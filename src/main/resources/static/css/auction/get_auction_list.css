@@ -143,9 +143,3 @@
 .page-link {
     color: rgb(100, 106, 118);
 }
-
-.active > .page-link {
-    color: white;
-    background-color: rgb(100, 106, 118);
-    border-color: rgb(100, 106, 118);;
-}
