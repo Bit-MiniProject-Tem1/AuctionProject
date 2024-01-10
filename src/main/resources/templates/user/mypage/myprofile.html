@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/user/my/profile.css">
+    <link rel="stylesheet" href="/css/user/fragment/mypage_navbar.css">
+    <script defer src="/js/my/mypage_navbar.js"></script>
+</head>
+<html>
+
+
+
+<body>
+<div class="container my lg">
+    <div>
+        <!-- navbar -->
+        <div class="snb_area"><a href="/my" class="nuxt-link-active">
+            <h2 class="snb_main_title">마이 페이지</h2>
+        </a>
+            <nav class="snb">
+                <div class="snb_list"><strong class="snb_title">쇼핑 정보</strong>
+                    <ul class="snb_menu">
+                        <li class="menu_item"><a id="buying" href="/users/html/my/buying.html" class="menu_link">구매
+                            내역 </a></li>
+                        <li class="menu_item"><a id="selling" href="/users/html/my/selling.html" class="menu_link">판매 내역
+                        </a></li>
+                        <li class="menu_item"><a id="wish" href="/users/html/my/wish.html" class="menu_link">관심상품 </a>
+                        </li>
+                    </ul>
+                </div>
+                                        <!-- 나중에 해야 html 다 만들고 !! ㄱㄱㄱ해야댐-->
+<!--                <div class="snb_list"><strong class="snb_title">내 정보</strong>-->
+<!--                    <ul class="snb_menu">-->
+<!--                        <li class="menu_item"><a  href="/user/mypage/user/myprofile" class="menu_link">-->
+<!--                            프로필 정보 </a></li>-->
+<!--                        <li class="menu_item"><a  href="/users/html/my/address.html" class="menu_link">주소록-->
+<!--                        </a></li>-->
+<!--                        <li class="menu_item"><a  href="/users/html/my/payment.html" class="menu_link">결제 정보-->
+<!--                        </a></li>-->
+<!--                        <li class="menu_item"><a  href="/users/html/my/account.html" class="menu_link">판매 정산-->
+<!--                            계좌 </a></li>-->
+<!--                        <li class="menu_item"><a  href="/users/html/my/receipt.html" class="menu_link">현금영수증-->
+<!--                            정보 </a></li>-->
+<!--                        <li class="menu_item"><a  href="/users/html/my/point.html" class="menu_link">포인트 </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+            </nav>
+        </div>
+    </div>
+    <div class="content_area">
+        <div class="my_profile">
+            <div class="content_title border">
+                <div class="title">
+                    <h3>프로필 정보</h3>
+                    <!---->
+                </div>
+                <!---->
+            </div>
+            <div class="user_profile">
+                <div class="profile_thumb"><img id="profile_img" src="../../img/profile.png" alt="사용자 이미지" class="thumb_img read_img"></div>
+                <div class="profile_detail"><strong class="name">fd730</strong>
+                    <div class="profile_btn_box"><label href="#" class="btn outlinegrey small" for="modify_img"> 이미지 변경 </label><a href="#"
+                                                                                                                                   class="btn outlinegrey small" onclick="delete_img()"> 삭제 </a></div>
+                </div>
+            </div><input type="file" id="modify_img" accept="image/jpeg,image/png" hidden="hidden"><canvas width="1000"
+                                                                                                           height="1000" style="display: none;"></canvas>
+            <div class="profile_info">
+                <div class="profile_group">
+                    <h4 class="group_title">로그인 정보</h4>
+                    <div class="unit">
+                        <h5 class="title">이메일 주소</h5>
+                        <p class="desc email">f***0@naver.com</p><button type="button"
+                                                                         class="btn btn_modify outlinegrey small"> 변경 </button>
+                    </div>
+                    <div class="modify" style="display: none;">
+                        <div class="input_box">
+                            <h6 class="input_title">이메일 주소 변경</h6>
+                            <div class="input_item"><input type="email" autocomplete="off" class="input_txt"
+                                                           placeholder="f***0@naver.com"></div>
+                            <p class="input_error"> </p>
+                        </div>
+                        <div class="modify_btn_box"><button type="button" class="btn outlinegrey medium"
+                                                            slot="button"> 취소 </button><button disabled="disabled" type="button"
+                                                                                               class="btn solid medium disabled" slot="button"> 인증 메일 발송 </button></div>
+                    </div>
+                    <div class="unit">
+                        <h5 class="title">비밀번호</h5>
+                        <p class="desc password">•••••••••</p><button type="button"
+                                                                      class="btn btn_modify outlinegrey small"> 변경 </button>
+                    </div>
+                    <div class="modify" style="display: none;">
+                        <h5 class="title">비밀번호 변경</h5>
+                        <div class="input_box">
+                            <h6 class="input_title">이전 비밀번호</h6>
+                            <div class="input_item"><input type="password" placeholder="영문, 숫자, 특수문자 조합 8-16자"
+                                                           autocomplete="off" class="input_txt"></div>
+                            <p class="input_error"> 영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)
+                            </p>
+                        </div>
+                        <div class="input_box">
+                            <h6 class="input_title">새 비밀번호</h6>
+                            <div class="input_item"><input type="password" placeholder="영문, 숫자, 특수문자 조합 8-16자"
+                                                           autocomplete="off" class="input_txt"></div>
+                            <p class="input_error"> 영문, 숫자, 특수문자를 조합해서 입력해주세요. (8-16자)
+                            </p>
+                        </div>
+                        <div class="modify_btn_box"><button type="button" class="btn outlinegrey medium"
+                                                            slot="button"> 취소 </button><button disabled="disabled" type="button"
+                                                                                               class="btn solid medium disabled" slot="button"> 저장 </button></div>
+                    </div>
+                </div>
+                <div class="profile_group">
+                    <h4 class="group_title">개인 정보</h4>
+                    <div class="unit unit_name">
+                        <h5 class="title">이름</h5>
+                        <p class="desc">fd730</p><button type="button" class="btn btn_modify outlinegrey small" onclick="pop_name()"> 변경
+                    </button>
+                    </div>
+                    <div class="modify name modify_name" style="display: none;">
+                        <h5 class="title">이름</h5>
+                        <div class="input_box" id="name_input_box">
+                            <h6 class="input_title">새로운 이름</h6>
+                            <div class="input_item"><input type="text" id="name_input" placeholder="고객님의 이름" autocomplete="off"
+                                                           class="input_txt" id=""></div>
+                            <p class="input_error" id="name_input_error"></p>
+                        </div>
+                        <div class="modify_btn_box"><button type="button" class="btn outlinegrey medium close_name "
+                                                            slot="button"> 취소 </button><button type="button"
+                                                                                               class="btn solid medium disabled close_name" id="name_save"slot="button" disabled="true"> 저장 </button></div>
+                    </div>
+                    <div class="unit">
+                        <h5 class="title">휴대폰 번호</h5>
+                        <p class="desc">010-5***-*794</p><button type="button"
+                                                                 class="btn btn_modify outlinegrey small"> 변경 </button>
+                    </div>
+                    <div class="layer lg layer_size" style="display: none;">
+                        <div class="layer_container"><a class="btn_layer_close" ><svg
+                                xmlns="http://www.w3.org/2000/svg" class="ico-close icon sprite-icons">
+                            <use href="/_nuxt/3182c3b1ca2f77da7bc3e1acf109306c.svg#i-ico-close"
+                                 xlink:href="/_nuxt/3182c3b1ca2f77da7bc3e1acf109306c.svg#i-ico-close"></use>
+                            </svg></a>
+
+                        </div>
+                    </div>
+                </div>
+                <a href="/my/withdrawal" class="btn_withdrawal">회원 탈퇴</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--<script>-->
+<!--    function validateName(strName){-->
+<!--        // const reg_name =  /^[가-힣a-zA-Z]+$/;-->
+<!--        const reg_name = /^[가-힣]{2,50}$/;-->
+<!--        if(!reg_name.test(''+strName)){-->
+<!--            return false;-->
+<!--        }-->
+<!--        return true;-->
+<!--    }-->
+<!--    let strName=document.querySelector(".unit_name .desc").innerHTML;-->
+<!--    document.querySelector('#name_input').addEventListener('input', e=>{-->
+<!--        strName=e.target.value;-->
+<!--        let errorMsg='';-->
+<!--        if(!validateName(strName)){-->
+<!--            errorMsg='올바른 이름을 입력해주세요. (2-50자)';-->
+<!--            document.querySelector('#name_input_box').className='has_button input_box has_error';-->
+<!--            document.querySelector('#name_input').setAttribute('validateresult',false);-->
+<!--            document.querySelector('#name_save').classList.add('disabled');-->
+<!--            document.querySelector('#name_save').disabled = true;-->
+
+<!--        } else {-->
+<!--            document.querySelector('#name_input_box').className='has_button input_box fill';-->
+<!--            document.querySelector('#name_input').setAttribute('validateresult',true);-->
+<!--            document.querySelector('#name_save').classList.remove('disabled');-->
+<!--            document.querySelector('#name_save').disabled = false;-->
+<!--        }-->
+<!--        document.querySelector('#name_input_error').innerHTML=errorMsg;-->
+<!--    });-->
+
+<!--    if(validateName() && 계좌번호() && ture ){-->
+<!--        remove .ds-->
+<!--    }-->
+<!--    function pop_name(){-->
+<!--        document.querySelector('.unit_name').style.display="none"-->
+<!--        document.querySelector('.modify_name').style.display="block"-->
+<!--    }-->
+<!--    const closename =document.querySelectorAll('.close_name')-->
+<!--    const layer1 = document.querySelector('.modify_name')-->
+<!--    const layer2 = document.querySelector('.unit_name')-->
+<!--    closename.forEach((target) => {-->
+<!--        target.addEventListener('click', () => {-->
+
+<!--            layer1.style.display="none"-->
+<!--            layer2.style.display="block"-->
+<!--            if(validateName(strName)){-->
+<!--                let name=document.querySelector(".unit_name .desc")-->
+<!--                let name1=document.querySelector(".profile_detail .name")-->
+<!--                name.innerHTML=strName-->
+<!--                name1.innerHTML=strName-->
+<!--            }-->
+
+<!--        })-->
+<!--    })-->
+
+<!--    function close_layer(){-->
+<!--        document.querySelector('.layer_size').style.display="none"-->
+<!--        let size=document.querySelector(".size.desc");-->
+<!--        size.innerHTML= document.querySelector(".size_item .btn.on span").innerHTML-->
+<!--    }-->
+<!--    function pop_layer(){-->
+<!--        document.querySelector('.layer_size').style.display="block"-->
+
+
+<!--    }-->
+<!--    const boxes = document.querySelectorAll(".size_item .btn");-->
+<!--    boxes.forEach((box) => {-->
+<!--        box.addEventListener("click", () => {-->
+<!--            boxes.forEach((e)=>{-->
+<!--                e.classList.remove("on")-->
+<!--            })-->
+<!--            box.classList.add("on")-->
+<!--        })-->
+<!--    });-->
+
+
+<!--    function delete_img(){-->
+<!--        const pi = document.getElementById('profile_img');-->
+<!--        console.log(pi.src);-->
+<!--        pi.setAttribute('src', '../../img/profile.png');-->
+<!--        console.log(pi.src);-->
+<!--    }-->
+
+
+<!--    // 프로필 이미지 변경-->
+<!--    function readImage(input){-->
+<!--        if(input.files && input.files[0]){-->
+<!--            const reader = new FileReader();-->
+
+<!--            reader.onload = e => {-->
+<!--                const newImg = document.getElementById('profile_img');-->
+<!--                newImg.src=e.target.result;-->
+<!--            }-->
+<!--            reader.readAsDataURL(input.files[0]);-->
+<!--        }-->
+<!--    }-->
+
+<!--    const modifyImg = document.getElementById('modify_img');-->
+<!--    modifyImg.addEventListener("change", e => {-->
+<!--        readImage(e.target);-->
+<!--    })-->
+
+
+<!--</script>-->
+
+
+</html>

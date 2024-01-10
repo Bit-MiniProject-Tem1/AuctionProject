@@ -1,0 +1,213 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+body, button, input, select, table, textarea {
+    color: #222;
+}
+input, textarea {
+    padding: 0;
+    outline: 0;
+    border: 0;
+    resize: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+li, ol, ul {
+    list-style: none;
+}
+a, a:active, a:focus, a:hover {
+    text-decoration: none;
+}
+a {
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+}
+
+
+.container.my {
+    margin: 0 auto;
+    padding: 40px 40px 160px;
+    max-width: 1280px;
+}
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.content_title {
+    display: -webkit-box;
+    display: flex;
+    padding: 5px 0 6px;
+}
+.title {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.title>h3 {
+    line-height: 29px;
+    font-size: inherit;
+}
+.lg .withdrawal_wrap, .md .withdrawal_wrap {
+    padding-top: 40px;
+}
+.withdrawal_title {
+    font-size: 18px;
+    letter-spacing: -.27px;
+}
+.withdrawal_terms {
+    margin-top: 20px;
+    padding: 24px;
+    border: 1px solid #d3d3d3;
+}
+.withdrawal_wrap .label_txt {
+    letter-spacing: -.16px;
+    font-size: 16px;
+}
+.checkbox_item .label_txt {
+    padding-left: 8px;
+    display: inline-block;
+    line-height: 24px;
+    font-size: 24px;
+    letter-spacing: -.07px;
+    vertical-align: top;
+}
+.terms_title {
+    font-size: 16px;
+    letter-spacing: -.16px;
+}
+.checkbox_item {
+    position: relative;
+    font-size: 0;
+}
+.blind, .u_skip {
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+}
+.checkbox_item .check_label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+.withdrawal_wrap .label_txt {
+    letter-spacing: -.16px;
+    font-size: 16px;
+}
+.terms_detail {
+    padding-top: 16px;
+}
+.terms_item {
+    position: relative;
+    padding-left: 12px;
+    color: #333;
+    word-break: keep-all;
+}
+.terms_item, .terms_subtitle {
+    font-size: 15px;
+    letter-spacing: -.15px;
+}
+.terms_item:before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+    background-color: #222;
+}
+.terms_item+.terms_item {
+    margin-top: 8px;
+}
+.terms_box+.terms_box {
+    margin-top: 40px;
+}
+.blind, .u_skip {
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+}
+input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 2px 3px 0px 4px;
+    padding: initial;
+    border: initial;
+}
+.terms_subtitle {
+    padding-bottom: 8px;
+    font-weight: 600;
+}
+.terms_box+.terms_box {
+    margin-top: 40px;
+}
+.terms_detail {
+    padding-top: 16px;
+}
+.withdrawal_check {
+    margin-top: 20px;
+}
+.withdrawal_btn_box {
+    padding-top: 40px;
+    text-align: center;
+}
+.withdrawal_btn_box .btn {
+    width: 120px;
+}
+.outlinegrey {
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.btn {
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+}
+.withdrawal_btn_box {
+    padding-top: 40px;
+    text-align: center;
+}
+.solid {
+    font-weight: 700;
+    color: #fff;
+    background-color: #222;
+}
+.withdrawal_btn_box .btn+.btn {
+    margin-left: 8px;
+}
+.checkbox_button{
+    width: 22px;
+    height: 22px;
+}

@@ -1,0 +1,453 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+img, video {
+    border: 0;
+    vertical-align: top;
+    -moz-user-select: none!important;
+    user-select: none!important;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+a, a:active, a:focus, a:hover {
+    text-decoration: none;
+}
+a {
+    color: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,.1);
+}
+input, textarea {
+    padding: 0;
+    outline: 0;
+    border: 0;
+    resize: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.content_title.border {
+    padding-bottom: 16px;
+    border-bottom: 3px solid #222;
+}
+.content_title {
+    display: -webkit-box;
+    display: flex;
+    padding: 5px 0 6px;
+}
+.user_profile {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 50px 0 38px;
+    border-bottom: 1px solid #ebebeb;
+    background-color: #fff;
+}
+.profile_info {
+    max-width: 480px;
+}
+.title{
+    font-size: 13px;
+    color: rgba(34,34,34,.5);
+}
+.title h3 {
+    line-height: 29px;
+    font-size: 24px;
+    margin:0;
+    color: black;
+}
+.profile_thumb {
+    -webkit-box-flex: 0;
+    flex: none;
+    overflow: hidden;
+    margin-right: 18px;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+.profile_thumb .thumb_img {
+    width: 100%;
+    height: 100%;
+}
+.profile_detail .name {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -.12px;
+    color: #000;
+}
+.profile_btn_box {
+    margin-top: 8px;
+    font-size: 0;
+}
+.profile_group{
+    padding-top:58px;
+}
+.outlinegrey {
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+}
+.small, .xsmall {
+    font-size: 12px;
+    letter-spacing: -.06px;
+}
+.small {
+    padding: 0 14px;
+    height: 34px;
+    border-radius: 10px;
+}
+.btn {
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+}
+.profile_btn_box {
+    margin-top: 8px;
+    font-size: 0;
+}
+.profile_btn_box .btn+.btn {
+    margin-left: 8px;
+}
+.container.my {
+    margin: 0 auto;
+    padding: 40px 40px 160px;
+    max-width: 1280px;
+}
+.group_title {
+    font-size: 18px;
+    letter-spacing: -.27px;
+    margin: 0;
+}
+.unit {
+    padding: 25px 60px 18px 0;
+    position: relative;
+    border-bottom: 1px solid #ebebeb;
+}
+.desc.email {
+    color: rgba(34,34,34,.5);
+}
+.desc {
+    padding-top: 6px;
+    font-size: 16px;
+    letter-spacing: -.16px;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.input_title {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    line-height: 18px;
+}
+.input_item {
+    position: relative;
+}
+.modify.name {
+    padding-top: 25px;
+}
+.modify {
+    padding-top: 23px;
+}
+.modify .title {
+    padding-bottom: 22px;
+    color: #222;
+}
+.input_box {
+    position: relative;
+    padding: 10px 0 14px;
+}
+.profile_group .modify .input_txt {
+    padding: 7px 0;
+    font-size: 15px;
+    letter-spacing: -.15px;
+}
+.profile_group .input_txt {
+    padding: 7px 0 19px;
+    font-size: 16px;
+    letter-spacing: -.16px;
+}
+.input_txt {
+    padding: 8px 0;
+    width: 100%;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    line-height: 22px;
+    border-bottom: 1px solid #ebebeb;
+}
+.input_error {
+    display: none;
+}
+.modify_btn_box {
+    padding-top: 28px;
+    text-align: center;
+    font-size: 0;
+}
+.modify_btn_box .btn {
+    padding: 0 38px;
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+    
+}
+.btn.btn_modify {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    padding-top: 1px;
+    padding-left: 11px;
+    padding-right: 12px;
+}
+.solid.disabled, .solid:disabled {
+    background-color: #ebebeb;
+    color: #fff;
+    cursor: default;
+    border-color: #f6f1f105;
+}
+.modify_btn_box .btn+.btn {
+    margin-left: 8px;
+}
+.solid {
+    font-weight: 700;
+    color: #fff;
+    background-color: #222;
+}
+.has_error .input_title {
+    color: #f15746;
+}
+.has_error .input_txt {
+    border-bottom-color: #ef6253;
+}
+.has_error .input_error {
+    display: block;
+    position: absolute;
+    line-height: 16px;
+    font-size: 11px;
+    color: #f15746;
+}
+.layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34,34,34,.5);
+    z-index: 1010;
+}
+.layer_container {
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 4px 10px 0 rgba(0,0,0,.1);
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,.1);
+}
+.btn_layer_close {
+    cursor: pointer;
+}
+.btn_layer_close {
+    display: none;
+}
+.btn_layer_close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+}
+[class*=ico-] {
+    width: 24px;
+    height: 24px;
+}
+.layer_header .title {
+    line-height: 22px;
+    padding: 18px 50px 20px;
+    min-height: 60px;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    font-weight: 700;
+    letter-spacing: -.15px;
+    color: #000;
+    text-align: center;
+    background-color: #fff;
+}
+.size_list_area {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 6px 28px 0;
+    height: 270px;
+}
+.size_list_area:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.size_item {
+    float: left;
+    display: table;
+    margin: 4px;
+    width: calc(33.33333% - 8px);
+    height: 52px;
+}
+.size_item .btn {
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3d3d3;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fff;
+}
+.size_item .info_txt {
+    display: inline-block;
+    font-size: 14px;
+    color: #000;
+}
+.size_item .btn {
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3d3d3;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fff;
+}
+.size_item .btn.on {
+    border-color: #333;
+    font-weight: 700;
+}
+.layer_btn {
+    padding: 24px 32px 32px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.layer_btn .btn {
+    width: 120px;
+}
+
+.unit.to_receive {
+    padding-right: 200px;
+    padding-bottom: 20px;
+}
+.unit.to_receive .desc {
+    font-size: 15px;
+    letter-spacing: -.15px;
+}
+.radio_txt_box {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+}
+.radio_txt_box .radio_item {
+    position: relative;
+    margin-top: 0;
+    float: left;
+}
+.radio_input {
+    overflow: hidden!important;
+    position: absolute!important;
+    clip: rect(0,0,0,0)!important;
+    width: 1px!important;
+    height: 1px!important;
+    margin: -1px!important;
+}
+.radio_txt_box .radio_label {
+    overflow: hidden;
+    padding: 0;
+    font-size: 14px;
+    letter-spacing: -.21px;
+    color: rgba(34,34,34,.8);
+}
+.radio_label {
+    padding: 10px 0 10px 10px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.radio_txt_box .radio_input:checked~.radio_label:before {
+    right: 2px;
+    margin: -10px 0 0;
+}
+.radio_input:checked~.radio_label:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin: -10px -15px 0 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #222;
+    border-radius: 100%;
+}
+.radio_txt_box [class*=ico-] {
+    float: right;
+}
+[class*=ico-] {
+    width: 24px;
+    height: 24px;
+}
+.btn_withdrawal, .btn_withdrawal:hover {
+    text-decoration: underline;
+    
+}
+.btn_withdrawal {
+    margin-top: 55px;
+    padding: 5px 0;
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.5);
+}

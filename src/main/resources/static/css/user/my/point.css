@@ -1,0 +1,305 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+body, button, input, select, table, textarea {
+    color: #222;
+}
+button {
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+button {
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 0;
+    border: 0;
+    border-collapse: collapse;
+}
+
+
+.container.my {
+    margin: 0 auto;
+    padding: 40px 40px 160px;
+    max-width: 1280px;
+}
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.content_title {
+    display: -webkit-box;
+    display: flex;
+    padding: 5px 0 6px;
+}
+.title {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.title>h3 {
+    line-height: 29px;
+    font-size: inherit;
+}
+.lg .btn_help, .md .btn_help {
+    cursor: pointer;
+    margin-left: 4px;
+}
+.lg .point>.dashboard, .md .point>.dashboard {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 30px;
+    margin-top: 12px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    border: 1px solid #ebebeb;
+}
+.lg .point>.dashboard>.point_summary, .md .point>.dashboard>.point_summary {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    flex: 1;
+    max-width: 420px;
+}
+.lg .point>.dashboard>.point_summary>.point_info>.title, .md .point>.dashboard>.point_summary>.point_info>.title {
+    color: rgba(34,34,34,.5);
+    font-size: 13px;
+    letter-spacing: -.07px;
+}
+.lg .point>.dashboard>.point_summary>.point_info>.point, .md .point>.dashboard>.point_summary>.point_info>.point {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.lg .point>.dashboard>.point_summary>.divider, .md .point>.dashboard>.point_summary>.divider {
+    -webkit-box-flex: 1;
+    flex: 1;
+    height: 44px;
+}
+.lg .point>.dashboard>.point_summary>.divider>.divider_line, .md .point>.dashboard>.point_summary>.divider>.divider_line {
+    margin: auto;
+    width: 1px;
+    height: 100%;
+    background-color: rgba(34,34,34,.1);
+}
+.lg .point>.dashboard>.register, .md .point>.dashboard>.register {
+    padding-left: 25px;
+}
+.solid {
+    font-weight: 700;
+    color: #fff;
+    background-color: #222;
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.btn {
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+}
+.lg .point>.description, .md .point>.description {
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    margin-top: 12px;
+}
+.lg .point>.point_history_table, .md .point>.point_history_table {
+    margin-top: 40px;
+    border-top: 2px solid #222;
+}
+.lg .point>.point_history_table .point_history_data:first-of-type, .lg .point>.point_history_table .point_history_header:first-of-type, .md .point>.point_history_table .point_history_data:first-of-type, .md .point>.point_history_table .point_history_header:first-of-type {
+    text-align: left;
+}
+.lg .point>.point_history_table .point_history_header, .md .point>.point_history_table .point_history_header {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    padding: 15px 0;
+    font-weight: 400;
+}
+.lg .point>.point_history_table .point_history_data, .lg .point>.point_history_table .point_history_header, .md .point>.point_history_table .point_history_data, .md .point>.point_history_table .point_history_header {
+    border-bottom: 1px solid #f0f0f0;
+}
+.point_empty {
+    padding-top: 150px;
+}
+.point_empty>.text {
+    text-align: center;
+    color: rgba(34,34,34,.5);
+    font-size: 14px;
+    letter-spacing: -.21px;
+}
+.btn_help>img{
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(189, 188, 188);
+    border-radius: 50%;
+    margin-top: 2px;
+}
+.lg .point>.point_history_table .point_history_data:nth-of-type(2), .lg .point>.point_history_table .point_history_header:nth-of-type(2), .md .point>.point_history_table .point_history_data:nth-of-type(2), .md .point>.point_history_table .point_history_header:nth-of-type(2) {
+    text-align: right;
+}
+
+/*적립 및 만료*/
+.lg .point>.point_history_table .point_history_data,
+.lg .point>.point_history_table .point_history_header,
+.md .point>.point_history_table .point_history_data,
+.md .point>.point_history_table .point_history_header {
+    border-bottom: 1px solid #f0f0f0;
+}
+.lg .point>.point_history_table .point_history_data,
+.md .point>.point_history_table .point_history_data {
+    padding: 20px 0;
+}
+.lg .point>.point_history_table .point_history_data:first-of-type,
+.lg .point>.point_history_table .point_history_header:first-of-type,
+.md .point>.point_history_table .point_history_data:first-of-type,
+.md .point>.point_history_table .point_history_header:first-of-type {
+    text-align: left;
+}
+.mo .point>.point_contents>.point_histories>.point_history>.point_history_detail,
+.point_detail,
+.sm .point>.point_contents>.point_histories>.point_history>.point_history_detail {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.point_detail{
+    min-width: 0;
+    -webkit-box-flex: 1;
+    flex: 1;
+}
+.point_detail>.status_stamp{
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 16px;
+    text-align: center;
+}
+.point_detail>.status_stamp.expired {
+    border: 1px solid rgba(34,34,34,.2);
+}
+.point_detail>.status_stamp>.text{
+    font-size: 13px;
+    letter-spacing: -.07px;
+    line-height: 48px;
+}
+.point_detail>.status_stamp.expired>.text {
+    color: rgba(34,34,34,.5);
+}
+.point_detail>.details {
+    min-width: 0;
+}
+.point_detail>.details>.created_date{
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.5);
+    margin-bottom: 2px;
+}
+.point_detail>.details>.description,
+.point_detail>.details>.expired_date,
+.point_detail>.details>.title {
+    overflow: hidden;
+    white-space: nowrap;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+.point_detail>.details>.title {
+    font-size: 14px;
+    letter-spacing: -.21px;
+}
+.lg .point>.point_history_table .point_history_data:nth-of-type(2),
+.lg .point>.point_history_table .point_history_header:nth-of-type(2),
+.md .point>.point_history_table .point_history_data:nth-of-type(2),
+.md .point>.point_history_table .point_history_header:nth-of-type(2) {
+    text-align: right;
+}
+.point_amount>.amount {
+    font-size: 14px;
+    letter-spacing: -.21px;
+}
+.point_amount>.amount.deducted, .point_amount>.amount.expired {
+    color: #f15746;
+}
+
+.point_detail>.status_stamp.invalidated,
+.point_detail>.status_stamp.issued,
+.point_detail>.status_stamp.refunded {
+    background-color: #222;
+}
+.point_detail>.status_stamp.invalidated>.text,
+.point_detail>.status_stamp.issued>.text,
+.point_detail>.status_stamp.refunded>.text {
+    color: #fff;
+}
+
+.point_detail>.details>.description {
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.8);
+    margin-top: 1px;
+}
+.point_detail>.details>.description {
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.8);
+    margin-top: 1px;
+}
+.point_detail>.details>.description>.ic-arrow {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+.point_detail>.details>.expired_date{
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.5);
+    margin-top: 1px;
+}
+.point_amount>.amount.invalidated,
+.point_amount>.amount.issued,
+.point_amount>.amount.refunded {
+    font-weight: 700;
+}

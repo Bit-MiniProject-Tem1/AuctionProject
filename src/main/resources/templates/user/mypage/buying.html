@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/my/buying.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script src="/js/my/buying.js"></script>
+        <!--        <script type="text/javascript" th:src="@{/lib/js/pjs_header_nav.js}"></script>-->
+        <!--        <script th:src="@{/lib/js/loginpage_mypage_all.js}" type="text/javascript"></script>-->
+        <!--        <script th:src="@{/lib/js/mypage.js}" type="text/javascript"></script>-->
+        <!--        <script> const sessionId = sessionStorage.getItem('userid'); // 세션 가져오기</script>-->
+    </th:block>
+
+
+
+<body>
+<div layout:fragment="content" id="__nuxt">
+    <!---->
+    <div id="__layout">
+        <div class="wrap win_os">
+            <div class="wrap_inner">
+                <!--container-->
+                <div class="container my lg">
+                    <div class="content_area">
+                        <div class="my_purchase">
+                            <div class="content_title">
+                                <div class="title">
+                                    <h3>입찰 내역</h3>
+                                    <!---->
+                                </div>
+                                <!---->
+                            </div>
+                            <div class="purchase_list_tab detail_tab">
+                                <div class="tab_item total">
+                                    <a href="#" class="tab_link">
+                                        <dl class="tab_box">
+                                            <dt class="title">전체</dt>
+                                            <dd class="count">0</dd>
+                                        </dl>
+                                    </a>
+                                </div>
+                                <div class="tab_item tab_on buy">
+                                    <a class="tab_link">
+                                        <dl class="tab_box">
+                                            <dt class="title">입찰중</dt>
+                                            <dd class="count" id="bindCount">0</dd>
+                                        </dl>
+                                    </a>
+                                </div>
+                                <div class="tab_item inProgress">
+                                    <a class="tab_link">
+                                        <dl class="tab_box">
+                                            <dt class="title">진행중</dt>
+                                            <dd class="count" id="continueCount">0</dd>
+                                            <!---->
+                                        </dl>
+                                    </a>
+                                </div>
+                                <div class="tab_item end">
+                                    <a class="tab_link">
+                                        <dl class="tab_box">
+                                            <dt class="title">입찰 완료</dt>
+                                            <dd class="count" id="endCount">0</dd>
+                                        </dl>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="period_search">
+                                <div class="period_month">
+                                    <ul class="month_list">
+                                        <li class="month_item is_active"><a class="month_link">최근 2개월</a></li>
+                                        <li class="month_item"><a class="month_link">4개월</a></li>
+                                        <li class="month_item"><a class="month_link">6개월</a></li>
+                                        <li class="month_item hide_item"><a class="month_link">기간조회</a></li>
+                                    </ul>
+                                    <!--모바일-->
+                                    <div class="period_option">
+                                        <div class="selected_txt">
+                                            <span>기간 선택</span>
+                                            <img src="/lib/img/select_down_arrow_icon.png"
+                                                 class="ico-arr-down-gray icon sprite-icons">
+                                        </div>
+                                        <label>
+                                            <select id="period_select">
+                                                <option value=""> </option>
+                                                <option value=""> </option>
+                                                <option value=""> </option>
+                                                <option value=""> </option>
+                                                <option value=""> </option>
+                                                <option value=""> </option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <!---->
+                                </div>
+                                <div class="period_calendar_wrapper">
+                                    <div class="period_calendar">
+                                        <div class="calendar_wrap">
+                                                <span>
+                                                    <div class="calendar">
+                                                        <input type="text" class="cal_input" value="2024-01-10"
+                                                               name="date1" id="datepicker1" readonly>
+                                                        <span class="cal_btn"></span>
+                                                    </div>
+                                                    <div class="vc-popover-content-wrapper">
+                                                        <!---->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                        <span class="swung_dash">~</span>
+                                        <div class="calendar_wrap">
+                                                <span>
+                                                    <div class="calendar">
+                                                        <input type="text" class="cal_input" value="2025-01-10"
+                                                               name="date2" id="datepicker2" readonly>
+                                                        <span class="cal_btn"></span>
+                                                    </div>
+                                                    <div class="vc-popover-content-wrapper is-interactive"
+                                                         style="margin: 0px;">
+                                                        <!---->
+                                                    </div>
+                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="period_btn_box">
+                                        <button class="btn_search" onclick="bindAxios()"> 조회 </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="search_info">
+                                <li class="info_item">
+                                    <p>한 번에 조회 가능한 기간은 최대 6개월입니다.</p>
+                                </li>
+                                <li class="info_item">
+                                    <p>기간별 조회 결과는 입찰일 기준으로 노출됩니다.</p>
+                                </li>
+                            </ul>
+                            <div id="purchase_list">
+                                <!-- purchase_list -->
+                                <div class="purchase_list finished bid">
+                                    <div class="purchase_head">
+                                        <div class="head_product" onclick="status_layer()">
+                                            <a href="#" class="btn_filter">
+                                                <span class="status">전체</span>
+                                                <input type="text" placeholder="전체" disabled="disabled" autocomplete="off" value="" class="status">
+                                                <img src="/img/select_icon.png" class="ico-arr-dir-down-circle icon sprite-icons"></img>
+                                            </a>
+                                        </div>
+                                        <div class="head_status">
+                                            <div class="status_box field_price">
+                                                <a class="status_link">
+                                                    <span class="status_txt">구매 희망가</span>
+                                                </a>
+                                            </div>
+                                            <div class="status_box field_date_purchased" style="display: none">
+                                                <a class="status_link">
+                                                    <span class="status_txt">구매일</span>
+                                                </a>
+                                            </div>
+                                            <div class="status_box field_date_paid" style="display: none">
+                                                <a class="status_link">
+                                                    <span class="status_txt">정산일</span>
+                                                </a>
+                                            </div>
+                                            <div class="status_box field_expires_at">
+                                                <a class="status_link">
+                                                    <span class="status_txt">만료일</span>
+                                                </a>
+                                            </div>
+                                            <div class="status_box field_status" style="display: none">
+                                                <a class="status_link">
+                                                    <span class="status_txt">상태</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-v-0d2f7c95="">
+                                        <div data-v-96f66296="" data-v-0d2f7c95="">
+                                            <div data-v-96f66296="" class="purchase_list_display_item"
+                                                 style="background-color: rgb(255, 255, 255);">
+                                                <div data-v-96f66296="" class="purchase_list_product">
+                                                    <div data-v-96f66296="" class="list_item_img_wrap"><img
+                                                            data-v-96f66296="" alt="nike"
+                                                            src="//kream-phinf.pstatic.net/MjAyMzEyMThfNjAg/MDAxNzAyODgxMTkxMzM2.A9sxAzBr0zPJI5IDBx4uTtiHOUc7ZGaHEIfspSryzrMg.rzlBdvuKndp9DH8MHDBSvjEinlpwGAXUDDHRnUsiEB4g.PNG/a_e98d07071b9149e7815ae2acb4496331.png?type=l_webp"
+                                                            class="list_item_img"
+                                                            style="background-color: rgb(244, 244, 244);"><!---->
+                                                    </div>
+                                                    <div data-v-96f66296="" class="list_item_title_wrap"><!---->
+                                                        <p data-v-96f66296="" class="list_item_title">Nike Kobe 4 Protro Black University Gold</p>
+                                                        <p data-v-96f66296="" class="list_item_description">255 SIZE
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div data-v-96f66296="" class="list_item_status">
+                                                    <div data-v-96f66296=""
+                                                         class="list_item_column column_secondary">
+                                                        <p data-v-e22435d8="" data-v-96f66296=""
+                                                           class="secondary_title display_paragraph"
+                                                           style="color: rgb(34, 34, 34);">330,000원</p>
+                                                    </div>
+                                                    <div data-v-96f66296="" class="list_item_column column_last">
+                                                        <p data-v-e22435d8="" data-v-96f66296=""
+                                                           class="last_title display_paragraph"
+                                                           style="color: rgb(241, 87, 70);">기한만료</p>
+                                                        <p data-v-e22435d8="" data-v-96f66296=""
+                                                           class="last_description display_paragraph"></p>
+                                                    </div>
+                                                </div>
+                                            </div><!---->
+                                        </div>
+                                    </div>
+                                    <!--상품 리스트-->
+                                    <div class="purchase_item_wrap">
+                                        <!--상품-->
+                                    </div>
+                                    <!--상태 팝업 1 입찰중-->
+                                    <div class="layer lg" style="display: none;" id="status1">
+                                        <div class="layer_container">
+                                            <div class="layer_header">
+                                                <h2 class="title">선택한 상태 보기</h2>
+                                            </div>
+                                            <div class="layer_content">
+                                                <div class="select_status">
+                                                    <ul class="status_list">
+                                                        <li class="status_item item_on"><a class="status_link">전체</a></li>
+                                                        <li class="status_item"><a class="status_link">입찰중</a></li>
+                                                        <li class="status_item status_danger"><a class="status_link">기한만료</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a class="btn_layer_close">
+                                                <img src="/lib/img/nav_close_icon.png" class="ico-close icon sprite-icons">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--상태 팝업 2 진행중-->
+                                    <div class="layer lg" style="display: none;" id="status2">
+                                        <div class="layer_container">
+                                            <div class="layer_header">
+                                                <h2 class="title">선택한 상태 보기</h2>
+                                            </div>
+                                            <div class="layer_content">
+                                                <div class="select_status">
+                                                    <ul class="status_list">
+                                                        <li class="status_item item_on"><a
+                                                                class="status_link">전체</a></li>
+                                                        <li class="status_item"><a class="status_link">대기중</a></li>
+                                                        <li class="status_item"><a class="status_link">발송완료</a></li>
+                                                        <li class="status_item"><a class="status_link">입고대기</a></li>
+                                                        <li class="status_item"><a class="status_link">입고완료</a></li>
+                                                        <li class="status_item"><a class="status_link">검수중</a></li>
+                                                        <li class="status_item status_warning"><a
+                                                                class="status_link">검수보류</a></li>
+                                                        <li class="status_item"><a class="status_link">검수합격</a></li>
+                                                        <li class="status_item"><a class="status_link">배송중</a></li>
+                                                        <li class="status_item status_danger"><a
+                                                                class="status_link">거래실패</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a class="btn_layer_close">
+                                                <img src="/lib/img/nav_close_icon.png"
+                                                     class="ico-close icon sprite-icons">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--상태 팝업 3 종료-->
+                                    <!-- layer_status 넣을곳 -->
+                                    <div class="layer lg status_layer" style="display: none;">
+                                        <div class="layer_container">
+                                            <div class="layer_header">
+                                                <h2 class="title">선택한 상태 보기</h2>
+                                            </div>
+                                            <div class="layer_content">
+                                                <div class="status_list_area">
+                                                    <div class="status_item status_on">
+                                                        <a type="button" class="btn outlinegrey medium">
+                                                            <span class="info_txt">전체</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="status_item">
+                                                        <a type="button" class="btn outlinegrey medium">
+                                                            <span class="info_txt">입찰 중</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="status_item">
+                                                        <a type="button" class="btn outlinegrey medium">
+                                                            <span class="info_txt" id="expired">기한만료</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:void(0);" class="btn_layer_close"
+                                               onclick="closeLayer()">
+                                                <img src="../../img/nav_close_icon.png"
+                                                     class="ico-close icon sprite-icons">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!----><!----><!----><!---->
+                                </div>
+                            </div>
+                            <div class="pagination">
+                                <div class="pagination_box first last">
+                                    <div class="prev_btn_box">
+                                        <a class="btn_arr">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="arr-page-first icon sprite-icons">
+                                                <use href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-first"
+                                                     xlink:href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-first">
+                                                </use>
+                                            </svg>
+                                        </a>
+                                        <a class="btn_arr">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="arr-page-prev icon sprite-icons">
+                                                <use href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-prev"
+                                                     xlink:href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-prev">
+                                                </use>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="page_bind">
+                                        <a class="btn_page active"> 1 </a>
+                                    </div>
+                                    <div class="next_btn_box">
+                                        <a class="btn_arr">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="arr-page-next icon sprite-icons">
+                                                <use href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-next"
+                                                     xlink:href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-next">
+                                                </use>
+                                            </svg>
+                                        </a>
+                                        <a class="btn_arr">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 class="arr-page-last icon sprite-icons">
+                                                <use href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-last"
+                                                     xlink:href="/_nuxt/91e1223d82ae15dcdada670ee3ffdaf6.svg#i-arr-page-last">
+                                                </use>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!---->
+    </div>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+body, button, input, select, table, textarea {
+    color: #222;
+}
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+a, a:active, a:focus, a:hover {
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+.title>h3{
+    margin:0;
+}
+.container.my {
+    margin: 0 auto;
+    padding: 40px 40px 160px;
+    max-width: 1280px;
+}
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.content_title.has_sub {
+    padding-bottom: 22px;
+}
+.content_title.border {
+    padding-bottom: 16px;
+    border-bottom: 3px solid #222;
+}
+.content_title {
+    display: flex;
+    padding: 5px 0 6px;
+}
+.title {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.title>h3 {
+    line-height: 29px;
+    font-size: inherit;
+}
+.sub_title {
+    font-size: 12px;
+    letter-spacing: -.005em;
+    color: rgba(34,34,34,.5);
+}
+.content_title.has_sub .btn_box {
+    padding-top: 4px;
+}
+.btn_box .btn, .btn_box {
+    display: flex;
+}
+.btn_box {
+    margin-left: auto;
+    padding-left: 30px;
+    flex-shrink: 0;
+}
+.btn_box .btn.btn_add {
+    margin-right: 0;
+    padding: 0 14px;
+    height: 34px;
+    line-height: 32px;
+    border-radius: 10px;
+    border: 1px solid #222;
+    font-size: 12px;
+    letter-spacing: -.06px;
+}
+.btn {
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+    color: rgba(34,34,34,.8);
+    background-color: #fff;
+}
+.empty_area .desc {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    color: rgba(34,34,34,.5);
+}
+.my .empty_area {
+    padding: 80px 0;
+}
+.empty_area.has_bg {
+    background-color: #fafafa;
+}
+.empty_area {
+    padding: 81px 0 45px;
+    text-align: center;
+}
+.my_payment .empty_area {
+    padding: 160px 0!important;
+}

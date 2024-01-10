@@ -1,0 +1,179 @@
+.auction-nav {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+    font-family: Pretendard;
+}
+
+.auction-nav a, .auction-nav a:link, .auction-nav a:visited, .auction-nav a:hover, .auction-nav a:active {
+    color: #222;
+}
+
+.auction-nav .nav .active {
+    font-weight: 700;
+    border-bottom: 2px solid #222;
+}
+
+.content {
+    font-family: Pretendard;
+}
+
+a {
+    text-decoration: none;
+}
+
+.light-border {
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.light-border-bottom {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.light-border-top {
+    border-top: 1px solid #ebebeb;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    text-align: center;
+    font-family: GmarketSans;
+}
+
+.img_wrapper {
+    position: relative;
+    padding-top: 100%;
+}
+
+.img_wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.btn-red {
+    background-color: rgb(239, 98, 83);
+    color: white;
+}
+
+.btn-green {
+    background-color: rgb(65, 185, 121);
+    color: white;
+}
+
+.link {
+    border-radius: 0.375rem;
+}
+
+.link a, .link a:link, .link a:visited, .link a:hover, .link a:active {
+    color: white;
+}
+
+.favorite-link, .favorite-link:link, .favorite-link:visited, .favorite-link:hover, .favorite-link:active {
+    color: black;
+}
+
+.search-goods-list {
+    float: left;
+    width: 100%;
+    margin: 0;
+}
+
+.search-goods {
+    float: left;
+    width: 21%;
+    margin: 10px 2%;
+    text-align: center;
+}
+
+.search-goods .title {
+    margin: 15px 0 4px 0;
+}
+
+.search-goods .user-name {
+    margin: 8px 0 20px 0;
+}
+
+.search-goods .title, .search-goods .starting-price, .search-goods .current-bidding_price, .search-goods .user-name {
+    float: left;
+    width: 100%;
+}
+
+.search-goods .user-name span {
+    float: left;
+    width: 65%;
+    margin: 0 20%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(235, 235, 235);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-goods .user-name i {
+    font-size: 16px;
+    margin-right: 3px;
+}
+
+.search-goods .title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.search-goods .goods-img {
+    position: relative;
+    width: 100%;
+}
+
+.search-goods .remaining-time {
+    width: 75%;
+    font-size: 12px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.search-goods .remaining-time span {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-goods .starting-price span {
+    text-decoration-line: line-through;
+}
+
+.search-goods .current-bidding_price {
+    color: rgb(239, 98, 83);
+    font-size: 14px;
+}
+
+.search-goods .favorite-view-group span {
+    margin-right: 8px;
+}
+
+.search-goods .favorite-view-group {
+    float: left;
+    width: 100%;
+    color: rgba(34, 34, 34, .5);
+}
+
+.search-goods .favorite-view-group i {
+    margin-right: 3px;
+}

@@ -1,0 +1,76 @@
+.content, .container {
+    float: left;
+}
+
+.content, .container {
+    width: 100%;
+}
+
+.content {
+    padding: 30px 40px;
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    margin: 10px 0;
+    padding: 10px 20px;
+}
+
+#title {
+    border: none;
+    resize: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#title:focus {
+    outline: none;
+}
+
+.input-group-text, .form-control, .form-select {
+    padding: 10px;
+}
+
+.input-group-text {
+    font-size: 14px;
+}
+
+.form-control, .form-select, .form-text {
+    font-size: 13px;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.basic-category {
+    padding: 10px 0;
+}
+
+.ck-editor__editable {
+    min-height: 500px;
+}
+
+#register {
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+}
+
+.target-checkbox-group input {
+    margin-right: 5px;
+}
+
+.target-checkbox-group span {
+    margin: 0 15px;
+    font-size: 13px;
+}

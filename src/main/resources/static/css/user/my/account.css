@@ -1,0 +1,344 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+body, button, input, select, table, textarea {
+    color: #222;
+}
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    margin: 0;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    margin-top: 0;
+}
+input, textarea {
+    padding: 0;
+    outline: 0;
+    border: 0;
+    resize: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    background-color: transparent;
+}
+button {
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+
+
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.lg .my_account, .md .my_account {
+    width: 480px;
+}
+.content_title {
+    display: -webkit-box;
+    display: flex;
+    padding: 5px 0 6px;
+}
+.title {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.title>h3 {
+    line-height: 29px;
+    font-size: inherit;
+}
+.registered_account_box {
+    overflow: hidden;
+    margin-top: 21px;
+    padding: 15px 15px 16px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    border: 1px solid #ebebeb;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.registered_account_box .box_title {
+    line-height: 14px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+}
+.registered_account_box .box_account_info {
+    line-height: 22px;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    letter-spacing: -1px;
+}
+.registered_account_box .box_account_info .account_devider {
+    padding: 0 4px;
+}
+.lg .content_registration, .md .content_registration {
+    width: 100%;
+}
+.lg .account_registration, .md .account_registration {
+    padding-top: 20px;
+}
+.lg .account_registration .input_box, .md .account_registration .input_box {
+    padding-top: 16px;
+}
+.input_box {
+    position: relative;
+    padding: 10px 0 14px;
+}
+.lg .account_registration .input_title, .md .account_registration .input_title {
+    line-height: 14px;
+}
+.input_title {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    line-height: 18px;
+    margin: 0;
+}
+.input_item {
+    position: relative;
+}
+.lg .account_registration .input_txt, .md .account_registration .input_txt {
+    padding: 6px 0 7px;
+}
+.input_logistics_companies .input_txt, .input_txt.hover {
+    cursor: pointer;
+}
+.input_txt {
+    padding: 8px 0;
+    width: 100%;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    line-height: 22px;
+    border-bottom: 1px solid #ebebeb;
+}
+.btn.btn_dropdown {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -12px;
+    line-height: 0;
+}
+.btn {
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+
+}
+.lg .my_account .input_box+.input_box, .md .my_account .input_box+.input_box {
+    margin-top: 8px;
+}
+.lg .account_registration .input_box, .md .account_registration .input_box {
+    padding-top: 16px;
+}
+.input_box {
+    position: relative;
+    padding: 10px 0 14px;
+}
+.input_error {
+    display: none;
+}
+.lg .my_account .input_box+.input_box, .md .my_account .input_box+.input_box {
+    margin-top: 8px;
+}
+.lg .account_registration .input_box, .md .account_registration .input_box {
+    padding-top: 16px;
+}
+.input_box {
+    position: relative;
+    padding: 10px 0 14px;
+}
+.registration_btn_box {
+    padding-top: 20px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.lg .btn_save, .md .btn_save {
+    width: 102px;
+    border-radius: 10px;
+}
+.solid.disabled, .solid:disabled {
+    background-color: #ebebeb;
+    color: #fff;
+    cursor: default;
+}
+.solid {
+    font-weight: 700;
+    color: #fff;
+    background-color: #222;
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.input_txt::placeholder{
+    color: rgb(187, 185, 185);
+}
+.input_item img{
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+}
+.bank_dropdown_menu{
+    background-color: white;
+    position: absolute;
+    z-index: 1010;
+    width: 100%;
+}
+.bank_list{
+    border: 1px solid rgb(230, 228, 228);
+    overflow-y: auto;
+    max-height: 240px;
+}
+.bank_list li{
+    padding: 11px 20px 10px 16px;
+    color: gray;
+    font-size: 13px;
+}
+.bank_list:hover{
+    cursor: pointer;
+}
+.input_txt_color::placeholder{
+    color:black;
+}
+.select_bank{
+    font-weight: bolder;
+    color: black !important;
+}
+.bank_list_li img{
+    width: 18x;
+    height: 18px;
+    float: right;
+}
+.input_write:focus{
+    border-bottom: 2px solid black;
+}
+.layer_alert .layer_container {
+    width: 360px;
+}
+.layer_container {
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+}
+.layer_alert {
+    text-align: center;
+}
+.layer_alert .btn_layer_close {
+    display: none;
+}
+.btn_layer_close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+}
+.layer_alert .alert_box.high {
+    padding-top: 32px;
+}
+.layer_alert .alert_box {
+    padding: 8px 32px 0;
+}
+.layer_alert .alert_desc {
+    font-size: 14px;
+    letter-spacing: -.21px;
+    color: rgba(34,34,34,.8);
+}
+.layer_btn {
+    padding: 24px 32px 32px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.layer_btn .btn {
+    width: 120px;
+}
+.outlinegrey {
+    border: 1px solid #d3d3d3;
+    color: rgba(34,34,34,.8);
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34,34,34,.5);
+    z-index: 1010;
+}
+.layer_btn .btn+.btn {
+    margin-left: 8px;
+}
+.has_error .input_title {
+    color: #f15746;
+}
+.has_error .input_txt  {
+    border-bottom-color: #ef6253;
+}
+.has_error .input_error {
+    display: block;
+    position: absolute;
+    line-height: 16px;
+    font-size: 11px;
+    color: #f15746;
+}

@@ -1,0 +1,152 @@
+.content, .container, .column-bind, .column, .inline, .link, .link-title, .link-description, .link-group, .link,
+.link-description input, .favorite-link, .user-bidding-container, .user, .bidding-info, .sub-category > div, .sub-category-list ul,
+.sub-category-list > span, .filter-list > span, .container > title, .filter-tag-group, .filter-tag-group div {
+    float: left;
+}
+
+.content, .container, .column-bind, .inline, .goods-img .view img, .goods-img-group-item img, .inline, .link,
+.favorite-link, .user-bidding-container, .user, .bidding-info, .sub-category > div, .sub-category-list > span, .filter-list > span,
+.container > title, .filter-tag-group {
+    width: 100%;
+}
+
+.sub-category {
+    float: left;
+    width: 180px;
+    padding: 30px 0;
+    font-size: 16px;
+    font-family: Pretendard;
+}
+
+.content {
+    float: right;
+    width: 1020px;
+    padding: 30px 40px;
+    font-size: 13px;
+}
+
+.container {
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+
+.sub-category {
+    font-size: 14px;
+}
+
+.sub-category-title {
+    height: 100px;
+    line-height: 100px;
+    margin-bottom: 30px;
+    border: 4px solid #222;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: GmarketSans;
+}
+
+.sub-category-list > span {
+    padding: 16px 0;
+    font-weight: 700;
+}
+
+.filter-list p {
+    width: 100%;
+    margin: 0;
+}
+
+.filter-list-title {
+    float: left;
+    width: 100%;
+    padding: 10px 0 4px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    align-items: center;
+}
+
+.filter-list-title i {
+    float: right;
+}
+
+.sub-category-list ul, .filter-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sub-category-list a, .sub-category-list a:link, .sub-category-list a:visited, .sub-category-list a:hover, .sub-category-list a:active {
+    color: black;
+}
+
+.goods-number {
+    float: left;
+}
+
+.filter-sorting {
+    float: right;
+}
+
+.dropdown-menu {
+    color: black;
+    --bs-dropdown-link-active-color: black;
+    --bs-dropdown-link-active-bg: #e2e3e5;
+}
+
+.btn-group .btn {
+    font-size: 14px;
+    background-color: rgb(242, 242, 242);
+    color: black;
+}
+
+.dropdown-menu {
+    font-size: 14px;
+}
+
+.filter-tag-group {
+    padding: 10px 20px;
+}
+
+.filter-tag {
+    margin: 8px 8px 0 0;
+    padding: 4px 10px;
+    background-color: #f4f4f4;
+    border-radius: 6px;
+}
+
+.filter-tag span {
+    color: #222;
+}
+
+.filter-tag i {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.filter-list .checkbox-group input {
+    margin-right: 5px;
+}
+
+.filter-list .checkbox-group li {
+    margin-top: 5px;
+}
+
+.filter-list .card {
+    border-color: white;
+    padding: 0;
+}
+
+.goods-list-page {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+.page-link {
+    color: rgb(100, 106, 118);
+}
+
+.active > .page-link {
+    color: white;
+    background-color: rgb(100, 106, 118);
+    border-color: rgb(100, 106, 118);;
+}

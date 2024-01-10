@@ -1,0 +1,229 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+div {
+    display: block;
+}
+button {
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+input::placeholder{
+    color: lightgray;
+}
+input:focus{
+    outline: none;
+}
+/* 체크박스 꾸미기 - 활성화 x */
+input[class="check"] + label {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border: 1px solid #bcbcbc;
+	cursor: pointer;
+}
+
+/* 체크박스 꾸미기 - 활성화 */
+input[class="check"]:checked + label {
+    background-image:url("/users/img/check.png");
+    background-size: 100%;
+    border: 1px solid #fff;
+}
+/* input 안보이게 */
+.check{
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+
+.container.my .content_area {
+    overflow: hidden;
+    min-height: 380px;
+}
+.lg .my_account, .md .my_account {
+    width: 480px;
+}
+.content_title {
+    display: -webkit-box;
+    display: flex;
+    padding: 5px 0 6px;
+}
+.title {
+    font-size: 24px;
+    letter-spacing: -.36px;
+}
+.title>h3 {
+    line-height: 29px;
+    font-size: inherit;
+}
+.form_wrap:not(.mo_ls):not(.mo):not(.sm) {
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.description {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    font-weight: 400;
+}
+.input_box {
+    position: relative;
+    padding: 10px 0 14px;
+    margin: 8px 0 14px 0;
+}
+.input_title {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    line-height: 18px;
+}
+.input_item {
+    position: relative;
+}
+.input_logistics_companies .input_txt, .input_txt.hover {
+    cursor: pointer;
+}
+.input_txt {
+    padding: 8px 0;
+    width: 100%;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    line-height: 22px;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+}
+.btn.btn_dropdown {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    margin-top: -12px;
+    line-height: 0;
+}
+.btn {
+    display: -webkit-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    vertical-align: middle;
+    text-align: center;
+}
+.button_wrap {
+    padding-top: 20px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.form_wrap:not(.mo_ls):not(.mo):not(.sm) .button_wrap button {
+    width: 102px;
+}
+.medium {
+    padding: 0 18px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+.btn_dropdown img{
+    width: 15px;
+    height: 15px;
+}
+.container.my {
+    margin: 0 auto;
+    padding: 40px 40px 160px;
+    max-width: 1280px;
+}
+.input_logistics_companies input::placeholder{
+    color: black;
+}
+.receipt_config_wrap{
+    display: flex;
+}
+.label_txt{
+    font-size: 14px;
+    margin-left:10px;
+    line-height: 150%;
+}
+.btn_save {
+    background-color: #ebebeb;
+    color: #fff;
+    cursor: default;
+}
+.solid {
+    font-weight: 700;
+    color: #fff;
+    background-color: #222;
+}
+.bank_dropdown_menu{
+    background-color: white;
+    position: absolute;
+    z-index: 1010;
+    width: 100%;
+}
+.receipt_list{
+    border: 1px solid rgb(230, 228, 228);
+    overflow-y: auto;
+    max-height: 240px;
+}
+.receipt_list li{
+    padding: 11px 20px 10px 16px;
+    color: gray;
+    font-size: 13px;
+}
+.bank_list:hover{
+    cursor: pointer;
+}
+.input_txt_color::placeholder{
+    color:black;
+}
+.select_receipt{
+    font-weight: bolder;
+    color: black !important;
+}
+.receipt_list_li img{
+    width: 18x;
+    height: 18px;
+    float: right;
+}
+.receipt_dropdown_menu{
+    cursor: pointer;
+}
+.receipt_dropdown_menu{
+    background-color: white;
+    position: absolute;
+    z-index: 1010;
+    width: 100%;
+}
+.btn_active{
+    cursor: pointer;    
+}
+.input_hp:focus{
+    border-bottom:2px solid black;
+}
+.solid.disabled, .solid:disabled{
+    background-color: #ebebeb;
+    color: #fff;
+    cursor: default;
+}

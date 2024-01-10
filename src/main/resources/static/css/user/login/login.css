@@ -1,0 +1,515 @@
+/* Base Styles */
+body, button, input {
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #222;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%
+}
+
+ul, ol, li {
+    list-style: none;
+}
+
+a, a:link, a:visited, a:hover, a:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+input, button, form, img {
+    vertical-align: middle;
+}
+
+input {
+    padding: 0;
+    outline: 0;
+    border: 0;
+    resize: none;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.full {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 50px;
+    border-radius: 1.2rem;
+}
+
+.btn {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #fff;
+    margin-top: 1.2rem;
+    align-self: flex-start;
+}
+
+/* 로그인 */
+.login_container {
+    margin: 0 auto;
+    margin-top: 150px; /*fragment*/
+    /* padding: 6rem 0 16rem; */
+    width: 400px;
+}
+
+.login_title {
+    padding-bottom: 2rem;
+    text-align: center;
+    font-size: 0;
+}
+
+.login_title:before {
+    content: "";
+    display: inline-block;
+    width: 250px;
+    height: 56px;
+    background: url(https://kream.co.kr/_nuxt/img/login_title.9f9ccc8.png) no-repeat;
+    background-size: 250px 56px;
+}
+
+.input_box {
+    position: relative;
+    padding: 1rem 0 1.4rem;
+}
+
+.input_box .input_content {
+    padding-right: 3rem;
+    height: 3.8rem;
+}
+
+.input_content {
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    border-bottom: .1rem solid #ebebeb;
+}
+
+.input_content::placeholder {
+    color: #c0bfbf;
+    font-weight: 100;
+}
+
+.input_title {
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.input_item {
+    position: relative;
+}
+
+.solid {
+    background-color: #222;
+    color: #fff;
+    /* height: 50px; */
+}
+
+.solid.disabled
+    /* ,
+    .solid:disabled  */
+{
+    background-color: #ebebeb;
+    color: #fff;
+    cursor: default;
+}
+
+.btn.btn_login_katalk {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    color: #222;
+}
+
+.account_container {
+    padding: 0;
+    margin-top: 1.8rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.account_link {
+    margin: auto;
+    padding: 0 1rem;
+    display: inline-flex;
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+.account_list {
+    display: inline-flex;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.account_list+.account_list:before {
+    content: "";
+    margin-top: .3rem;
+    display: inline-block;
+    width: 0.1rem;
+    height: 1.3rem;
+    background-color: #d3d3d3;
+}
+
+/* 이메일아이디 & 비밀번호 찾기 */
+.help_area {
+    margin: 0 auto;
+    margin-top: 150px; /*fragment*/
+    /* padding: 60px 0 160px;  */
+    width: 400px;
+}
+
+.email_area {
+    margin: 0 auto;
+    margin-top: 150px;
+    width: 500px;
+}
+
+.id_txt {
+    color: #919191;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+
+.id_box {
+    padding: 40px 0 30px;
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.id_result {
+    font-weight: 700;
+    font-size: 20px;;
+}
+
+#find_email_btn {
+    margin-top: 1.2rem;
+    align-self: flex-start;
+    width: 50%;
+    height: 100%;
+    border: 1px solid #d3d3d3;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fff;
+    font-weight: 300;
+}
+
+#find_login_btn {
+    color: #ebebeb;
+    width: 50%;
+    align-self: flex-end;
+    margin-left: 10px;
+}
+
+.find_btn_box {
+    display: flex;
+    padding-top: 44px;
+}
+
+.help_title {
+    padding-bottom: 4rem;
+    text-align: center;
+    font-size: 3.2rem;
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.help_notice {
+    padding: 40px 0 30px;
+}
+
+.help_notice .notice_txt {
+    font-size: 1.4rem;
+}
+
+.help_btn_box {
+    padding-top: 44px;
+}
+
+.input_txt:focus {
+    border-bottom: 2px #000 solid;
+}
+
+.input_txt {
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    border-bottom: .1rem solid #ebebeb;
+    padding-right: 3rem;
+    height: 3.8rem;
+}
+
+.input_txt::placeholder {
+    color: #c0bfbf;
+    font-weight: 100;
+}
+
+#find_btn {
+    color: #fff;
+}
+
+/* 회원가입 */
+.join_area {
+    margin: 0 auto;
+    margin-top: 150px; /*fragment*/
+    /* padding: 5.8rem 0 16rem; */
+    width: 40rem;
+}
+
+.join_title {
+    padding-bottom: 4.2rem;
+    text-align: center;
+    font-size: 3.2rem;
+    color: #000;
+}
+
+.input_title.ess {
+    position: relative;
+    display: inline-block;
+    padding-right: .6rem;
+}
+
+.input_title.ess:after {
+    content: "*";
+    position: absolute;
+    right: 0;
+}
+
+.input_birth {
+    border: 1px solid #ebebeb;
+    width: 120px;
+    padding: 12px 5px;
+    margin: 0 auto;
+    letter-spacing: 4px;
+}
+
+.ssn1 {
+    margin-right: 12px;
+}
+
+.ssn2 {
+    width: 30px;
+    margin-left: 22px;
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+.dash {
+    font-size: 3rem;
+    font-weight: lighter;
+    display: inline-block;
+    position: absolute;
+    margin-top: -10px;
+}
+
+.bullelements {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    display: inline-block;
+    position: absolute;
+    margin-top: -10px;
+}
+
+.input_item.birth {
+    margin-top: 15px;
+}
+
+.input_birth::placeholder {
+    font-weight: bold;
+    font-size: 2.5rem;
+    padding: 5px;
+    color: #ebebeb;
+}
+
+.layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(34, 34, 34, .5);
+    z-index: 1010;
+}
+
+.layer_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 448px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.layer_header .title {
+    padding: 18px 50px 0;
+    min-height: 60px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+}
+
+.size_list_area {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 6px 28px 0;
+    height: 270px;
+}
+
+.size_list_area:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.size_item {
+    float: left;
+    display: table;
+    margin: 4px;
+    width: calc(33.33333% - 8px);
+    height: 52px;
+}
+
+.size_item .btn {
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3d3d3;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.size_item.active .btn {
+    border: 1px solid #222;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.size_item:not(.active) .btn{
+    border-color: #ebebeb;
+}
+
+.size_item .info_txt {
+    display: inline-block;
+    font-size: 14px;
+    color: #000;
+}
+
+.layer_btn {
+    padding: 1rem 3rem 3rem;
+    display: flex;
+    justify-content: center;
+}
+
+.layer_btn .btn {
+    width: 120px;
+}
+
+a:active, a:focus {
+    background-color: rgba(0,0,0,.1);
+}
+
+.btn_layer_close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    cursor: pointer;
+}
+
+.btn_size_select {
+    position: absolute;
+    right: 1rem;
+    top: -.7rem;
+}
+
+.input_item .input_txt.hover {
+    cursor: pointer;
+}
+
+.btn_size_select {
+    border: none;
+}
+
+#size_submit_btn:hover {
+    color: #fff;
+}
+
+#find_button:focus {
+    color: #fff;
+}
+
+.btn_join {
+    border: none;
+}
+
+.label_txt {
+    padding-left: .8rem;
+    display: inline-block;
+    line-height: 2.4rem;
+    font-size: 1.3rem;
+    vertical-align: top;
+}
+
+.medium {
+    padding: 0 1.8rem;
+    height: 42px;
+    line-height: 4rem;
+    border-radius: 12px;
+    font-size: 14px;
+    letter-spacing: -.14px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0
+}
+
+.has_button .input_txt {
+    padding-right: 3rem;
+    height: 3.8rem;
+}
+
+.input_txt {
+    padding: .8rem 0;
+    width: 100%;
+    font-size: 1.5rem;
+    letter-spacing: -.015rem;
+    line-height: 2.2rem;
+    border-bottom: .1rem solid #ebebeb;
+}
+
+.has_error .input_title {
+    color: #f15746;
+}
+
+.has_error .input_txt {
+    border-bottom-color: #ef6253;
+}
+
+.has_error .input_txt:focus {
+    border-bottom-color: #ef6253;
+}
+
+.has_error .input_error {
+    display: block;
+    position: absolute;
+    line-height: 1.6rem;
+    font-size: 1.1rem;
+    color: #f15746;
+    margin-top: 0;
+}

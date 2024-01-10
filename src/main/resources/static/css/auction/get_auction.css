@@ -1,0 +1,200 @@
+.content, .container, .column-bind, .column, .inline, .link, .link-title, .link-description, .link-group, .link, .link-description input, .favorite-link, .user-bidding-container, .user, .bidding-info {
+    float: left;
+}
+
+.content, .container, .column-bind, .inline, .goods-img .view img, .goods-img-group-item img, .inline, .link, .favorite-link, .user-bidding-container, .user, .bidding-info {
+    width: 100%;
+}
+
+.content {
+    padding: 30px 40px;
+}
+
+.column {
+    width: 46%;
+}
+
+.goods-img {
+    margin-right: 2%;
+}
+
+.goods-img-group-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-gap: 16px;
+    margin: 20px 0;
+}
+
+.goods-img-group-item img {
+    object-fit: contain;
+}
+
+.goods-info {
+    padding-left: 4%;
+    border-left: 1px solid #ebebeb;
+}
+
+.goods-info .title {
+    font-size: 25px;
+    font-weight: 600;
+    padding: 0 2%;
+    font-family: GmarketSans;
+}
+
+.container {
+    margin: 20px 0;
+    padding: 10px 20px;
+}
+
+.inline p {
+    margin-bottom: 0;
+}
+
+.line-title {
+    float: left;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+.line-description {
+    float: right;
+}
+
+.remaining-time {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.link {
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+}
+
+.link-group {
+    width: 49%;
+    margin: 0.5%;
+    font-size: 12px;
+}
+
+.link-title {
+    width: 25%;
+    padding: 2px 4px;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+}
+
+.link-description {
+    width: 75%;
+    padding: 2px 6px;
+    font-size: 13px;
+    border-left: 1px solid white;
+}
+
+.link-description .price {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.link-description .won {
+    margin-left: 5px;
+}
+
+.form-control {
+    width: 80%;
+    font-size: 17px;
+    padding: 0;
+}
+
+.favorite-link {
+    padding: 15px 0;
+    margin: 5px 0;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.favorite-link i {
+    margin-right: 10px;
+}
+
+.favorite-link span {
+    font-weight: 700;
+}
+
+.user-bidding-container {
+    margin: 20px 0;
+    padding: 10px 0;
+}
+
+.user-bidding-container .user, .user-bidding-container .bidding-info {
+    padding: 10px;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.user-bidding-container .user {
+    width: 38%;
+    margin-right: 2%;
+}
+
+.user-bidding-container .user span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.user-bidding-container .user i {
+    float: right;
+    font-size: 16px;
+}
+
+.bidding-info {
+    width: 60%;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.goods-detail-title, .question-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 20px 0;
+}
+
+.goods-detail-title span, .question-title span {
+    font-size: 13px;
+    font-weight: normal;
+    color: rgba(34, 34, 34, .5);
+}
+
+.question span {
+    font-size: 12px;
+    color: rgba(34, 34, 34, .5);
+}
+
+#question {
+    height: 42px;
+    margin: 10px 0;
+    padding: 0 18px;
+    border-radius: 12px;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+}
+
+.date {
+    margin: 0;
+}
+
+.question {
+    text-align: center;
+}
+
+.goods-detail {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,86 @@
+.content, .container, .goods-list, .info-img, .info-title-category, .link-group, .link, .goods-list-page {
+    float: left;
+}
+
+.content, .container, .goods-list, .link-group, .link, .goods-list-page {
+    width: 100%;
+}
+
+.content {
+    float: right;
+    width: 1020px;
+    padding: 30px 40px;
+}
+
+#title {
+    border: none;
+    resize: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#title:focus {
+    outline: none;
+}
+
+.goods-filter .nav-link {
+    color: rgba(34, 34, 34, .5);
+}
+
+.goods-filter .active {
+    color: black;
+    font-weight: 700;
+}
+
+.goods-list {
+    padding: 30px 0;
+}
+
+.goods-list td, .goods-list th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.info-title-category {
+    text-align: left;
+}
+
+.info-img {
+    width: 30%;
+}
+
+.info-title-category {
+    width: 70%;
+    padding: 0 10px;
+}
+
+.info-title-category span {
+    font-weight: 600;
+}
+
+.state-title {
+    margin-bottom: 4px;
+    color: rgb(239, 98, 83);
+    text-align: center;
+}
+
+.link {
+    padding: 5px;
+    margin: 2px 0;
+    font-weight: 700;
+    text-align: center;
+}
+
+figure {
+    margin: 0;
+}
+
+.page-link {
+    color: rgb(100, 106, 118);
+}
+
+.active > .page-link {
+    color: white;
+    background-color: rgb(100, 106, 118);
+    border-color: rgb(100, 106, 118);;
+}

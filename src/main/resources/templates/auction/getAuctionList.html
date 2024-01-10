@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/auctionLayout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/auction/get_auction_list.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/to_price_comma.js}"></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="sub-category">
+        <div class="sub-category-title">
+            자켓
+        </div>
+        <div class="sub-category-list">
+            <span>카테고리</span>
+            <ul>
+                <li>
+                    <a href="#">자켓</a>
+                </li>
+                <li>
+                    <a href="#">아노락</a>
+                </li>
+                <li>
+                    <a href="#">코트</a>
+                </li>
+                <li>
+                    <a href="#">패딩</a>
+                </li>
+                <li>
+                    <a href="#">기타 아우터</a>
+                </li>
+            </ul>
+        </div>
+        <div class="filter-list">
+            <p class="d-inline-flex gap-1">
+            <div class="filter-list-title light-border-bottom" data-bs-toggle="collapse"
+                 data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+                타켓층
+            <i class="bi bi-caret-down"></i>
+            </div>
+            </p>
+            <div class="collapse" id="collapse1">
+                <div class="card card-body checkbox-group">
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="baby">아기<br>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="children">아이<br>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="female">여성<br>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="male">남성<br>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="unisex">유니섹스<br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="filter-list">
+            <p class="d-inline-flex gap-1">
+            <div class="filter-list-title light-border-bottom" data-bs-toggle="collapse"
+                 data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+                마감 경매 포함
+            <i class="bi bi-caret-down"></i>
+            </div>
+            </p>
+            <div class="collapse" id="collapse2">
+                <div class="card card-body checkbox-group">
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="goods_target" value="baby">포함<br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="title">
+                <div class="goods-number">
+                    상품 11,713
+                </div>
+                <div class="filter-sorting btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            data-bs-display="static" aria-expanded="false">
+                        인기순
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item" href="#">인기순</a></li>
+                        <li><a class="dropdown-item" href="#">등록순</a></li>
+                        <li><a class="dropdown-item" href="#">마감 임박순</a></li>
+                        <li><a class="dropdown-item" href="#">낮은 가격순</a></li>
+                        <li><a class="dropdown-item" href="#">높은 가격순</a></li>
+                        <li><a class="dropdown-item" href="#">관심 많은순</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="filter-tag-group">
+            <div class="filter-tag">
+                <span>유니섹스</span>
+                <i class="bi bi-x"></i>
+            </div>
+            <div class="filter-tag">
+                <span>마감경매포함</span>
+                <i class="bi bi-x"></i>
+            </div>
+        </div>
+        <div class="container search-goods-list">
+            <div class="search-goods">
+                <div class="goods-img">
+                    <figure class="img_wrapper">
+                        <a href="#">
+                            <img class="d-block w-100"
+                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 alt=""/>
+                        </a>
+                    </figure>
+                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                </div>
+                <div class="title">물품명</div>
+                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                <div class="user-name">
+                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                </div>
+                <div class="favorite-view-group">
+                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                    <i class="bi bi-eye"></i>조회수&nbsp;15
+                </div>
+            </div>
+            <div class="search-goods">
+                <div class="goods-img">
+                    <figure class="img_wrapper">
+                        <a href="#">
+                            <img class="d-block w-100"
+                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 alt=""/>
+                        </a>
+                    </figure>
+                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                </div>
+                <div class="title">물품명</div>
+                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                <div class="user-name">
+                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                </div>
+                <div class="favorite-view-group">
+                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                    <i class="bi bi-eye"></i>조회수&nbsp;15
+                </div>
+            </div>
+            <div class="search-goods">
+                <div class="goods-img">
+                    <figure class="img_wrapper">
+                        <a href="#">
+                            <img class="d-block w-100"
+                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 alt=""/>
+                        </a>
+                    </figure>
+                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                </div>
+                <div class="title">물품명</div>
+                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                <div class="user-name">
+                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                </div>
+                <div class="favorite-view-group">
+                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                    <i class="bi bi-eye"></i>조회수&nbsp;15
+                </div>
+            </div>
+            <div class="search-goods">
+                <div class="goods-img">
+                    <figure class="img_wrapper">
+                        <a href="#">
+                            <img class="d-block w-100"
+                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 alt=""/>
+                        </a>
+                    </figure>
+                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                </div>
+                <div class="title">물품명</div>
+                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                <div class="user-name">
+                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                </div>
+                <div class="favorite-view-group">
+                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                    <i class="bi bi-eye"></i>조회수&nbsp;15
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" class="goods-list-page">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

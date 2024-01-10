@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script src="/js/login/login.js"></script>
+    </th:block>
+</head>
+
+<body>
+<div layout:fragment="content" class="login_container">
+    <h2 class="login_title"><span>KREAM</span></h2>
+
+    <form>
+        <div class="input_box has_button" id="email_input_box">
+            <h3 class="input_title">아이디</h3>
+            <div class="input_item">
+                <input type="text" class="input_content" name="id" id="email_input" >
+            </div><!--.inputItem END-->
+            <p class="input_error" id="email_input_error">  </p>
+        </div><!--.input_box input_box END-->
+
+        <div class="input_box has_button" id="password_input_box">
+            <h3 class="input_title">비밀번호</h3>
+            <div class="input_item">
+                <input type="password" class="input_content" name="userpw" id="password_input">
+            </div><!--.inputItem END-->
+            <p class="input_error" id="password_input_error">  </p>
+        </div><!--.input_box input_box END-->
+
+        <div class="login_btn_container">
+            <input type="submit" disabled="disabled" class="btn full solid disabled" id="login_btn" value="로그인">
+            </input>
+            <a type="button" class="btn btn_login_katalk full solid">
+                <div class="katalk"></div> 카카오톡으로 로그인
+            </a>
+        </div><!--.login_btn_container END-->
+    </form>
+
+    <ul class="account_container">
+        <li class="account_list"><a href="/user/join" class="account_link"> 회원가입 </a></li>
+        <li class="account_list"><a href="/user/find_id" class="account_link"> 아이디 찾기 </a></li>
+        <li class="account_list"><a href="/user/find_password" class="account_link"> 비밀번호 찾기 </a></li>
+    </ul>
+</div> <!--.login_container END-->
+
+
+
+</body>
+</html>

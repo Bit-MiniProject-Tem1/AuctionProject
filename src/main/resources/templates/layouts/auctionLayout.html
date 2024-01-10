@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- head 영역을 config.html로 대체 -->
+<head th:replace="~{/fragments/config :: config}">
+
+</head>
+<body>
+<header th:replace="~{/fragments/header :: header}"></header>
+
+<div th:replace="~{/fragments/auctionNav :: auctionNav}"></div>
+<div layout:fragment="content"></div>
+
+<footer th:replace="~{/fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myPageLayout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/auction/my_auction_list.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/to_price_comma.js}"></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content">
+        <div class="container">
+            <h1 class="page-title">경매 등록</h1>
+            <div class="goods-filter">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">전체</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">진행</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">종료</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">취소</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="goods-list">
+                <table class="table">
+                    <thead>
+                    <tr class="table-secondary">
+                        <th scope="col" class="info-title">경매정보</th>
+                        <th scope="col" class="date-title">등록일자</th>
+                        <th scope="col" class="enddate-title">마감일자</th>
+                        <th scope="col" class="starting-price-title">시작가</th>
+                        <th scope="col" class="current-bidding-price-title">현재가</th>
+                        <th scope="col" class="immediate-price-title">즉시입찰가</th>
+                        <th scope="col" class="state-title">경매상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="info">
+                            <div class="info-img">
+                                <figure class="img_wrapper">
+                                    <img class="d-block w-100"
+                                         src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                         alt=""/>
+                                </figure>
+                            </div>
+                            <div class="info-title-category">
+                                카테고리명1 - 하위카테고리명1<br>
+                                <span>물품명</span>
+                            </div>
+                        </td>
+                        <td>24.01.05</td>
+                        <td>24.01.20</td>
+                        <td>60,000원</td>
+                        <td>70,000원</td>
+                        <td>90,000원</td>
+                        <td>
+                            <div class="state-title">
+                                경매종료
+                            </div>
+                            <div class="link-group">
+                                <a href="#" class="link btn-red">수정</a><br>
+                                <a href="#" class="link btn-green">취소</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Page navigation example" class="goods-list-page">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

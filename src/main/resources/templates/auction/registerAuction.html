@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/auction/register_auction.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/to_price_comma.js}"></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content">
+        <h1 class="page-title">경매 등록</h1>
+        <form id="insertForm" action="" method="post" enctype="multipart/form-data">
+            <table style="border-collapse: collapse" width="100%">
+                <tr>
+                    <td class="input-group">
+                        <input type="text" name="title" id="title" class="form-control" placeholder="경매 제목" autofocus/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mb-3 light-border">
+                        <label class="form-label">카테고리</label>
+                        <div class="input-group basic-category">
+                            <label class="input-group-text">상위 카테고리</label>
+                            <select name="categoryId" class="form-select">
+                                <option selected>카테고리 선택</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="input-group basic-category">
+                            <label class="input-group-text">하위 카테고리</label>
+                            <select name="categoryId" class="form-select">
+                                <option selected>카테고리 선택</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mb-3 light-border">
+                        <label class="form-label">타켓층</label>
+                        <div class="input-group basic-category target-checkbox-group">
+                            <span><input type='checkbox' name='goods_target' value='baby'/>아기</span>
+                            <span><input type='checkbox' name='goods_target' value='children'/>아이</span>
+                            <span><input type='checkbox' name='goods_target' value='female'/>여성</span>
+                            <span><input type='checkbox' name='goods_target' value='male'/>남성</span>
+                            <span><input type='checkbox' name='goods_target' value='unisex'/>유니섹스</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mb-3 light-border">
+                        <label class="form-label">거래 가격</label>
+                        <div class="input-group">
+                            <label class="input-group-text">시작가</label>
+                            <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);" name="starting_price"
+                                   class="form-control price-comma"/>
+                            <span class="input-group-text">원(￦)</span>
+                            <label class="input-group-text">즉시입찰가</label>
+                            <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);" name="immediate_price"
+                                   class="form-control price-comma"/>
+                            <span class="input-group-text">원(￦)</span>
+                        </div>
+                        <div class="form-text basic-addon">가격은 1,000원 단위로 입력하세요.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="mb-3 light-border">
+                        <div class="input-group">
+                            <label class="input-group-text">경매 마감일</label>
+                            <input type="date" name="end_date" class="form-control"/>
+                        </div>
+                        <div class="form-text basic-addon">경매 마감 진행기간은 총 일입니다.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea name="auctionContent" id="editor"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="submit" id="register" value="등록"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <!-- CKEditor -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/translations/ko.js"></script>
+        <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+        <script>
+            ClassicEditor.create(document.querySelector('#editor'), {
+                toolbar: ['heading', '|', 'undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
+                shouldNotGroupWhenFull: false,
+                language: "ko",
+                ckfinder: {
+                    uploadUrl: '/auction/img/upload'
+                }
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>
