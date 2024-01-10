@@ -12,17 +12,6 @@
     padding: 30px 40px;
 }
 
-#title {
-    border: none;
-    resize: none;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-#title:focus {
-    outline: none;
-}
-
 .goods-filter .nav-link {
     color: rgba(34, 34, 34, .5);
 }
@@ -71,7 +60,7 @@
     text-align: center;
 }
 
-figure {
+.info-img figure {
     margin: 0;
 }
 
@@ -79,7 +68,7 @@ figure {
     color: rgb(100, 106, 118);
 }
 
-.active > .page-link {
+.goods-list-page .active > .page-link {
     color: white;
     background-color: rgb(100, 106, 118);
     border-color: rgb(100, 106, 118);;

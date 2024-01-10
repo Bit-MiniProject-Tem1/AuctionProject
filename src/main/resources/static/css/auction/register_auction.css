@@ -10,39 +10,39 @@
     padding: 30px 40px;
 }
 
-table {
+.register-auction table {
     width: 100%;
 }
 
-td {
+.register-auction td {
     margin: 10px 0;
     padding: 10px 20px;
 }
 
-#title {
+.register-auction #title {
     border: none;
     resize: none;
     font-size: 16px;
     font-weight: 700;
 }
 
-#title:focus {
+.register-auction #title:focus {
     outline: none;
 }
 
-.input-group-text, .form-control, .form-select {
+.register-auction .input-group-text, .register-auction .form-control, .register-auction .form-select {
     padding: 10px;
 }
 
-.input-group-text {
+.register-auction .input-group-text {
     font-size: 14px;
 }
 
-.form-control, .form-select, .form-text {
+.register-auction .form-control, .register-auction .form-select, .register-auction .form-text {
     font-size: 13px;
 }
 
-.form-label {
+.register-auction .form-label {
     font-size: 16px;
     font-weight: 700;
 }
