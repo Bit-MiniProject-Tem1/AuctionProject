@@ -1,0 +1,19 @@
+html, body {
+    min-height: 100%
+}
+
+html {
+    background-color: #fff;
+}
+
+header {
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+body {
+    width: 1200px;
+    background-color: royalblue;
+    margin: 0 auto;
+}
