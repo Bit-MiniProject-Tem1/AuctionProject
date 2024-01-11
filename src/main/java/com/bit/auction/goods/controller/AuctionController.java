@@ -41,14 +41,12 @@ public class AuctionController {
         ModelAndView mav = new ModelAndView();
 
         if (category_id == null) {
-            // mav.addObject("categoryList", categoryService.getAllCategoryList());
             mav.addObject("categoryList", categoryService.getTopCategoryList());
-            mav.addObject("topCategoryName", "뭥미");
         } else {
             mav.addObject("categoryList", categoryService.searchSubCategoryList(category_id));
-            mav.addObject("topCategoryName", name);
         }
         mav.addObject("topCategoryList", categoryService.getTopCategoryList());
+        mav.addObject("topCategoryName", name);
 
         mav.setViewName("auction/getAuctionList.html");
 
