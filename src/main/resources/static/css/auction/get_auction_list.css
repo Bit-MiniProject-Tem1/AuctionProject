@@ -85,20 +85,17 @@
     float: right;
 }
 
-.dropdown-menu {
+.filter-sorting .dropdown-menu {
     color: black;
+    font-size: 14px;
     --bs-dropdown-link-active-color: black;
     --bs-dropdown-link-active-bg: #e2e3e5;
 }
 
-.btn-group .btn {
+.filter-sorting .btn-group .btn {
     font-size: 14px;
     background-color: rgb(242, 242, 242);
     color: black;
-}
-
-.dropdown-menu {
-    font-size: 14px;
 }
 
 .filter-tag-group {

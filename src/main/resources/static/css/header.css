@@ -31,7 +31,7 @@ body {
 
 .header_top .top_link {
     align-items: center;
-    color: rgba(34,34,34,.8);
+    color: rgba(34, 34, 34, .8);
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -39,7 +39,7 @@ body {
 
 .header_top .top_link1 {
     align-items: center;
-    color: rgba(34,34,34,.8);
+    color: rgba(34, 34, 34, .8);
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -60,7 +60,7 @@ body {
     margin-left: 40px;
 }
 
-.logo>.logo_bk {
+.logo > .logo_bk {
     width: 200px;
     height: 35px;
 }
@@ -70,7 +70,6 @@ body {
     margin-right: 0;
     margin-left: 180px;
 }
-
 
 .category_menu {
     display: flex;
@@ -87,7 +86,7 @@ body {
     align-items: center;
 }
 
-.home  {
+.home {
     color: black;
     font-size: 18px;
     font-weight: 550;
@@ -116,18 +115,17 @@ input {
     width: 120px;
 }
 
-input::-webkit-input-placeholder{
-    background-image: url(https://cdn-icons-png.flaticon.com/512/71/71403.png) ;
+input::-webkit-input-placeholder {
+    background-image: url(https://cdn-icons-png.flaticon.com/512/71/71403.png);
     background-size: contain;
-    background-position:  1px center;
+    background-position: 1px center;
     background-repeat: no-repeat;
     text-indent: 30px;
 }
 
 
-
-ul{
-    list-style:none;
+ul {
+    list-style: none;
 }
 
 a {
@@ -164,8 +162,7 @@ dl, ol, ul {
     margin-bottom: 0rem;
 }
 
-
-.form-control {
+.header_main .form-control {
     display: block;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -178,7 +175,7 @@ dl, ol, ul {
     background-clip: padding-box;
     border: var(--bs-border-width) solid #212529;
     border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 :root, [data-bs-theme=light] {
@@ -206,7 +203,7 @@ hr {
     position: relative;
 }
 
-.dropdown{
+.dropdown {
     display: block;
     align-items: center;
     width: 110px;
@@ -214,7 +211,7 @@ hr {
     position: unset;
 }
 
-.dropdown:nth-child(2){
+.dropdown:nth-child(2) {
     display: block;
     align-items: center;
     width: 90px;
@@ -247,10 +244,10 @@ hr {
     color: black;
 }
 
-.dropdown-content{
-    display : none;
-    position : absolute;
-    z-index : 1;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
     right: 0;
     border: 2px solid black;
     width: 331px;
@@ -259,8 +256,8 @@ hr {
     border-radius: 5px;
 }
 
-.dropdown-content a{
-    display : block;
+.dropdown-content a {
+    display: block;
 }
 
 .dropdown:hover .dropdown-content {
