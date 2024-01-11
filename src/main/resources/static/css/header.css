@@ -14,7 +14,7 @@ header {
 
 body {
     width: 1200px;
-    background-color: royalblue;
+    background-color: white;
     margin: 0 auto;
 }
 
@@ -47,6 +47,7 @@ body {
 }
 
 .header_main {
+    width: 100%;
     padding: 7px 0px 15px;
     justify-content: space-between;
     display: flex;
@@ -130,6 +131,7 @@ ul {
 
 a {
     text-decoration-line: none;
+    color: black;
 }
 
 a:hover {
@@ -158,8 +160,7 @@ img, svg {
 }
 
 dl, ol, ul {
-    margin-top: 0;
-    margin-bottom: 0rem;
+    margin: 0;
 }
 
 .header_main .form-control {
@@ -221,7 +222,7 @@ hr {
 .dropdown:last-child {
     display: block;
     align-items: center;
-    width: 117px;
+    width: 90px;
 }
 
 .dropdown-title {
@@ -246,20 +247,90 @@ hr {
 
 .dropdown-content {
     display: none;
+}
+
+.list_box {
     position: absolute;
     z-index: 1;
     right: 0;
-    border: 2px solid black;
     width: 331px;
-    height: 300px;
-    background-color: white;
-    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    max-height: 300px;
 }
 
 .dropdown-content a {
     display: block;
 }
 
+.content_box {
+    width: 314px;
+    height: 60px;
+    border-radius: 5px;
+    border: 2px solid black;
+    padding-bottom: 2px;
+}
+
+.content_box .content_boxes {
+    width: 100%;
+}
+
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.content_boxes .list-img {
+    float: left;
+    width: 27%;
+}
+
+.list-title {
+    width: 70%;
+    float: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: 550;
+}
+
+.content_box a .list-title{
+    text-decoration-line: none
+}
+.content_box a:hover .list-title{
+    text-decoration: underline;
+}
+
+
+figure {
+    margin-top: 0.5px;
+    margin-bottom: 0;
+}
+
+.img_wrapper img {
+    width: 100%;
+    height: 56px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
+    border-radius: 2px;
+}
+.bi-heart {
+    margin-bottom: 0px;
+    margin-left: 2px;
+    display: flex;
+    float: left;
+    cursor: pointer;
+}
+.bi-heart-fill {
+    margin-bottom: 0px;
+    margin-left: 2px;
+    display: flex;
+    float: left;
+    color: red;
+    cursor: pointer;
 }
