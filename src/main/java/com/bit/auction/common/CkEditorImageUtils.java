@@ -8,12 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-/**
- * packageName : com.bit.auction.common
- * fileName : CkEditorImageUtils
- * author : misu
- * date : 2024-01-09
- */
 @Component
 public class CkEditorImageUtils {
     public String parseFileInto(MultipartFile uploadFile, String realPath) throws IOException {
