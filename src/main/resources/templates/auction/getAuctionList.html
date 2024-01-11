@@ -11,31 +11,22 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/to_price_comma.js}"></script>
     </th:block>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="sub-category">
         <div class="sub-category-title">
-            자켓
+            <span th:if="${param.category != null}" th:text="${topCategoryName}"></span>
+            <span th:unless="${param.category != null}" th:text="전체"></span>
         </div>
         <div class="sub-category-list">
             <span>카테고리</span>
             <ul>
-                <li>
-                    <a href="#">자켓</a>
+                <li th:each="category : ${categoryList}">
+                    <a href="#" th:href="@{/auction/goods-list(category=${param.category}, name=${category.name})}" th:text="${category.name}"></a>
                 </li>
-                <li>
-                    <a href="#">아노락</a>
-                </li>
-                <li>
-                    <a href="#">코트</a>
-                </li>
-                <li>
-                    <a href="#">패딩</a>
-                </li>
-                <li>
-                    <a href="#">기타 아우터</a>
-                </li>
+
             </ul>
         </div>
         <div class="filter-list">
@@ -197,7 +188,7 @@
                     </figure>
                     <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
                 </div>
-                <div class="title">물품명</div>
+                <div class="title" onclick="hello()" >물품명</div>
                 <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
                 <div class="current-bidding_price">현재가&nbsp;12,000</div>
                 <div class="user-name">

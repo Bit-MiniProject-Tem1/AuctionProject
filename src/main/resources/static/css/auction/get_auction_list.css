@@ -14,7 +14,7 @@
     float: left;
     width: 180px;
     padding: 30px 0;
-    font-size: 16px;
+    font-size: 14px;
     font-family: Pretendard;
 }
 
@@ -28,10 +28,6 @@
 .container {
     margin: 20px 0;
     padding: 10px 20px;
-}
-
-.sub-category {
-    font-size: 14px;
 }
 
 .sub-category-title {
@@ -75,6 +71,7 @@
 
 .sub-category-list a, .sub-category-list a:link, .sub-category-list a:visited, .sub-category-list a:hover, .sub-category-list a:active {
     color: black;
+    text-decoration: none;
 }
 
 .goods-number {

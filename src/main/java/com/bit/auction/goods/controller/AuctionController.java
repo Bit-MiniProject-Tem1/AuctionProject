@@ -1,12 +1,10 @@
 package com.bit.auction.goods.controller;
 
 import com.bit.auction.common.CkEditorImageUtils;
+import com.bit.auction.goods.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class AuctionController {
     private final CkEditorImageUtils ckEditorImageUtils;
+    private final CategoryService categoryService;
 
     @GetMapping("/register")
     public ModelAndView registrationAuction() {
@@ -37,8 +36,19 @@ public class AuctionController {
     }
 
     @GetMapping("/goods-list")
-    public ModelAndView getGoodsList() {
+    public ModelAndView getGoodsList(@RequestParam(value = "category", required = false) Long category_id,
+                                     @RequestParam(value = "name", required = false) String name) {
         ModelAndView mav = new ModelAndView();
+
+        if (category_id == null) {
+            // mav.addObject("categoryList", categoryService.getAllCategoryList());
+            mav.addObject("categoryList", categoryService.getTopCategoryList());
+            mav.addObject("topCategoryName", "뭥미");
+        } else {
+            mav.addObject("categoryList", categoryService.searchSubCategoryList(category_id));
+            mav.addObject("topCategoryName", name);
+        }
+        mav.addObject("topCategoryList", categoryService.getTopCategoryList());
 
         mav.setViewName("auction/getAuctionList.html");
 
