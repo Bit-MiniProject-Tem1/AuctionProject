@@ -97,7 +97,7 @@
 }
 
 .search-goods .title {
-    margin: 15px 0 4px 0;
+    margin: 30px 0 4px 0;
 }
 
 .search-goods .title, .search-goods .starting-price, .search-goods .current-bidding_price, .search-goods .user-name {
@@ -147,7 +147,7 @@
 }
 
 .search-goods .remaining-time span {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 }
 
