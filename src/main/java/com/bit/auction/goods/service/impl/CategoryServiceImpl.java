@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,22 +17,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public String getCategoryName(Long categoryId) {
         return categoryRepository.findNameByCategoryId(categoryId);
-    }
-
-    @Override
-    public CategoryDTO getCategory(Long categoryId) {
-        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-        if (optionalCategory.isEmpty()) {
-            throw new RuntimeException("data not exist");
-        }
-        return optionalCategory.get().toDTO();
-    }
-
-    @Override
-    public List<CategoryDTO> getAllCategoryList() {
-        List<Category> categoryList = categoryRepository.findCategory();
-
-        return categoryList.stream().map(Category::toDTO).toList();
     }
 
     @Override

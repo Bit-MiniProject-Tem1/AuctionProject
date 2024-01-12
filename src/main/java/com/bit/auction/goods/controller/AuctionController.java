@@ -1,7 +1,6 @@
 package com.bit.auction.goods.controller;
 
 import com.bit.auction.common.CkEditorImageUtils;
-import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
@@ -47,8 +46,7 @@ public class AuctionController {
     public ModelAndView getGoodsList(@RequestParam(value = "category", required = false) Long categoryId,
                                      @RequestParam(value = "subCategory", required = false) Long subCategoryId,
                                      @RequestParam(value = "etc", required = false) String etcOption,
-                                     @PageableDefault(page = 0, size = 12) Pageable pageable,
-                                     AuctionDTO auctionDTO) {
+                                     @PageableDefault(page = 0, size = 12) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
