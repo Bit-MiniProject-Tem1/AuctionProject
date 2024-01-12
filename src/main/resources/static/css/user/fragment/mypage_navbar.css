@@ -54,7 +54,7 @@ li {
 body, button, input, select, table, textarea {
     color: #222;
 }
-body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
     margin: 0;
     padding: 0;
 }
@@ -111,8 +111,8 @@ body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h
 }
 .container.my {
     margin: 0 auto;
-    padding: 40px 40px 160px;
-    max-width: 1280px;
+    padding: 0;
+    max-width: 1020px;
 }
 .container{
     margin: 40px 40px 160px 40px;

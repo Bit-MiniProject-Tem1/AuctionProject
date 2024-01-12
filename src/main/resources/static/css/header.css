@@ -14,7 +14,7 @@ header {
 
 body {
     width: 1200px;
-    background-color: royalblue;
+    background-color: white;
     margin: 0 auto;
 }
 
@@ -47,6 +47,7 @@ body {
 }
 
 .header_main {
+    width: 100%;
     padding: 7px 0px 15px;
     justify-content: space-between;
     display: flex;
