@@ -5,173 +5,65 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
+        <link rel="stylesheet" th:href="@{/css/user/login/join.css}">
     </th:block>
-    <th:block layout:fragment="script">
-        <script src="/js/login/join.js"></script>
-    </th:block>
+<!--    <th:block layout:fragment="script">-->
+<!--        <script th:src="@{/js/to_price_comma.js}"></script>-->
+<!--    </th:block>-->
+    <title>회원가입</title>
 </head>
 <body>
-<div layout:fragment="content" class="join_area">
-    <h2 class="join_title">회원가입</h2>
-    <div class="input_box has_button" id="id_input_box">
-        <h3 class="input_title ess">아이디</h3>
-        <div class="input_item">
-            <input type="text" class="input_txt in_essValue" name="password" id="id_input" placeholder="아이디 입력">
+    <div layout:fragment="content" class="join_container">
+        <h2 class="join_title">회원가입</h2>
+
+        <div>
+            <label class="join_name">아이디</label>
         </div>
-        <p class="input_error" id="id_input_error"></p>
+        <div>
+            <input type="text" class="input_border" placeholder="BitCamp">
+        </div>
+
+        <div>
+            <label class="join_name">비밀번호</label>
+        </div>
+        <div>
+            <input type="password"  class="input_border" placeholder="영문, 숫자, 특수문자 조합 8-16자">
+        </div>
+
+        <div>
+            <label class="join_name">이름</label>
+        </div>
+        <div>
+            <input type="text" class="input_border" placeholder="홍길동">
+        </div>
+
+        <div>
+            <label class="join_name">생년월일</label>
+        </div>
+        <div>
+            <input type="date" class="input_border">
+        </div>
+
+        <div>
+            <label class="join_name" >핸드폰 번호</label>
+        </div>
+        <div>
+            <input type="tel" class="input_border" placeholder="010-1234-5678">
+        </div>
+
+        <div>
+            <label class="join_name" >배송지</label>
+        </div>
+        <div>
+            <input type="text" class="input_border" placeholder="서울특별시 강남구 태해란로20길 20">
+        </div>
+
+        <div class="join_name">이메일 주소</label>
+        </div>
+        <div>
+            <input type="email" class="input_border" placeholder="예) kream@kream.co.kr">>
+        </div>
+        <button class="join_success">회원가입</button>
     </div>
-
-    <div class="input_box has_button" id="password_input_box">
-        <h3 class="input_title ess">비밀번호</h3>
-        <div class="input_item">
-            <input type="password" class="input_txt in_essValue" name="password" id="password_input" placeholder="영문, 숫자, 특수문자 조합 8-16자">
-        </div><!--.input_item END-->
-        <p class="input_error" id="password_input_error"></p>
-    </div><!--.input_box has_button END-->
-
-    <div class="input_box" id="name_input_box">
-        <h3 class="input_title ess">이름</h3>
-        <div class="input_item">
-            <input type="text" class="input_txt in_essValue" name="name" id="name_input" placeholder="이름 입력">
-        </div><!--.input_item END-->
-        <p class="input_error" id="name_input_error"></p>
-    </div><!--.input_box END-->
-
-    <div class="input_box" id="birthdate_input_box">
-        <h3 class="input_title ess">생년월일/성별</h3>
-        <div class="input_item birth">
-            <input type="number" maxlength="6" oninput="maxLengthCheck(this)" class="input_birth ssn1" name="ssn1" id="ssn1_input" placeholder="&bull; &bull; &bull; &bull; &bull; &bull;"> <span class="dash">-</span>
-            <input type="number" maxlength="1" oninput="maxLengthCheck(this)" class="input_birth ssn2" name="ssn2" id="ssn2_input" placeholder="&bull;"><span class="bullelements">&bull;&bull;&bull;&bull;&bull;&bull;</span>
-        </div><!--.input_item END-->
-        <p class="input_error" id="birthdate_input_error"></p>
-    </div><!--.input_box END-->
-
-    <div class="input_box" id="hp_input_box">
-        <h3 class="input_title ess">휴대폰 번호</h3>
-        <div class="input_item">
-            <input type="number" maxlength="11" oninput="maxLengthCheck(this)" class="input_txt in_essValue" name="hp" id="hp_input" placeholder="숫자만 입력">
-        </div><!--.input_item END-->
-        <p class="input_error" id="hp_input_error"></p>
-    </div><!--.input_box END-->
-
-    <div class="input_box" id="email_input_box">
-        <h3 class="input_title ess">이메일 주소</h3>
-        <div class="input_item">
-            <input type="text" class="input_txt in_essValue" name="email" id="email_input" placeholder="예) kream@kream.co.kr">
-        </div><!--.input_item END-->
-        <p class="input_error" id="email_input_error"></p>
-        <p class="error email-error"></p>
-    </div><!--.input_box END-->
-
-    <button type="submit" disabled="disabled" class="btn btn_join full solid disabled" id="btn_submitSignIn" onclick="sendit()"> 가입하기 </button>
-
-</div><!--.join_area END-->
-
-
 </body>
-
-<!-- layer_size 넣을곳 -->
-<div class="layer lg size_layer" style="display: none;">
-    <div class="layer_container">
-        <div class="layer_header">
-            <h2 class="title">사이즈 선택</h2>
-        </div>
-        <div class="layer_content">
-            <div class="size_list_area">
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">220</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">225</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">230</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">235</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">240</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">245</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">250</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">255</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">260</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">265</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">270</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">275</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">280</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">285</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">290</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">295</span>
-                    </a>
-                </div>
-                <div class="size_item">
-                    <a type="button" class="btn outlinegrey medium">
-                        <span class="info_txt">300</span>
-                    </a>
-                </div>
-            </div>
-            <div class="layer_btn">
-                <a type="button" class="btn solid disabled medium" id="size_submit_btn"> 확인 </a>
-            </div>
-        </div>
-        <a href="javascript:void(0);" class="btn_layer_close" onclick="closeLayer()">
-            <img src="../../img/nav_close_icon.png" class="ico-close icon sprite-icons">
-        </a>
-    </div>
-</div>
 </html>

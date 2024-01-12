@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myPageLayout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/my/buying_end.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script src="/js/user/my/buying.js"></script>
+    </th:block>
+<!--    <script type="text/javascript" th:src="@{/lib/js/pjs_header_nav.js}"></script>-->
+<!--    <script th:src="@{/lib/js/loginpage_mypage_all.js}" type="text/javascript"></script>-->
+<!--    <script th:src="@{/lib/js/mypage_buying_detail.js}" type="text/javascript"></script>-->
+<body>
+<div layout:fragment="content" id="__nuxt">
+    <!---->
+    <div id="__layout">
+        <div class="wrap win_os">
+            <!---->
+            <div class="wrap_inner">
+                <!--container-->
+                <div class="container my lg">
+                    <div class="content_area">
+                        <div class="my_buying_detail finished">
+                            <div class="content_title">
+                                <div class="title">
+                                    <h2 id="title_txt">종료된 거래 </h2>
+                                    <!---->
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="order_info_wrap">
+                                <div class="section_title order_title">
+                                    <!--이전 페이지에서 받아올 purchase id 값-->
+                                    <input type="hidden" id="id" th:value="${id}">
+                                    <!---->
+                                    <div class="title_box">
+                                        <h4 class="title"> 주문번호 <em class="order_number"> B-SN29098010</em></h4>
+                                        <a type="button" class="btn"> 문의하기 </a>
+                                    </div>
+                                    <!---->
+                                </div>
+                                <div class="order_info">
+                                    <div class="order_product">
+                                        <div class="product_box">
+                                            <div class="product" style="background-color: red(244, 244, 244);">
+                                                <img src="" class="product_img">
+                                                <!----><!---->
+                                            </div>
+                                        </div>
+                                        <div class="product_detail">
+                                            <p class="number">신발 이름</p>
+                                            <p class="name">NIKE</p>
+                                            <p class="size">260</p>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                    <div class="order_btn">
+                                        <a type="button" class="btn outlinegrey small" onclick="location.href='/product/'+productId;"> 상품 상세 </a>
+                                    </div>
+                                    <!---->
+                                </div>
+                            </div>
+                            <div class="purchase_history_wrap">
+                                <div class="section_title">
+                                    <div class="title_box">
+                                        <h4 class="title" id="detail_title"> 결제 내역 </h4>
+                                    </div>
+                                    <!---->
+                                </div>
+                                <div class="purchase_history">
+                                    <div class="history_detail">
+                                        <div class="main_box">
+                                            <dl class="main_item">
+                                                <dt class="title" id="box_title">총 결제금액</dt>
+                                                <dd class="price buy">
+                                                    <span class="amount" id="total_price"></span>
+                                                    <span class="unit">315,000원</span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div item=",," class="detail_box">
+                                            <dl class="price_addition">
+                                                <dt class="price_title dark">
+                                                    <span id="section_price">구매가</span>
+                                                    <!---->
+                                                </dt>
+                                                <dd  class="price_text bold" id="pay_price">300,000원</dd>
+                                            </dl>
+
+                                            <dl  class="price_addition">
+                                                <dt  class="price_title">
+                                                    <span>검수비</span>
+                                                    <!---->
+                                                </dt>
+                                                <dd  class="price_text"> 무료 </dd>
+                                            </dl>
+
+                                            <dl class="price_addition">
+                                                <dt class="price_title">
+                                                    <span >수수료</span>
+                                                    <!---->
+                                                </dt>
+                                                <dd class="price_text"> 10,000원 </dd>
+                                            </dl>
+
+                                            <dl class="price_addition">
+                                                <dt class="price_title">
+                                                    <span >배송비</span>
+                                                    <!---->
+                                                </dt>
+                                                <dd class="price_text"> 5,000원 </dd>
+                                            </dl>
+
+                                        </div>
+                                        <div class="detail_box">
+
+                                            <dl class="price_addition">
+                                                <dt  class="price_title dark">
+                                                    <span >거래 일시</span>
+                                                    <!---->
+                                                </dt>
+                                                <dd  class="price_text" id="regdate_txt"> 24/01/1 13:05 </dd>
+                                            </dl>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shipping_info_wrap">
+                            <div class="section_title">
+                                <div class="title_box">
+                                    <h4 class="title"> 배송 정보 </h4>
+                                </div>
+                                <p class="noti">운송장 번호를 눌러 배송현황을 확인할 수 있습니다.</p>
+                                <!---->
+                            </div>
+                            <div class="shipping_info">
+                                <a class="btn_shipping" onclick="delivary()"> CJ대한통운123456789</a>
+                            </div>
+                        </div>
+                        <div class="shipping_address_wrap">
+                            <div class="section_title">
+                                <div class="title_box">
+                                    <h4 class="title"> 배송 주소 </h4>
+                                </div>
+                                <p class="noti">대기 중,발송완료,입고완료 상태에서만 배송지 변경이 가능합니다.</p>
+                            </div>
+                            <div class="shipping_address">
+                                <dl class="address_item">
+                                    <dt class="address_title">받는 사람</dt>
+                                    <dd class="address_txt" id="addressName">김**</dd>
+                                </dl><dl class="address_item">
+                                <dt class="address_title">휴대폰 번호</dt>
+                                <dd class="address_txt" id="addressHp">010-1***-*678</dd>
+                            </dl>
+                                <dl class="address_item">
+                                    <dt class="address_title">주소</dt>
+                                    <dd class="address_txt" id="addressDetail">(01234) 서울시 서울구 서울로 서울동 서울호</dd>
+                                </dl>
+                            </div>
+                            <!----><!---->
+                        </div>
+                        <div class="payment_wrap">
+                            <div class="section_title">
+                                <div class="title_box">
+                                    <h4 class="title"> 결제 정보 </h4>
+                                </div>
+                                <!---->
+                            </div>
+                            <div class="payment_info">
+                                <div class="card_info">
+                                    <span class="card_name" id="cardCompany"> 삼성</span>
+                                    <div class="card_num">
+                                            <span class="num_bind">
+                                                <span class="dot">
+                                                    <span class="dot"></span>
+                                                </span>
+                                                <span class="hyphen"></span>
+                                                <span class="dot">
+                                                    <span class="dot"></span>
+                                                </span>
+                                                <span class="hyphen"></span>
+                                                <span class="dot">
+                                                    <span class="dot"></span>
+                                                </span>
+                                                <span class="hyphen"></span>
+                                                <!---->
+                                                <span class="last_num" id="cardLastNumber">1234</span>
+                                            </span>
+                                        <!---->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail_btn_box">
+                            <a href="#" type="button" class="btn_view_list outlinegrey medium"> 목록보기 </a>
+                        </div>
+                    </div>
+                    <!----><!----><!----><!----><!---->
+                    <div class="layer lg layer_alert" style="display: none;">
+                        <div class="layer_container">
+                            <div class="layer_header">
+                                <h2 class="title">입찰 지우기</h2>
+                            </div>
+                            <div class="layer_content">
+                                <div class="alert_box">
+                                    <p class="alert_desc">등록하신 입찰을 지우시면 주문이 취소됩니다.</p>
+                                </div>
+                                <div class="layer_btn">
+                                    <button type="button" class="btn outlinegrey medium"> 취소 </button>
+                                    <button type="button" class="btn solid medium"> 입찰 지우기 </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---->
+</div>
+</div>
+</div>
+<!--<script>-->
+<!--    const sessionId = sessionStorage.getItem('userid'); // 세션 가져오기-->
+
+<!--    // 이전페이지에서 받아온 purchase id값-->
+<!--    const purchaseId = document.querySelector('#id').value;-->
+
+<!--    const contentTitle = document.querySelector('.content_title').querySelector('h3');-->
+<!--    const headerTitle = document.querySelector('.main_inner').querySelector('h4');-->
+<!--    headerTitle.innerHTML=contentTitle.innerText;-->
+
+<!--    // nav 태그에 on 클래스 추가-->
+<!--    document.querySelector("#buying").className += ' menu_on';-->
+
+<!--</script>-->
+
+</body>
+</html>
