@@ -1,0 +1,116 @@
+footer {
+    float: left;
+}
+
+.footer_top {
+    border-top: 1px solid #ebebeb;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.service_area {
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    padding-bottom: 56px;
+}
+
+.agree_box {
+    width: 160px;
+    height: 147px;
+
+}
+
+.agree_box + .agree_box {
+    margin-left: 80px;
+}
+
+.agree_box .agree_title {
+    font-size: 16px;
+    letter-spacing: -.16px;
+    font-weight: bold;
+}
+
+.agree_box .agree_list {
+    padding-top: 16px;
+    padding-left: 0;
+}
+
+.agree_item + .agree_item {
+    margin-top: 12px;
+}
+
+.agree_box .agree_link {
+    color: rgba(34, 34, 34, .5);
+    display: inline-block;
+    font-size: 14px;
+    letter-spacing: -.21px;
+    text-align: left;
+}
+
+.customer_service .service_name {
+    align-items: center;
+    display: inline-flex;
+    font-size: 16px;
+    letter-spacing: -.16px;
+    font-weight: bold;
+}
+
+.service_time {
+    padding-top: 8px;
+}
+
+.item_box {
+    line-height: 17px;
+}
+
+.time_term {
+    max-width: 320px;
+    color: rgba(34, 34, 34, .5);
+    float: left;
+    font-size: 13px;
+    line-height: 17px;
+}
+
+.service_noti {
+    font-size: 13px;
+    letter-spacing: -.07px;
+    padding-top: 40px;
+}
+
+.service_btn_box {
+    padding-top: 17px;
+}
+
+.service_btn_box .btn {
+    border-radius: 0;
+}
+
+.soild {
+    background-color: #222;
+    color: white;
+    font-weight: 700;
+}
+
+.samll {
+    border-radius: 10px;
+    font-size: 12px;
+    height: 34px;
+    letter-spacing: -.06px;
+    padding: 0 14px;
+}
+
+.btn {
+    align-items: center;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.customer_service {
+    margin-left: 500px;
+}

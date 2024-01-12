@@ -87,6 +87,33 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("/buying_detail")
+    public ModelAndView getBuyingDetail() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/buying_detail.html");
+
+        return mav;
+    }
+
+    @GetMapping("/buying_end")
+    public ModelAndView getBuyingEnd() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/buying_end.html");
+
+        return mav;
+    }
+
+    @GetMapping("/selling")
+    public ModelAndView getSelling() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/selling.html");
+
+        return mav;
+    }
+
 
 
 

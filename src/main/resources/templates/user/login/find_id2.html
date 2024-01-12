@@ -5,29 +5,26 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
+        <link rel="stylesheet" th:href="@{/css/user/login/find_id2.css}">
     </th:block>
-    <th:block layout:fragment="script">
-        <script src="/js/login/find_id.js"></script>
-    </th:block>
+    <!--    <th:block layout:fragment="script">-->
+    <!--        <script th:src="@{/js/to_price_comma.js}"></script>-->
+    <!--    </th:block>-->
+    <title>아이디 찾기</title>
 </head>
 
 <body>
-<div layout:fragment="content" class="email_area">
-    <h2 class="help_title">아이디 찾기에 <br> 성공 하였습니다.</h2>
-    <div>
-        <div class="id_box">
+<div layout:fragment="content" class="find_id2_container">
+    <h2 class="find_id_title">아이디 찾기에 성공 하였습니다.</h2>
+    <div class="find_id2_line"></div>
+        <div class="find_id_box">
             <p class="id_txt">아이디</p>
-            <p class="id_result"><span>***0826</span></p>
-        </div><!--.email_box END-->
-
-        <div class="find_btn_box">
-            <a href="#" type="button" class="btn full solid" id="find_email_btn"> 비밀번호 찾기 </a>
-            <a href="#" type="button" class="btn full solid" id="find_login_btn"> 로그인 </a>
-        </div><!--.find_btn_box END-->
+            <p class="id_result"><span>******0826</span></p>
+        </div>
+    <div class="view_box">
+        <a href="/user/find_password"><button class="findpw_view">비밀번호 찾기</button></a>
+        <a href="/user/login"><button class="login_view">로그인</button></a>
     </div>
-</div><!--.email_area END-->
-
-
+</div>
 </body>
 </html>

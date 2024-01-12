@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <body>
-<div th:fragment="myNav" style="float: left; width: 180px; height: 600px; background-color: powderblue;">
-    서브 메뉴
+<head>
+    <th:block layout:fragment="css">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script src="/js/my/mypage_navbar.js"></script>
+    </th:block>
+</head>
+<div th:fragment="myNav" style="float: left; width: 180px; height: 600px;">
+    <div class="snb_area"><a href="/user/mypage" class="nuxt-link-active">
+        <h2 class="snb_main_title">마이 페이지</h2>
+    </a>
+        <nav class="snb">
+            <div class="snb_list"><strong class="snb_title">쇼핑 정보</strong>
+                <ul class="snb_menu">
+                    <li class="menu_item"><a name="buying" href="/user/buying" class="menu_link">입찰 내역 </a></li>
+                    <li class="menu_item"><a name="selling" href="/user/selling" class="menu_link">낙찰 내역 </a></li>
+                    <li class="menu_item"><a name="wish" href="wish.html" class="menu_link">관심상품 </a></li>
+                </ul>
+            </div>
+            <div class="snb_list"><strong class="snb_title">내 정보</strong>
+                <ul class="snb_menu">
+                    <li class="menu_item"><a name="profile" href="/user/myprofile" class="menu_link"> 프로필 수정 </a></li>
+                    <li class="menu_item"><a name="address" href="../../html/my/address.html" class="menu_link"> 마이 문의 </a></li>
+                    <li class="menu_item"><a name="point" href="../../html/my/point.html" class="menu_link">포인트 </a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
 </body>
 </html>

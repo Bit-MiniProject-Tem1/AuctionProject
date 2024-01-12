@@ -1,0 +1,61 @@
+.find_id_container {
+    width: 1200px;
+}
+
+body {
+    font-family: Pretendard;
+}
+
+.find_id_title {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    font-size: 35px;
+    text-align: center;
+}
+.find_id_line {
+    width: 400px;
+    height: 2px;
+    background-color: #bcbcbc;
+    margin-left: 400px;
+}
+
+.find_id_textBox {
+    width: 600px;
+    margin-left: 400px;
+    margin-top: 50px;
+}
+
+h3 {
+    font-size: 15px;
+}
+
+.find_id_phoneNum {
+    width: 600px;
+    margin-left: 400px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+input {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 400px;
+    margin-left: 400px;
+
+}
+
+.find_id_input {
+    border-width: 0 0 1px;
+}
+
+.find_id_btn {
+    width: 400px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #e2e3e5;
+    font-weight: bold;
+    margin-left: 400px;
+    color: white;
+    border:none;
+}
+
