@@ -5,7 +5,9 @@ import com.bit.auction.goods.dto.CategoryDTO;
 import java.util.List;
 
 public interface CategoryService {
-    CategoryDTO getCategory(Long category_id);
+    String getCategoryName(Long categoryId);
+
+    CategoryDTO getCategory(Long categoryId);
 
     List<CategoryDTO> getAllCategoryList();
 

@@ -3,7 +3,6 @@ package com.bit.auction.goods.entity;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,42 +23,38 @@ public class Auction {
     @Column(name = "auction_id")
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private Long regUserId; // fk
 
     // private Long categoryId; // fk
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @NotNull
     private Category category;
 
-    @NotNull
+    @Column(nullable = false)
     private String title;
 
-    @NotNull
-    @Column(name = "goods_description")
+    @Column(name = "goods_description", nullable = false)
     private String description;
 
     private String target;
 
-    @NotNull
-    @Column(columnDefinition = "default 'S'")
+    @Column(columnDefinition = "char(1) default 'S'", nullable = false)
     private char status;
 
-    @NotNull
+    @Column(nullable = false)
     private int startingPrice;
 
     private int currentBiddingPrice;
 
-    @NotNull
-    private int immediate_price;
+    @Column(nullable = false)
+    private int immediatePrice;
 
     @CreationTimestamp
-    //@Column(columnDefinition = "datetime(6) default now(6)", updatable = false, nullable = false)
+    @Column(columnDefinition = "datetime(6)", updatable = false, nullable = false)
     private LocalDateTime regDate;
 
-    @NotNull
-    @Column(columnDefinition = "datetime(6)")
+    @Column(columnDefinition = "datetime(6)", nullable = false)
     private LocalDateTime endDate;
 
     private String successfulBidderId; // fk 의현님 구현 부분
@@ -81,7 +76,7 @@ public class Auction {
                 .status(this.status)
                 .startingPrice(this.startingPrice)
                 .currentBiddingPrice(this.currentBiddingPrice)
-                .immediate_price(this.immediate_price)
+                .immediatePrice(this.immediatePrice)
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)

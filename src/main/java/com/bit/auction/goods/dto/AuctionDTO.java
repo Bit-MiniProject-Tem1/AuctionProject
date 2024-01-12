@@ -24,7 +24,7 @@ public class AuctionDTO {
     private char status;
     private int startingPrice;
     private int currentBiddingPrice;
-    private int immediate_price;
+    private int immediatePrice;
     private LocalDateTime regDate;
     private LocalDateTime endDate;
     private String successfulBidderId; // fk
@@ -41,7 +41,7 @@ public class AuctionDTO {
                 .status(this.status)
                 .startingPrice(this.startingPrice)
                 .currentBiddingPrice(this.currentBiddingPrice)
-                .immediate_price(this.immediate_price)
+                .immediatePrice(this.immediatePrice)
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)

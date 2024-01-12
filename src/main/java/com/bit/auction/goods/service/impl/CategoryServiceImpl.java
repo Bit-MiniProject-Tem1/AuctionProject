@@ -16,8 +16,13 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public CategoryDTO getCategory(Long category_id) {
-        Optional<Category> optionalCategory = categoryRepository.findById(category_id);
+    public String getCategoryName(Long categoryId) {
+        return categoryRepository.findNameByCategoryId(categoryId);
+    }
+
+    @Override
+    public CategoryDTO getCategory(Long categoryId) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
         if (optionalCategory.isEmpty()) {
             throw new RuntimeException("data not exist");
         }
@@ -26,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDTO> getAllCategoryList() {
-        List<Category> categoryList = categoryRepository.findByCategory();
+        List<Category> categoryList = categoryRepository.findCategory();
 
         return categoryList.stream().map(Category::toDTO).toList();
     }

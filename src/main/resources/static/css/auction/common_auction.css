@@ -100,19 +100,15 @@ a {
     margin: 15px 0 4px 0;
 }
 
-.search-goods .user-name {
-    margin: 8px 0 20px 0;
-}
-
 .search-goods .title, .search-goods .starting-price, .search-goods .current-bidding_price, .search-goods .user-name {
     float: left;
     width: 100%;
 }
 
-.search-goods .user-name span {
+.search-goods .user-name {
     float: left;
     width: 65%;
-    margin: 0 20%;
+    margin: 8px 20%;
     padding: 8px 10px;
     border-radius: 10px;
     border: 1px solid rgb(235, 235, 235);

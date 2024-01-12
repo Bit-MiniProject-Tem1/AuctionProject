@@ -30,7 +30,7 @@ class CategoryServiceTest {
     @DisplayName("Category 테이블 상속 조회 테스트")
     @Test
     void getCategoryAll() {
-        categoryRepository.findByCategory().forEach(category -> {
+        categoryRepository.findCategory().forEach(category -> {
             log.info("category_id : " + category.getId() + ", name : " + category.getName());
         });
     }
@@ -38,7 +38,7 @@ class CategoryServiceTest {
     @DisplayName("CategoryDTO 조회 테스트")
     @Test
     void getCategoryAllDTO() {
-        List<Category> categoryList = categoryRepository.findByCategory();
+        List<Category> categoryList = categoryRepository.findCategory();
 
         List<CategoryDTO> categoryDTOList = categoryList.stream().map(Category::toDTO).toList();
         categoryDTOList.forEach(categoryDTO -> {

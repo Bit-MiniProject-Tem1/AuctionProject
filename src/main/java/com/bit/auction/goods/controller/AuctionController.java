@@ -1,13 +1,20 @@
 package com.bit.auction.goods.controller;
 
 import com.bit.auction.common.CkEditorImageUtils;
+import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.CategoryDTO;
+import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -15,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class AuctionController {
     private final CkEditorImageUtils ckEditorImageUtils;
+    private final AuctionService auctionService;
     private final CategoryService categoryService;
 
     @GetMapping("/register")
@@ -36,17 +44,34 @@ public class AuctionController {
     }
 
     @GetMapping("/goods-list")
-    public ModelAndView getGoodsList(@RequestParam(value = "category", required = false) Long category_id,
-                                     @RequestParam(value = "name", required = false) String name) {
+    public ModelAndView getGoodsList(@RequestParam(value = "category", required = false) Long categoryId,
+                                     @RequestParam(value = "subCategory", required = false) Long subCategoryId,
+                                     @RequestParam(value = "etc", required = false) String etcOption,
+                                     @PageableDefault(page = 0, size = 12) Pageable pageable,
+                                     AuctionDTO auctionDTO) {
         ModelAndView mav = new ModelAndView();
-
-        if (category_id == null) {
-            mav.addObject("categoryList", categoryService.getTopCategoryList());
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
+        if (categoryId == null) {
+            mav.addObject("categoryList", categoryList);
         } else {
-            mav.addObject("categoryList", categoryService.searchSubCategoryList(category_id));
+            categoryList = categoryService.searchSubCategoryList(categoryId);
+            mav.addObject("categoryList", categoryList);
         }
-        mav.addObject("topCategoryList", categoryService.getTopCategoryList());
-        mav.addObject("topCategoryName", name);
+
+        if (categoryId == null && subCategoryId == null) {
+            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all"));
+            mav.addObject("topCategoryName", "전체");
+        } else {
+            mav.addObject("topCategoryName", categoryService.getCategoryName(categoryId));
+            if (subCategoryId != null) {
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub"));
+            } else if (etcOption != null) {
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc"));
+            } else {
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top"));
+            }
+        }
 
         mav.setViewName("auction/getAuctionList.html");
 
