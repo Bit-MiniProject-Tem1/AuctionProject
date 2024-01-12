@@ -270,6 +270,7 @@ hr {
     border-radius: 5px;
     border: 2px solid black;
     padding-bottom: 2px;
+    background-color: white;
 }
 
 .content_box .content_boxes {
