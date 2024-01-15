@@ -1,8 +1,7 @@
-package com.bit.auction.bidding.api;
+package com.bit.auction.goods.api;
 
-import com.bit.auction.bidding.dto.BiddingRequestDTO;
-import com.bit.auction.bidding.entity.Bidding;
-import com.bit.auction.bidding.service.BiddingService;
+import com.bit.auction.goods.dto.BiddingRequestDTO;
+import com.bit.auction.goods.service.BiddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +16,8 @@ public class BiddingApiController {
     private final BiddingService biddingService;
 
     @PostMapping("/bidding")
-    public void biddingPrice(@RequestBody final BiddingRequestDTO biddingRequestDTO){
-       biddingService.biddingPrice(biddingRequestDTO);
+    public void biddingPrice(@RequestBody final BiddingRequestDTO biddingRequestDTO) {
+        biddingService.biddingPrice(biddingRequestDTO);
     }
 
 }

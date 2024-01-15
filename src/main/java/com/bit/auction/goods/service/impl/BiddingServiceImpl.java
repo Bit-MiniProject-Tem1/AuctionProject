@@ -1,9 +1,9 @@
-package com.bit.auction.bidding.service.impl;
+package com.bit.auction.goods.service.impl;
 
-import com.bit.auction.bidding.dto.BiddingRequestDTO;
-import com.bit.auction.bidding.entity.Bidding;
-import com.bit.auction.bidding.repository.BiddingRepository;
-import com.bit.auction.bidding.service.BiddingService;
+import com.bit.auction.goods.dto.BiddingRequestDTO;
+import com.bit.auction.goods.entity.Bidding;
+import com.bit.auction.goods.repository.BiddingRepository;
+import com.bit.auction.goods.service.BiddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,12 @@ import org.springframework.stereotype.Service;
 public class BiddingServiceImpl implements BiddingService {
 
     private final BiddingRepository biddingRepository;
+
     @Override
     public void biddingPrice(BiddingRequestDTO biddingRequestDTO) {
 
         Bidding bidding = biddingRequestDTO.toEntity();
 
-       biddingRepository.save(bidding);
+        biddingRepository.save(bidding);
     }
 }

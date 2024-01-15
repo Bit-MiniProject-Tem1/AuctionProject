@@ -1,12 +1,8 @@
-package com.bit.auction.bidding.controller;
+package com.bit.auction.goods.controller;
 
-import com.bit.auction.bidding.dto.BiddingRequestDTO;
-import com.bit.auction.bidding.entity.Bidding;
-import com.bit.auction.bidding.service.BiddingService;
+import com.bit.auction.goods.service.BiddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;

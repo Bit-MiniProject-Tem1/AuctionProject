@@ -1,6 +1,6 @@
-package com.bit.auction.bidding.repository;
+package com.bit.auction.goods.repository;
 
-import com.bit.auction.bidding.entity.Bidding;
+import com.bit.auction.goods.entity.Bidding;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BiddingRepository extends JpaRepository<Bidding, Long> {

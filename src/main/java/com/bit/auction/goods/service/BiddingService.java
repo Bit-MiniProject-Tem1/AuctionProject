@@ -1,6 +1,6 @@
-package com.bit.auction.bidding.service;
+package com.bit.auction.goods.service;
 
-import com.bit.auction.bidding.dto.BiddingRequestDTO;
+import com.bit.auction.goods.dto.BiddingRequestDTO;
 
 public interface BiddingService {
 

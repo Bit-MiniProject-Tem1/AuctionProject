@@ -1,12 +1,7 @@
-package com.bit.auction.bidding.dto;
+package com.bit.auction.goods.dto;
 
-import com.bit.auction.bidding.entity.Bidding;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 
