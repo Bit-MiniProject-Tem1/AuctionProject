@@ -5,36 +5,30 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
+        <link rel="stylesheet" th:href="@{/css/user/login/find_id.css}">
     </th:block>
-    <th:block layout:fragment="script">
-        <script src="/js/login/find_id.js"></script>
-    </th:block>
+    <!--    <th:block layout:fragment="script">-->
+    <!--        <script th:src="@{/js/to_price_comma.js}"></script>-->
+    <!--    </th:block>-->
+    <title>아이디 찾기</title>
 </head>
-
-
 <body>
-<div layout:fragment="content" class="help_area">
-    <h2 class="help_title">아이디 찾기</h2>
-    <div>
-        <div class="help_notice">
-            <p class="notice_txt">
-                가입 시 등록한 휴대폰 번호를 입력하면<br> 아이디를 알려드립니다.
-            </p>
-        </div><!--.help_notice END-->
+    <div layout:fragment="content" class="find_id_container">
+        <h2 class="find_id_title">아이디 찾기</h2>
+        <div class="find_id_line"></div>
 
-        <div class="input_box" id="hp_input_box">
-            <h3 class="input_title">휴대폰 번호</h3>
-            <div class="input_item">
-                <input type="number" maxlength="11" oninput="maxLengthCheck(this)" class="input_txt" name="hp" id="hp_input" placeholder="가입하신 휴대폰 번호">
-            </div><!--.input_item END-->
-            <p class="input_error" id="hp_input_error"></p>
-        </div><!--.input_box END-->
+        <div class="find_id_textBox">
+            <h3>가입 시 등록한 휴대폰 번호를 입력하시면</h3>
+            <h3>아이디의 일부를 알려드립니다.</h3>
+        </div>
 
-        <div class="help_btn_box">
-            <a disabled="disabled" href="#" type="button" class="btn full solid disabled" id="find_btn"> 아이디 찾기 </a>
-        </div><!--.help_btn_box END-->
+        <div class="find_id_phoneNum">
+            <h3>휴대폰 번호</h3>
+        </div>
+        <div>
+            <input type="text" class="find_id_input" placeholder="가입하신 휴대폰 번호">
+        </div>
+        <a href="/user/find_id2"><button class="find_id_btn">아이디 찾기</button></a>
     </div>
-</div><!--.help_area END-->
 </body>
 </html>
