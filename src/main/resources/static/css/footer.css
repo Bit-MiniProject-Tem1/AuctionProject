@@ -1,3 +1,7 @@
+footer {
+    float: left;
+}
+
 .footer_top {
 border-top: 1px solid #ebebeb;
 margin-left: auto;
@@ -6,12 +10,13 @@ max-width: 1280px;
 padding-bottom: 50px;
 padding-top: 50px;
 }
-s
+
 .footer_top .home_card_list {
     width: 100%;
 }
 
 .service_area {
+    border-bottom: 1px solid #ebebeb;
     display: flex;
     padding-bottom: 56px;
 }
@@ -37,7 +42,7 @@ s
      padding-left: 0;
 }
 
-.agree_item+.agree_item {
+ .agree_item+.agree_item {
      margin-top: 12px;
  }
 
@@ -56,20 +61,20 @@ s
     letter-spacing: -.16px;
     font-weight: bold;
 }
-.footer_top .service_time {
+.service_time {
     padding-top: 8px;
 }
-.footer_top .item_box {
+.item_box {
     line-height: 17px;
 }
-.footer_top .time_term {
+.time_term {
     max-width: 320px;
     color: rgba(34,34,34,.5);
     float: left;
     font-size: 13px;
     line-height: 17px;
 }
-.footer_top .service_noti {
+.service_noti {
     font-size: 13px;
     letter-spacing: -.07px;
     padding-top: 40px;
@@ -82,19 +87,19 @@ s
 .footer_top .service_btn_box .btn {
     border-radius: 0;
 }
-.footer_top .soild {
+.soild {
     background-color: #222;
     color: white;
     font-weight: 700;
 }
-.footer_top .samll {
+.samll {
     border-radius: 10px;
     font-size: 12px;
     height: 34px;
     letter-spacing: -.06px;
     padding: 0 14px;
 }
-.footer_top .btn {
+.btn {
     align-items: center;
     cursor: pointer;
     display: inline-flex;
@@ -104,7 +109,7 @@ s
     --bs-btn-hover-border-color: none;
     color: white;
 }
-.footer_top .customer_service {
+.customer_service {
     margin-left: 500px;
 }
 

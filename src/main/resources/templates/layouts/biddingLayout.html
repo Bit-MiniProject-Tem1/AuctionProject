@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="~{/fragments/config :: config}">
+<link rel="stylesheet" th:href="@{/css/bid/biddingHeader.css}">
+
+</head>
+<body>
+<header th:replace="~{/fragments/biddingHeader :: biddingHeader}"></header>
+<div layout:fragment="content"></div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+.find_id2_container {
+    width: 1200px;
+}
+
+body {
+    font-family: Pretendard;
+}
+
+h2 {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 100px;
+}
+
+.find_id2_line {
+    width: 580px;
+    height: 1.5px;
+    background-color: black;
+    margin-left: 320px;
+    margin-top: 25px;
+}
+
+.find_id_box {
+    width: 600px;
+    margin-left: 300px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.id_txt {
+    font-size: 15px;
+    color: lightgrey;
+    margin-bottom: 10px;
+}
+
+.id_result {
+    font-size: 30px;
+}
+
+.view_box {
+    width: 600px;
+    margin-left: 300px;
+    margin-top: 75px;
+}
+
+.findpw_view {
+    width: 290px;
+    height: 50px;
+    background-color: #e2e3e5;
+    font-size: 18px;
+    border-radius: 15px;
+    border: none;
+    margin-left: 5px;
+}
+
+.login_view {
+    width: 290px;
+    height: 50px;
+    background-color: black;
+    font-size: 18px;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    margin-left: 10px;
+}

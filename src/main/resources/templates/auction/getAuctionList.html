@@ -9,33 +9,24 @@
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/to_price_comma.js}"></script>
+        <script th:src="@{/js/auction_filter_tag.js}"></script>
+        <script th:src="@{/js/countdown.js}"></script>
     </th:block>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="goods-list-content">
     <div class="sub-category">
         <div class="sub-category-title">
-            자켓
+            <span th:text="${topCategoryName}"></span>
         </div>
         <div class="sub-category-list">
             <span>카테고리</span>
             <ul>
-                <li>
-                    <a href="#">자켓</a>
+                <li th:each="category : ${categoryList}">
+                    <a href="#" th:if="${param.category} == null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${param.category}, subCategory=${category.id})}" th:text="${category.name}"></a>
                 </li>
-                <li>
-                    <a href="#">아노락</a>
-                </li>
-                <li>
-                    <a href="#">코트</a>
-                </li>
-                <li>
-                    <a href="#">패딩</a>
-                </li>
-                <li>
-                    <a href="#">기타 아우터</a>
-                </li>
+                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc=1)}">기타</a></li>
             </ul>
         </div>
         <div class="filter-list">
@@ -43,26 +34,26 @@
             <div class="filter-list-title light-border-bottom" data-bs-toggle="collapse"
                  data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
                 타켓층
-            <i class="bi bi-caret-down"></i>
+                <i class="bi bi-caret-down"></i>
             </div>
             </p>
             <div class="collapse" id="collapse1">
                 <div class="card card-body checkbox-group">
                     <ul>
                         <li>
-                            <input type="checkbox" name="goods_target" value="baby">아기<br>
+                            <input type="checkbox" name="goods-target" value="baby">아기<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="children">아이<br>
+                            <input type="checkbox" name="goods-target" value="children">아이<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="female">여성<br>
+                            <input type="checkbox" name="goods-target" value="female">여성<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="male">남성<br>
+                            <input type="checkbox" name="goods-target" value="male">남성<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="unisex">유니섹스<br>
+                            <input type="checkbox" name="goods-target" value="unisex">유니섹스<br>
                         </li>
                     </ul>
                 </div>
@@ -73,14 +64,14 @@
             <div class="filter-list-title light-border-bottom" data-bs-toggle="collapse"
                  data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
                 마감 경매 포함
-            <i class="bi bi-caret-down"></i>
+                <i class="bi bi-caret-down"></i>
             </div>
             </p>
             <div class="collapse" id="collapse2">
                 <div class="card card-body checkbox-group">
                     <ul>
                         <li>
-                            <input type="checkbox" name="goods_target" value="baby">포함<br>
+                            <input type="checkbox" id="closing-auction-checkbox" name="closing-auction" value="E">포함<br>
                         </li>
                     </ul>
                 </div>
@@ -120,7 +111,7 @@
             </div>
         </div>
         <div class="container search-goods-list">
-            <div class="search-goods">
+            <div class="search-goods" th:each="auction : ${auctionList}">
                 <div class="goods-img">
                     <figure class="img_wrapper">
                         <a href="#">
@@ -129,79 +120,20 @@
                                  alt=""/>
                         </a>
                     </figure>
-                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    <div class="remaining-time">남은시간<br>
+                        <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
+                        <span class="months">0</span>
+                        <span class="days">0</span><br>
+                        <span class="hours">0</span>
+                        <span class="minutes">0</span>
+                        <span class="seconds">0</span>
+                    </div>
                 </div>
-                <div class="title">물품명</div>
-                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
-                <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                <div class="title" th:text="${auction.title}"></div>
+                <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
+                <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
                 <div class="user-name">
-                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
-                </div>
-                <div class="favorite-view-group">
-                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
-                    <i class="bi bi-eye"></i>조회수&nbsp;15
-                </div>
-            </div>
-            <div class="search-goods">
-                <div class="goods-img">
-                    <figure class="img_wrapper">
-                        <a href="#">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </a>
-                    </figure>
-                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
-                </div>
-                <div class="title">물품명</div>
-                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
-                <div class="current-bidding_price">현재가&nbsp;12,000</div>
-                <div class="user-name">
-                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
-                </div>
-                <div class="favorite-view-group">
-                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
-                    <i class="bi bi-eye"></i>조회수&nbsp;15
-                </div>
-            </div>
-            <div class="search-goods">
-                <div class="goods-img">
-                    <figure class="img_wrapper">
-                        <a href="#">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </a>
-                    </figure>
-                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
-                </div>
-                <div class="title">물품명</div>
-                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
-                <div class="current-bidding_price">현재가&nbsp;12,000</div>
-                <div class="user-name">
-                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
-                </div>
-                <div class="favorite-view-group">
-                    <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
-                    <i class="bi bi-eye"></i>조회수&nbsp;15
-                </div>
-            </div>
-            <div class="search-goods">
-                <div class="goods-img">
-                    <figure class="img_wrapper">
-                        <a href="#">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </a>
-                    </figure>
-                    <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
-                </div>
-                <div class="title">물품명</div>
-                <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
-                <div class="current-bidding_price">현재가&nbsp;12,000</div>
-                <div class="user-name">
-                    <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                 </div>
                 <div class="favorite-view-group">
                     <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
