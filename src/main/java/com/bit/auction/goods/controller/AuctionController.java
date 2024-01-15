@@ -84,16 +84,7 @@ public class AuctionController {
 
         return mav;
     }
-
-    @GetMapping("/mygoods")
-    public ModelAndView getMyAuction() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/getMyAuctionList.html");
-
-        return mav;
-    }
-
+    
     @PostMapping(value = "/img/upload")
     public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("jsonView");

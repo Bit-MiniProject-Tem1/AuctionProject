@@ -1,3 +1,8 @@
+.goods-list-content {
+    float: left;
+    width: 100%;
+}
+
 .content, .container, .column-bind, .column, .inline, .link, .link-title, .link-description, .link-group, .link,
 .link-description input, .favorite-link, .user-bidding-container, .user, .bidding-info, .sub-category > div, .sub-category-list ul,
 .sub-category-list > span, .filter-list > span, .container > title, .filter-tag-group, .filter-tag-group div {
