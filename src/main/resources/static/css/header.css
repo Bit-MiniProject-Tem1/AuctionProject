@@ -263,3 +263,8 @@ hr {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+/*hr position*/
+.h-line {
+    margin-bottom: 16px;
+}

@@ -1,0 +1,67 @@
+.product-container{
+    padding: 30px;
+    width: 647px;
+    height: 550px;
+    background-color: white;
+}
+
+.product-image{
+    width: 100%;
+    height: 100%;
+}
+
+.bidding-container{
+    position: relative;
+    left: 647px;
+    width: 553px;
+    height: 550px;
+    bottom: 550px;
+    background-color: #f4f3f1;
+}
+
+.product-container , .product-name{
+    text-align: center;
+}
+
+.bidding-area{
+    padding: 30px;
+}
+
+.pricing-options{
+    background-color: white;
+}
+
+.name-price{
+    background-color: white;
+}
+
+.subtotal{
+    background-color: white;
+}
+
+.price-option{
+    display: flex;
+    padding: 20px;
+}
+
+.price-option div:nth-child(n){
+    border: solid 1px;
+    border-color: #cbd5e0;
+    display: flex;
+    flex: 1 0 0px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 70px;
+    letter-spacing: 0.004rem;
+    line-height: 5px;
+    padding-top: 18px;
+    cursor: pointer;
+}
+
+.price-option div:nth-child(2) {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+
