@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
-<body>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/footer.css}">
+    </th:block>
+</head>
 <footer th:fragment="footer">
     <div class="footer_top">
         <div class="service_area">
@@ -42,7 +46,7 @@
             </div>
             <div class="customer_service">
                 <strong class="service_name">
-                    고객센터 1588-7813
+                    고객센터 010-9493-9521
                 </strong>
                 <div class="service_time">
                     <dl class="time_box">

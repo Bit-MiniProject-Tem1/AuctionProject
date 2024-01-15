@@ -2,13 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+      layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="script">
     </th:block>
 </head>
 <body>
 <header th:fragment="header">
+<div class="main_header">
     <div class="header_top">
         <ul class="top_list">
 
@@ -23,7 +24,6 @@
         </ul>
     </div>
     <div th:class="header_main">
-
         <a th:href="@{/board}" th:class="logo">
             <img th:src="@{/img/logoo.png}" th:class="logo_bk">
         </a>
@@ -252,6 +252,7 @@
             </div>
         </div>
     </div>
+</div>
 </header>
 </body>
 </html>

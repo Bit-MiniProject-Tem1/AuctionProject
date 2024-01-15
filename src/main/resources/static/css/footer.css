@@ -6,9 +6,12 @@ max-width: 1280px;
 padding-bottom: 50px;
 padding-top: 50px;
 }
+s
+.footer_top .home_card_list {
+    width: 100%;
+}
 
 .service_area {
-    border-bottom: 1px solid #ebebeb;
     display: flex;
     padding-bottom: 56px;
 }
@@ -29,12 +32,12 @@ padding-top: 50px;
     font-weight: bold;
 }
 
- .agree_box .agree_list {
+.agree_box .agree_list {
     padding-top: 16px;
      padding-left: 0;
 }
 
- .agree_item+.agree_item {
+.agree_item+.agree_item {
      margin-top: 12px;
  }
 
@@ -46,59 +49,70 @@ padding-top: 50px;
     text-align: left;
 }
 
-.customer_service .service_name {
+.footer_top .customer_service .service_name {
     align-items: center;
     display: inline-flex;
     font-size: 16px;
     letter-spacing: -.16px;
     font-weight: bold;
 }
-.service_time {
+.footer_top .service_time {
     padding-top: 8px;
 }
-.item_box {
+.footer_top .item_box {
     line-height: 17px;
 }
-.time_term {
+.footer_top .time_term {
     max-width: 320px;
     color: rgba(34,34,34,.5);
     float: left;
     font-size: 13px;
     line-height: 17px;
 }
-.service_noti {
+.footer_top .service_noti {
     font-size: 13px;
     letter-spacing: -.07px;
     padding-top: 40px;
 }
 
-.service_btn_box {
+.footer_top .service_btn_box {
     padding-top: 17px;
 }
 
-.service_btn_box .btn {
+.footer_top .service_btn_box .btn {
     border-radius: 0;
 }
-.soild {
+.footer_top .soild {
     background-color: #222;
     color: white;
     font-weight: 700;
 }
-.samll {
+.footer_top .samll {
     border-radius: 10px;
     font-size: 12px;
     height: 34px;
     letter-spacing: -.06px;
     padding: 0 14px;
 }
-.btn {
+.footer_top .btn {
     align-items: center;
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
     text-align: center;
     vertical-align: middle;
+    --bs-btn-hover-border-color: none;
+    color: white;
 }
-.customer_service {
+.footer_top .customer_service {
     margin-left: 500px;
+}
+
+.footer_top a {
+    text-decoration-line: none;
+    color: black;
+}
+
+.footer_top a:hover {
+    text-decoration: underline;
 }
