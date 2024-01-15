@@ -1,0 +1,261 @@
+.content_area {
+    width: 1020px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.title_area {
+    border-bottom-color: rgb(34, 34, 34);
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    box-sizing: border-box;
+    color: rgb(34, 34, 34);
+    height: 48px;
+    /*width: 1020px;*/
+    padding-bottom: 7px;
+    margin-top: 30px;
+    display: flex;
+}
+
+.title {
+    color: rgb(34, 34, 34);
+    display: block;
+    font-size: 26px;
+    width: 927px;
+}
+
+#search_table {
+    width: 990px;
+    height: 40px;
+    border-collapse: collapse;
+    font-size: 24px;
+    margin: 50px 15px;
+}
+
+.search_item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 17px;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #dedede;
+}
+
+#search_area {
+    vertical-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search_icon {
+    font-size: 1.3em;
+    color: #999999;
+}
+
+input::placeholder {
+    font-size: 14px;
+    color: #999;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#board_table_header {
+    /*width: 990px;*/
+    height: 40px;
+    border-collapse: collapse;
+    background-color: #f4f4f4;
+    font-size: 18px;
+    text-align: center;
+}
+
+#board_table {
+    width: 990px;
+    border-collapse: collapse;
+    /*background-color: skyblue;  !*#f4f4f4;*!*/
+    margin: 10px 15px 20px;
+}
+
+/*----------------------------------------------------------*/
+
+/*#detailView_table {*/
+/*    width: 990px;*/
+/*    border-collapse: collapse;*/
+/*    background-color: lightblue;*/
+/*    font-size: 18px;*/
+/*    margin: 20px 15px;*/
+/*}*/
+
+.detailView_area {
+    border: 1px solid lightblue;      /* <--- 영역 구분을 위한 임시 테두리 */
+    margin: 40px 0;
+    padding: 0 15px;
+    color:rgb(107, 107, 107);
+}
+
+#category {
+    border: 1.5px solid #dedede;
+    /*border: 1px solid #797979;*/
+    display: inline-block;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.detail_item {
+    width: 990px;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid mediumpurple;    /* <--- 영역 구분을 위한 임시 테두리 */
+    margin: 40px 0 10px;
+}
+
+.item_label_area {
+    display: flex;
+    padding: 10px 0;
+}
+
+.label_icon {
+    color: lightcoral;
+}
+
+.item_label {
+    font-size: 20px;
+    color:rgb(107, 107, 107);
+    margin-left: 5px;
+}
+
+.view_box {
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 990px;
+    padding: 10px 20px;
+    border: 2px solid #dedede;
+    height: auto;
+    font-size: 18px;
+}
+
+.text_area {
+    border: none;
+    resize: none;
+    display: table;
+    table-layout: auto;
+    width: 100%;
+    overflow-y: hidden;
+
+    border: 1px dashed red;    /* <--- 영역 구분을 위한 임시 테두리 */
+}
+
+.text_area:focus {
+    outline: none;
+}
+
+/*----------------------------------------------------------*/
+
+#modalPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.data_area {
+    margin: 0 30px;
+    border: 1px solid skyblue;
+    box-sizing: border-box;
+}
+
+#closeBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 1.6em;
+    background-color: #dedede;
+    color: white;   /*rgb(107, 107, 107);  #999999;*/
+    border: none;
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.table_header {
+    height: 40px;
+    border-collapse: collapse;
+    background-color: #f4f4f4;
+    font-size: 18px;
+    text-align: center;
+}
+
+#memberInfo_area {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.memberInfo_item {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#joinInfo{
+    width: 450px;
+    border: 1px solid purple;
+}
+
+#inquiryHistory {
+    width: 450px;
+    border: 1px solid purple;
+    margin-left: 60px;
+}
+
+.memberInfo_item>table {
+    border-collapse: collapse;
+    border: 2px solid #d4d4d4;
+    --leftColWidth: 100px; /* 변수 설정 */
+    --rightColWidth: 350px; /* 변수 설정 */
+}
+
+.joinInfo_key {
+    /*text-align: center;*/
+    text-indent: 18px;
+    background-color: #f4f4f4;
+    border: 1px solid #d4d4d4;
+    width: var(--leftColWidth);
+}
+
+.joinInfo_value {
+    text-indent: 10px;
+    border: 1px solid #d4d4d4;
+    width: var(--rightColWidth);
+}
+
+.colName {
+    text-align: center;
+    background-color: #f4f4f4;
+    border: 1px solid #d4d4d4;
+}
+
+#inquiryHistory .colName:first-child {
+    width: var(--leftColWidth);
+}
+
+#inquiryHistory .colName:nth-child(2) {
+    width: var(--rightColWidth);
+}
+
+#purchaseHistory, #salesHistory {
+    width: 100%;
+}
+
+#purchaseHistory>table, #salesHistory>table {
+    width: 100%;
+}
