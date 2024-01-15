@@ -6,9 +6,8 @@
 <div th:fragment="auctionNav" class="auction-nav">
     <nav class="nav">
         <a class="nav-link active" aria-current="page" href="/auction/goods-list">전체</a>
-        <a class="nav-link" href="#"
-           th:href="@{/auction/goods-list(category=${topCategory.id}, name=${topCategory.name})}"
-           th:each="topCategory : ${topCategoryList}"><span
+        <a class="nav-link" th:each="topCategory : ${topCategoryList}" href="#"
+           th:href="@{/auction/goods-list(category=${topCategory.id})}"><span
                 th:text="${topCategory.name}"></span></a>
     </nav>
 </div>

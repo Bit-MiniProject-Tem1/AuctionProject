@@ -9,7 +9,7 @@
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/to_price_comma.js}"></script>
+        <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
     </th:block>
 </head>
@@ -26,7 +26,7 @@
                     <a href="#" th:if="${param.category} == null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
                     <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${param.category}, subCategory=${category.id})}" th:text="${category.name}"></a>
                 </li>
-                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc='etc')}">기타</a></li>
+                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc=1)}">기타</a></li>
             </ul>
         </div>
         <div class="filter-list">
@@ -41,19 +41,19 @@
                 <div class="card card-body checkbox-group">
                     <ul>
                         <li>
-                            <input type="checkbox" name="goods_target" value="baby">아기<br>
+                            <input type="checkbox" name="goods-target" value="baby">아기<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="children">아이<br>
+                            <input type="checkbox" name="goods-target" value="children">아이<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="female">여성<br>
+                            <input type="checkbox" name="goods-target" value="female">여성<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="male">남성<br>
+                            <input type="checkbox" name="goods-target" value="male">남성<br>
                         </li>
                         <li>
-                            <input type="checkbox" name="goods_target" value="unisex">유니섹스<br>
+                            <input type="checkbox" name="goods-target" value="unisex">유니섹스<br>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="card card-body checkbox-group">
                     <ul>
                         <li>
-                            <input type="checkbox" name="goods_target" value="baby">포함<br>
+                            <input type="checkbox" id="closing-auction-checkbox" name="closing-auction" value="E">포함<br>
                         </li>
                     </ul>
                 </div>

@@ -28,11 +28,10 @@ class AuctionServiceTest {
     void insertAuction() {
         Category category1 = categoryRepository.findById(1L).get();
         Auction auction1 = Auction.builder()
-                .regUserId(1L)
+                .regUserId("han")
                 .category(category1)
                 .title("테스트 제목1")
                 .description("테스트 내용")
-                .target("unisex")
                 .startingPrice(50000)
                 .immediatePrice(700000)
                 .endDate(LocalDateTime.parse("2024-05-17T13:40:00.000000"))
@@ -41,7 +40,7 @@ class AuctionServiceTest {
 
         Category category2 = categoryRepository.findById(2L).get();
         Auction auction2 = Auction.builder()
-                .regUserId(1L)
+                .regUserId("park")
                 .category(category2)
                 .title("테스트 제목2")
                 .description("테스트 내용")
@@ -54,11 +53,11 @@ class AuctionServiceTest {
 
         Category category3 = categoryRepository.findById(3L).get();
         Auction auction3 = Auction.builder()
-                .regUserId(2L)
+                .regUserId("choi")
                 .category(category3)
                 .title("테스트 제목3")
                 .description("테스트 내용")
-                .target("unisex")
+                .target("baby")
                 .startingPrice(30000)
                 .immediatePrice(70000)
                 .endDate(LocalDateTime.parse("2024-11-17T13:40:00.000000"))
@@ -67,16 +66,34 @@ class AuctionServiceTest {
 
         Category category4 = categoryRepository.findById(4L).get();
         Auction auction4 = Auction.builder()
-                .regUserId(3L)
+                .regUserId("han")
                 .category(category4)
                 .title("테스트 제목4")
                 .description("테스트 내용")
-                .target("unisex")
+                .target("female")
+                .status('E')
+                .successfulBidderId("choi")
                 .startingPrice(15000)
                 .immediatePrice(30000)
                 .endDate(LocalDateTime.parse("2024-05-17T13:40:00.000000"))
                 .build();
         auctionRepository.saveAndFlush(auction4);
         log.info(">>>" + auctionRepository.findAll());
+
+        Category category5 = categoryRepository.findById(5L).get();
+        Auction auction5 = Auction.builder()
+                .regUserId("han")
+                .category(category5)
+                .title("테스트 제목4")
+                .description("테스트 내용")
+                .target("female")
+                .status('C')
+                .startingPrice(15000)
+                .immediatePrice(30000)
+                .endDate(LocalDateTime.parse("2024-05-17T13:40:00.000000"))
+                .build();
+        auctionRepository.saveAndFlush(auction5);
+        log.info(">>>" + auctionRepository.findAll());
     }
+
 }

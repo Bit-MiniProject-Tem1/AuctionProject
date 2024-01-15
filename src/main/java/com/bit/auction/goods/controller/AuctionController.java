@@ -13,7 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -43,31 +46,37 @@ public class AuctionController {
     }
 
     @GetMapping("/goods-list")
-    public ModelAndView getGoodsList(@RequestParam(value = "category", required = false) Long categoryId,
-                                     @RequestParam(value = "subCategory", required = false) Long subCategoryId,
-                                     @RequestParam(value = "etc", required = false) String etcOption,
+    public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
                                      @PageableDefault(page = 0, size = 12) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
-        if (categoryId == null) {
+        if (paramMap.get("category") == null) {
             mav.addObject("categoryList", categoryList);
         } else {
-            categoryList = categoryService.searchSubCategoryList(categoryId);
+            categoryList = categoryService.searchSubCategoryList(Long.valueOf(String.valueOf(paramMap.get("category"))));
             mav.addObject("categoryList", categoryList);
         }
 
-        if (categoryId == null && subCategoryId == null) {
-            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all"));
+        List<String> targetList = new ArrayList<>();
+        if (paramMap.get("target") != null) {
+            targetList = Arrays.asList(paramMap.get("target").toString().split(","));
+        }
+
+        if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
+            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all", targetList));
             mav.addObject("topCategoryName", "전체");
         } else {
+            Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
             mav.addObject("topCategoryName", categoryService.getCategoryName(categoryId));
-            if (subCategoryId != null) {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub"));
-            } else if (etcOption != null) {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc"));
+
+            if (paramMap.get("subCategory") != null) {
+                Long subCategoryId = Long.valueOf(String.valueOf(paramMap.get("subCategory")));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", targetList));
+            } else if (paramMap.get("etc") != null) {
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", targetList));
             } else {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top"));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", targetList));
             }
         }
 
@@ -76,11 +85,11 @@ public class AuctionController {
         return mav;
     }
 
-    @GetMapping("/my")
+    @GetMapping("/mygoods")
     public ModelAndView getMyAuction() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("mypage/getMyAuctionList.html");
+        mav.setViewName("user/mypage/getMyAuctionList.html");
 
         return mav;
     }

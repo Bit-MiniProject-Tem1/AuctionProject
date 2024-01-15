@@ -3,10 +3,7 @@ package com.bit.auction.goods.entity;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,7 +22,7 @@ public class Auction {
     private Long id;
 
     @Column(nullable = false)
-    private Long regUserId; // fk
+    private String regUserId; // fk
 
     // private Long categoryId; // fk
     @ManyToOne
@@ -40,7 +38,8 @@ public class Auction {
     private String target;
 
     @Column(columnDefinition = "char(1) default 'S'", nullable = false)
-    private char status;
+    @Builder.Default()
+    private char status = 'S';
 
     @Column(nullable = false)
     private int startingPrice;
