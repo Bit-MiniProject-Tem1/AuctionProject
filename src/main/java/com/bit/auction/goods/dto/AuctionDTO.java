@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class AuctionDTO {
     private Long id;
-    private Long regUserId; // fk
+    private String regUserId; // fk
     // private Long categoryId; // fk
     private String categoryName;
     private String title;

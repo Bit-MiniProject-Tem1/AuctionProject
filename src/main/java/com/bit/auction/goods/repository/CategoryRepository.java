@@ -21,5 +21,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     public List<Category> findSubCategoryList(Long categoryId);
 
     @Query(value = "select c2.id from Category c1 right join Category c2 on c1.id = c2.topCategoryId where c2.topCategoryId = :categoryId")
-    public Long[] findSubCategoryIdList(Long categoryId);
+    public List<Long> findSubCategoryIdList(Long categoryId);
 }

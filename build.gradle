@@ -45,6 +45,28 @@ dependencies {
     annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
     testAnnotationProcessor 'org.projectlombok:lombok'
     implementation 'org.hibernate:hibernate-validator:7.0.5.Final'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+}
+
+//Q 도메인 클래스 생성 위치 변수로 선언
+def generated = 'src/main/generated'
+
+//Q 도메인 클래스 생성 위치 지정
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+// Java Sourceset에 Q 도메인 클래스 위치 추가
+sourceSets {
+    main.java.srcDirs += [generated]
+}
+
+// 프로젝트 클린 시 Q 도메인 클래스도 다 삭제되도록 지정
+clean {
+    delete file(generated)
 }
 
 tasks.named('test') {
