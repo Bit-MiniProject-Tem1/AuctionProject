@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>자주 묻는 질문</title>
+<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+
+</head>
+<body>
+<div class="content_area" layout:fragment="content" >
+    <div class="title_area">
+        <div class="title">
+            <strong>자주 묻는 질문</strong>
+        </div>
+    </div>
+    <div>
+        <div class="search">
+            <form id="searchForm" action="" method="get">
+                <table id="search_table">
+                    <tr >
+                        <td id="search_area">
+                            <select name="categoryCondition" class="search_item" style="width: 168px; text-indent: 12px; border-radius: 10px;">
+                                <option value="all"
+                                        th:selected="${categoryCondition == 'all' || categoryCondition == '' ||
+                                                       categoryCondition == null}">전체</option>
+                                <option value="usePolicy"
+                                        th:selected="${categoryCondition == 'usePolicy'}">이용정책</option>
+                                <option value="common"
+                                        th:selected="${categoryCondition == 'common'}">공통</option>
+                                <option value="purchase"
+                                        th:selected="${categoryCondition == 'purchase'}">구매</option>
+                                <option value="sales"
+                                        th:selected="${categoryCondition == 'sales'}">판매</option>
+                            </select>
+                            <div style="display: flex;">
+                                <select name="searchCondition" class="search_item" style="width: 130px; text-indent: 12px;">
+                                    <option value="all"
+                                            th:selected="${searchCondition == 'all' || searchCondition == '' ||
+                                                       searchCondition == null}">전체</option>
+                                    <option value="title"
+                                            th:selected="${searchCondition == 'title'}">제목</option>
+                                    <option value="content"
+                                            th:selected="${searchCondition == 'content'}">내용</option>
+                                </select>
+                                <input type="text" name="searchKeyword" class="search_item"
+                                       style="width: 620px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
+                                       th:value="${searchKeyword }">
+
+                            </div>
+                            <button type="submit" id="btnSearch" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                                <i class="bi bi-search search_icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="board">
+<!--            <table id="boardTable" class="table" border="1" style="width: 700px; border-collapse: collapse;">-->
+            <table id="board_table" >
+                <tr id="board_table_header">
+                    <th style="width: 70px;">번호</th>
+                    <th style="width: 140px;">카테고리</th>
+                    <th style="width: 560px;">제목</th>
+                    <th style="width: 140px;">등록일자</th>
+                    <th style="width: 80px;">조회수</th>
+                </tr>
+                <tr style="height:4px; border-top: 2px solid #999999; border-bottom: 2px solid #999999;"></tr>
+
+<!--                <tr th:each="board : ${boardList.content}">-->
+<!--                    <td th:text="${board.boardNo}"></td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{/board/board/{boardNo} (boardNo=${board.boardNo})}"-->
+<!--                           th:text="${board.boardTitle}"></a>-->
+<!--                    </td>-->
+<!--                    <td th:text="${board.boardTitle }"></td>-->
+<!--                    <td th:text="${board.boardRegdate }"></td>-->
+<!--                    <td th:text="${board.boardCnt }"></td>-->
+<!--                </tr>-->
+            </table>
+            <br/>
+<!--            <div style="text-align: center;">-->
+<!--                <ul class="pagination" th:if="${boardList.totalElements > 0}"-->
+<!--                    th:with="pageNumber = ${boardList.pageable.pageNumber},-->
+<!--                             pageSize = ${boardList.pageable.pageSize},-->
+<!--                             totalPages = ${boardList.totalPages},-->
+<!--                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},-->
+<!--                             tempEndPage = ${startPage + pageSize - 1},-->
+<!--                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">-->
+<!--                    <li class="pagination-btn" th:if="${pageNumber > 0}">-->
+<!--                        <a th:href="@{/board/board-list(page=${pageNumber - 1})}">이전</a>-->
+<!--                    </li>-->
+<!--                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                        <a th:href="@{/board/board-list(page=${page - 1})}" th:text="${page} ">이전</a>-->
+<!--                    </li>-->
+<!--                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">-->
+<!--                        <a th:href="@{/board/board-list(page=${pageNumber + 1})}">다음</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+            <br/>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

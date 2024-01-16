@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>회원 상세정보</title>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+
+</head>
+<body>
+<div class="content_area" layout:fragment="content" >
+    <div class="data_area">
+        <div class="title_area">
+            <div class="title">
+                <strong>회원 상세정보</strong>
+            </div>
+            <div style="position: relative;">
+                <button id="closeBtn">
+                    <i class="bi bi-x d-flex align-items-center justify-content-center"></i>
+                </button>
+            </div>
+        </div>
+
+        <!----------------------------------------------------------------------------------------------------------------------------->
+
+        <div id="memberInfo_area">
+            <div style="display: flex;">
+
+                <div class="memberInfo_item" id="joinInfo">
+                    <div class="item_label_area">
+                        <div class="label_icon d-flex align-items-center justify-content-center">
+                            <i class="bi bi-record-fill"></i>
+                        </div>
+                        <strong>
+                            <label class="item_label">가입 정보</label>
+                        </strong>
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">아이디</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">이름</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">닉네임</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">생년월일</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">연락처</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">이메일</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                        <tr>
+                            <th class="joinInfo_key" scope="row">주소</th>
+                            <td class="joinInfo_value"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!----------------------------------------------------------------------------------------------------------------------------->
+
+                <div class="memberInfo_item" id="inquiryHistory">
+                    <div class="item_label_area">
+                        <div class="label_icon d-flex align-items-center justify-content-center">
+                            <i class="bi bi-record-fill"></i>
+                        </div>
+                        <strong>
+                            <label class="item_label">문의 내역</label>
+                        </strong>
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="colName">등록일</th>
+                            <th class="colName">제목</th>
+                        </tr>
+                            <tr>
+                                <td class="cell"></td>
+                                <td class="cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="cell"></td>
+                                <td class="cell"></td>
+                            </tr>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="memberInfo_item" id="purchaseHistory">
+                <div class="item_label_area">
+                    <div class="label_icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-record-fill"></i>
+                    </div>
+                    <strong>
+                        <label class="item_label">구매 내역</label>
+                    </strong>
+                </div>
+                <table>
+                    <tr>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                    </tr>
+                    <tr>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                    </tr>
+                </table>
+
+            </div>
+
+
+            <div class="memberInfo_item" id="salesHistory">
+                <div class="item_label_area">
+                    <div class="label_icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-record-fill"></i>
+                    </div>
+                    <strong>
+                        <label class="item_label">판매 내역</label>
+                    </strong>
+                </div>
+                <table>
+                    <tr>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                        <th class="colName"></th>
+                    </tr>
+                    <tr>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                    </tr>
+                    <tr>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                        <td class="cell"></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+    <div>
+
+<!--        <div class="board">-->
+<!--            <table id="boardTable" class="table" border="1" style="width: 700px; border-collapse: collapse;">-->
+<!--            <table id="board_table" >-->
+<!--                <tr id="board_table_header">-->
+<!--                    <th style="width: 70px;">번호</th>-->
+<!--                    <th style="width: 100px;">이름</th>-->
+<!--                    <th style="width: 150px;">아이디</th>-->
+<!--                    <th style="width: 150px;">연락처</th>-->
+<!--                    <th style="width: 200px;">이메일</th>-->
+<!--                    <th style="width: 320px;">주소</th>-->
+<!--                </tr>-->
+<!--                <tr style="height:4px; border-top: 2px solid #999999; border-bottom: 2px solid #999999;"></tr>-->
+
+<!--                <tr th:each="board : ${boardList.content}">-->
+<!--                    <td th:text="${board.boardNo}"></td>-->
+<!--                    <td>-->
+<!--                        <a th:href="@{/board/board/{boardNo} (boardNo=${board.boardNo})}"-->
+<!--                           th:text="${board.boardTitle}"></a>-->
+<!--                    </td>-->
+<!--                    <td th:text="${board.boardTitle }"></td>-->
+<!--                    <td th:text="${board.boardRegdate }"></td>-->
+<!--                    <td th:text="${board.boardCnt }"></td>-->
+<!--                </tr>-->
+            </table>
+            <br/>
+<!--            <div style="text-align: center;">-->
+<!--                <ul class="pagination" th:if="${boardList.totalElements > 0}"-->
+<!--                    th:with="pageNumber = ${boardList.pageable.pageNumber},-->
+<!--                             pageSize = ${boardList.pageable.pageSize},-->
+<!--                             totalPages = ${boardList.totalPages},-->
+<!--                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},-->
+<!--                             tempEndPage = ${startPage + pageSize - 1},-->
+<!--                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">-->
+<!--                    <li class="pagination-btn" th:if="${pageNumber > 0}">-->
+<!--                        <a th:href="@{/board/board-list(page=${pageNumber - 1})}">이전</a>-->
+<!--                    </li>-->
+<!--                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                        <a th:href="@{/board/board-list(page=${page - 1})}" th:text="${page} ">이전</a>-->
+<!--                    </li>-->
+<!--                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">-->
+<!--                        <a th:href="@{/board/board-list(page=${pageNumber + 1})}">다음</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+            <br/>
+        </div>
+
+    <!---------------------------------------------------------------------------------------------------------------------->
+
+
+    <!---------------------------------------------------------------------------------------------------------------------->
+
+
+<!--    </div>-->
+
+
+</div>
+</body>
+</html>
