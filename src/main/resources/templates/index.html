@@ -8,8 +8,11 @@
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
-    <script th:src="@{/js/countdown.js}"></script>
-</th:block>
+         <script th:src="@{/js/countdown.js}">
+    </script>
+        <script th:src="@{/js/plus_button.js}">
+    </script>
+    </th:block>
 </head>
 <body class="main_body">
 <div layout:fragment="content">
@@ -24,24 +27,24 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="https://preview.redd.it/i-edited-a-1920-x-480-syndra-banner-for-twitch-feel-free-to-v0-2cxkqtcllfg81.png?auto=webp&s=f85928f9c5e9980e60a44a5375166fc4de3730c0" class="d-block w-100" alt="...">
+                            <img src="/img/main/home_image1.png" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h3>새해 맞이 특가</h3>
-                                <p>기간 : 1월 1일부터 2월 8일까지</p>
+                                <h5>새해 맞이 특가</h5>
+                                <p>기간: 1월 1일 ~ 1월 31일</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/fe6a66cb-cda5-4f85-a361-c848af95800b-profile_banner-480.png" class="d-block w-100" alt="...">
+                            <img src="/img/main/home_image2.png" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>Second slide label</h5>
-                                <p>Some representative placeholder content for the second slide.</p>
+                                <h5>경매 천국</h5>
+                                <p>1월 1일 정식 오픈</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://cdn.shopify.com/s/files/1/1588/5917/collections/Header_banner_1920x480-2.png?v=1646644986" class="d-block w-100" alt="...">
+                            <img src="/img/main/home_image3.png" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>Third slide label</h5>
-                                <p>Some representative placeholder content for the third slide.</p>
+                                <h5></h5>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -80,14 +83,19 @@
                 </div>
             </div>
         </div>
-        <div class="home_product">
+        <div class="home_product 1">
             <div class="container_title">
                 <div class="title_item">
                     <div class="title_item_name">Just Dropped</div>
-                    <div class="title_item_sub">발매 상품</div>
+                    <div class="title_item_sub">최근 등록된 상품</div>
+                </div>
+                <div class="more_product">
+                    <a href="/auction/recentproducts">
+                        더보기+
+                    </a>
                 </div>
             </div>
-            <div class="container search-goods-list">
+            <div class="container search-goods-list1">
                 <div class="search-goods">
                     <div class="goods-img">
                         <figure class="img_wrapper">
@@ -176,8 +184,1023 @@
                         <i class="bi bi-eye"></i>조회수&nbsp;15
                     </div>
                 </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+            </div>
+            <div class="btn_product">
+                <a class="btn outline medium" id="loadMoreBtn1">
+                    더보기
+                </a>
             </div>
         </div>
+        <div class="home_product 2">
+            <div class="container_title">
+                <div class="title_item">
+                    <div class="title_item_name">Final hours</div>
+                    <div class="title_item_sub">마감 임박 상품</div>
+                </div>
+                <div class="more_product">
+                    <a href="/auction/finalproducts">
+                        더보기+
+                    </a>
+                </div>
+            </div>
+            <div class="container search-goods-list2">
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+            </div>
+            <div class="btn_product">
+                <a class="btn outline medium" id="loadMoreBtn2">
+                    더보기
+                </a>
+            </div>
+            </div>
+        <div class="home_product 3">
+            <div class="container_title">
+                <div class="title_item">
+                    <div class="title_item_name">Popular items</div>
+                    <div class="title_item_sub">인기 상품</div>
+                </div>
+                <div class="more_product">
+                    <a href="/auction/popularproducts">
+                        더보기+
+                    </a>
+                </div>
+            </div>
+            <div class="container search-goods-list3">
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;15
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;16
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;17
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+                <div class="search-goods">
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#">
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br><span>05일04:03:37</span></div>
+                    </div>
+                    <div class="title">물품명</div>
+                    <div class="starting-price">시작가&nbsp;<span>10,000</span></div>
+                    <div class="current-bidding_price">현재가&nbsp;12,000</div>
+                    <div class="user-name">
+                        <span><i class="bi bi-person"></i>사용awdwadwad자1</span>
+                    </div>
+                    <div class="favorite-view-group">
+                        <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                        <i class="bi bi-eye"></i>조회수&nbsp;18
+                    </div>
+                </div>
+            </div>
+            <div class="btn_product">
+                <a class="btn outline medium" id="loadMoreBtn3">
+                    더보기
+                </a>
+            </div>
+        </div>
+       </div>
+
     </div>
 </div>
 </body>

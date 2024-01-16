@@ -29,6 +29,7 @@ header {
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
+    font-family: Pretendard;
 }
 
 .header_top .top_link1 {
@@ -38,6 +39,7 @@ header {
     font-size: 12px;
     letter-spacing: -.06px;
     margin-left: 24px;
+    font-family: Pretendard;
 }
 
 .header_main {
@@ -116,6 +118,7 @@ header {
     background-position: 1px center;
     background-repeat: no-repeat;
     text-indent: 30px;
+    font-family: Pretendard;
 }
 
 
@@ -182,6 +185,7 @@ header {
 
 .main_header span {
     margin-left: 3px;
+    font-family: Pretendard;
 }
 
 .main_header hr {
@@ -201,21 +205,25 @@ header {
 .main_header .dropdown {
     display: block;
     align-items: center;
-    width: 110px;
-    margin-right: 5px;
+    width: 95px;
+    margin-right: 10px;
+    margin-top: 5px;
     position: unset;
 }
 .main_header .dropdown:nth-child(2) {
     display: block;
     align-items: center;
-    width: 90px;
-    margin-right: 5px;
+    width: 80px;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 
 .main_header .dropdown:last-child {
     display: block;
     align-items: center;
-    width: 90px;
+    width: 76px;
+    margin-right: 10px;
+    margin-top: 5px;
 }
 
 .main_header .dropdown-title {
@@ -298,7 +306,7 @@ header {
 }
 
 .main_header .img_wrapper {
-    padding-top: 50%;
+    padding: 0;
 }
 .main_header figure {
     margin-top: 0.5px;
@@ -314,6 +322,7 @@ header {
     bottom: 0;
     object-fit: cover;
     border-radius: 2px;
+    position: unset;
 }
 .main_header .bi-heart {
     margin-bottom: 0px;
