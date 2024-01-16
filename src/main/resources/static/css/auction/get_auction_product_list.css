@@ -1,0 +1,48 @@
+.product_title {
+    margin-bottom: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    padding-top: 45px;
+}
+
+.product_title .product_main_title {
+    max-width: 1200px;
+    text-align: center;
+}
+
+.product_title .product_big {
+    font-size: 22px;
+    color: black;
+    letter-spacing: -.3px;
+    font-family: GmarketSans;
+}
+
+.product_title .product_small {
+    font-size: 15px;
+    letter-spacing: -.15px;
+    margin-top: 4px;
+    color: rgba(34,34,34,.5);
+    font-family: Pretendard;
+}
+
+.main_product_list .product_list {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    border-top: none;
+    column-gap: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    padding-bottom: 56px;
+    padding-left: 0;
+    padding-right: 0;
+    row-gap: 56px;
+    display: grid;
+}
+.main_product_list .search-goods {
+    float: left;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+

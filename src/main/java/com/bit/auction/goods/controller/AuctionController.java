@@ -27,6 +27,33 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryService categoryService;
 
+    @GetMapping("/recentproducts")
+    public ModelAndView RentAuctionProducts() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("auction/getAuctionforRecent.html");
+
+        return mav;
+    }
+
+    @GetMapping("/finalproducts")
+    public ModelAndView FinalAuctionProducts() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("auction/getAuctionforFinal.html");
+
+        return mav;
+    }
+
+    @GetMapping("/popularproducts")
+    public ModelAndView PopularAuctionProducts() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("auction/getAuctionforPopular.html");
+
+        return mav;
+    }
+
     @GetMapping("/register")
     public ModelAndView registrationAuction() {
         ModelAndView mav = new ModelAndView();
