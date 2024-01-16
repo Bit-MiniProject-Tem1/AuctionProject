@@ -20,10 +20,9 @@ import java.util.List;
 public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
     private final CategoryRepository categoryRepository;
-    private List<Character> statusList = new ArrayList<>(List.of('S'));
 
     @Override
-    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String filter, List<String> target) {
+    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String filter, List<String> target, List<Character> status) {
         List<Long> categoryIdList = new ArrayList<>();
 
         if (filter.equals("top")) {
@@ -32,6 +31,11 @@ public class AuctionServiceImpl implements AuctionService {
         } else if (filter.equals("all")) {
             categoryId = 0L;
         }
+        List<Character> statusList = new ArrayList<>();
+        if (status != null || !status.isEmpty()) {
+            statusList.add('S');
+            statusList.addAll(status);
+        }
 
         Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, target, statusList);
 
@@ -39,8 +43,4 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionDTOPageList;
     }
 
-    @Override
-    public void addSearchStatus(char status) {
-        this.statusList.add(status);
-    }
 }

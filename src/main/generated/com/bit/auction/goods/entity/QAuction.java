@@ -52,6 +52,8 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final StringPath title = createString("title");
 
+    public final NumberPath<Integer> view = createNumber("view", Integer.class);
+
     public QAuction(String variable) {
         this(Auction.class, forVariable(variable), INITS);
     }

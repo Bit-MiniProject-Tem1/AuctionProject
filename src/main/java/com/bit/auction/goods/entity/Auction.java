@@ -3,7 +3,10 @@ package com.bit.auction.goods.entity;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,7 +26,6 @@ public class Auction {
     @Column(nullable = false)
     private String regUserId; // fk
 
-    // private Long categoryId; // fk
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -58,6 +59,10 @@ public class Auction {
 
     private String successfulBidderId; // fk 의현님 구현 부분
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Builder.Default()
+    private int view = 0;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
@@ -79,6 +84,7 @@ public class Auction {
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)
+                .view(this.view)
                 .auctionImgDTOList(this.auctionImgList.stream().map(AuctionImg::toDTO).toList())
                 .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
                 .build();

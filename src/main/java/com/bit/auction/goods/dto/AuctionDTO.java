@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,7 +16,7 @@ import java.util.List;
 public class AuctionDTO {
     private Long id;
     private String regUserId; // fk
-    // private Long categoryId; // fk
+    private Long categoryId; // fk
     private String categoryName;
     private String title;
     private String description;
@@ -28,6 +27,7 @@ public class AuctionDTO {
     private LocalDateTime regDate;
     private LocalDateTime endDate;
     private String successfulBidderId; // fk
+    private int view;
     private List<AuctionImgDTO> auctionImgDTOList;
     private List<DescriptionImgDTO> descriptionImgDTOList;
 
@@ -45,6 +45,7 @@ public class AuctionDTO {
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)
+                .view(this.view)
                 .auctionImgList(new ArrayList<>())
                 .descriptionImgList(new ArrayList<>())
                 .build();

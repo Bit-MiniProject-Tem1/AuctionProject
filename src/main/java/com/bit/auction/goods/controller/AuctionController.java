@@ -63,20 +63,28 @@ public class AuctionController {
             targetList = Arrays.asList(paramMap.get("target").toString().split(","));
         }
 
+        List<Character> statusList = new ArrayList<>();
+        if (paramMap.get("closing") != null) {
+            String[] status = paramMap.get("closing").toString().split(",");
+            for (String s : status) {
+                statusList.add(s.charAt(0));
+            }
+        }
+
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
-            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all", targetList));
             mav.addObject("topCategoryName", "전체");
+            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all", targetList, statusList));
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
             mav.addObject("topCategoryName", categoryService.getCategoryName(categoryId));
 
             if (paramMap.get("subCategory") != null) {
                 Long subCategoryId = Long.valueOf(String.valueOf(paramMap.get("subCategory")));
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", targetList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", targetList, statusList));
             } else if (paramMap.get("etc") != null) {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", targetList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", targetList, statusList));
             } else {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", targetList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", targetList, statusList));
             }
         }
 
@@ -84,7 +92,7 @@ public class AuctionController {
 
         return mav;
     }
-    
+
     @PostMapping(value = "/img/upload")
     public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
         ModelAndView mav = new ModelAndView("jsonView");
