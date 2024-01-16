@@ -31,6 +31,9 @@ public class AuctionController {
     public ModelAndView registrationAuction() {
         ModelAndView mav = new ModelAndView();
 
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
+
         mav.setViewName("auction/registerAuction.html");
 
         return mav;
@@ -49,6 +52,7 @@ public class AuctionController {
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
                                      @PageableDefault(page = 0, size = 12) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
+
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
         if (paramMap.get("category") == null) {

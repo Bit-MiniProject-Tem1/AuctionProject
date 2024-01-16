@@ -5,19 +5,21 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/auction/register_auction.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/reg_auction.css}">
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/to_price_comma.js}"></script>
+        <script th:src="@{/js/get_subCategory_ajax.js}"></script>
+        <script th:src="@{/js/reg_auction.js}"></script>
     </th:block>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="content register-auction">
         <h1 class="page-title">경매 등록</h1>
-        <form id="insertForm" action="" method="post" enctype="multipart/form-data">
-            <table style="border-collapse: collapse" width="100%">
+        <form id="insertForm" action="/auction/register.do" method="post" enctype="multipart/form-data">
+            <table style="border-collapse: collapse">
                 <tr>
                     <td class="input-group">
                         <input type="text" name="title" id="title" class="form-control" placeholder="경매 제목" autofocus/>
@@ -28,20 +30,18 @@
                         <label class="form-label">카테고리</label>
                         <div class="input-group basic-category">
                             <label class="input-group-text">상위 카테고리</label>
-                            <select name="categoryId" class="form-select">
-                                <option selected>카테고리 선택</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select name="categoryId" class="form-select" id="drop-topCategory">
+                                <option selected value="none">카테고리 선택</option>
+                                <option value="1" th:each="topCategory : ${topCategoryList}"
+                                        th:value="${topCategory.id}"
+                                        th:text="${topCategory.name}">One
+                                </option>
                             </select>
                         </div>
                         <div class="input-group basic-category">
                             <label class="input-group-text">하위 카테고리</label>
-                            <select name="categoryId" class="form-select">
-                                <option selected>카테고리 선택</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select name="categoryId" class="form-select" id="drop-subCategory">
+                                <option selected value="none">카테고리 선택</option>
                             </select>
                         </div>
                     </td>
@@ -50,11 +50,12 @@
                     <td class="mb-3 light-border">
                         <label class="form-label">타켓층</label>
                         <div class="input-group basic-category target-checkbox-group">
-                            <span><input type='checkbox' name='goods_target' value='baby'/>아기</span>
-                            <span><input type='checkbox' name='goods_target' value='children'/>아이</span>
-                            <span><input type='checkbox' name='goods_target' value='female'/>여성</span>
-                            <span><input type='checkbox' name='goods_target' value='male'/>남성</span>
-                            <span><input type='checkbox' name='goods_target' value='unisex'/>유니섹스</span>
+                            <span><input type='radio' name='goods_target' value='none' checked/>없음</span>
+                            <span><input type='radio' name='goods_target' value='baby'/>아기</span>
+                            <span><input type='radio' name='goods_target' value='children'/>아이</span>
+                            <span><input type='radio' name='goods_target' value='female'/>여성</span>
+                            <span><input type='radio' name='goods_target' value='male'/>남성</span>
+                            <span><input type='radio' name='goods_target' value='unisex'/>유니섹스</span>
                         </div>
                     </td>
                 </tr>
@@ -84,6 +85,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="mb-3 light-border">
+                        <label class="form-label">물품 썸네일 이미지</label><br>
+                        <input type="file" name="uploadFiles" id="uploadFiles" multiple>
+                        <div id="attachZone"
+                             data-placeholder="파일을 첨부하려면 파일선택 버튼을 누르세요.">
+                        </div>
+                        <div class="form-text basic-addon">이미지는 순서대로 5개까지만 등록됩니다.</div>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <textarea name="auctionContent" id="editor"></textarea>
                     </td>
@@ -101,7 +112,7 @@
         <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
         <script>
             ClassicEditor.create(document.querySelector('#editor'), {
-                toolbar: ['heading', '|', 'undo', 'redo', '|', 'fontSize', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
+                toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
                 shouldNotGroupWhenFull: false,
                 language: "ko",
                 ckfinder: {

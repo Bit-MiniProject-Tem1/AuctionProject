@@ -43,4 +43,8 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionDTOPageList;
     }
 
+    @Override
+    public void insertAuction(AuctionDTO auctionDTO) {
+    }
+
 }

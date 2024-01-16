@@ -16,8 +16,8 @@ public class CkEditorImageUtils {
         String newFileName = UUID.randomUUID() + ext;
         realPath = System.getProperty("user.dir") + "\\src\\";
 
-        String savePath = realPath + "upload/" + newFileName;
-        String uploadPath = realPath + "upload\\" + newFileName;
+        String savePath = realPath + "/main/resources/static/upload/" + newFileName;
+        String uploadPath = realPath + "\\main\\resources\\static\\upload\\" + newFileName;
 
         Path path = Paths.get(savePath).toAbsolutePath();
         uploadFile.transferTo(path.toFile());

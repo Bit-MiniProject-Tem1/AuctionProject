@@ -117,8 +117,8 @@
 }
 
 .filter-tag i {
-    font-size: 15px;
     font-weight: 600;
+    margin-right: 4px;
 }
 
 .filter-list .checkbox-group input {

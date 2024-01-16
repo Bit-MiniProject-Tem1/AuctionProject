@@ -74,3 +74,39 @@
     margin: 0 15px;
     font-size: 13px;
 }
+
+#uploadFiles {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+#attachZone > div {
+    display: inline-block;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 5px;
+    border: 1px solid #6c757d;
+    z-index: 1;
+}
+
+#attachZone > div input {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    z-index: 999;
+    border-radius: 5px;
+    border: 1px solid rgb(239, 98, 83);
+    color: rgb(239, 98, 83);
+}
+
+#attachZone > div span {
+    width: 120px;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

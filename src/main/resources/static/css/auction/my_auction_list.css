@@ -73,3 +73,15 @@
     background-color: rgb(100, 106, 118);
     border-color: rgb(100, 106, 118);;
 }
+
+#register {
+    float: right;
+    padding: 10px 18px;
+    margin-top: 20px;
+    border-radius: 12px;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+}

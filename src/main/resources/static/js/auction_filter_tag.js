@@ -9,7 +9,36 @@ $(document).ready(function () {
     // 가져온 파라미터 값과 일치하는 모든 체크박스에 checked 속성 추가
     selectedValues.forEach(function (paramValue) {
         $('input[name="goods-target"][value="' + paramValue + '"]').prop('checked', true);
+        addFilterTag(paramValue);
     });
+
+    // 필터 태그를 추가하는 함수
+    function addFilterTag(paramValue) {
+        var filterName;
+        switch (paramValue) {
+            case 'baby':
+                filterName = '아기';
+                break;
+            case 'children':
+                filterName = '아이';
+                break;
+            case 'female':
+                filterName = '여성';
+                break;
+            case 'male':
+                filterName = '남성';
+                break;
+            case 'unisex':
+                filterName = '유니섹스';
+                break;
+        }
+
+        // 새로운 필터 태그를 생성
+        var newFilterTag = $('<div class="filter-tag"><i class="bi bi-funnel"></i><span>' + filterName + '</span></div>');
+
+        // 생성된 필터 태그를 .filter-tag-group에 추가
+        $('.filter-tag-group').append(newFilterTag);
+    }
 
     // 체크박스 변경 이벤트 핸들러
     $('input[name="goods-target"]').change(function () {
@@ -52,6 +81,13 @@ $(document).ready(function () {
 
     // #closing-auction-checkbox 체크 여부 설정
     $('#closing-auction-checkbox').prop('checked', hasClosingParam);
+
+    if (hasClosingParam) {
+        var newFilterTag = $('<div class="filter-tag"><i class="bi bi-funnel"></i><span>' + '마감경매포함' + '</span></div>');
+
+        // 생성된 필터 태그를 .filter-tag-group에 추가
+        $('.filter-tag-group').append(newFilterTag);
+    }
 
     $('#closing-auction-checkbox').change(function () {
         var currentUrl = window.location.href;
