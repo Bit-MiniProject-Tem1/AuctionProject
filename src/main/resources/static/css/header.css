@@ -55,7 +55,7 @@ header {
     margin-left: 40px;
 }
 
-.main_header .logo > .logo_bk {
+.main_header .logo>.logo_bk {
     width: 200px;
     height: 35px;
 }
@@ -297,7 +297,9 @@ header {
     text-decoration: underline;
 }
 
-
+.main_header .img_wrapper {
+    padding-top: 50%;
+}
 .main_header figure {
     margin-top: 0.5px;
     margin-bottom: 0;

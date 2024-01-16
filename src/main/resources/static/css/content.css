@@ -29,6 +29,7 @@
 .main_body {
     width: 100%;
 }
+
 .main_body header {
     width: 1200px;
     margin: 0 auto;
@@ -129,6 +130,7 @@
     width: 23%;
     margin: 10px 17px 0px 16px;
     text-align: center;
+    font-family: Pretendard;
 }
 
 .home_product .search-goods:first-child {
@@ -136,12 +138,14 @@
     width: 23%;
     margin: 10px 15px 100px 0;
     text-align: center;
+    font-family: Pretendard;
 }
 .home_product .search-goods:last-child {
     width: 23%;
     margin: 10px 0 0 15px;
     text-align: center;
     float: right;
+    font-family: Pretendard;
 }
 
 .home_product .container {
