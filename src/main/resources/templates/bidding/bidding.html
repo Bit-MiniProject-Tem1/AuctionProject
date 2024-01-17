@@ -7,27 +7,30 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bid/bidding.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/to_price_comma.js}"></script>
+    </th:block>
     <title>Title</title>
 </head>
 <body>
 <div layout:fragment="content">
- <div class="v-line"></div>
- <div class="bid-page">
-
+ <div class="content-container">
     <div class="product-container">
-         <h2 class="head-text">product name</h2>
+         <h2 class="head-text">Product name</h2>
         <div class="product-image">
+            <figure class="img_wrapper">
             <img
              src="https://cdn.pixabay.com/photo/2016/06/03/17/35/shoes-1433925_1280.jpg"
             alt="productImg"/>
+            </figure>
         </div>
     </div>
 
     <div class="bidding-container">
         <div class="bidding-area">
-            <div class="pricing-options">
+            <div class="price-option">
                 <p class="content-text">Pricing Options</p>
-                <div class="price-option">
+                <div class="pricing-options">
                     <div class="good-bid">
                         <p class="price-text">₩194,000</p>
                         <p class="option-text">현재 입찰가</p>
@@ -41,15 +44,15 @@
                          <p class="option-text">즉시 입찰가</p>
                     </div>
                 </div>
-            </div>
-            <div class="name-price">
-                <p class="content-text">자율 입찰가 입력</p>
-                <div class="placeholder-text">
-                    <input class="bid-input" placeholder="여기에 입력해주세요">
-                </div>
-                <div class="placeholder-text">
-                    <p class="price-description">희망하는 입찰가를 입력해주세요</p>
-                </div>
+                    <div class="name-price">
+                    <p class="content-text">자율 입찰가 입력</p>
+                     <div class="placeholder-text">
+                        <input class="bid-input" placeholder="여기에 입력해주세요">
+                    </div>
+                    <div class="placeholder-text">
+                        <p class="price-description">희망하는 입찰가를 입력해주세요</p>
+                    </div>
+                 </div>
             </div>
 
             <div class="subtotal">
@@ -59,7 +62,6 @@
                   <p class="subtotal-description">세금과 배송비를 포함한 가격입니다</p>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

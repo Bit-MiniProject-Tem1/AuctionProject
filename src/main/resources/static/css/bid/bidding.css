@@ -1,21 +1,24 @@
-.product-container{
-    padding: 30px;
-    width: 647px;
-    height: 550px;
-    background-color: white;
+.recent{
+    margin-bottom: 20px;
 }
-
-.product-image img{
-    width: 400px;
-    height: 300px;
+.content-container{
+    border-radius: 10px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    height: 650px;
+}
+.product-container{
+    padding: 15px 40px 15px 40px;
+    width: 647px;
+    height: 650px;
+    background-color: white;
 }
 
 .bidding-container{
     position: relative;
     left: 647px;
     width: 553px;
-    height: 550px;
-    bottom: 550px;
+    height: 650px;
+    bottom: 650px;
     background-color: #f4f3f1;
 }
 
@@ -24,26 +27,33 @@
 }
 
 .bidding-area{
-    padding: 30px;
+    padding: 35px 30px 30px 30px;
 }
 
-.pricing-options{
+.price-option{
     background-color: white;
+    height: 350px;
+    margin-bottom: 25px;
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.subtotal{
+    background-color: white;
+    height: 200px;
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
 
 .name-price{
     background-color: white;
 }
 
-.subtotal{
-    background-color: white;
-}
-
-.price-option{
+.pricing-options{
     display: flex;
 }
 
-.price-option div:nth-child(n){
+.pricing-options div:nth-child(n){
     border: solid 1px;
     border-color: #cbd5e0;
     display: flex;
@@ -60,5 +70,84 @@
     margin-left: 16px;
     margin-right: 16px;
 }
+
+.img_wrapper {
+    position: relative;
+    padding-top: 100%;
+}
+
+ .img_wrapper img {
+    position: absolute;
+    width: 565px;
+    height: 545px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+ .head-text{
+     margin-bottom: 20px;
+     font-family: GmarketSans;
+ }
+
+ .content-text {
+     font-family: Pretendard;
+     font-size: 18px;
+     font-weight: 600;
+     padding: 16px 0px 3px 16px;
+ }
+
+ .placeholder-text{
+     font-family: Pretendard;
+     font-size: 15px;
+     padding: 16px 0px 3px 16px;
+ }
+
+ .subtotal .price-text{
+      padding: 16px 0px 3px 16px;
+ }
+
+ .nav-area{
+    position: fixed;
+    bottom: 0;
+    width: 1200px;
+    height: 100px;
+    margin-top: 30px;
+    border-color: rgba(0 , 0, 0, 0.2);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    background-color: white;
+ }
+
+ .navbar-bid button{
+    display: inline-block;
+    float: right;
+    border-radius: 5px;
+     width: 100px;
+     height: 50px;
+ }
+.next-button{
+    margin: 25px 50px 0 10px;
+    background-color: lightseagreen;
+}
+
+.cancel-button{
+    margin: 25px 230px 0 100px;
+    border-color: lightgrey;
+    background-color: white;
+
+}
+
+
+
+ .navbar-bid{
+    font-family: GmarketSans;
+ }
 
 

@@ -2,11 +2,12 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="~{/fragments/biddingConfig :: biddingConfig}">
+<head th:replace="~{/fragments/config :: config}">
 
 </head>
 <body>
-<header th:replace="~{/fragments/biddingHeader :: biddingHeader}"></header>
+<header th:replace="~{/fragments/header :: header}"></header>
 <div layout:fragment="content"></div>
+<div th:replace="~{/fragments/bidNav :: bidNav}"></div>
 </body>
 </html>
