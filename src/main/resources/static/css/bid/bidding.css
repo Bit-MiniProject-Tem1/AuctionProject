@@ -67,8 +67,8 @@
 }
 
 .price-option div:nth-child(2) {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 24px;
+    margin-right: 24px;
 }
 
 .img_wrapper {
@@ -89,6 +89,11 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
+ .bid-input{
+    width: 300px;
+    height: 50px;
+ }
+
  .head-text{
      margin-bottom: 20px;
      font-family: GmarketSans;
@@ -98,56 +103,53 @@
      font-family: Pretendard;
      font-size: 18px;
      font-weight: 600;
-     padding: 16px 0px 3px 16px;
+     padding: 20px 0px 3px 24px;
+     margin-bottom: 15px;
  }
 
  .placeholder-text{
      font-family: Pretendard;
      font-size: 15px;
-     padding: 16px 0px 3px 16px;
+     padding: 20px 0px 3px 24px;
  }
 
  .subtotal .price-text{
-      padding: 16px 0px 3px 16px;
+      padding: 20px 0px 3px 24px;
  }
 
  .nav-area{
-    position: fixed;
+    position: sticky;
     bottom: 0;
     width: 1200px;
     height: 100px;
     margin-top: 30px;
-    border-color: rgba(0 , 0, 0, 0.2);
     border-radius: 5px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-    border-width: 1px 1px 0 1px;
-    border-style: solid;
     background-color: white;
  }
-
- .navbar-bid button{
-    display: inline-block;
+.navicon-container{
+    margin-top: 30px;
+}
+.back-navicon-wrapper svg{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    color: #21252969;
+}
+.back-navicon-wrapper svg:hover{
+    transition: 1s;
+    color: rgba(30, 30, 30, 0.8);
+}
+.next-navicon-wrapper svg{
+    position: relative;
     float: right;
-    border-radius: 5px;
-     width: 100px;
-     height: 50px;
- }
-.next-button{
-    margin: 25px 50px 0 10px;
-    background-color: lightseagreen;
+    width: 50px;
+    height: 50px;
+    color: #21252969;
+}
+.next-navicon-wrapper svg:hover{
+    transition: 1s;
+    color: rgba(30, 30, 30, 0.8);
 }
 
-.cancel-button{
-    margin: 25px 230px 0 100px;
-    border-color: lightgrey;
-    background-color: white;
-
-}
-
-
-
- .navbar-bid{
-    font-family: GmarketSans;
- }
 
 

@@ -22,6 +22,15 @@ public class BiddingController {
         return mav;
 
     }
+
+    @GetMapping("/bidinfo")
+    public ModelAndView biddinginfo() {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("bidding/biddinginfo.html");
+        return mav;
+
+    }
 //    @PostMapping("/bidding")
 //    public void biddingPrice(@RequestBody final BiddingRequestDTO biddingRequestDTO){
 //       biddingService.biddingPrice(biddingRequestDTO);

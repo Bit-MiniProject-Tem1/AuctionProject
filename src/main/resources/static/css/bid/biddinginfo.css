@@ -1,0 +1,108 @@
+.shipping-container{
+    margin-top: 20px;
+}
+
+.paymentselect-container label {
+  font-size: 18px;
+  line-height: 2rem;
+  padding: 0.2em 0.4em;
+    font-family: Pretendard;
+}
+
+.address-container{
+    margin-top: 20px;
+    width: 400px;
+    height: 500px;
+    background-color: beige;
+}
+
+.productinfo-container{
+    margin-top: 30px;
+
+}
+
+.info-container{
+    height: 400px;
+}
+
+.info-container .product-info{
+    text-align: center;
+    padding-top: 120px;
+}
+
+
+.paymentselect-container{
+    margin-top: 30px;
+}
+
+ .img_wrapper img {
+    margin-top: 60px;
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+
+[type="radio"], span {
+  vertical-align: middle;
+}
+
+[type="radio"] {
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  transition: border 0.5s ease-in-out;
+}
+
+[type="radio"]:checked {
+  border: 0.4em solid #47acff;
+}
+
+[type="radio"]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) dotted tomato;
+}
+
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  cursor: pointer;
+}
+
+[type="radio"]:hover + span {
+  cursor: pointer;
+}
+
+fieldset {
+  display: inline;
+  border: none;
+  margin: 0;
+  padding: 40px 20px;
+}
+.button-wrapper{
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 40px;
+}
+
+.order-button{
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.order-button:hover{
+    transition: 500ms;
+    background-color: rgba(128, 128, 128, 0.15);
+}
+
+.content-text{
+    font-family: Pretendard;
+    font-weight: bold;
+    text-align: center;
+}

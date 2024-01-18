@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bid/biddinginfo.css}">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-container">
+        <div class="shipping-container">
+            <div class="shipinfo-container">
+                <h2>Shipping Info</h2>
+                <hr>
+                <h2>Address</h2>
+                <div class="address-container">
+                </div>
+            </div>
+        </div>
+        <div class="productinfo-container">
+            <h2 class="head-text">Product Info</h2>
+            <hr>
+            <div class="info-container">
+            <div class="product-image">
+                <figure class="img_wrapper">
+                    <img
+                     src="https://cdn.pixabay.com/photo/2016/06/03/17/35/shoes-1433925_1280.jpg"
+                    alt="productImg"/>
+                </figure>
+            </div>
+                <div class="product-info">
+                        <h3 class="head-text">Product Title</h3>
+                        <p class="content-text">product name</p>
+                    </br>
+                        <h3 class="head-text">Total Price</h3>
+                        <p class="content-text">product price</p>
+                </div>
+            </div>
+        </div>
+        <div class="paymentselect-container">
+            <h2>Payment Select</h2>
+            <hr>
+            <fieldset>
+              <label>
+                <input type="radio" name="payment-option" value="virtual" checked />
+                <span class="content-text">무통장결제</span>
+              </label>
+                </br>
+              <label>
+                <input type="radio" name="payment-option" value="card" />
+                <span class="content-text">카드</span>
+              </label>
+                </br>
+              <label>
+                <input type="radio" name="payment-option" value="naverpay"  />
+                <span class="content-text">네이버페이</span>
+              </label>
+                </br>
+              <label>
+                <input type="radio" name="payment-option" value="kakaopay" />
+                <span class="content-text">카카오페이</span>
+              </label>
+            </fieldset>
+            <hr>
+            <div class="button-wrapper">
+            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button">
+                <p class="content-text">주문하기</p>
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
