@@ -1,7 +1,12 @@
 package com.bit.auction.user.controller;
 
+import com.bit.auction.user.dto.ResponseDTO;
+import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-
+    private final UserService userService;
     @GetMapping("/join")
     public ModelAndView getJoin() {
         ModelAndView mav = new ModelAndView();
@@ -69,52 +77,63 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/myprofile")
+    @GetMapping("/profile")
     public ModelAndView getMyProfile() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("user/mypage/myprofile.html");
+        mav.setViewName("user/mypage/profile.html");
 
         return mav;
     }
 
-    @GetMapping("/buying")
-    public ModelAndView getBuying() {
+    @GetMapping("/myInquiry")
+    public ModelAndView getMyInquiry() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("user/mypage/buying.html");
+        mav.setViewName("user/mypage/myinquiry.html");
 
         return mav;
     }
 
-    @GetMapping("/buying_detail")
-    public ModelAndView getBuyingDetail() {
+    @GetMapping("/inquiry")
+    public ModelAndView getInquiry() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("user/mypage/buying_detail.html");
+        mav.setViewName("user/mypage/inquiry.html");
 
         return mav;
     }
 
-    @GetMapping("/buying_end")
-    public ModelAndView getBuyingEnd() {
-        ModelAndView mav = new ModelAndView();
+    // --------------------------------------------------------- //
 
-        mav.setViewName("user/mypage/buying_end.html");
+    @PostMapping("/id-check")
+    public ResponseEntity<?> idCheck(UserDTO userDTO) {
+        System.out.println(userDTO.getUserId());
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
-        return mav;
+        Map<String, String> returnMap = new HashMap<>();
+
+        try {
+            int idCheck = userService.idCheck(userDTO.getUserId());
+
+            if(idCheck == 0) {
+                returnMap.put("idCheckMsg", "idOk");
+            } else {
+                returnMap.put("idCheckMsg", "idFail");
+            }
+
+            response.setItem(returnMap);
+            response.setStatusCode(HttpStatus.OK.value());
+
+            return ResponseEntity.ok(response);
+        } catch(Exception e) {
+            response.setErrorCode(501);
+            response.setErrorMessage(e.getMessage());
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+            return ResponseEntity.badRequest().body(response);
+        }
     }
-
-    @GetMapping("/selling")
-    public ModelAndView getSelling() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/selling.html");
-
-        return mav;
-    }
-
-
 
 
 

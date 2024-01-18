@@ -31,8 +31,32 @@ input {
     padding: 10px;
     width: 600px;
     margin-left: 25%;
+    display: flex;
 }
 
 .input_border {
     border-width: 0 0 1px;
+}
+
+.join_id_check {
+    height: 44.8px;
+    font-size: 12px;
+    width: 60px;
+    border-radius: 15px;
+    background-color: white;
+    border-width: 1px 1px 1px 1px;
+}
+
+.join_name_box{
+    margin-left: 100px;
+    width: 812px;
+    display: flex;
+
+}
+
+.pwValidation {
+    margin-left: 25%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #bcbcbc;
 }

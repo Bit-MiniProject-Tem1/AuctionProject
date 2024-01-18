@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<body>
+<head>
+    <th:block layout:fragment="css">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script src="/js/my/mypage_navbar.js"></script>
+    </th:block>
+</head>
+<div th:fragment="myNav" style="float: left; width: 180px; height: 600px;">
+    <div class="snb_area"><a href="#" class="nuxt-link-active">
+        <h2 class="snb_main_title">고객센터</h2>
+    </a>
+        <nav class="snb">
+            <div class="snb_list"><strong class="snb_title"></strong>
+                <ul class="snb_menu">
+                    <li class="menu_item"><a href="#" class="menu_link">자주묻는 질문</a></li>
+                    <li class="menu_item"><a href="#" class="menu_link">문의 하기</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
