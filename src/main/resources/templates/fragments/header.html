@@ -4,8 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
-    <th:block layout:fragment="script">
-    </th:block>
 </head>
 <body>
 <header th:fragment="header">
@@ -28,10 +26,9 @@
             <img th:src="@{/img/logoo.png}" th:class="logo_bk">
         </a>
 
-        <div class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search">
-        </div>
-
+        <form th:action="@{/auction/goods-list}" method="get" id="searchForm">
+            <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" id="searchInput" name="searchQuery"  th:attr="data-show-alert-th=${showAlertValue}">
+        </form>
         <div class="category_menu">
             <div class="category_menu_item">
                 <a th:href="@{/#}" class="home">

@@ -65,6 +65,36 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
 
+    @Override
+    public List<Auction> findByAuctionNameContaining(String searchQuery, List<Character> statusList) {
+        BooleanBuilder whereConditions = new BooleanBuilder()
+                .and(auction.title.containsIgnoreCase(searchQuery))
+                .and(eqStatus(statusList));
+
+        return jpaQueryFactory
+                .selectFrom(auction)
+                .where(whereConditions)
+                .fetch();
+    }
+
+    @Override
+    public List<Auction> findByforResent() {
+
+        return jpaQueryFactory
+                .selectFrom(auction)
+                .orderBy(auction.regDate.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<Auction> findByforFinal() {
+
+        return jpaQueryFactory
+                .selectFrom(auction)
+                .orderBy(auction.endDate.asc())
+                .fetch();
+    }
+
     private BooleanBuilder eqCategoryId(Long categoryId, List<Long> subCategoryIdList) {
         if (categoryId == 0L) {
             return null;
@@ -107,4 +137,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         }
         return booleanBuilder;
     }
+
+
 }

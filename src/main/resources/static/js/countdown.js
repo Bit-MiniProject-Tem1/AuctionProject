@@ -66,5 +66,6 @@ $(document).ready(function () {
         // 초기 카운트다운 값을 설정하고 1초마다 업데이트합니다.
         calculateCountdown();
         countdownInterval = setInterval(calculateCountdown, 1000);
+
     });
 });

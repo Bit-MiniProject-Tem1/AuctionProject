@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Optional;
 
 @Slf4j
@@ -117,4 +118,38 @@ public class AuctionServiceImpl implements AuctionService {
 
         auctionRepository.saveOne(auction);
     }
+    @Override
+    public List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status) {
+        List<Character> statusList = new ArrayList<>();
+        if (status != null || !status.isEmpty()) {
+            statusList.add('S');
+            statusList.addAll(status);
+        }
+
+        return auctionRepository
+                .findByAuctionNameContaining(searchQuery, statusList)
+                .stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuctionDTO> findByForRecentList() {
+
+        List<Auction> recentAuctions = auctionRepository.findByforResent();
+        return recentAuctions.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<AuctionDTO> findByForFinalList() {
+        List<Auction> finalAuctions = auctionRepository.findByforFinal();
+        return finalAuctions.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+    }
+
+
 }

@@ -1,16 +1,19 @@
 package com.bit.auction.goods.controller;
 
+import ch.qos.logback.core.model.Model;
 import com.bit.auction.common.CkEditorImageUtils;
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.AuctionImgDTO;
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -36,14 +39,25 @@ public class AuctionController {
     public ModelAndView RentAuctionProducts() {
         ModelAndView mav = new ModelAndView();
 
+        List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
+
+        mav.addObject("auctionList", recentAuctions);
+        mav.addObject("topCategoryName", "전체");
+
         mav.setViewName("auction/getAuctionforRecent.html");
 
         return mav;
     }
 
+
     @GetMapping("/finalproducts")
     public ModelAndView FinalAuctionProducts() {
         ModelAndView mav = new ModelAndView();
+
+        List<AuctionDTO> fianlAuctions = auctionService.findByForFinalList();
+
+        mav.addObject("auctionList", fianlAuctions);
+        mav.addObject("topCategoryName", "전체");
 
         mav.setViewName("auction/getAuctionforFinal.html");
 
@@ -153,7 +167,7 @@ public class AuctionController {
             } else {
                 categoryId = auctionDTO.getCategoryId();
             }
-            
+
             auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
             auctionService.updateAuction(auctionDTO, categoryId);
 
@@ -186,11 +200,13 @@ public class AuctionController {
 
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
-                                     @PageableDefault(page = 0, size = 12) Pageable pageable) {
+                                     @PageableDefault(page = 0, size = 12) Pageable pageable,
+                                     @RequestParam(required = false) String searchQuery) {
         ModelAndView mav = new ModelAndView();
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
+
         if (paramMap.get("category") == null) {
             mav.addObject("categoryList", categoryList);
         } else {
@@ -213,7 +229,32 @@ public class AuctionController {
 
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
-            mav.addObject("auctionList", auctionService.getAuctionList(pageable, null, "all", targetList, statusList));
+
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                List<AuctionDTO> searchResult = auctionService.searchAuctions(searchQuery, statusList);
+
+                // 전체 항목을 가져오기
+                Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+                List<AuctionDTO> allAuctions = auctionPage.getContent();
+
+                if (!searchResult.isEmpty()) {
+                    // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
+                    mav.addObject("auctionList", searchResult);
+                    mav.addObject("topCategoryName", "검색 결과");
+
+                } else {
+                    // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
+                    mav.addObject("auctionList", allAuctions);
+                    mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
+                    mav.addObject("showAlertValue", true);
+                }
+            } else {
+                // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
+                Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+                List<AuctionDTO> allAuctions = auctionPage.getContent();
+                mav.addObject("auctionList", allAuctions);
+            }
+
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
             mav.addObject("topCategoryName", categoryService.getCategoryName(categoryId));
