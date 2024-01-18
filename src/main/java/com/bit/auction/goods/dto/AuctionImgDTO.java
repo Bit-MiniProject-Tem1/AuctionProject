@@ -5,6 +5,7 @@ import com.bit.auction.goods.entity.AuctionImg;
 import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -30,8 +30,6 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final StringPath description = createString("description");
 
-    public final ListPath<DescriptionImg, QDescriptionImg> descriptionImgList = this.<DescriptionImg, QDescriptionImg>createList("descriptionImgList", DescriptionImg.class, QDescriptionImg.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.time.LocalDateTime> endDate = createDateTime("endDate", java.time.LocalDateTime.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

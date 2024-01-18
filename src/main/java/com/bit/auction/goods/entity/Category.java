@@ -31,8 +31,8 @@ public class Category {
     //@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> childrenList;
 
-    @OneToMany(mappedBy = "category")
-    private List<Auction> auctionList;
+    // @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    // private List<Auction> auctionList;
 
     public CategoryDTO toDTO() {
         return CategoryDTO.builder()

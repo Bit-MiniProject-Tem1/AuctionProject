@@ -10,7 +10,7 @@ $(document).ready(function () {
             type: "GET",
             data: {topCategoryId: selectedValue},
             success: function (data) {
-                $('#drop-subCategory option[value!="none"]').remove();
+                $('#drop-subCategory option[value!=""]').remove();
                 $.each(data, function (i) {
                     $("#drop-subCategory").append(
                         '<option value="' + data[i].id + '">' + data[i].name + '</option>'

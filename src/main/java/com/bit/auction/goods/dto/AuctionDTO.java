@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,6 +21,7 @@ public class AuctionDTO {
     private String categoryName;
     private String title;
     private String description;
+    private String target;
     private char status;
     private int startingPrice;
     private int currentBiddingPrice;
@@ -29,7 +31,10 @@ public class AuctionDTO {
     private String successfulBidderId; // fk
     private int view;
     private List<AuctionImgDTO> auctionImgDTOList;
-    private List<DescriptionImgDTO> descriptionImgDTOList;
+    private String representativeImgUrl;
+    private String representativeImgName;
+    private List<Long> deleteAuctionImgList;
+    //  private List<DescriptionImgDTO> descriptionImgDTOList;
 
     public Auction toEntity(Category category) {
         return Auction.builder()
@@ -38,6 +43,7 @@ public class AuctionDTO {
                 .category(category)
                 .title(this.title)
                 .description(this.description)
+                .target(this.target)
                 .status(this.status)
                 .startingPrice(this.startingPrice)
                 .currentBiddingPrice(this.currentBiddingPrice)
@@ -47,7 +53,8 @@ public class AuctionDTO {
                 .successfulBidderId(this.successfulBidderId)
                 .view(this.view)
                 .auctionImgList(new ArrayList<>())
-                .descriptionImgList(new ArrayList<>())
+                //   .descriptionImgList(new ArrayList<>())
                 .build();
     }
+
 }

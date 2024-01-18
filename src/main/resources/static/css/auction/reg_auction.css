@@ -110,3 +110,63 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.file-list {
+    margin-top: 0.25rem;
+    width: 450px;
+    overflow: auto;
+    background-color: #ebebeb;
+    padding: 10px;
+}
+
+.file-list .filebox {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.file-list .filebox p {
+    float: left;
+    width: 350px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.file-list .filebox .delete i {
+    color: #ff5353;
+    margin-left: 5px;
+}
+
+.file-list .filebox .represent i {
+    color: rgb(65, 185, 121);
+    margin-left: 5px;
+}
+
+.label-uploadFiles {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 20px;
+    border-radius: 12px;
+    background-color: #6c757d;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+#current-category {
+    color: rgb(65, 185, 121);
+    font-size: 16px;
+    font-weight: 700;
+}

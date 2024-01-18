@@ -10,27 +10,49 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
+        <script th:inline="javascript">
+            $(() => {
+                startingPrice = [[${getGoods.startingPrice}]];
+                immediatePrice = [[${getGoods.immediatePrice}]];
+                description = [[${getGoods.description}]];
+                categoryId = [[${getGoods.category.id}]];
+                var category = [[${getGoods.category.name}]];
+                var target = [[${getGoods.target}]];
+
+                $("#startingPrice").val(startingPrice);
+                $("#startingPrice").attr("readonly", true);
+                $("#immediatePrice").val(immediatePrice);
+
+                $("#current-category").append("<i class=\"bi bi-dash-square\" style='color: #6c757d; margin-left:4px; margin-right: 10px;'></i>" + category);
+
+
+                $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
+            });
+        </script>
         <script th:src="@{/js/reg_auction.js}"></script>
     </th:block>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="content register-auction">
-        <h1 class="page-title">경매 등록</h1>
+        <h1 class="page-title">경매 정보 수정</h1>
         <form id="insertForm" action="/auction/register.do" method="post" enctype="multipart/form-data">
             <table style="border-collapse: collapse">
                 <tr>
                     <td class="input-group">
-                        <input type="text" name="title" id="title" class="form-control" placeholder="경매 제목" autofocus/>
+                        <input type="text" name="title" id="title" class="form-control" placeholder="경매 제목"
+                               th:value="${getGoods.title}" autofocus/>
                     </td>
                 </tr>
                 <tr>
                     <td class="mb-3 light-border">
                         <label class="form-label">카테고리</label>
+                        <div class="form-text" id="current-category">
+                        </div>
                         <div class="input-group basic-category">
                             <label class="input-group-text">상위 카테고리</label>
                             <select name="topCategory" class="form-select" id="drop-topCategory">
-                                <option selected value="">카테고리 선택</option>
+                                <option selected value="">변경 카테고리 선택</option>
                                 <option value="" th:each="topCategory : ${topCategoryList}"
                                         th:value="${topCategory.id}"
                                         th:text="${topCategory.name}">
@@ -40,7 +62,7 @@
                         <div class="input-group basic-category">
                             <label class="input-group-text">하위 카테고리</label>
                             <select name="subCategory" class="form-select" id="drop-subCategory">
-                                <option selected value="">카테고리 선택</option>
+                                <option selected value="">변경 카테고리 선택</option>
                             </select>
                         </div>
                     </td>
@@ -64,11 +86,13 @@
                         <div class="input-group">
                             <label class="input-group-text">시작가</label>
                             <input type="number" maxlength="10"
-                                   name="startingPrice" id="startingPrice" class="form-control price-comma"/>
+                                   name="startingPrice" id="startingPrice" class="form-control price-comma"
+                                   th:value="${getGoods.startingPrice}"/>
                             <span class="input-group-text">원(￦)</span>
                             <label class="input-group-text">즉시입찰가</label>
                             <input type="number" maxlength="10"
-                                   name="immediatePrice" id="immediatePrice" class="form-control price-comma"/>
+                                   name="immediatePrice" id="immediatePrice" class="form-control price-comma"
+                                   th:value="${getGoods.immediatePrice}"/>
                             <span class="input-group-text">원(￦)</span>
                         </div>
                         <div class="form-text basic-addon">시작가는 추후 변경이 불가능합니다.</div>
@@ -78,7 +102,8 @@
                     <td class="mb-3 light-border">
                         <div class="input-group">
                             <label class="input-group-text">경매 마감일</label>
-                            <input type="datetime-local" name="endDate" id="endDate" class="form-control"/>
+                            <input type="datetime-local" name="endDate" id="endDate" class="form-control"
+                                   value="" th:value="${getGoods.endDate}"/>
                         </div>
                         <div class="form-text basic-addon">경매 진행 기간은 최소 3일입니다.</div>
                     </td>
@@ -88,7 +113,19 @@
                         <label class="form-label">경매 물품 이미지</label>
                         <label class="label-uploadFiles" for="uploadFiles">업로드</label>
                         <input type="file" onchange="addFile(this)" name="uploadFiles" id="uploadFiles" multiple/>
-                        <div class="file-list"></div>
+                        <div class="file-list">
+                            <div class="filebox" th:each="file : ${getGoods.auctionImgDTOList}"
+                                 th:id="file+${file.id}"
+                                 data-saveDB="${file.id}">
+                                <p class="name" th:text="${file.fileName}"></p>
+                                <a class="delete" th:onclick="deleteFile(${file.id})">
+                                    <i class="bi bi-x-circle"></i>
+                                </a>
+                                <a class="represent" th:onclick="representativeFile(${file.id})">
+                                    <i class="bi bi-check-circle"></i>
+                                </a>
+                            </div>
+                        </div>
                         <div class="form-text basic-addon">최대 5개까지 업로드할 수 있습니다.</div>
                     </td>
                 </tr>
@@ -99,13 +136,15 @@
                 </tr>
                 <tr>
                     <td align="center">
+                        <input type="hidden" name="categoryId" id="categoryId" value="">
+                        <input type="hidden" name="id" id="goodsId" value="">
                         <input type="hidden" maxlength="10"
                                name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"
                                value="0"/>
                         <input type="hidden" maxlength="10"
                                name="representativeImgName" id="representativeImgName"
                                class="form-control price-comma"/>
-                        <button id="register" type="button">등록</button>
+                        <button id="update" type="button">수정</button>
                     </td>
                 </tr>
             </table>

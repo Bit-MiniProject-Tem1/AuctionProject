@@ -95,5 +95,4 @@ class AuctionRepositoryTest {
         auctionRepository.saveAndFlush(auction5);
         log.info(">>>" + auctionRepository.findAll());
     }
-
 }
