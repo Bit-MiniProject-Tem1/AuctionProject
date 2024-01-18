@@ -87,7 +87,7 @@
     width: 1200px;
     margin: auto;
     padding-top: 30px;
-    padding-bottom: 20px;
+    padding-bottom: 0px;
     border-top: 1px solid #ebebeb;
 }
 
@@ -170,8 +170,9 @@
 }
 
 .home_product .btn_product {
-    padding: 0 32px;
     text-align: center;
+    width: 1200px;
+    margin-bottom: 20px;
 }
 
 .home_product .search-goods .title {

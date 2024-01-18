@@ -8,4 +8,11 @@ import java.util.List;
 
 public interface AuctionRepositoryCustom {
     Page<Auction> searchAll(Pageable pageable, Long categoryId, List<Long> subCategoryIdList, List<String> targetList, List<Character> statusList);
+
+    List<Auction> findByAuctionNameContaining(String searchQuery, List<Character> statusList);
+
+    List<Auction> findByforResent();
+
+    List<Auction> findByforFinal();
+
 }
