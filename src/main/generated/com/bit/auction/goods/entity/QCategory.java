@@ -22,8 +22,6 @@ public class QCategory extends EntityPathBase<Category> {
 
     public static final QCategory category = new QCategory("category");
 
-    public final ListPath<Auction, QAuction> auctionList = this.<Auction, QAuction>createList("auctionList", Auction.class, QAuction.class, PathInits.DIRECT2);
-
     public final ListPath<Category, QCategory> childrenList = this.<Category, QCategory>createList("childrenList", Category.class, QCategory.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

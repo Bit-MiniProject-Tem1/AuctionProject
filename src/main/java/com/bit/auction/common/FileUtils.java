@@ -9,23 +9,20 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.bit.auction.configuration.NaverConfiguration;
-import com.bit.auction.goods.dto.DescriptionImgDTO;
+import com.bit.auction.goods.dto.AuctionImgDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 @Component
-public class CkEditorImageUtils {
+public class FileUtils {
     private final AmazonS3 s3;
 
-    public CkEditorImageUtils(NaverConfiguration naverConfiguration) {
+    public FileUtils(NaverConfiguration naverConfiguration) {
         s3 = AmazonS3ClientBuilder.standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
                         naverConfiguration.getEndPoint(), naverConfiguration.getRegionName()
@@ -38,10 +35,10 @@ public class CkEditorImageUtils {
                 .build();
     }
 
-    public DescriptionImgDTO parseFileInfo(MultipartFile multipartFile, String directory) {
+    public AuctionImgDTO parseFileInfo(MultipartFile multipartFile, String directory, String representativeImgName) {
         String bucketName = "bitcamp-bucket-122";
 
-        DescriptionImgDTO descriptionImgDTO = new DescriptionImgDTO();
+        AuctionImgDTO auctionImgDTO = new AuctionImgDTO();
 
         String auctionImgOrigin = multipartFile.getOriginalFilename();
 
@@ -72,24 +69,14 @@ public class CkEditorImageUtils {
             System.out.println(e.getMessage());
         }
 
-        descriptionImgDTO.setFileName(imgName);
-        descriptionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/" + imgPath);
 
-        return descriptionImgDTO;
-    }
+        auctionImgDTO.setFileName(imgName);
+        auctionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/" + imgPath);
 
-    public String parseFileInto(MultipartFile uploadFile, String realPath) throws IOException {
-        String originalFileName = uploadFile.getOriginalFilename();
-        String ext = originalFileName.substring(originalFileName.indexOf("."));
-        String newFileName = UUID.randomUUID() + ext;
-        realPath = System.getProperty("user.dir") + "\\src\\";
+        if (auctionImgOrigin.equals(representativeImgName)) {
+            auctionImgDTO.setRepresentative(true);
+        }
 
-        String savePath = realPath + "/main/resources/static/upload/" + newFileName;
-        String uploadPath = realPath + "\\main\\resources\\static\\upload\\" + newFileName;
-
-        Path path = Paths.get(savePath).toAbsolutePath();
-        uploadFile.transferTo(path.toFile());
-
-        return uploadPath;
+        return auctionImgDTO;
     }
 }

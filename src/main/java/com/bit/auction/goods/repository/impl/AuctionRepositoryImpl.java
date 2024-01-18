@@ -5,6 +5,7 @@ import com.bit.auction.goods.repository.AuctionRepositoryCustom;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +22,16 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     private final EntityManager em;
 
+    @Override
+    @Transactional
+    public void saveOne(Auction auction) {
+        // 식별자(pk)의 값이 없을 때 insert => persist()
+        if (auction.getId() == null || auction.getId() == 0) {
+            em.persist(auction);
+        } else {
+            em.merge(auction);
+        }
+    }
 
     @Override
     public Page<Auction> searchAll(Pageable pageable, Long categoryId, List<Long> subCategoryIdList, List<String> targetList, List<Character> statusList) {

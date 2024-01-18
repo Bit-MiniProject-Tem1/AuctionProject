@@ -26,7 +26,7 @@ public class Auction {
     @Column(nullable = false)
     private String regUserId; // fk
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -45,7 +45,9 @@ public class Auction {
     @Column(nullable = false)
     private int startingPrice;
 
-    private int currentBiddingPrice;
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Builder.Default()
+    private int currentBiddingPrice = 0;
 
     @Column(nullable = false)
     private int immediatePrice;
@@ -63,17 +65,18 @@ public class Auction {
     @Builder.Default()
     private int view = 0;
 
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "auction")
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<DescriptionImg> descriptionImgList;
+    // @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+    // @JsonManagedReference
+    // private List<DescriptionImg> descriptionImgList;
 
     public AuctionDTO toDTO() {
         return AuctionDTO.builder()
                 .id(this.id)
                 .regUserId(this.regUserId)
+                .categoryId(this.category.getId())
                 .categoryName(this.category.getName())
                 .title(this.title)
                 .description(this.description)
@@ -86,16 +89,15 @@ public class Auction {
                 .successfulBidderId(this.successfulBidderId)
                 .view(this.view)
                 .auctionImgDTOList(this.auctionImgList.stream().map(AuctionImg::toDTO).toList())
-                .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
+                //   .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
                 .build();
     }
 
-    public void addAuctionImgList(AuctionImg auctionImg) {
+    public void addAuctionImg(AuctionImg auctionImg) {
         this.auctionImgList.add(auctionImg);
     }
 
-    public void addDescriptionImgList(DescriptionImg descriptionImg) {
-        this.descriptionImgList.add(descriptionImg);
-    }
-
+    // public void addDescriptionImgList(DescriptionImg descriptionImg) {
+    //     this.descriptionImgList.add(descriptionImg);
+    // }
 }

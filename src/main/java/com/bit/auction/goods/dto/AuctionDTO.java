@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,7 +30,8 @@ public class AuctionDTO {
     private String successfulBidderId; // fk
     private int view;
     private List<AuctionImgDTO> auctionImgDTOList;
-    private List<DescriptionImgDTO> descriptionImgDTOList;
+    private String representativeImgName;
+    //  private List<DescriptionImgDTO> descriptionImgDTOList;
 
     public Auction toEntity(Category category) {
         return Auction.builder()
@@ -47,7 +49,8 @@ public class AuctionDTO {
                 .successfulBidderId(this.successfulBidderId)
                 .view(this.view)
                 .auctionImgList(new ArrayList<>())
-                .descriptionImgList(new ArrayList<>())
+                //   .descriptionImgList(new ArrayList<>())
                 .build();
     }
+
 }

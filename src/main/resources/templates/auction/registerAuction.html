@@ -9,7 +9,6 @@
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/to_price_comma.js}"></script>
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
         <script th:src="@{/js/reg_auction.js}"></script>
     </th:block>
@@ -30,8 +29,8 @@
                         <label class="form-label">카테고리</label>
                         <div class="input-group basic-category">
                             <label class="input-group-text">상위 카테고리</label>
-                            <select name="categoryId" class="form-select" id="drop-topCategory">
-                                <option selected value="none">카테고리 선택</option>
+                            <select name="topCategory" class="form-select" id="drop-topCategory">
+                                <option selected value="">카테고리 선택</option>
                                 <option value="1" th:each="topCategory : ${topCategoryList}"
                                         th:value="${topCategory.id}"
                                         th:text="${topCategory.name}">One
@@ -40,8 +39,8 @@
                         </div>
                         <div class="input-group basic-category">
                             <label class="input-group-text">하위 카테고리</label>
-                            <select name="categoryId" class="form-select" id="drop-subCategory">
-                                <option selected value="none">카테고리 선택</option>
+                            <select name="subCategory" class="form-select" id="drop-subCategory">
+                                <option selected value="">카테고리 선택</option>
                             </select>
                         </div>
                     </td>
@@ -50,12 +49,12 @@
                     <td class="mb-3 light-border">
                         <label class="form-label">타켓층</label>
                         <div class="input-group basic-category target-checkbox-group">
-                            <span><input type='radio' name='goods_target' value='none' checked/>없음</span>
-                            <span><input type='radio' name='goods_target' value='baby'/>아기</span>
-                            <span><input type='radio' name='goods_target' value='children'/>아이</span>
-                            <span><input type='radio' name='goods_target' value='female'/>여성</span>
-                            <span><input type='radio' name='goods_target' value='male'/>남성</span>
-                            <span><input type='radio' name='goods_target' value='unisex'/>유니섹스</span>
+                            <span><input type='radio' name='target' value='' checked/>없음</span>
+                            <span><input type='radio' name='target' value='baby'/>아기</span>
+                            <span><input type='radio' name='target' value='children'/>아이</span>
+                            <span><input type='radio' name='target' value='female'/>여성</span>
+                            <span><input type='radio' name='target' value='male'/>남성</span>
+                            <span><input type='radio' name='target' value='unisex'/>유니섹스</span>
                         </div>
                     </td>
                 </tr>
@@ -64,44 +63,51 @@
                         <label class="form-label">거래 가격</label>
                         <div class="input-group">
                             <label class="input-group-text">시작가</label>
-                            <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);" name="starting_price"
-                                   class="form-control price-comma"/>
+                            <input type="number" maxlength="10"
+                                   name="startingPrice" id="startingPrice" class="form-control price-comma"/>
                             <span class="input-group-text">원(￦)</span>
                             <label class="input-group-text">즉시입찰가</label>
-                            <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);" name="immediate_price"
-                                   class="form-control price-comma"/>
+                            <input type="number" maxlength="10"
+                                   name="immediatePrice" id="immediatePrice" class="form-control price-comma"/>
                             <span class="input-group-text">원(￦)</span>
                         </div>
-                        <div class="form-text basic-addon">가격은 1,000원 단위로 입력하세요.</div>
                     </td>
                 </tr>
                 <tr>
                     <td class="mb-3 light-border">
                         <div class="input-group">
                             <label class="input-group-text">경매 마감일</label>
-                            <input type="date" name="end_date" class="form-control"/>
+                            <input type="datetime-local" name="endDate" id="endDate" class="form-control"/>
                         </div>
                         <div class="form-text basic-addon">경매 마감 진행기간은 총 일입니다.</div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="mb-3 light-border">
-                        <label class="form-label">물품 썸네일 이미지</label><br>
-                        <input type="file" name="uploadFiles" id="uploadFiles" multiple>
-                        <div id="attachZone"
-                             data-placeholder="파일을 첨부하려면 파일선택 버튼을 누르세요.">
-                        </div>
-                        <div class="form-text basic-addon">이미지는 순서대로 5개까지만 등록됩니다.</div>
+                    <td>
+                        <label class="form-label">경매 물품 이미지</label>
+                        <label class="label-uploadFiles" for="uploadFiles">업로드</label>
+                        <input type="file" onchange="addFile(this)" name="uploadFiles" id="uploadFiles" multiple/>
+                        <div class="file-list"></div>
+                        <div class="form-text basic-addon">최대 5개까지 업로드할 수 있습니다.</div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <textarea name="auctionContent" id="editor"></textarea>
+                        <textarea name="description" id="editor"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="submit" id="register" value="등록"/>
+                        <input type="hidden" maxlength="10"
+                               name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"
+                               value="0"/>
+                        <input type="hidden" maxlength="10"
+                               name="representativeImgName" id="representativeImgName"
+                               class="form-control price-comma"/>
+                        <!--
+                        <input type="submit" id="register" value="등록" onclick="return submitForm()"/>
+                        -->
+                        <button id="register" type="button">등록</button>
                     </td>
                 </tr>
             </table>
@@ -118,6 +124,10 @@
                 ckfinder: {
                     uploadUrl: '/auction/img/upload'
                 }
+            }).then(contents => {
+                theEditor = contents;
+            }).catch(error => {
+                console.error(error);
             });
         </script>
     </div>
