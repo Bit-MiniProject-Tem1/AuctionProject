@@ -36,7 +36,7 @@ public class FileUtils {
     }
 
     public AuctionImgDTO parseFileInfo(MultipartFile multipartFile, String directory, String representativeImgName) {
-        String bucketName = "bitcamp-bucket-122";
+        String bucketName = "bitcamp-bucket-22";
 
         AuctionImgDTO auctionImgDTO = new AuctionImgDTO();
 
