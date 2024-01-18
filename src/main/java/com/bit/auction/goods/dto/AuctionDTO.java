@@ -21,6 +21,7 @@ public class AuctionDTO {
     private String categoryName;
     private String title;
     private String description;
+    private String target;
     private char status;
     private int startingPrice;
     private int currentBiddingPrice;
@@ -30,7 +31,9 @@ public class AuctionDTO {
     private String successfulBidderId; // fk
     private int view;
     private List<AuctionImgDTO> auctionImgDTOList;
+    private String representativeImgUrl;
     private String representativeImgName;
+    private List<Long> deleteAuctionImgList;
     //  private List<DescriptionImgDTO> descriptionImgDTOList;
 
     public Auction toEntity(Category category) {
@@ -40,6 +43,7 @@ public class AuctionDTO {
                 .category(category)
                 .title(this.title)
                 .description(this.description)
+                .target(this.target)
                 .status(this.status)
                 .startingPrice(this.startingPrice)
                 .currentBiddingPrice(this.currentBiddingPrice)

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,6 +26,17 @@ public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
     private final CategoryRepository categoryRepository;
     private final AuctionImgRepository auctionImgRepository;
+
+    @Override
+    public AuctionDTO getAuctionGoods(Long id) {
+        Optional<Auction> optionalAuction = auctionRepository.findById(id);
+
+        if (optionalAuction.isEmpty()) {
+            throw new RuntimeException("data not exist");
+        }
+
+        return optionalAuction.get().toDTO();
+    }
 
     @Override
     public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String filter, List<String> target, List<Character> status) {
@@ -36,6 +48,7 @@ public class AuctionServiceImpl implements AuctionService {
         } else if (filter.equals("all")) {
             categoryId = 0L;
         }
+
         List<Character> statusList = new ArrayList<>();
         if (status != null || !status.isEmpty()) {
             statusList.add('S');
@@ -51,16 +64,13 @@ public class AuctionServiceImpl implements AuctionService {
     @Transactional
     @Override
     public void insertAuction(AuctionDTO auctionDTO, Long categoryId) {
-        if (auctionDTO.getTitle().equals("")) {
-            throw new RuntimeException("title cannot be null");
-        }
-
-        if (auctionDTO.getDescription().equals("")) {
-            throw new RuntimeException("description cannot be null");
-        }
-
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
 
+        String stripTitle = auctionDTO.getTitle().strip();
+        String stripDescription = auctionDTO.getDescription().strip();
+
+        auctionDTO.setTitle(stripTitle);
+        auctionDTO.setDescription(stripDescription);
         auctionDTO.setRegUserId("kim");
         auctionDTO.setStatus('S');
 
@@ -71,11 +81,40 @@ public class AuctionServiceImpl implements AuctionService {
                 .toList();
 
         auctionImgList.forEach(auctionImg -> {
-            auctionImg.setAuction(auction);
             auction.addAuctionImg(auctionImg);
         });
 
-        auctionRepository.saveAndFlush(auction);
-        auctionImgRepository.saveAllAndFlush(auctionImgList);
+        auctionRepository.saveOne(auction);
+    }
+
+    @Override
+    public void updateAuction(AuctionDTO auctionDTO, Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
+
+        String stripTitle = auctionDTO.getTitle().strip();
+        String stripDescription = auctionDTO.getDescription().strip();
+
+        auctionDTO.setTitle(stripTitle);
+        auctionDTO.setDescription(stripDescription);
+        auctionDTO.setRegUserId("kim");
+        auctionDTO.setStatus('S');
+
+        Auction auction = auctionDTO.toEntity(category);
+
+        List<AuctionImg> auctionImgList = auctionDTO.getAuctionImgDTOList().stream()
+                .map(auctionImgDTO -> auctionImgDTO.toEntity(auction))
+                .toList();
+
+        auctionImgList.forEach(auctionImg -> {
+            auction.addAuctionImg(auctionImg);
+        });
+
+        List<Long> deleteImgList = auctionDTO.getDeleteAuctionImgList().stream().toList();
+
+        deleteImgList.forEach(id -> {
+            auctionImgRepository.deleteById(id);
+        });
+
+        auctionRepository.saveOne(auction);
     }
 }

@@ -114,15 +114,21 @@
 .file-list {
     margin-top: 0.25rem;
     width: 450px;
-    height: 200px;
     overflow: auto;
     background-color: #ebebeb;
     padding: 10px;
 }
 
-.file-list .filebox p {
-    font-size: 14px;
+.file-list .filebox {
+    float: left;
+    width: 100%;
     margin-top: 10px;
+}
+
+.file-list .filebox p {
+    float: left;
+    width: 350px;
+    font-size: 14px;
     display: inline-block;
 }
 
@@ -157,4 +163,10 @@ input[type="file"] {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+}
+
+#current-category {
+    color: rgb(65, 185, 121);
+    font-size: 16px;
+    font-weight: 700;
 }

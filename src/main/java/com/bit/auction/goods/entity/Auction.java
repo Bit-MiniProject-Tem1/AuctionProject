@@ -65,14 +65,25 @@ public class Auction {
     @Builder.Default()
     private int view = 0;
 
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
     // @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     // @JsonManagedReference
     // private List<DescriptionImg> descriptionImgList;
 
+    @Transient
+    private String representativeImgUrl;
+    @Transient
+    private String representativeImgName;
+
     public AuctionDTO toDTO() {
+        auctionImgList.forEach(auctionImg -> {
+            if (auctionImg.isRepresentative()) {
+                representativeImgUrl = auctionImg.getFileUrl();
+                representativeImgName = auctionImg.getFileName();
+            }
+        });
         return AuctionDTO.builder()
                 .id(this.id)
                 .regUserId(this.regUserId)
@@ -80,6 +91,7 @@ public class Auction {
                 .categoryName(this.category.getName())
                 .title(this.title)
                 .description(this.description)
+                .target(this.target)
                 .status(this.status)
                 .startingPrice(this.startingPrice)
                 .currentBiddingPrice(this.currentBiddingPrice)
@@ -89,12 +101,18 @@ public class Auction {
                 .successfulBidderId(this.successfulBidderId)
                 .view(this.view)
                 .auctionImgDTOList(this.auctionImgList.stream().map(AuctionImg::toDTO).toList())
+                .representativeImgUrl(this.representativeImgUrl)
+                .representativeImgName(this.representativeImgName)
                 //   .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
                 .build();
     }
 
     public void addAuctionImg(AuctionImg auctionImg) {
         this.auctionImgList.add(auctionImg);
+    }
+
+    public void representativeImgUrl(String representativeImgUrl) {
+        this.representativeImgUrl = representativeImgUrl;
     }
 
     // public void addDescriptionImgList(DescriptionImg descriptionImg) {

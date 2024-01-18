@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.bit.auction.goods.entity.QAuction.auction;
+import static com.bit.auction.goods.entity.QAuctionImg.auctionImg;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +26,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     @Override
     @Transactional
     public void saveOne(Auction auction) {
-        // 식별자(pk)의 값이 없을 때 insert => persist()
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
@@ -41,6 +41,18 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
                         eqTarget(targetList),
                         eqStatus(statusList))
                 .fetch();
+
+        auctionList.forEach(a -> {
+            String url = jpaQueryFactory
+                    .select(auctionImg.fileUrl)
+                    .from(auctionImg)
+                    .where(auctionImg.auction.id.eq(a.getId())
+                            .and(auctionImg.isRepresentative.eq(true))
+                    )
+                    .fetchOne();
+
+            a.representativeImgUrl(url);
+        });
 
         long totalCnt = jpaQueryFactory
                 .select(auction.count())

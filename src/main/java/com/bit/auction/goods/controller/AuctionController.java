@@ -31,7 +31,6 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryService categoryService;
     private final FileUtils fileUtils;
-    int count = 0;
 
     @GetMapping("/recentproducts")
     public ModelAndView RentAuctionProducts() {
@@ -77,7 +76,6 @@ public class AuctionController {
                                              @RequestParam(value = "uploadFiles", required = false) MultipartFile[] uploadFiles,
                                              @RequestParam(value = "topCategory", required = false) Long topCategoryId,
                                              @RequestParam(value = "subCategory", required = false) Long subCategoryId) {
-        count++;
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         String representativeImgName = auctionDTO.getRepresentativeImgName();
@@ -86,9 +84,7 @@ public class AuctionController {
             for (MultipartFile file : uploadFiles) {
                 if (file.getOriginalFilename() != null &&
                         !file.getOriginalFilename().equals("")) {
-
                     AuctionImgDTO auctionImgDTO = fileUtils.parseFileInfo(file, "auction/", representativeImgName);
-
                     auctionImgDTOList.add(auctionImgDTO);
                 }
             }
@@ -118,10 +114,71 @@ public class AuctionController {
         }
     }
 
-    @GetMapping("/goods")
-    public ModelAndView getGoods() {
+    @GetMapping("/goods-update/{id}")
+    public ModelAndView updateGoods(@PathVariable("id") Long categoryId) {
         ModelAndView mav = new ModelAndView();
 
+        mav.addObject("getGoods", auctionService.getAuctionGoods(categoryId));
+
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
+
+        mav.setViewName("auction/updateAuction.html");
+
+        return mav;
+    }
+
+    @PutMapping("/goods")
+    public ResponseEntity<?> updateAuction(AuctionDTO auctionDTO,
+                                           @RequestParam(value = "uploadFiles", required = false) MultipartFile[] uploadFiles,
+                                           @RequestParam(value = "topCategory", required = false) Long topCategoryId,
+                                           @RequestParam(value = "subCategory", required = false) Long subCategoryId) {
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
+
+        String representativeImgName = auctionDTO.getRepresentativeImgName();
+        try {
+            List<AuctionImgDTO> auctionImgDTOList = new ArrayList<>();
+            for (MultipartFile file : uploadFiles) {
+                if (file.getOriginalFilename() != null &&
+                        !file.getOriginalFilename().equals("")) {
+                    AuctionImgDTO auctionImgDTO = fileUtils.parseFileInfo(file, "auction/", representativeImgName);
+                    auctionImgDTOList.add(auctionImgDTO);
+                }
+            }
+            Long categoryId = topCategoryId;
+            if (auctionDTO.getCategoryId() == null) {
+                if (subCategoryId != null) {
+                    categoryId = subCategoryId;
+                }
+            } else {
+                categoryId = auctionDTO.getCategoryId();
+            }
+            
+            auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
+            auctionService.updateAuction(auctionDTO, categoryId);
+
+            Map<String, String> returnMap = new HashMap<>();
+
+            returnMap.put("msg", "정상적으로 수정되었습니다.");
+
+            response.setItem(returnMap);
+            response.setStatusCode(HttpStatus.OK.value());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.setErrorCode(605);
+            response.setErrorMessage(e.getMessage());
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+    @GetMapping("/goods/{id}")
+    public ModelAndView getGoods(@PathVariable("id") Long categoryId) {
+        ModelAndView mav = new ModelAndView();
+
+        mav.addObject("getGoods", auctionService.getAuctionGoods(categoryId));
         mav.setViewName("auction/getAuction.html");
 
         return mav;
