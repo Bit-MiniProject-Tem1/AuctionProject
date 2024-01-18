@@ -14,7 +14,6 @@ public interface AuctionService {
     void insertAuction(AuctionDTO auctionDTO, Long categoryId);
 
     void updateAuction(AuctionDTO auctionDTO, Long categoryId);
-    void insertAuction(AuctionDTO auctionDTO);
 
     List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status);
 
