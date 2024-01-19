@@ -201,6 +201,7 @@ public class AuctionController {
                                      @PageableDefault(page = 0, size = 12) Pageable pageable,
                                      @RequestParam(required = false) String searchQuery) {
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("auction/getAuctionList.html");
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
@@ -249,8 +250,8 @@ public class AuctionController {
             } else {
                 // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
                 Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
-                List<AuctionDTO> allAuctions = auctionPage.getContent();
-                mav.addObject("auctionList", allAuctions);
+                // List<AuctionDTO> allAuctions = auctionPage.getContent();
+                mav.addObject("auctionList", auctionPage);
             }
 
         } else {

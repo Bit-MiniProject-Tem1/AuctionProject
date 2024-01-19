@@ -11,6 +11,12 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
+        <script th:inline="javascript">
+            $(() => {
+                var auctionList = [[${auctionList}]];
+                console.log(auctionList);
+            });
+        </script>
     </th:block>
 </head>
 <body>
@@ -139,23 +145,33 @@
                 </div>
             </div>
         </div>
+
+
         <nav aria-label="Page navigation example" class="goods-list-page">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center" th:if="${auctionList.totalElements > 0}"
+                th:with="pageNumber = ${auctionList.pageable.pageNumber},
+                             pageSize = ${auctionList.pageable.pageSize},
+                             totalPages = ${auctionList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href="#" aria-label="Previous" th:href="@{/auction/goods-list(page=${pageNumber - 1})}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <!--
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                --->
+                <li class="page-item"  th:each="page : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" href="#" th:href="@{/auction/goods-list(page=${page - 1})}" th:text="${page}">1</a></li>
+                <li class="page-item" th:if="${pageNumber < totalPages - 1}">
+                    <a class="page-link" href="#" aria-label="Next" th:href="@{/auction/goods-list(page=${pageNumber + 1})}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
     </div>
 </div>
 </body>

@@ -60,8 +60,8 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, target, statusList);
-
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+
         return auctionDTOPageList;
     }
 
