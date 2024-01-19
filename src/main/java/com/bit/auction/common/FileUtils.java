@@ -6,10 +6,12 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.bit.auction.configuration.NaverConfiguration;
 import com.bit.auction.goods.dto.AuctionImgDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,8 @@ import java.util.UUID;
 @Component
 public class FileUtils {
     private final AmazonS3 s3;
+    @Value("${ncp.accessKey}")
+    private String accessKey;
 
     public FileUtils(NaverConfiguration naverConfiguration) {
         s3 = AmazonS3ClientBuilder.standard()
@@ -36,7 +40,7 @@ public class FileUtils {
     }
 
     public AuctionImgDTO parseFileInfo(MultipartFile multipartFile, String directory, String representativeImgName) {
-        String bucketName = "bitcamp-bucket-22";
+        String bucketName = "bitcamp-bucket-122";
 
         AuctionImgDTO auctionImgDTO = new AuctionImgDTO();
 
@@ -78,5 +82,11 @@ public class FileUtils {
         }
 
         return auctionImgDTO;
+    }
+
+    public void deleteObject(String url) {
+        String bucketName = "bitcamp-bucket-122";
+
+        s3.deleteObject(new DeleteObjectRequest(bucketName, url));
     }
 }

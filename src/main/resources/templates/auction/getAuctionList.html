@@ -107,8 +107,14 @@
                     <figure class="img_wrapper">
                         <a href="#">
                             <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 src=""
+                                 th:src="@{/img/no-preview.jpeg}"
+                                 th:if="${auction.representativeImgUrl} eq null"
+                                 alt=""/>
+                            <img class="d-block w-100"
+                                 src=""
                                  th:src="${auction.representativeImgUrl}"
+                                 th:if="${auction.representativeImgUrl} ne null"
                                  alt=""/>
                         </a>
                     </figure>

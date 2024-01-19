@@ -1,12 +1,10 @@
 package com.bit.auction.goods.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.bit.auction.common.CkEditorImageUtils;
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.AuctionImgDTO;
-import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
@@ -142,7 +140,7 @@ public class AuctionController {
         return mav;
     }
 
-    @PutMapping("/goods")
+    @PutMapping("/goods-update")
     public ResponseEntity<?> updateAuction(AuctionDTO auctionDTO,
                                            @RequestParam(value = "uploadFiles", required = false) MultipartFile[] uploadFiles,
                                            @RequestParam(value = "topCategory", required = false) Long topCategoryId,

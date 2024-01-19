@@ -1,5 +1,6 @@
 package com.bit.auction.goods.service.impl;
 
+import com.bit.auction.common.FileUtils;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.AuctionImg;
@@ -17,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,6 +28,7 @@ public class AuctionServiceImpl implements AuctionService {
     private final AuctionRepository auctionRepository;
     private final CategoryRepository categoryRepository;
     private final AuctionImgRepository auctionImgRepository;
+    private final FileUtils fileUtils;
 
     @Override
     public AuctionDTO getAuctionGoods(Long id) {
@@ -110,14 +112,17 @@ public class AuctionServiceImpl implements AuctionService {
             auction.addAuctionImg(auctionImg);
         });
 
-        List<Long> deleteImgList = auctionDTO.getDeleteAuctionImgList().stream().toList();
+        List<Long> deleteIdList = auctionDTO.getDeleteAuctionImgList().stream().toList();
+        List<AuctionImg> deleteImgList = auctionImgRepository.findAllById(deleteIdList);
 
-        deleteImgList.forEach(id -> {
-            auctionImgRepository.deleteById(id);
+        deleteImgList.forEach(img -> {
+            fileUtils.deleteObject("auction/" + img.getFileName());
+            auctionImgRepository.deleteById(img.getId());
         });
 
         auctionRepository.saveOne(auction);
     }
+
     @Override
     public List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status) {
         List<Character> statusList = new ArrayList<>();

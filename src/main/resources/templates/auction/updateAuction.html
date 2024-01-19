@@ -16,8 +16,10 @@
                 immediatePrice = [[${getGoods.immediatePrice}]];
                 description = [[${getGoods.description}]];
                 categoryId = [[${getGoods.categoryId}]];
+                originRepresentativeImgName = [[${getGoods.representativeImgName}]];
                 var category = [[${getGoods.categoryName}]];
                 var target = [[${getGoods.target}]];
+                originFileArr = [[${getGoods.auctionImgDTOList}]];
 
                 $("#startingPrice").val(startingPrice);
                 $("#startingPrice").attr("readonly", true);
@@ -116,13 +118,14 @@
                         <div class="file-list">
                             <div class="filebox" th:each="file : ${getGoods.auctionImgDTOList}"
                                  th:id="file+${file.id}"
-                                 data-saveDB="${file.id}">
+                                 data-saveDB="true">
                                 <p class="name" th:text="${file.fileName}"></p>
-                                <a class="delete" th:onclick="deleteFile(${file.id})">
+                                <a class="delete" th:onclick="'deleteFile('+${file.id}+')'">
                                     <i class="bi bi-x-circle"></i>
                                 </a>
-                                <a class="represent" th:onclick="representativeFile(${file.id})">
-                                    <i class="bi bi-check-circle"></i>
+                                <a class="represent" th:onclick="'representativeFile('+${file.id}+')'">
+                                    <i class="bi bi-check-circle-fill" th:if="${file.isRepresentative} eq true"></i>
+                                    <i class="bi bi-check-circle" th:if="${file.isRepresentative} ne true"></i>
                                 </a>
                             </div>
                         </div>
@@ -136,11 +139,12 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="hidden" name="categoryId" id="categoryId" value="">
-                        <input type="hidden" name="id" id="goodsId" value="">
+                        <input type="hidden" name="categoryId" id="categoryId" value=""
+                               th:value="${getGoods.categoryId}">
+                        <input type="hidden" name="id" id="goodsId" value="" th:value="${getGoods.id}">
                         <input type="hidden" maxlength="10"
                                name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"
-                               value="0"/>
+                               value="" th:value="${getGoods.currentBiddingPrice}"/>
                         <input type="hidden" maxlength="10"
                                name="representativeImgName" id="representativeImgName"
                                class="form-control price-comma"/>

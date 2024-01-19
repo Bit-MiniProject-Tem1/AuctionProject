@@ -16,4 +16,6 @@ public interface AuctionRepositoryCustom {
     List<Auction> findByforResent();
 
     List<Auction> findByforFinal();
+
+    void updaterepresentativeImg(Auction auction);
 }
