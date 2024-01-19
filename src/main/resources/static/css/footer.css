@@ -1,11 +1,16 @@
+footer {
+    float: left;
+    width: 100%;
+}
+
 .footer_top {
-border-top: 1px solid #ebebeb;
-border-bottom: 1px solid #ebebeb;
-margin-left: auto;
-margin-right: auto;
-max-width: 1200px;
-padding-top: 50px;
-width: 1200px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    padding-top: 50px;
+    width: 1200px;
     display: flex;
 }
 
@@ -26,7 +31,7 @@ width: 1200px;
 
 }
 
-.agree_box+.agree_box {
+.agree_box + .agree_box {
     margin-left: 80px;
 }
 
@@ -38,15 +43,15 @@ width: 1200px;
 
 .agree_box .agree_list {
     padding-top: 16px;
-     padding-left: 0;
+    padding-left: 0;
 }
 
- .agree_item+.agree_item {
-     margin-top: 12px;
- }
+.agree_item + .agree_item {
+    margin-top: 12px;
+}
 
 .agree_box .agree_link {
-    color: rgba(34,34,34,.5);
+    color: rgba(34, 34, 34, .5);
     display: inline-block;
     font-size: 14px;
     letter-spacing: -.21px;
@@ -61,20 +66,24 @@ width: 1200px;
     letter-spacing: -.16px;
     font-family: Pretendard;
 }
+
 .service_time {
     padding-top: 8px;
 }
+
 .item_box {
     line-height: 17px;
 }
+
 .time_term {
     max-width: 280px;
-    color: rgba(34,34,34,.5);
+    color: rgba(34, 34, 34, .5);
     float: left;
     font-size: 13px;
     line-height: 17px;
     font-family: Pretendard;
 }
+
 .service_noti {
     font-size: 13px;
     letter-spacing: -.07px;
@@ -89,11 +98,13 @@ width: 1200px;
 .footer_top .service_btn_box .btn {
     border-radius: 0;
 }
+
 .footer_top .soild {
     background-color: #222;
     color: white;
     font-weight: 700;
 }
+
 .samll {
     border-radius: 10px;
     font-size: 12px;
@@ -102,6 +113,7 @@ width: 1200px;
     padding: 0 14px;
     font-family: GmarketSans;
 }
+
 .footer_top .btn {
     align-items: center;
     cursor: pointer;
@@ -112,6 +124,7 @@ width: 1200px;
     --bs-btn-hover-border-color: none;
     color: white;
 }
+
 .customer_service {
     margin-left: 500px;
 }

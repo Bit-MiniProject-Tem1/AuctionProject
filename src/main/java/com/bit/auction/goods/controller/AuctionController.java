@@ -228,31 +228,8 @@ public class AuctionController {
 
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
-
-            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-                List<AuctionDTO> searchResult = auctionService.searchAuctions(searchQuery, statusList);
-
-                // 전체 항목을 가져오기
-                Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
-                List<AuctionDTO> allAuctions = auctionPage.getContent();
-
-                if (!searchResult.isEmpty()) {
-                    // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
-                    mav.addObject("auctionList", searchResult);
-                    mav.addObject("topCategoryName", "검색 결과");
-
-                } else {
-                    // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
-                    mav.addObject("auctionList", allAuctions);
-                    mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
-                    mav.addObject("showAlertValue", true);
-                }
-            } else {
-                // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
-                Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
-                // List<AuctionDTO> allAuctions = auctionPage.getContent();
-                mav.addObject("auctionList", auctionPage);
-            }
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            mav.addObject("auctionList", auctionPage);
 
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
@@ -270,6 +247,64 @@ public class AuctionController {
 
         mav.setViewName("auction/getAuctionList.html");
 
+        return mav;
+    }
+
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam(required = false) Map<String, Object> paramMap,
+                               @PageableDefault(page = 0, size = 12) Pageable pageable,
+                               @RequestParam(required = false) String searchQuery) {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("auction/getAuctionList.html");
+
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
+
+        if (paramMap.get("category") == null) {
+            mav.addObject("categoryList", categoryList);
+        } else {
+            categoryList = categoryService.searchSubCategoryList(Long.valueOf(String.valueOf(paramMap.get("category"))));
+            mav.addObject("categoryList", categoryList);
+        }
+
+        List<String> targetList = new ArrayList<>();
+        if (paramMap.get("target") != null) {
+            targetList = Arrays.asList(paramMap.get("target").toString().split(","));
+        }
+
+        List<Character> statusList = new ArrayList<>();
+        if (paramMap.get("closing") != null) {
+            String[] status = paramMap.get("closing").toString().split(",");
+            for (String s : status) {
+                statusList.add(s.charAt(0));
+            }
+        }
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            List<AuctionDTO> searchResult = auctionService.searchAuctions(searchQuery, statusList);
+
+            // 전체 항목을 가져오기
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            List<AuctionDTO> allAuctions = auctionPage.getContent();
+
+            if (!searchResult.isEmpty()) {
+                // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
+                mav.addObject("auctionList", searchResult);
+                mav.addObject("topCategoryName", "검색 결과");
+
+            } else {
+                // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
+                mav.addObject("auctionList", allAuctions);
+                mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
+                mav.addObject("showAlertValue", true);
+            }
+        } else {
+            // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            List<AuctionDTO> allAuctions = auctionPage.getContent();
+            mav.addObject("auctionList", auctionPage);
+        }
         return mav;
     }
 

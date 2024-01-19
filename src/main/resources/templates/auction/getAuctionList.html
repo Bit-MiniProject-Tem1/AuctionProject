@@ -111,7 +111,7 @@
             <div class="search-goods" th:each="auction : ${auctionList}">
                 <div class="goods-img">
                     <figure class="img_wrapper">
-                        <a href="#">
+                        <a href="#" th:href="'/auction/goods/'+${auction.id}">
                             <img class="d-block w-100"
                                  src=""
                                  th:src="@{/img/no-preview.jpeg}"
@@ -133,7 +133,7 @@
                         <span class="seconds">0</span>
                     </div>
                 </div>
-                <div class="title" th:text="${auction.title}"></div>
+                <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span th:text="${auction.title}"></span></a></div>
                 <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
                 <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
                 <div class="user-name">
@@ -160,9 +160,6 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <!--
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                --->
                 <li class="page-item"  th:each="page : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" href="#" th:href="@{/auction/goods-list(page=${page - 1})}" th:text="${page}">1</a></li>
                 <li class="page-item" th:if="${pageNumber < totalPages - 1}">
                     <a class="page-link" href="#" aria-label="Next" th:href="@{/auction/goods-list(page=${pageNumber + 1})}">
