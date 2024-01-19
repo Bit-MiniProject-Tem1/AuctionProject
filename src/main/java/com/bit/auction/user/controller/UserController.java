@@ -1,17 +1,16 @@
 package com.bit.auction.user.controller;
 
+import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -23,6 +22,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AuctionService auctionService;
+
     @GetMapping("/join")
     public ModelAndView getJoin() {
         ModelAndView mav = new ModelAndView();
@@ -104,6 +105,18 @@ public class UserController {
         return mav;
     }
 
+    @GetMapping("/reg-goods")
+    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        ModelAndView mav = new ModelAndView();
+
+        String regUserId = "kim";
+
+        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
+        mav.setViewName("user/mypage/getMyAuctionList.html");
+
+        return mav;
+    }
     // --------------------------------------------------------- //
 
     @PostMapping("/id-check")
@@ -116,7 +129,7 @@ public class UserController {
         try {
             int idCheck = userService.idCheck(userDTO.getUserId());
 
-            if(idCheck == 0) {
+            if (idCheck == 0) {
                 returnMap.put("idCheckMsg", "idOk");
             } else {
                 returnMap.put("idCheckMsg", "idFail");
@@ -126,7 +139,7 @@ public class UserController {
             response.setStatusCode(HttpStatus.OK.value());
 
             return ResponseEntity.ok(response);
-        } catch(Exception e) {
+        } catch (Exception e) {
             response.setErrorCode(501);
             response.setErrorMessage(e.getMessage());
             response.setStatusCode(HttpStatus.BAD_REQUEST.value());
@@ -134,7 +147,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
 
 
 }

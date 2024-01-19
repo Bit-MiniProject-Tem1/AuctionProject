@@ -65,6 +65,28 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionDTOPageList;
     }
 
+    @Override
+    public Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status) {
+        List<Character> statusList = new ArrayList<>();
+
+        if (status == null || status.isEmpty()) {
+            statusList.add('S');
+            statusList.add('C');
+            statusList.add('E');
+        } else if (status.equals("S")) {
+            statusList.add('S');
+        } else if (status.equals("E")) {
+            statusList.add('E');
+        } else if (status.equals("C")) {
+            statusList.add('C');
+        }
+
+        Page<Auction> auctionPageList = auctionRepository.searchMyAuctionList(pageable, regUserId, statusList);
+        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+
+        return auctionDTOPageList;
+    }
+
     @Transactional
     @Override
     public void insertAuction(AuctionDTO auctionDTO, Long categoryId) {
@@ -124,7 +146,7 @@ public class AuctionServiceImpl implements AuctionService {
             }
             auctionImgRepository.deleteById(img.getId());
         });
-        
+
         auctionRepository.saveOne(auction);
     }
 

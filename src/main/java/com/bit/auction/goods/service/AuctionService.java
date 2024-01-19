@@ -11,6 +11,8 @@ public interface AuctionService {
 
     Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String filter, List<String> target, List<Character> status);
 
+    Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status);
+
     void insertAuction(AuctionDTO auctionDTO, Long categoryId);
 
     void updateAuction(AuctionDTO auctionDTO, Long categoryId);

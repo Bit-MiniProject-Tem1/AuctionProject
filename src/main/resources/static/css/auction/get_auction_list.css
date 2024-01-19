@@ -51,6 +51,10 @@
     font-weight: 700;
 }
 
+.sub-category-list, .filter-list {
+    display: none;
+}
+
 .filter-list p {
     width: 100%;
     margin: 0;

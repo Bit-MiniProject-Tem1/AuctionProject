@@ -11,6 +11,18 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
+        <script>
+            $(document).ready(function() {
+                const urlParams = new URL(location.href).searchParams;
+                const name = urlParams.get('regUser');
+                console.log(name);
+
+                if(name==null){
+                    $(".sub-category-list").css("display", "block");
+                    $(".filter-list").css("display", "block");
+                }
+            });
+        </script>
     </th:block>
 </head>
 <body>
@@ -131,7 +143,7 @@
                 <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
                 <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
                 <div class="user-name">
-                    <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
+                    <i class="bi bi-person"></i><a href="#" th:href="'/auction/goods-list?regUser='+${auction.regUserId}"> <span th:text="${auction.regUserId}"></span></a>
                 </div>
                 <div class="favorite-view-group">
                     <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
@@ -139,8 +151,6 @@
                 </div>
             </div>
         </div>
-
-
         <nav aria-label="Page navigation example" class="goods-list-page">
             <ul class="pagination justify-content-center" th:if="${auctionList.totalElements > 0}"
                 th:with="pageNumber = ${auctionList.pageable.pageNumber},
@@ -162,7 +172,6 @@
                 </li>
             </ul>
         </nav>
-
     </div>
 </div>
 </body>

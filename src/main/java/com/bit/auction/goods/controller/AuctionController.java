@@ -189,17 +189,30 @@ public class AuctionController {
     @GetMapping("/goods/{id}")
     public ModelAndView getGoods(@PathVariable("id") Long categoryId) {
         ModelAndView mav = new ModelAndView();
-
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
         mav.addObject("getGoods", auctionService.getAuctionGoods(categoryId));
         mav.setViewName("auction/getAuction.html");
 
         return mav;
     }
 
+    @GetMapping("/reg-goods")
+    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        ModelAndView mav = new ModelAndView();
+
+        String regUserId = "kim";
+
+        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
+        mav.setViewName("user/mypage/getMyAuctionList.html");
+
+        return mav;
+    }
+
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
-                                     @PageableDefault(page = 0, size = 12) Pageable pageable,
-                                     @RequestParam(required = false) String searchQuery) {
+                                     @PageableDefault(page = 0, size = 12) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("auction/getAuctionList.html");
 
@@ -226,11 +239,17 @@ public class AuctionController {
             }
         }
 
+        if (paramMap.get("regUser") != null) {
+            String regUserId = paramMap.get("regUser").toString();
+            mav.addObject("topCategoryName", regUserId);
+            mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, "S"));
+            return mav;
+        }
+
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
             mav.addObject("auctionList", auctionPage);
-
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
             mav.addObject("topCategoryName", categoryService.getCategoryName(categoryId));
@@ -244,8 +263,6 @@ public class AuctionController {
                 mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", targetList, statusList));
             }
         }
-
-        mav.setViewName("auction/getAuctionList.html");
 
         return mav;
     }

@@ -30,7 +30,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
-            auctionImgRepository.updaterepresentativeImg(auction);
+            auctionImgRepository.updateRepresentativeImg(auction);
             em.merge(auction);
         }
     }
@@ -61,6 +61,34 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
                 .where(eqCategoryId(categoryId, subCategoryIdList),
                         eqTarget(targetList),
                         eqStatus(statusList))
+                .from(auction)
+                .fetchOne();
+
+        return new PageImpl<>(auctionList, pageable, totalCnt);
+    }
+
+    @Override
+    public Page<Auction> searchMyAuctionList(Pageable pageable, String regUserId, List<Character> statusList) {
+        List<Auction> auctionList = jpaQueryFactory
+                .selectFrom(auction)
+                .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
+                .fetch();
+
+        auctionList.forEach(a -> {
+            String url = jpaQueryFactory
+                    .select(auctionImg.fileUrl)
+                    .from(auctionImg)
+                    .where(auctionImg.auction.id.eq(a.getId())
+                            .and(auctionImg.isRepresentative.eq(true))
+                    )
+                    .fetchOne();
+
+            a.representativeImgUrl(url);
+        });
+
+        long totalCnt = jpaQueryFactory
+                .select(auction.count())
+                .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
                 .from(auction)
                 .fetchOne();
 

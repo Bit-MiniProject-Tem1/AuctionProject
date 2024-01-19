@@ -28,7 +28,7 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
 
     @Override
     @Transactional
-    public void updaterepresentativeImg(Auction auction) {
+    public void updateRepresentativeImg(Auction auction) {
         List<AuctionImg> auctionImgList = jpaQueryFactory
                 .selectFrom(auctionImg)
                 .where(auctionImg.auction.id.eq(auction.getId()))

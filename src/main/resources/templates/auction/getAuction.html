@@ -82,7 +82,14 @@
                         </p>
                         <p class="line-description remaining-time">
                             <i class="bi bi-clock"></i>
-                            05일04:03:37
+                            <span class="end_date"
+                                  th:text="${#temporals.format(getGoods.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                                  style="display: none"></span>
+                            <span class="months">0</span>
+                            <span class="days">0</span>
+                            <span class="hours">0</span>
+                            <span class="minutes">0</span>
+                            <span class="seconds">0</span>
                         </p>
                     </div>
                 </div>
@@ -119,7 +126,8 @@
                 <div class="user-bidding-container light-border-top">
                     <div class="user">
                         판매자<br>
-                        <span th:text="${getGoods.regUserId}"></span><i class="bi bi-chevron-right"></i>
+                        <a href="#" th:href="'/auction/goods-list?regUser='+${getGoods.regUserId}"> <span
+                                th:text="${getGoods.regUserId}"></span><i class="bi bi-chevron-right"></i></a>
                     </div>
                     <div class="bidding-info">
                         <table class="table table-striped">

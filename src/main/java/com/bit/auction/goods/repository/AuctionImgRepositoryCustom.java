@@ -6,5 +6,5 @@ import com.bit.auction.goods.entity.AuctionImg;
 public interface AuctionImgRepositoryCustom {
     void saveOne(AuctionImg auctionImg);
 
-    void updaterepresentativeImg(Auction auction);
+    void updateRepresentativeImg(Auction auction);
 }

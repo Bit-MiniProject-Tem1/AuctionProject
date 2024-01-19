@@ -3,6 +3,7 @@ var originRepresentativeImgName;
 var startingPrice;
 var immediatePrice;
 var description;
+let editor;
 
 var fileNo = 0;
 var filesArr = new Array(); //originFiles
@@ -81,7 +82,6 @@ function deleteFile(num) {
     } else {
         filesArr[num].is_delete = true;
     }
-    console.log(deletefilesArr);
     document.querySelector("#file" + num).remove();
 }
 
@@ -125,24 +125,6 @@ function representativeFile(num) {
 }
 
 $(() => {
-    let editor;
-
-    ClassicEditor.create(document.querySelector('#editor'), {
-        toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
-        shouldNotGroupWhenFull: false,
-        language: "ko",
-        ckfinder: {
-            uploadUrl: '/auction/img/upload'
-        }
-    }).then(newEditor => {
-        editor = newEditor;
-        if (description != null) {
-            editor.setData(description);
-        }
-    }).catch(error => {
-        console.error(error);
-    });
-
     const today = new Date();
     const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3);
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
@@ -196,15 +178,11 @@ $(() => {
 
         formData.set("deleteAuctionImgList", deletefilesArr);
         formData.set("currentBiddingPrice", 0);
-        console.log(originRepresentativeImgName);
-        console.log("representativeName : " + representativeName);
         formData.set("representativeImgName", representativeName);
         formData.set("description", editor.getData());
         if ($("#drop-topCategory").val() === "" || $("#drop-topCategory").val() == null) {
             formData.set("categoryId", categoryId);
         }
-
-        console.log(formData);
 
         $.ajax({
             method: 'put',
