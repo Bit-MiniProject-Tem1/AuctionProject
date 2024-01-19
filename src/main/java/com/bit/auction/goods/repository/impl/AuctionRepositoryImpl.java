@@ -1,7 +1,6 @@
 package com.bit.auction.goods.repository.impl;
 
 import com.bit.auction.goods.entity.Auction;
-import com.bit.auction.goods.entity.AuctionImg;
 import com.bit.auction.goods.repository.AuctionRepositoryCustom;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -23,6 +22,7 @@ import static com.bit.auction.goods.entity.QAuctionImg.auctionImg;
 public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     private final EntityManager em;
+    private final AuctionImgRepositoryImpl auctionImgRepository;
 
     @Override
     @Transactional
@@ -30,38 +30,9 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
-            updaterepresentativeImg(auction);
+            auctionImgRepository.updaterepresentativeImg(auction);
             em.merge(auction);
         }
-    }
-
-    public void updaterepresentativeImg(Auction auction) {
-        List<AuctionImg> auctionImgList = jpaQueryFactory
-                .selectFrom(auctionImg)
-                .where(auctionImg.auction.id.eq(auction.getId()))
-                .fetch();
-
-        auctionImgList.forEach(img -> {
-            if (!img.getFileName().equals(auction.getRepresentativeImgName())) {
-                jpaQueryFactory
-                        .update(auctionImg)
-                        .set(auctionImg.isRepresentative, false)
-                        .where(auctionImg.id.eq(img.getId()))
-                        .execute();
-                em.clear();
-                em.flush();
-            } else {
-                if (!img.isRepresentative()) {
-                    jpaQueryFactory
-                            .update(auctionImg)
-                            .set(auctionImg.isRepresentative, true)
-                            .where(auctionImg.id.eq(img.getId()))
-                            .execute();
-                    em.clear();
-                    em.flush();
-                }
-            }
-        });
     }
 
     @Override

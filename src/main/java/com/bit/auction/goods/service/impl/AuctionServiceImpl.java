@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -115,8 +116,12 @@ public class AuctionServiceImpl implements AuctionService {
         List<Long> deleteIdList = auctionDTO.getDeleteAuctionImgList().stream().toList();
         List<AuctionImg> deleteImgList = auctionImgRepository.findAllById(deleteIdList);
 
+        AtomicBoolean isRepresentative = new AtomicBoolean(false);
         deleteImgList.forEach(img -> {
             fileUtils.deleteObject("auction/" + img.getFileName());
+            if (img.isRepresentative()) {
+                isRepresentative.set(true);
+            }
             auctionImgRepository.deleteById(img.getId());
         });
 
