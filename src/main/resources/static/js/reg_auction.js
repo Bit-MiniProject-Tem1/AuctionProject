@@ -186,12 +186,18 @@ $(() => {
             }
         }
 
+        if (filesArr.length == 0 || filesArr == null) {
+            representativeName = originRepresentativeImgName;
+        }
+
         $("#uploadFiles")[0].files = dt.files;
 
         var formData = new FormData($("#insertForm")[0]);
 
         formData.set("deleteAuctionImgList", deletefilesArr);
         formData.set("currentBiddingPrice", 0);
+        console.log(originRepresentativeImgName);
+        console.log("representativeName : " + representativeName);
         formData.set("representativeImgName", representativeName);
         formData.set("description", editor.getData());
         if ($("#drop-topCategory").val() === "" || $("#drop-topCategory").val() == null) {

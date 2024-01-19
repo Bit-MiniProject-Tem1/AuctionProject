@@ -51,6 +51,8 @@ public class AuctionDTO {
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)
+                .representativeImgUrl(this.representativeImgUrl)
+                .representativeImgName(this.representativeImgName)
                 .view(this.view)
                 .auctionImgList(new ArrayList<>())
                 //   .descriptionImgList(new ArrayList<>())

@@ -9,7 +9,14 @@
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/to_price_comma.js}"></script>
+        <script th:src="@{/js/countdown.js}"></script>
+        <script th:inline="javascript">
+            $(() => {
+                var description = [[${getGoods.description}]];
+                $(".goods-detail").append(description);
+                $(".carousel-item").first().addClass("active view");
+            });
+        </script>
     </th:block>
 </head>
 <body>
@@ -18,38 +25,11 @@
         <div class="column-bind">
             <div id="goodsCarousel" class="column goods-img carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active view">
+                    <div class="carousel-item" th:each="file: ${getGoods.auctionImgDTOList}">
                         <figure class="img_wrapper">
                             <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2016/06/03/17/35/shoes-1433925_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="carousel-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/08/04/33/converse-2483523_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="carousel-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="carousel-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/08/04/33/converse-2483523_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="carousel-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/08/04/33/converse-2483523_1280.jpg"
+                                 src=""
+                                 th:src="${file.fileUrl}"
                                  alt=""/>
                         </figure>
                     </div>
@@ -65,54 +45,25 @@
                     <span class="visually-hidden">Next</span>
                 </button>
                 <div class="goods-img-group-list">
-                    <div class="goods-img-group-item">
+                    <div class="goods-img-group-item" th:each="file: ${getGoods.auctionImgDTOList}">
                         <figure class="img_wrapper">
                             <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="goods-img-group-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="goods-img-group-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="goods-img-group-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                 alt=""/>
-                        </figure>
-                    </div>
-                    <div class="goods-img-group-item">
-                        <figure class="img_wrapper">
-                            <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 src=""
+                                 th:src="${file.fileUrl}"
                                  alt=""/>
                         </figure>
                     </div>
                 </div>
             </div>
             <div class="column goods-info">
-                <div class="title">
-                    제목
-                </div>
+                <div class="title" th:text="${getGoods.title}"></div>
                 <div class="container light-border">
                     <div class="inline">
                         <p class="line-title">
                             시작가
                         </p>
                         <p class="line-description">
-                            60,000<span class="won">원</span>
+                            <span th:text="${getGoods.startingPrice}"></span><span class="won">원</span>
                         </p>
                     </div>
                     <div class="inline">
@@ -120,7 +71,7 @@
                             현재가
                         </p>
                         <p class="line-description">
-                            70,000<span class="won">원</span>
+                            <span th:text="${getGoods.currentBiddingPrice}"></span><span class="won">원</span>
                         </p>
                     </div>
                 </div>
@@ -143,10 +94,9 @@
                             </div>
                             <div class="link-description">
                                 즉시입찰가<br>
-                                <span class="price">90,000<span class="won">원</span></span>
+                                <span class="price" th:text="${getGoods.immediatePrice}+'원'"></span>
                             </div>
                         </a>
-                        1,000원 단위 입찰
                     </div>
                     <div class="link-group">
                         <a href="#" class="link btn-green">
@@ -160,17 +110,16 @@
                                 <span class="price won">원</span>
                             </div>
                         </a>
-                        1,000원 단위 입찰<br>
                         원하는 입찰 금액을 적어주세요.
                     </div>
                 </div>
                 <a href="#" class="favorite-link">
-                    <i class="bi bi-heart"></i>관심상품 <span>345</span>
+                    <i class="bi bi-heart"></i>관심&nbsp;<span>345</span>
                 </a>
                 <div class="user-bidding-container light-border-top">
                     <div class="user">
                         판매자<br>
-                        <span>사용자1</span><i class="bi bi-chevron-right"></i>
+                        <span th:text="${getGoods.regUserId}"></span><i class="bi bi-chevron-right"></i>
                     </div>
                     <div class="bidding-info">
                         <table class="table table-striped">
@@ -205,9 +154,7 @@
                     경매를 입찰하기 전, 경매 물품의 상세정보를 꼼꼼히 확인해주세요.
                 </span>
             </div>
-            <div class="goods-detail">
-                상세 정보
-            </div>
+            <div class="goods-detail"></div>
         </div>
         <div class="container light-border-bottom">
             <div class="question-title">

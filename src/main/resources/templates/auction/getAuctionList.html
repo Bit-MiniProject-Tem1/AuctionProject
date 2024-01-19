@@ -11,12 +11,6 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
-        <script th:inline="javascript">
-            $(() => {
-                var auctionList = [[${auctionList}]];
-                console.log(auctionList);
-            });
-        </script>
     </th:block>
 </head>
 <body>
@@ -86,7 +80,7 @@
         <div class="container">
             <div class="title">
                 <div class="goods-number">
-                    상품 11,713
+                    상품 <span th:text="${auctionList.totalElements}"></span>
                 </div>
                 <div class="filter-sorting btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"

@@ -114,7 +114,7 @@ public class Auction {
     public void representativeImgUrl(String representativeImgUrl) {
         this.representativeImgUrl = representativeImgUrl;
     }
-
+    
     // public void addDescriptionImgList(DescriptionImg descriptionImg) {
     //     this.descriptionImgList.add(descriptionImg);
     // }

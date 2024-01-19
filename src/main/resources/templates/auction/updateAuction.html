@@ -10,6 +10,7 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
+        <script th:src="@{/js/reg_auction.js}"></script>
         <script th:inline="javascript">
             $(() => {
                 startingPrice = [[${getGoods.startingPrice}]];
@@ -31,7 +32,6 @@
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
             });
         </script>
-        <script th:src="@{/js/reg_auction.js}"></script>
     </th:block>
 </head>
 <body>

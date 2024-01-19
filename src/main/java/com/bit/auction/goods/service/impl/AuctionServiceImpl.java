@@ -124,7 +124,7 @@ public class AuctionServiceImpl implements AuctionService {
             }
             auctionImgRepository.deleteById(img.getId());
         });
-
+        
         auctionRepository.saveOne(auction);
     }
 
