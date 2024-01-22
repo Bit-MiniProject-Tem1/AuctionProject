@@ -34,7 +34,6 @@ function addFile(obj) {
             };
             reader.readAsDataURL(file)
 
-            console.log(originRepresentativeImgName);
             let htmlData = '';
             htmlData += '<div id="file' + fileNo + '" class="filebox">';
             htmlData += '   <p class="name">' + file.name + '</p>';
@@ -43,7 +42,7 @@ function addFile(obj) {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle-fill"></i></a>';
                 representativeImg = file;
                 representativeName = representativeImg.name;
-
+                console.log(representativeName);
             } else {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle"></i></a>';
             }

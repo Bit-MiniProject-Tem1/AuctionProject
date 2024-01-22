@@ -63,9 +63,9 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
         });
 
         if (count.get() == 0) {
-            AuctionImg img = auctionImgList.get(0);
+            AuctionImg img = auction.getAuctionImgList().get(0);
             img.setRepresentative(true);
-            saveOne(img);
+            //  saveOne(img);
         }
     }
 }

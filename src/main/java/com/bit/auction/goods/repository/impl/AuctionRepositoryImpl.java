@@ -30,7 +30,9 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
-            auctionImgRepository.updateRepresentativeImg(auction);
+            if (auction.getAuctionImgList() != null || auction.getAuctionImgList().size() != 0) {
+                auctionImgRepository.updateRepresentativeImg(auction);
+            }
             em.merge(auction);
         }
     }

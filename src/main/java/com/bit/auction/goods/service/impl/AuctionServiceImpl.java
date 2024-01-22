@@ -121,25 +121,30 @@ public class AuctionServiceImpl implements AuctionService {
 
         Auction auction = auctionDTO.toEntity(category);
 
-        List<AuctionImg> auctionImgList = auctionDTO.getAuctionImgDTOList().stream()
-                .map(auctionImgDTO -> auctionImgDTO.toEntity(auction))
-                .toList();
+        if (auctionDTO.getAuctionImgDTOList() != null) {
+            List<AuctionImg> auctionImgList = auctionDTO.getAuctionImgDTOList().stream()
+                    .map(auctionImgDTO -> auctionImgDTO.toEntity(auction))
+                    .toList();
 
-        auctionImgList.forEach(auctionImg -> {
-            auction.addAuctionImg(auctionImg);
-        });
+            auctionImgList.forEach(auctionImg -> {
+                auction.addAuctionImg(auctionImg);
+            });
 
-        List<Long> deleteIdList = auctionDTO.getDeleteAuctionImgList().stream().toList();
-        List<AuctionImg> deleteImgList = auctionImgRepository.findAllById(deleteIdList);
+        }
 
-        AtomicBoolean isRepresentative = new AtomicBoolean(false);
-        deleteImgList.forEach(img -> {
-            fileUtils.deleteObject("auction/" + img.getFileName());
-            if (img.isRepresentative()) {
-                isRepresentative.set(true);
-            }
-            auctionImgRepository.deleteById(img.getId());
-        });
+        if (auctionDTO.getDeleteAuctionImgList() != null) {
+            List<Long> deleteIdList = auctionDTO.getDeleteAuctionImgList().stream().toList();
+            List<AuctionImg> deleteImgList = auctionImgRepository.findAllById(deleteIdList);
+
+            AtomicBoolean isRepresentative = new AtomicBoolean(false);
+            deleteImgList.forEach(img -> {
+                fileUtils.deleteObject("auction/" + img.getFileName());
+                if (img.isRepresentative()) {
+                    isRepresentative.set(true);
+                }
+                auctionImgRepository.deleteById(img.getId());
+            });
+        }
 
         auctionRepository.saveOne(auction);
     }

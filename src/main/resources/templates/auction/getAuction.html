@@ -13,6 +13,8 @@
         <script th:inline="javascript">
             $(() => {
                 var description = [[${getGoods.description}]];
+
+                console.log([[${getGoods.auctionImgDTOList}]]);
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
             });
@@ -33,19 +35,31 @@
                                  alt=""/>
                         </figure>
                     </div>
+                    <div class="carousel-item"
+                         th:if="${#lists.size(getGoods.auctionImgDTOList) eq 0}">
+                        <figure class="img_wrapper">
+                            <img class="d-block w-100"
+                                 src=""
+                                 th:src="@{/img/no-preview.jpeg}"
+                                 alt=""/>
+                        </figure>
+                    </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#goodsCarousel"
-                        data-bs-slide="prev">
+                        data-bs-slide="prev"
+                        th:if="${#lists.size(getGoods.auctionImgDTOList) ne 0}">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#goodsCarousel"
-                        data-bs-slide="next">
+                        data-bs-slide="next"
+                        th:if="${#lists.size(getGoods.auctionImgDTOList) ne 0}">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
                 <div class="goods-img-group-list">
-                    <div class="goods-img-group-item" th:each="file: ${getGoods.auctionImgDTOList}">
+                    <div class="goods-img-group-item" th:each="file: ${getGoods.auctionImgDTOList}"
+                         th:if="${#lists.size(getGoods.auctionImgDTOList) ne 0}">
                         <figure class="img_wrapper">
                             <img class="d-block w-100"
                                  src=""

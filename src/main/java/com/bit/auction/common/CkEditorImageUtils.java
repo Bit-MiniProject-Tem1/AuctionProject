@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.bit.auction.configuration.NaverConfiguration;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,9 @@ import java.util.UUID;
 public class CkEditorImageUtils {
     private final AmazonS3 s3;
 
+    @Value("${ncp.bucket}")
+    private String bucketName;
+
     public CkEditorImageUtils(NaverConfiguration naverConfiguration) {
         s3 = AmazonS3ClientBuilder.standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
@@ -39,8 +43,6 @@ public class CkEditorImageUtils {
     }
 
     public DescriptionImgDTO parseFileInfo(MultipartFile multipartFile, String directory) {
-        String bucketName = "bitcamp-bucket-122";
-
         DescriptionImgDTO descriptionImgDTO = new DescriptionImgDTO();
 
         String auctionImgOrigin = multipartFile.getOriginalFilename();

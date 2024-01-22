@@ -158,15 +158,17 @@ public class AuctionController {
                 }
             }
             Long categoryId = topCategoryId;
-            if (auctionDTO.getCategory() == null) {
+            if (auctionDTO.getCategoryId() == null) {
                 if (subCategoryId != null) {
                     categoryId = subCategoryId;
                 }
             } else {
-                categoryId = auctionDTO.getCategory().getId();
+                categoryId = auctionDTO.getCategoryId();
             }
 
-            auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
+            if (auctionDTO.getAuctionImgDTOList() != null || auctionDTO.getRepresentativeImgName() != null) {
+                auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
+            }
             auctionService.updateAuction(auctionDTO, categoryId);
 
             Map<String, String> returnMap = new HashMap<>();
