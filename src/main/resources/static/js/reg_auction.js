@@ -3,6 +3,7 @@ var originRepresentativeImgName;
 var startingPrice;
 var immediatePrice;
 var description;
+var status;
 let editor;
 
 var fileNo = 0;
@@ -146,6 +147,11 @@ $(() => {
         if ($("#immediatePrice").val() === '') {
             alert('즉시입찰가를 입력하세요.');
             $("#immediatePrice").focus();
+            return false;
+        }
+
+        if (status != 'S') {
+            alert("취소되거나 종료된 경매는 수정할 수 없습니다.");
             return false;
         }
 

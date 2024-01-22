@@ -12,6 +12,10 @@
     padding: 30px 40px;
 }
 
+.container {
+    margin: 0;
+}
+
 .goods-filter .nav-link {
     color: rgba(34, 34, 34, .5);
 }
@@ -49,6 +53,8 @@
 .info-title-category {
     width: 70%;
     padding: 0 10px;
+    color: rgba(34, 34, 34, .5);
+    font-weight: 600;
 }
 
 .info-title-category .title {

@@ -16,9 +16,10 @@
                 startingPrice = [[${getGoods.startingPrice}]];
                 immediatePrice = [[${getGoods.immediatePrice}]];
                 description = [[${getGoods.description}]];
-                categoryId = [[${getGoods.categoryId}]];
+                categoryId = [[${getGoods.category.id}]];
                 originRepresentativeImgName = [[${getGoods.representativeImgName}]];
-                var category = [[${getGoods.categoryName}]];
+                status = [[${getGoods.status}]];
+                var category = [[${getGoods.category.name}]];
                 var target = [[${getGoods.target}]];
                 originFileArr = [[${getGoods.auctionImgDTOList}]];
 
@@ -46,7 +47,7 @@
                 }).catch(error => {
                     console.error(error);
                 });
-                
+
             });
         </script>
     </th:block>
@@ -157,7 +158,7 @@
                 <tr>
                     <td align="center">
                         <input type="hidden" name="categoryId" id="categoryId" value=""
-                               th:value="${getGoods.categoryId}">
+                               th:value="${getGoods.category.id}">
                         <input type="hidden" name="id" id="goodsId" value="" th:value="${getGoods.id}">
                         <input type="hidden" maxlength="10"
                                name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"

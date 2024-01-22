@@ -63,7 +63,9 @@
                                 </figure>
                             </div>
                             <div class="info-title-category">
-                                <span th:text="${auction.categoryName}"></span><br>
+                                <span th:text="${auction.category.topCategory.name}+'> '"
+                                      th:if="${auction.category.topCategory} ne null"></span>
+                                <span th:text="${auction.category.name}"></span><br>
                                 <a href="#" th:href="'/auction/goods/'+${auction.id}">
                                     <span class="title" th:text="${auction.title}"></span></a>
                             </div>

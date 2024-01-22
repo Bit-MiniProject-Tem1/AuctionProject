@@ -87,8 +87,7 @@ public class Auction {
         return AuctionDTO.builder()
                 .id(this.id)
                 .regUserId(this.regUserId)
-                .categoryId(this.category.getId())
-                .categoryName(this.category.getName())
+                .category(this.category.toDTO())
                 .title(this.title)
                 .description(this.description)
                 .target(this.target)
@@ -114,7 +113,7 @@ public class Auction {
     public void representativeImgUrl(String representativeImgUrl) {
         this.representativeImgUrl = representativeImgUrl;
     }
-    
+
     // public void addDescriptionImgList(DescriptionImg descriptionImg) {
     //     this.descriptionImgList.add(descriptionImg);
     // }

@@ -36,9 +36,9 @@
             <ul>
                 <li th:each="category : ${categoryList}">
                     <a href="#" th:if="${param.category} == null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
-                    <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${param.category}, subCategory=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, subCategory=${category.id})}" th:text="${category.name}"></a>
                 </li>
-                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc=1)}">기타</a></li>
+                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, etc=1)}">기타</a></li>
             </ul>
         </div>
         <div class="filter-list">

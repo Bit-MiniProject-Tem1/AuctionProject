@@ -158,12 +158,12 @@ public class AuctionController {
                 }
             }
             Long categoryId = topCategoryId;
-            if (auctionDTO.getCategoryId() == null) {
+            if (auctionDTO.getCategory() == null) {
                 if (subCategoryId != null) {
                     categoryId = subCategoryId;
                 }
             } else {
-                categoryId = auctionDTO.getCategoryId();
+                categoryId = auctionDTO.getCategory().getId();
             }
 
             auctionDTO.setAuctionImgDTOList(auctionImgDTOList);

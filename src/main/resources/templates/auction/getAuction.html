@@ -56,6 +56,24 @@
                 </div>
             </div>
             <div class="column goods-info">
+                <div class="category">
+                    <a href="#" th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}"
+                       th:if="${getGoods.category.topCategory} ne null">
+                        <span th:text="${getGoods.category.topCategory.name}+'> '"
+                              th:if="${getGoods.category.topCategory} ne null"></span>
+                    </a>
+                    <a href="#"
+                       th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
+                       th:if="${getGoods.category.topCategory} ne null">
+                        <span th:text="${getGoods.category.name}"
+                              th:if="${getGoods.category.topCategory} ne null"></span>
+                    </a>
+                    <a href="#"
+                       th:href="'/auction/goods-list?category='+${getGoods.category.id}">
+                        <span th:text="${getGoods.category.name}"
+                              th:if="${getGoods.category.topCategory} eq null"></span>
+                    </a>
+                </div>
                 <div class="title" th:text="${getGoods.title}"></div>
                 <div class="container light-border">
                     <div class="inline">
