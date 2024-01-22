@@ -36,7 +36,7 @@
                     <tr class="table-secondary">
                         <th scope="col" class="info-title">경매정보</th>
                         <th scope="col" class="date-title">등록일자</th>
-                        <th scope="col" class="enddate-title">마감일자</th>
+                        <th scope="col" class="endDate-title">마감일자</th>
                         <th scope="col" class="starting-price-title">시작가</th>
                         <th scope="col" class="current-bidding-price-title">현재가</th>
                         <th scope="col" class="immediate-price-title">즉시입찰가</th>
@@ -64,11 +64,12 @@
                             </div>
                             <div class="info-title-category">
                                 <span th:text="${auction.categoryName}"></span><br>
-                                <span class="title" th:text="${auction.title}"></span>
+                                <a href="#" th:href="'/auction/goods/'+${auction.id}">
+                                    <span class="title" th:text="${auction.title}"></span></a>
                             </div>
                         </td>
-                        <td th:text="${auction.regDate}"></td>
-                        <td th:text="${auction.endDate}"></td>
+                        <td th:text="${#temporals.format(auction.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:text="${auction.startingPrice}+'원'"></td>
                         <td th:text="${auction.currentBiddingPrice}+'원'"></td>
                         <td th:text="${auction.immediatePrice}+'원'"></td>
@@ -78,7 +79,7 @@
                                 <span th:if="${auction.status} eq 'E'">경매종료</span>
                                 <span th:if="${auction.status} eq 'C'">경매취소</span>
                             </div>
-                            <div class="link-group">
+                            <div class="link-group" th:if="${auction.status} eq 'S'">
                                 <a href="#" class="link btn-green" th:href="'auction/goods-update/'+${auction.id}"
                                    th:if="${auction.status} eq 'S'">수정</a><br>
                                 <a href="#" class="link btn-red" th:href="'auction/cancel/'+${auction.id}"

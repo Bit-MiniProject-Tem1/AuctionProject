@@ -53,13 +53,7 @@ public class AuctionServiceImpl implements AuctionService {
             categoryId = 0L;
         }
 
-        List<Character> statusList = new ArrayList<>();
-        if (status != null || !status.isEmpty()) {
-            statusList.add('S');
-            statusList.addAll(status);
-        }
-
-        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, target, statusList);
+        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, target, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
 
         return auctionDTOPageList;

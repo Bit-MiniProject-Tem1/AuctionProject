@@ -150,9 +150,11 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         }
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+
         for (String target : targetList) {
             booleanBuilder.or(auction.target.eq(target));
         }
+
         return booleanBuilder;
     }
 
@@ -162,11 +164,11 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         }
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+
         for (Character status : statusList) {
             booleanBuilder.or(auction.status.eq(status));
         }
+
         return booleanBuilder;
     }
-
-
 }

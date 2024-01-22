@@ -232,11 +232,9 @@ public class AuctionController {
         }
 
         List<Character> statusList = new ArrayList<>();
+        statusList.add('S');
         if (paramMap.get("closing") != null) {
-            String[] status = paramMap.get("closing").toString().split(",");
-            for (String s : status) {
-                statusList.add(s.charAt(0));
-            }
+            statusList.add(paramMap.get("closing").toString().charAt(0));
         }
 
         if (paramMap.get("regUser") != null) {
