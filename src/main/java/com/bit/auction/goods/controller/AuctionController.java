@@ -347,4 +347,16 @@ public class AuctionController {
         mav.addObject("url", descriptionImgDTO.getFileUrl());
         return mav;
     }
+
+    @PutMapping("/img/notSave")
+    public ResponseEntity<String> handleNotSaveRequest() {
+        try {
+            auctionService.removeDescriptionImg(temporaryImage);
+            temporaryImage.clear();
+            return ResponseEntity.ok().body("Request processed successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
 }

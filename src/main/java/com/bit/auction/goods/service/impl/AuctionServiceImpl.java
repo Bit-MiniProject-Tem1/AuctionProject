@@ -181,7 +181,7 @@ public class AuctionServiceImpl implements AuctionService {
             while (matcher.find()) {
                 originImgList.add(matcher.group(1));
             }
-            
+
             originImgList.forEach(img -> {
                 int count = 0;
                 for (int i = 0; i < imgList.size(); i++) {
@@ -195,6 +195,19 @@ public class AuctionServiceImpl implements AuctionService {
                 }
             });
         }
+    }
+
+    @Override
+    public void removeDescriptionImg(List<String> temporaryImageList) {
+        if (temporaryImageList != null || temporaryImageList.size() > 0) {
+            temporaryImageList.forEach(img -> {
+                String imgName = img.replace("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/", "");
+
+                fileUtils.deleteObject(imgName);
+
+            });
+        }
+
     }
 
     @Override

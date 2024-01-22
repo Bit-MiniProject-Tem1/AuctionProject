@@ -8,6 +8,8 @@ let editor;
 var goodsId;
 var categoryId;
 
+var checkUnload;
+
 var fileNo = 0;
 var filesArr = new Array(); //originFiles
 var representativeImg;
@@ -136,6 +138,7 @@ $(() => {
     $("#endDate").attr("min", date);
 
     $("#update").on("click", () => {
+        checkUnload = false;
         if ($("#title").val() === '') {
             alert('제목을 입력하세요.');
             $("#title").focus();
@@ -212,6 +215,8 @@ $(() => {
     });
 
     $("#register").on("click", () => {
+        checkUnload = false;
+
         if ($("#title").val() === '') {
             alert('제목을 입력하세요.');
             $("#title").focus();

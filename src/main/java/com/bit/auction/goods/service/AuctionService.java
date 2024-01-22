@@ -19,6 +19,8 @@ public interface AuctionService {
 
     void removeDescriptionImg(String description, String originDescription, List<String> temporaryImageList);
 
+    void removeDescriptionImg(List<String> temporaryImageList);
+
     List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status);
 
     List<AuctionDTO> findByForRecentList();
