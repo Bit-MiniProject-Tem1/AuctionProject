@@ -21,6 +21,7 @@ public class AuctionDTO {
     private Long categoryId;
     private String title;
     private String description;
+    private String originDescription;
     private String target;
     private char status;
     private int startingPrice;
@@ -34,7 +35,6 @@ public class AuctionDTO {
     private String representativeImgUrl;
     private String representativeImgName;
     private List<Long> deleteAuctionImgList;
-    //  private List<DescriptionImgDTO> descriptionImgDTOList;
 
     public Auction toEntity(Category category) {
         return Auction.builder()
@@ -55,7 +55,6 @@ public class AuctionDTO {
                 .representativeImgName(this.representativeImgName)
                 .view(this.view)
                 .auctionImgList(new ArrayList<>())
-                //   .descriptionImgList(new ArrayList<>())
                 .build();
     }
 

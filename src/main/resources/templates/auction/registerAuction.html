@@ -11,6 +11,26 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
         <script th:src="@{/js/reg_auction.js}"></script>
+        <script>
+            $(document).ready(function () {
+                ClassicEditor.create(document.querySelector('#editor'), {
+                    toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
+                    shouldNotGroupWhenFull: false,
+                    language: "ko",
+                    ckfinder: {
+                        uploadUrl: '/auction/img/upload',
+                        withCredentials: true
+                    }
+                }).then(newEditor => {
+                    editor = newEditor;
+                    if (description != null) {
+                        editor.setData(description);
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
+            });
+        </script>
     </th:block>
 </head>
 <body>

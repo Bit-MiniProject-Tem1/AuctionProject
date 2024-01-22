@@ -32,6 +32,7 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryService categoryService;
     private final FileUtils fileUtils;
+    private List<String> temporaryImage = new ArrayList<>();
 
     @GetMapping("/recentproducts")
     public ModelAndView RentAuctionProducts() {
@@ -107,10 +108,14 @@ public class AuctionController {
             }
 
             auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
+
+            auctionService.removeDescriptionImg(auctionDTO.getDescription(), auctionDTO.getOriginDescription(), temporaryImage);
+            temporaryImage.clear();
+
             auctionService.insertAuction(auctionDTO, categoryId);
 
-            Map<String, String> returnMap = new HashMap<>();
 
+            Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "정상적으로 입력되었습니다.");
 
             response.setItem(returnMap);
@@ -169,10 +174,13 @@ public class AuctionController {
             if (auctionDTO.getAuctionImgDTOList() != null || auctionDTO.getRepresentativeImgName() != null) {
                 auctionDTO.setAuctionImgDTOList(auctionImgDTOList);
             }
+
+            auctionService.removeDescriptionImg(auctionDTO.getDescription(), auctionDTO.getOriginDescription(), temporaryImage);
+            temporaryImage.clear();
+
             auctionService.updateAuction(auctionDTO, categoryId);
 
             Map<String, String> returnMap = new HashMap<>();
-
             returnMap.put("msg", "정상적으로 수정되었습니다.");
 
             response.setItem(returnMap);
@@ -332,6 +340,8 @@ public class AuctionController {
         MultipartFile uploadFile = request.getFile("upload");
 
         DescriptionImgDTO descriptionImgDTO = ckEditorImageUtils.parseFileInfo(uploadFile, "description/");
+
+        temporaryImage.add(descriptionImgDTO.getFileUrl());
 
         mav.addObject("uploaded", true);
         mav.addObject("url", descriptionImgDTO.getFileUrl());

@@ -12,7 +12,7 @@ import lombok.*;
 @ToString
 public class AuctionImgDTO {
     private Long id;
-    private Long auctionId; // fk
+    private Long auctionId;
     private String fileUrl;
     private String fileName;
     private boolean isRepresentative;

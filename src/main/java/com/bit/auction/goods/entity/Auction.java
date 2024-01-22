@@ -33,7 +33,7 @@ public class Auction {
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "goods_description", nullable = false)
+    @Column(name = "goods_description", length = 1000, nullable = false)
     private String description;
 
     private String target;
@@ -68,9 +68,6 @@ public class Auction {
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
-    // @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    // @JsonManagedReference
-    // private List<DescriptionImg> descriptionImgList;
 
     @Transient
     private String representativeImgUrl;
@@ -113,8 +110,4 @@ public class Auction {
     public void representativeImgUrl(String representativeImgUrl) {
         this.representativeImgUrl = representativeImgUrl;
     }
-
-    // public void addDescriptionImgList(DescriptionImg descriptionImg) {
-    //     this.descriptionImgList.add(descriptionImg);
-    // }
 }

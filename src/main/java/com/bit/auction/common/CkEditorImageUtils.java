@@ -80,14 +80,23 @@ public class CkEditorImageUtils {
         return descriptionImgDTO;
     }
 
-    public String parseFileInto(MultipartFile uploadFile, String realPath) throws IOException {
-        String originalFileName = uploadFile.getOriginalFilename();
-        String ext = originalFileName.substring(originalFileName.indexOf("."));
-        String newFileName = UUID.randomUUID() + ext;
-        realPath = System.getProperty("user.dir") + "\\src\\";
+    public String parseFileInto(MultipartFile uploadFile) throws IOException {
+        SimpleDateFormat formater = new SimpleDateFormat("yyyyMMddHHmmsss");
+        Date nowDate = new Date();
+        String nowDateStr = formater.format(nowDate);
 
-        String savePath = realPath + "/main/resources/static/upload/" + newFileName;
-        String uploadPath = realPath + "\\main\\resources\\static\\upload\\" + newFileName;
+        UUID uuid = UUID.randomUUID();
+        String originalFileName = uploadFile.getOriginalFilename();
+        String imgName = nowDateStr + "_" + uuid.toString() + "_" + originalFileName.substring(originalFileName.indexOf("."));
+
+
+        // String originalFileName = uploadFile.getOriginalFilename();
+        // String ext = originalFileName.substring(originalFileName.indexOf("."));
+        // String newFileName = UUID.randomUUID() + ext;
+        String realPath = System.getProperty("user.dir") + "\\src\\";
+
+        String savePath = realPath + "/main/resources/static/upload/" + imgName;
+        String uploadPath = realPath + "\\main\\resources\\static\\upload\\" + imgName;
 
         Path path = Paths.get(savePath).toAbsolutePath();
         uploadFile.transferTo(path.toFile());

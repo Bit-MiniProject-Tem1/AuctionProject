@@ -19,7 +19,7 @@ public class AuctionImg {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "auction_id")
-    private Auction auction; // fk
+    private Auction auction;
     private String fileUrl;
     private String fileName;
     private boolean isRepresentative;

@@ -5,6 +5,8 @@ var immediatePrice;
 var description;
 var status;
 let editor;
+var goodsId;
+var categoryId;
 
 var fileNo = 0;
 var filesArr = new Array(); //originFiles
@@ -42,7 +44,6 @@ function addFile(obj) {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle-fill"></i></a>';
                 representativeImg = file;
                 representativeName = representativeImg.name;
-                console.log(representativeName);
             } else {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle"></i></a>';
             }
@@ -120,8 +121,6 @@ function representativeFile(num) {
         representativeImg = filesArr[num];
         representativeName = filesArr[num].name;
     }
-
-    console.log(representativeName);
 }
 
 $(() => {
@@ -173,8 +172,9 @@ $(() => {
             }
         }
 
-        if (filesArr.length == 0 || filesArr == null) {
-            representativeName = originRepresentativeImgName;
+        if (representativeName == null) {
+            alert('대표 이미지를 1개 이상 등록하세요.');
+            return false;
         }
 
         $("#uploadFiles")[0].files = dt.files;
@@ -184,10 +184,13 @@ $(() => {
         formData.set("deleteAuctionImgList", deletefilesArr);
         formData.set("currentBiddingPrice", 0);
         formData.set("representativeImgName", representativeName);
+
         formData.set("description", editor.getData());
         if ($("#drop-topCategory").val() === "" || $("#drop-topCategory").val() == null) {
             formData.set("categoryId", categoryId);
         }
+        formData.set("id", goodsId);
+        formData.set("originDescription", description);
 
         $.ajax({
             method: 'put',
@@ -248,6 +251,11 @@ $(() => {
         if ($("#startingPrice").val() > $("#immediatePrice").val()) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
+            return false;
+        }
+
+        if (representativeName == null) {
+            alert('대표 이미지를 1개 이상 등록하세요.');
             return false;
         }
 

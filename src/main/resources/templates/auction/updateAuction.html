@@ -12,12 +12,15 @@
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
         <script th:src="@{/js/reg_auction.js}"></script>
         <script th:inline="javascript">
-            $(() => {
+            $(document).ready(function () {
+                goodsId = [[${getGoods.id}]];
                 startingPrice = [[${getGoods.startingPrice}]];
                 immediatePrice = [[${getGoods.immediatePrice}]];
                 description = [[${getGoods.description}]];
                 categoryId = [[${getGoods.category.id}]];
+                representativeName = [[${getGoods.representativeImgName}]];
                 originRepresentativeImgName = [[${getGoods.representativeImgName}]];
+
                 status = [[${getGoods.status}]];
                 var category = [[${getGoods.category.name}]];
                 var target = [[${getGoods.target}]];
@@ -29,7 +32,6 @@
 
                 $("#current-category").append("<i class=\"bi bi-dash-square\" style='color: #6c757d; margin-left:4px; margin-right: 10px;'></i>" + category);
 
-
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
 
                 ClassicEditor.create(document.querySelector('#editor'), {
@@ -37,7 +39,8 @@
                     shouldNotGroupWhenFull: false,
                     language: "ko",
                     ckfinder: {
-                        uploadUrl: '/auction/img/upload'
+                        uploadUrl: '/auction/img/upload',
+                        withCredentials: true
                     }
                 }).then(newEditor => {
                     editor = newEditor;
@@ -47,7 +50,6 @@
                 }).catch(error => {
                     console.error(error);
                 });
-
             });
         </script>
     </th:block>
@@ -157,15 +159,14 @@
                 </tr>
                 <tr>
                     <td align="center">
+                        <!--
                         <input type="hidden" name="categoryId" id="categoryId" value=""
                                th:value="${getGoods.category.id}">
                         <input type="hidden" name="id" id="goodsId" value="" th:value="${getGoods.id}">
-                        <input type="hidden" maxlength="10"
-                               name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"
-                               value="" th:value="${getGoods.currentBiddingPrice}"/>
-                        <input type="hidden" maxlength="10"
+                               <input type="hidden" maxlength="10"
                                name="representativeImgName" id="representativeImgName"
                                class="form-control price-comma"/>
+                         -->
                         <button id="update" type="button">수정</button>
                     </td>
                 </tr>

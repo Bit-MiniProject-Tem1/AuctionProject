@@ -26,6 +26,9 @@ public class FileUtils {
     @Value("${ncp.accessKey}")
     private String accessKey;
 
+    @Value("${ncp.bucket}")
+    private String bucketName;
+
     public FileUtils(NaverConfiguration naverConfiguration) {
         s3 = AmazonS3ClientBuilder.standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
@@ -85,8 +88,6 @@ public class FileUtils {
     }
 
     public void deleteObject(String url) {
-        String bucketName = "bitcamp-bucket-122";
-
         s3.deleteObject(new DeleteObjectRequest(bucketName, url));
     }
 }

@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -147,6 +149,52 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         auctionRepository.saveOne(auction);
+    }
+
+    @Override
+    public void removeDescriptionImg(String description, String originDescription, List<String> temporaryImageList) {
+        Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+        List<String> imgList = new ArrayList<>();
+        Matcher matcher = pattern.matcher(description);
+        while (matcher.find()) {
+            imgList.add(matcher.group(1));
+        }
+
+        if (temporaryImageList != null || temporaryImageList.size() > 0) {
+            temporaryImageList.forEach(img -> {
+                int count = 0;
+                for (int i = 0; i < imgList.size(); i++) {
+                    if (imgList.contains(img)) {
+                        count++;
+                    }
+                }
+                String imgName = img.replace("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/", "");
+                if (count == 0) {
+                    fileUtils.deleteObject(imgName);
+                }
+            });
+        }
+
+        if (originDescription != null) {
+            List<String> originImgList = new ArrayList<>();
+            matcher = pattern.matcher(originDescription);
+            while (matcher.find()) {
+                originImgList.add(matcher.group(1));
+            }
+            
+            originImgList.forEach(img -> {
+                int count = 0;
+                for (int i = 0; i < imgList.size(); i++) {
+                    if (imgList.contains(img)) {
+                        count++;
+                    }
+                }
+                String imgName = img.replace("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/", "");
+                if (count == 0) {
+                    fileUtils.deleteObject(imgName);
+                }
+            });
+        }
     }
 
     @Override
