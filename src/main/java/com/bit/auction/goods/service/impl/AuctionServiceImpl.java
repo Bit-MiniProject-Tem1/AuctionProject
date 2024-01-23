@@ -244,6 +244,11 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
+    public void cancelAuction(Long id) {
+        auctionRepository.updateStatusByCancel(id);
+    }
+
+    @Override
     public List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status) {
         List<Character> statusList = new ArrayList<>();
         if (status != null || !status.isEmpty()) {

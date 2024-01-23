@@ -8,6 +8,28 @@
         <link rel="stylesheet" th:href="@{/css/auction/my_auction_list.css}">
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            $(document).ready(function() {
+                $('.btn-cancel').click(function () {
+                    var auctionId = $(this).data('id');
+
+                    $.ajax({
+                        method: 'put',
+                        url: '/auction/cancel',
+                        data: {id:auctionId},
+                        success: (obj) => {
+                            alert(obj.item.msg);
+                            location.href = "/user/reg-goods";
+                        },
+                        error: (err) => {
+                            console.log(err);
+                            alert(err.responseJSON.errorMessage);
+                        }
+                    });
+                });
+            });
+        </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -84,8 +106,7 @@
                             <div class="link-group" th:if="${auction.status} eq 'S'">
                                 <a href="#" class="link btn-green" th:href="'auction/goods-update/'+${auction.id}"
                                    th:if="${auction.status} eq 'S'">수정</a><br>
-                                <a href="#" class="link btn-red" th:href="'auction/cancel/'+${auction.id}"
-                                   th:if="${auction.status} eq 'S'">취소</a>
+                                <a href="#" class="link btn-red btn-cancel" th:if="${auction.status} eq 'S'" th:data-id="${auction.id}">취소</a>
                             </div>
                         </td>
                     </tr>

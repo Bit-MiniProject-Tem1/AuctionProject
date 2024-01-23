@@ -15,6 +15,11 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     void updateStatusByEndDate(LocalDateTime now);
 
     @Modifying
+    @Query(value = "update Auction a set a.status='C' where a.id = :id")
+    int updateStatusByCancel(Long id);
+
+    @Modifying
     @Query("update Auction a set a.view = a.view + 1 where a.id = :id")
     int updateView(Long id);
+
 }

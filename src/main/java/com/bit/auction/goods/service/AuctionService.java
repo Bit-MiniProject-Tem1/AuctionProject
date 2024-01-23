@@ -25,6 +25,8 @@ public interface AuctionService {
 
     void updateView(Long id, HttpServletRequest request, HttpServletResponse response);
 
+    void cancelAuction(Long id);
+
     List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status);
 
     List<AuctionDTO> findByForRecentList();

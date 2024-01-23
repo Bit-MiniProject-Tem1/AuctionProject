@@ -74,6 +74,37 @@ public class AuctionController {
         return mav;
     }
 
+    @GetMapping("/goods/{id}")
+    public ModelAndView getGoods(@PathVariable("id") Long categoryId,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView();
+
+        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+        mav.addObject("topCategoryList", categoryList);
+
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(categoryId);
+        auctionService.updateView(auctionDTO.getId(), request, response);
+
+        mav.addObject("getGoods", auctionDTO);
+        mav.setViewName("auction/getAuction.html");
+
+        return mav;
+    }
+
+    @GetMapping("/reg-goods")
+    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        ModelAndView mav = new ModelAndView();
+
+        String regUserId = "kim";
+
+        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
+        mav.setViewName("user/mypage/getMyAuctionList.html");
+
+        return mav;
+    }
+
     @GetMapping("/register")
     public ModelAndView registerAuctionView() {
         ModelAndView mav = new ModelAndView();
@@ -198,36 +229,29 @@ public class AuctionController {
         }
     }
 
-    @GetMapping("/goods/{id}")
-    public ModelAndView getGoods(@PathVariable("id") Long categoryId,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView();
+    @PutMapping("/cancel")
+    public ResponseEntity<?> updateAuction(@RequestParam("id") Long id) {
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
-        List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
-        mav.addObject("topCategoryList", categoryList);
+        try {
+            auctionService.cancelAuction(id);
 
-        AuctionDTO auctionDTO = auctionService.getAuctionGoods(categoryId);
-        auctionService.updateView(auctionDTO.getId(), request, response);
+            Map<String, String> returnMap = new HashMap<>();
+            returnMap.put("msg", "경매가 취소되었습니다.");
 
-        mav.addObject("getGoods", auctionDTO);
-        mav.setViewName("auction/getAuction.html");
+            response.setItem(returnMap);
+            response.setStatusCode(HttpStatus.OK.value());
 
-        return mav;
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.setErrorCode(605);
+            response.setErrorMessage(e.getMessage());
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
-    @GetMapping("/reg-goods")
-    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        ModelAndView mav = new ModelAndView();
-
-        String regUserId = "kim";
-
-        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
-        mav.setViewName("user/mypage/getMyAuctionList.html");
-
-        return mav;
-    }
 
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
