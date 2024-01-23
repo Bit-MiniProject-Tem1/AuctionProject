@@ -18,6 +18,8 @@ public class BiddingRequestDTO {
 
     private boolean status;
 
+    private int payment;
+
 
     public Bidding toEntity() {
         return Bidding.builder()
