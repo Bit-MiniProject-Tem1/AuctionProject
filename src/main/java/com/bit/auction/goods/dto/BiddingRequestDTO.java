@@ -20,13 +20,13 @@ public class BiddingRequestDTO {
 
     private int payment;
 
-
     public Bidding toEntity() {
         return Bidding.builder()
                 .userId(userId)
                 .auctionId(auctionId)
                 .biddingPrice(biddingPrice)
                 .status(status)
+                .payment(payment)
                 .build();
     }
 }
