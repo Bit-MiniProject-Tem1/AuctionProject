@@ -42,3 +42,5 @@ src/main/resources/application.properties
 src/main/resources/log4jdbc.log4j2.properties
 src/main/resources/logback-spring.xml
 src/main/java/com/bit/auction/configuration/DatabaseConfig.java
+src/main/java/com/bit/auction/common/CkEditorImageUtils.java
+src/main/java/com/bit/auction/common/FileUtils.java
