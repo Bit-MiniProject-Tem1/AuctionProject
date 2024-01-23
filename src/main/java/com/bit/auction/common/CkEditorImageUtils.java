@@ -39,7 +39,7 @@ public class CkEditorImageUtils {
     }
 
     public DescriptionImgDTO parseFileInfo(MultipartFile multipartFile, String directory) {
-        String bucketName = "bitcamp-bucket-07";
+        String bucketName = "bitcamp-bucket-22";
 
         DescriptionImgDTO descriptionImgDTO = new DescriptionImgDTO();
 
