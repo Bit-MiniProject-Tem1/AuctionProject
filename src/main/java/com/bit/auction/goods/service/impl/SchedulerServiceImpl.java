@@ -2,6 +2,7 @@ package com.bit.auction.goods.service.impl;
 
 import com.bit.auction.goods.repository.AuctionRepository;
 import com.bit.auction.goods.service.SchedulerService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ public class SchedulerServiceImpl implements SchedulerService {
     private final AuctionRepository auctionRepository;
 
     @Override
-    @Scheduled(cron = "0 0 12 * * *")
+    @Transactional
+    @Scheduled(cron = "0 33 10 * * *")
     public void setStateChangeFromEndDate() {
         auctionRepository.updateStatusByEndDate(LocalDateTime.now());
     }

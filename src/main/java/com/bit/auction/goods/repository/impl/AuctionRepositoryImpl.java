@@ -1,6 +1,7 @@
 package com.bit.auction.goods.repository.impl;
 
 import com.bit.auction.goods.entity.Auction;
+import com.bit.auction.goods.repository.AuctionImgRepository;
 import com.bit.auction.goods.repository.AuctionRepositoryCustom;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -22,7 +23,7 @@ import static com.bit.auction.goods.entity.QAuctionImg.auctionImg;
 public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     private final EntityManager em;
-    private final AuctionImgRepositoryImpl auctionImgRepository;
+    private final AuctionImgRepository auctionImgRepository;
 
     @Override
     @Transactional

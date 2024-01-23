@@ -25,6 +25,22 @@ class AuctionRepositoryTest {
 
     @DisplayName("Auction 테이블 insert 테스트")
     @Test
+    void insertAuction1() {
+        Category category1 = categoryRepository.findById(1L).get();
+        Auction auction1 = Auction.builder()
+                .regUserId("han")
+                .category(category1)
+                .title("테스트 제목1")
+                .description("테스트 내용")
+                .startingPrice(50000)
+                .immediatePrice(700000)
+                .endDate(LocalDateTime.parse("2024-01-23T09:40:00.000000"))
+                .build();
+        auctionRepository.saveAndFlush(auction1);
+    }
+
+    @DisplayName("Auction 테이블 insert 테스트")
+    @Test
     void insertAuction() {
         Category category1 = categoryRepository.findById(1L).get();
         Auction auction1 = Auction.builder()

@@ -1,6 +1,8 @@
 package com.bit.auction.goods.service;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,6 +22,8 @@ public interface AuctionService {
     void removeDescriptionImg(String description, String originDescription, List<String> temporaryImageList);
 
     void removeDescriptionImg(List<String> temporaryImageList);
+
+    void updateView(Long id, HttpServletRequest request, HttpServletResponse response);
 
     List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status);
 

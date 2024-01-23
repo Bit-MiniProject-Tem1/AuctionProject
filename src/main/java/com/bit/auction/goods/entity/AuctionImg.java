@@ -3,11 +3,14 @@ package com.bit.auction.goods.entity;
 import com.bit.auction.goods.dto.AuctionImgDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Setter
+//@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -32,5 +35,9 @@ public class AuctionImg {
                 .fileName(this.fileName)
                 .isRepresentative(this.isRepresentative)
                 .build();
+    }
+
+    public void setRepresentative(boolean isRepresentative) {
+        this.isRepresentative = isRepresentative;
     }
 }

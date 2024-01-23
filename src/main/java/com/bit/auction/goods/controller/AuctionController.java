@@ -9,6 +9,8 @@ import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -197,11 +199,18 @@ public class AuctionController {
     }
 
     @GetMapping("/goods/{id}")
-    public ModelAndView getGoods(@PathVariable("id") Long categoryId) {
+    public ModelAndView getGoods(@PathVariable("id") Long categoryId,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
         ModelAndView mav = new ModelAndView();
+
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
-        mav.addObject("getGoods", auctionService.getAuctionGoods(categoryId));
+
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(categoryId);
+        auctionService.updateView(auctionDTO.getId(), request, response);
+
+        mav.addObject("getGoods", auctionDTO);
         mav.setViewName("auction/getAuction.html");
 
         return mav;

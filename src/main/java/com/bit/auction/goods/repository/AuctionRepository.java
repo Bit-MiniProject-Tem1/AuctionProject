@@ -10,8 +10,11 @@ import java.time.LocalDateTime;
 
 @Transactional
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
-
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query(value = "update Auction a set a.status='E' where a.endDate<:now")
     void updateStatusByEndDate(LocalDateTime now);
+
+    @Modifying
+    @Query("update Auction a set a.view = a.view + 1 where a.id = :id")
+    int updateView(Long id);
 }

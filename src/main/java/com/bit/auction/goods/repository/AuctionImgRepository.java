@@ -5,5 +5,5 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Transactional
-public interface AuctionImgRepository extends JpaRepository<AuctionImg, Long> {
+public interface AuctionImgRepository extends JpaRepository<AuctionImg, Long>, AuctionImgRepositoryCustom {
 }

@@ -59,13 +59,14 @@ public class Auction {
     @Column(columnDefinition = "datetime(6)", nullable = false)
     private LocalDateTime endDate;
 
-    private String successfulBidderId; // fk 의현님 구현 부분
+    private String successfulBidderId; // fk
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     @Builder.Default()
     private int view = 0;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+    @OrderBy("isRepresentative desc")
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
 

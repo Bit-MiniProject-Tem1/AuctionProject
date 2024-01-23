@@ -22,12 +22,6 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
 
     @Override
     @Transactional
-    public void saveOne(AuctionImg auctionImg) {
-        em.merge(auctionImg);
-    }
-
-    @Override
-    @Transactional
     public void updateRepresentativeImg(Auction auction) {
         List<AuctionImg> auctionImgList = jpaQueryFactory
                 .selectFrom(auctionImg)
@@ -65,7 +59,6 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
         if (count.get() == 0) {
             AuctionImg img = auction.getAuctionImgList().get(0);
             img.setRepresentative(true);
-            //  saveOne(img);
         }
     }
 }
