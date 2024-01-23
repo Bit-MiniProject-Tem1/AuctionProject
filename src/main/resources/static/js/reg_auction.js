@@ -1,6 +1,7 @@
 var originFileArr;
 var originRepresentativeImgName;
 var startingPrice;
+var currentBiddingPrice;
 var immediatePrice;
 var description;
 var status;
@@ -162,8 +163,19 @@ $(() => {
             return false;
         }
 
+        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+            alert('가격은 0이거나 음수일 수 없습니다.');
+            return false;
+        }
+
         if ($("#startingPrice").val() > $("#immediatePrice").val()) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
+            $("#immediatePrice").focus();
+            return false;
+        }
+
+        if (currentBiddingPrice > $("#immediatePrice").val()) {
+            alert('즉시 입찰가는 현재 최고 입찰가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;
         }
@@ -244,6 +256,11 @@ $(() => {
         if ($("#endDate").val() === '') {
             alert('경매 마감일을 입력하세요.');
             $("#endDate").focus();
+            return false;
+        }
+
+        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+            alert('가격은 0이거나 음수일 수 없습니다.');
             return false;
         }
 
