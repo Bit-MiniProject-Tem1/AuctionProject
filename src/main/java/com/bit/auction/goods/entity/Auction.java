@@ -33,7 +33,7 @@ public class Auction {
     @Column(nullable = false)
     private String title;
 
-    @Column(name = "goods_description", nullable = false)
+    @Column(name = "goods_description", length = 1000, nullable = false)
     private String description;
 
     private String target;
@@ -59,18 +59,16 @@ public class Auction {
     @Column(columnDefinition = "datetime(6)", nullable = false)
     private LocalDateTime endDate;
 
-    private String successfulBidderId; // fk 의현님 구현 부분
+    private String successfulBidderId; // fk
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     @Builder.Default()
     private int view = 0;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+    @OrderBy("isRepresentative desc")
     @JsonManagedReference
     private List<AuctionImg> auctionImgList;
-    // @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    // @JsonManagedReference
-    // private List<DescriptionImg> descriptionImgList;
 
     @Transient
     private String representativeImgUrl;
@@ -87,8 +85,7 @@ public class Auction {
         return AuctionDTO.builder()
                 .id(this.id)
                 .regUserId(this.regUserId)
-                .categoryId(this.category.getId())
-                .categoryName(this.category.getName())
+                .category(this.category.toDTO())
                 .title(this.title)
                 .description(this.description)
                 .target(this.target)
@@ -114,8 +111,4 @@ public class Auction {
     public void representativeImgUrl(String representativeImgUrl) {
         this.representativeImgUrl = representativeImgUrl;
     }
-
-    // public void addDescriptionImgList(DescriptionImg descriptionImg) {
-    //     this.descriptionImgList.add(descriptionImg);
-    // }
 }

@@ -3,12 +3,23 @@ package com.bit.auction.goods.repository;
 import com.bit.auction.goods.entity.Auction;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDateTime;
 
 @Transactional
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
-    // @Query(value = "select a from Auction a where a.category.id = :categoryId and a.status in :status")
-    // Page<Auction> findBySubCategoryId(Pageable pageable, Long categoryId, List<Character> status);
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update Auction a set a.status='E' where a.endDate<:now")
+    void updateStatusByEndDate(LocalDateTime now);
 
-    // @Query(value = "select a from Auction a where a.category.id in :subCategoryId and a.status in :status")
-    // Page<Auction> findByTopCategoryId(Pageable pageable, List<Long> subCategoryId, List<Character> status);
+    @Modifying
+    @Query(value = "update Auction a set a.status='C' where a.id = :id")
+    int updateStatusByCancel(Long id);
+
+    @Modifying
+    @Query("update Auction a set a.view = a.view + 1 where a.id = :id")
+    int updateView(Long id);
+
 }

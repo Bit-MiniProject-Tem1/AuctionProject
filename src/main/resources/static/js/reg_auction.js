@@ -1,13 +1,20 @@
+var originFileArr;
 var originRepresentativeImgName;
 var startingPrice;
+var currentBiddingPrice;
 var immediatePrice;
 var description;
-var topCategoryId;
-var subCategoryId;
+var status;
+let editor;
+var goodsId;
+var categoryId;
+
+var checkUnload;
 
 var fileNo = 0;
 var filesArr = new Array(); //originFiles
 var representativeImg;
+var representativeName;
 
 const deletefilesArr = new Array();
 
@@ -21,10 +28,6 @@ function addFile(obj) {
     if (curFileCnt > remainFileCnt + delFileCnt) {
         alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
     }
-
-    // if (curFileCnt > remainFileCnt) {
-    //     alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
-    // }
 
     for (var i = 0; i < Math.min(curFileCnt, remainFileCnt); i++) {
         const file = obj.files[i];
@@ -43,7 +46,7 @@ function addFile(obj) {
             if (originRepresentativeImgName == null && fileNo == 0) {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle-fill"></i></a>';
                 representativeImg = file;
-                console.log(representativeImg);
+                representativeName = representativeImg.name;
             } else {
                 htmlData += '   <a class="represent" onclick="representativeFile(' + fileNo + ')"><i class="bi bi-check-circle"></i></a>';
             }
@@ -80,10 +83,10 @@ function validation(obj) {
 function deleteFile(num) {
     if (document.querySelector("#file" + num).hasAttribute('data-saveDB')) {
         deletefilesArr.push(num);
+    } else {
+        filesArr[num].is_delete = true;
     }
-
     document.querySelector("#file" + num).remove();
-    filesArr[num].is_delete = true;
 }
 
 function representativeFile(num) {
@@ -93,41 +96,37 @@ function representativeFile(num) {
         if (i != num) {
             check.addClass("bi-check-circle");
             check.removeClass("bi-check-circle-fill");
-            representativeImg = filesArr[num];
         }
     }
 
-    check = $("#file" + num + " .represent i");
-    check.addClass("bi-check-circle-fill");
-    check.removeClass("bi-check-circle");
+    if (originFileArr != null) {
+        for (var i = 0; i < originFileArr.length; i++) {
+            check = $("#file" + originFileArr[i].id + " .represent i");
+            console.log(originFileArr[i].id);
+            if (originFileArr[i].id != num) {
+                check.addClass("bi-check-circle");
+                check.removeClass("bi-check-circle-fill");
+            } else {
+                check = $("#file" + num + " .represent i");
+                check.addClass("bi-check-circle-fill");
+                check.removeClass("bi-check-circle");
 
-    representativeImg = filesArr[num];
-    console.log(representativeImg);
+                representativeName = originFileArr[i].fileName;
+            }
+        }
+    }
+
+    if (num <= 5) {
+        check = $("#file" + num + " .represent i");
+        check.addClass("bi-check-circle-fill");
+        check.removeClass("bi-check-circle");
+
+        representativeImg = filesArr[num];
+        representativeName = filesArr[num].name;
+    }
 }
 
 $(() => {
-    let editor;
-
-    ClassicEditor.create(document.querySelector('#editor'), {
-        toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
-        shouldNotGroupWhenFull: false,
-        language: "ko",
-        ckfinder: {
-            uploadUrl: '/auction/img/upload'
-        }
-    }).then(newEditor => {
-        editor = newEditor;
-        if (description != null) {
-            editor.setData(description);
-        }
-    }).catch(error => {
-        console.error(error);
-    });
-
-    if (originRepresentativeImgName != null) {
-        representativeImg = originRepresentativeImgName;
-    }
-
     const today = new Date();
     const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3);
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
@@ -140,15 +139,10 @@ $(() => {
     $("#endDate").attr("min", date);
 
     $("#update").on("click", () => {
+        checkUnload = false;
         if ($("#title").val() === '') {
             alert('제목을 입력하세요.');
             $("#title").focus();
-            return false;
-        }
-
-        if ($("#drop-topCategory").val() === '') {
-            alert('카테고리를 선택하세요.');
-            $("#drop-topCategory").focus();
             return false;
         }
 
@@ -158,14 +152,30 @@ $(() => {
             return false;
         }
 
+        if (status != 'S') {
+            alert("취소되거나 종료된 경매는 수정할 수 없습니다.");
+            return false;
+        }
+
         if ($("#endDate").val() === '') {
             alert('경매 마감일을 입력하세요.');
             $("#endDate").focus();
             return false;
         }
 
+        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+            alert('가격은 0이거나 음수일 수 없습니다.');
+            return false;
+        }
+
         if ($("#startingPrice").val() > $("#immediatePrice").val()) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
+            $("#immediatePrice").focus();
+            return false;
+        }
+
+        if (currentBiddingPrice > $("#immediatePrice").val()) {
+            alert('즉시 입찰가는 현재 최고 입찰가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;
         }
@@ -177,29 +187,35 @@ $(() => {
             }
         }
 
+        if (representativeName == null) {
+            alert('대표 이미지를 1개 이상 등록하세요.');
+            return false;
+        }
+
         $("#uploadFiles")[0].files = dt.files;
 
         var formData = new FormData($("#insertForm")[0]);
 
         formData.set("deleteAuctionImgList", deletefilesArr);
         formData.set("currentBiddingPrice", 0);
-        formData.set("representativeImgName", representativeImg.name);
+        formData.set("representativeImgName", representativeName);
+
         formData.set("description", editor.getData());
         if ($("#drop-topCategory").val() === "" || $("#drop-topCategory").val() == null) {
             formData.set("categoryId", categoryId);
         }
+        formData.set("id", goodsId);
+        formData.set("originDescription", description);
 
         $.ajax({
-            method: 'POST',
-            url: '/auction/register',
+            method: 'put',
+            url: '/auction/goods-update',
             data: formData,
             cache: false,
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
             success: (obj) => {
-                console.log(obj);
-
                 alert(obj.item.msg);
                 location.href = "/auction/goods-list";
             },
@@ -211,6 +227,8 @@ $(() => {
     });
 
     $("#register").on("click", () => {
+        checkUnload = false;
+
         if ($("#title").val() === '') {
             alert('제목을 입력하세요.');
             $("#title").focus();
@@ -241,9 +259,25 @@ $(() => {
             return false;
         }
 
+        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+            alert('가격은 0이거나 음수일 수 없습니다.');
+            return false;
+        }
+
+        if ($("#startingPrice").val() < 5000) {
+            alert('경매는 시작가는 5000원 이상이어야 합니다.');
+            $("#startingPrice").focus();
+            return false;
+        }
+
         if ($("#startingPrice").val() > $("#immediatePrice").val()) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
+            return false;
+        }
+
+        if (representativeName == null) {
+            alert('대표 이미지를 1개 이상 등록하세요.');
             return false;
         }
 
@@ -271,8 +305,6 @@ $(() => {
             processData: false,
             contentType: false,
             success: (obj) => {
-                console.log(obj);
-
                 alert(obj.item.msg);
                 location.href = "/auction/goods-list";
             },

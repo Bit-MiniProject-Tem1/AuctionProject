@@ -10,14 +10,22 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/get_subCategory_ajax.js}"></script>
+        <script th:src="@{/js/reg_auction.js}"></script>
         <script th:inline="javascript">
-            $(() => {
+            $(document).ready(function () {
+                goodsId = [[${getGoods.id}]];
                 startingPrice = [[${getGoods.startingPrice}]];
                 immediatePrice = [[${getGoods.immediatePrice}]];
+                currentBiddingPrice = [[${getGoods.currentBiddingPrice}]];
                 description = [[${getGoods.description}]];
                 categoryId = [[${getGoods.category.id}]];
+                representativeName = [[${getGoods.representativeImgName}]];
+                originRepresentativeImgName = [[${getGoods.representativeImgName}]];
+
+                status = [[${getGoods.status}]];
                 var category = [[${getGoods.category.name}]];
                 var target = [[${getGoods.target}]];
+                originFileArr = [[${getGoods.auctionImgDTOList}]];
 
                 $("#startingPrice").val(startingPrice);
                 $("#startingPrice").attr("readonly", true);
@@ -25,11 +33,27 @@
 
                 $("#current-category").append("<i class=\"bi bi-dash-square\" style='color: #6c757d; margin-left:4px; margin-right: 10px;'></i>" + category);
 
-
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
+
+                ClassicEditor.create(document.querySelector('#editor'), {
+                    toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
+                    shouldNotGroupWhenFull: false,
+                    language: "ko",
+                    ckfinder: {
+                        uploadUrl: '/auction/img/upload',
+                        withCredentials: true
+                    }
+                }).then(newEditor => {
+                    editor = newEditor;
+                    if (description != null) {
+                        editor.setData(description);
+                    }
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         </script>
-        <script th:src="@{/js/reg_auction.js}"></script>
+        <script th:src="@{/js/ck_unload_event.js}"></script>
     </th:block>
 </head>
 <body>
@@ -116,13 +140,14 @@
                         <div class="file-list">
                             <div class="filebox" th:each="file : ${getGoods.auctionImgDTOList}"
                                  th:id="file+${file.id}"
-                                 data-saveDB="${file.id}">
+                                 data-saveDB="true">
                                 <p class="name" th:text="${file.fileName}"></p>
-                                <a class="delete" th:onclick="deleteFile(${file.id})">
+                                <a class="delete" th:onclick="'deleteFile('+${file.id}+')'">
                                     <i class="bi bi-x-circle"></i>
                                 </a>
-                                <a class="represent" th:onclick="representativeFile(${file.id})">
-                                    <i class="bi bi-check-circle"></i>
+                                <a class="represent" th:onclick="'representativeFile('+${file.id}+')'">
+                                    <i class="bi bi-check-circle-fill" th:if="${file.isRepresentative} eq true"></i>
+                                    <i class="bi bi-check-circle" th:if="${file.isRepresentative} ne true"></i>
                                 </a>
                             </div>
                         </div>
@@ -136,14 +161,14 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <input type="hidden" name="categoryId" id="categoryId" value="">
-                        <input type="hidden" name="id" id="goodsId" value="">
-                        <input type="hidden" maxlength="10"
-                               name="currentBiddingPrice" id="currentBiddingPrice" class="form-control price-comma"
-                               value="0"/>
-                        <input type="hidden" maxlength="10"
+                        <!--
+                        <input type="hidden" name="categoryId" id="categoryId" value=""
+                               th:value="${getGoods.category.id}">
+                        <input type="hidden" name="id" id="goodsId" value="" th:value="${getGoods.id}">
+                               <input type="hidden" maxlength="10"
                                name="representativeImgName" id="representativeImgName"
                                class="form-control price-comma"/>
+                         -->
                         <button id="update" type="button">수정</button>
                     </td>
                 </tr>

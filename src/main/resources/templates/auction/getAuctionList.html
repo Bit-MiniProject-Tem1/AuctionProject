@@ -11,6 +11,18 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
+        <script>
+            $(document).ready(function() {
+                const urlParams = new URL(location.href).searchParams;
+                const name = urlParams.get('regUser');
+                console.log(name);
+
+                if(name==null){
+                    $(".sub-category-list").css("display", "block");
+                    $(".filter-list").css("display", "block");
+                }
+            });
+        </script>
     </th:block>
 </head>
 <body>
@@ -24,7 +36,8 @@
             <ul>
                 <li th:each="category : ${categoryList}">
                     <a href="#" th:if="${param.category} == null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
-                    <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${param.category}, subCategory=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:if="${param.category} != null and ${category.topCategory} == null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, subCategory=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:if="${param.category} != null and ${category.topCategory} != null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
                 </li>
                 <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc=1)}">기타</a></li>
             </ul>
@@ -80,19 +93,19 @@
         <div class="container">
             <div class="title">
                 <div class="goods-number">
-                    상품 11,713
+                    상품 <span th:text="${auctionList.totalElements}"></span>
                 </div>
                 <div class="filter-sorting btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                             data-bs-display="static" aria-expanded="false">
-                        인기순
+                        조회순
                     </button>
                     <ul class="dropdown-menu dropdown-menu-lg-end">
                         <li><a class="dropdown-item" href="#">조회순</a></li>
                         <li><a class="dropdown-item" href="#">등록순</a></li>
+                        <li><a class="dropdown-item" href="#">마감 임박순</a></li>
                         <li><a class="dropdown-item" href="#">낮은 가격순</a></li>
                         <li><a class="dropdown-item" href="#">높은 가격순</a></li>
-                        <li><a class="dropdown-item" href="#">마감 임박순</a></li>
                         <li><a class="dropdown-item" href="#">입찰 많은순</a></li>
                         <li><a class="dropdown-item" href="#">관심 많은순</a></li>
                     </ul>
@@ -105,10 +118,16 @@
             <div class="search-goods" th:each="auction : ${auctionList}">
                 <div class="goods-img">
                     <figure class="img_wrapper">
-                        <a href="#">
+                        <a href="#" th:href="'/auction/goods/'+${auction.id}">
                             <img class="d-block w-100"
-                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                 src=""
+                                 th:src="@{/img/no-preview.jpeg}"
+                                 th:if="${auction.representativeImgUrl} eq null"
+                                 alt=""/>
+                            <img class="d-block w-100"
+                                 src=""
                                  th:src="${auction.representativeImgUrl}"
+                                 th:if="${auction.representativeImgUrl} ne null"
                                  alt=""/>
                         </a>
                     </figure>
@@ -121,11 +140,11 @@
                         <span class="seconds">0</span>
                     </div>
                 </div>
-                <div class="title" th:text="${auction.title}"></div>
+                <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span th:text="${auction.title}"></span></a></div>
                 <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
                 <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
                 <div class="user-name">
-                    <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
+                    <i class="bi bi-person"></i><a href="#" th:href="'/auction/goods-list?regUser='+${auction.regUserId}"> <span th:text="${auction.regUserId}"></span></a>
                 </div>
                 <div class="favorite-view-group">
                     <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
@@ -134,17 +153,21 @@
             </div>
         </div>
         <nav aria-label="Page navigation example" class="goods-list-page">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center" th:if="${auctionList.totalElements > 0}"
+                th:with="pageNumber = ${auctionList.pageable.pageNumber},
+                             pageSize = ${auctionList.pageable.pageSize},
+                             totalPages = ${auctionList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href="#" aria-label="Previous" th:href="@{/auction/goods-list(page=${pageNumber - 1})}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                <li class="page-item"  th:each="page : ${#numbers.sequence(startPage, endPage)}"><a class="page-link" href="#" th:href="@{/auction/goods-list(page=${page - 1})}" th:text="${page}">1</a></li>
+                <li class="page-item" th:if="${pageNumber < totalPages - 1}">
+                    <a class="page-link" href="#" aria-label="Next" th:href="@{/auction/goods-list(page=${pageNumber + 1})}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

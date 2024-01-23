@@ -12,6 +12,10 @@
     padding: 30px 40px;
 }
 
+.container {
+    margin: 0;
+}
+
 .goods-filter .nav-link {
     color: rgba(34, 34, 34, .5);
 }
@@ -23,6 +27,14 @@
 
 .goods-list {
     padding: 30px 0;
+}
+
+.goods-list .info-title {
+    width: 280px;
+}
+
+.goods-list .date-title, .endDate-title {
+    width: 105px;
 }
 
 .goods-list td, .goods-list th {
@@ -41,9 +53,11 @@
 .info-title-category {
     width: 70%;
     padding: 0 10px;
+    color: rgba(34, 34, 34, .5);
+    font-weight: 600;
 }
 
-.info-title-category span {
+.info-title-category .title {
     font-weight: 600;
 }
 

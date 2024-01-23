@@ -14,6 +14,6 @@ import java.util.List;
 public class CategoryDTO {
     private Long id;
     private String name;
-    private Long topCategoryId; // fk
+    private Category topCategory;
     private List<Category> subCategoryList;
 }

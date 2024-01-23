@@ -17,10 +17,11 @@ import java.util.List;
 public class AuctionDTO {
     private Long id;
     private String regUserId; // fk
-    private Long categoryId; // fk
-    private String categoryName;
+    private CategoryDTO category;
+    private Long categoryId;
     private String title;
     private String description;
+    private String originDescription;
     private String target;
     private char status;
     private int startingPrice;
@@ -34,7 +35,6 @@ public class AuctionDTO {
     private String representativeImgUrl;
     private String representativeImgName;
     private List<Long> deleteAuctionImgList;
-    //  private List<DescriptionImgDTO> descriptionImgDTOList;
 
     public Auction toEntity(Category category) {
         return Auction.builder()
@@ -51,9 +51,10 @@ public class AuctionDTO {
                 .regDate(this.regDate)
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)
+                .representativeImgUrl(this.representativeImgUrl)
+                .representativeImgName(this.representativeImgName)
                 .view(this.view)
                 .auctionImgList(new ArrayList<>())
-                //   .descriptionImgList(new ArrayList<>())
                 .build();
     }
 

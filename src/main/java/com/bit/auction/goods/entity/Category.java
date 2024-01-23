@@ -1,6 +1,7 @@
 package com.bit.auction.goods.entity;
 
 import com.bit.auction.goods.dto.CategoryDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,21 +25,17 @@ public class Category {
     private Long topCategoryId;
 
     @ManyToOne
-    //@ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "top_category_id", referencedColumnName = "category_id", insertable = false, updatable = false)
     private Category parent;
     @OneToMany(mappedBy = "parent")
-    //@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> childrenList;
-
-    // @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
-    // private List<Auction> auctionList;
 
     public CategoryDTO toDTO() {
         return CategoryDTO.builder()
                 .id(this.id)
                 .name(this.name)
-                .topCategoryId(this.topCategoryId)
+                .topCategory(this.parent)
                 .subCategoryList(this.childrenList)
                 .build();
     }

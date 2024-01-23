@@ -47,6 +47,7 @@ header {
     padding: 7px 0px 15px;
     justify-content: space-between;
     display: flex;
+    border-bottom: 1px solid #ebebeb;
 }
 
 .main_header .logo {
@@ -57,7 +58,7 @@ header {
     margin-left: 40px;
 }
 
-.main_header .logo>.logo_bk {
+.main_header .logo > .logo_bk {
     width: 200px;
     height: 35px;
 }
@@ -210,6 +211,7 @@ header {
     margin-top: 5px;
     position: unset;
 }
+
 .main_header .dropdown:nth-child(2) {
     display: block;
     align-items: center;
@@ -298,16 +300,18 @@ header {
     font-weight: 550;
 }
 
-.main_header .content_box a .list-title{
+.main_header .content_box a .list-title {
     text-decoration-line: none
 }
-.main_header .content_box a:hover .list-title{
+
+.main_header .content_box a:hover .list-title {
     text-decoration: underline;
 }
 
 .main_header .img_wrapper {
     padding: 0;
 }
+
 .main_header figure {
     margin-top: 0.5px;
     margin-bottom: 0;
@@ -324,6 +328,7 @@ header {
     border-radius: 2px;
     position: unset;
 }
+
 .main_header .bi-heart {
     margin-bottom: 0px;
     margin-left: 2px;
@@ -331,6 +336,7 @@ header {
     float: left;
     cursor: pointer;
 }
+
 .main_header .bi-heart-fill {
     margin-bottom: 0px;
     margin-left: 2px;

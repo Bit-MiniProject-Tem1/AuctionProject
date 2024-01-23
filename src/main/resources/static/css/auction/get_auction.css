@@ -34,6 +34,12 @@
     border-left: 1px solid #ebebeb;
 }
 
+.goods-info .category {
+    color: rgba(34, 34, 34, .5);
+    font-weight: 600;
+    padding: 0 2%;
+}
+
 .goods-info .title {
     font-size: 25px;
     font-weight: 600;
@@ -75,6 +81,7 @@
     width: 49%;
     margin: 0.5%;
     font-size: 12px;
+    text-align: left;
 }
 
 .link-title {
