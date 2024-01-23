@@ -36,15 +36,18 @@ public class Bidding {
 
     private boolean status;
 
+    private int payment;
+
     private LocalDateTime date = LocalDateTime.now();
 
     @Builder
-    public Bidding(Long bidderId, String userId, Long auctionId, int biddingPrice, boolean status) {
+    public Bidding(Long bidderId, String userId, Long auctionId, int biddingPrice, boolean status, int payment) {
         this.bidderId = bidderId;
         this.userId = userId;
         this.auctionId = auctionId;
         this.biddingPrice = biddingPrice;
         this.status = status;
+        this.payment = payment;
     }
 }
 

@@ -27,6 +27,8 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public final DateTimePath<java.time.LocalDateTime> date = createDateTime("date", java.time.LocalDateTime.class);
 
+    public final NumberPath<Integer> payment = createNumber("payment", Integer.class);
+
     public final BooleanPath status = createBoolean("status");
 
     public final StringPath userId = createString("userId");

@@ -18,6 +18,7 @@ public class BiddingRequestDTO {
 
     private boolean status;
 
+    private int payment;
 
     public Bidding toEntity() {
         return Bidding.builder()
@@ -25,6 +26,7 @@ public class BiddingRequestDTO {
                 .auctionId(auctionId)
                 .biddingPrice(biddingPrice)
                 .status(status)
+                .payment(payment)
                 .build();
     }
 }
