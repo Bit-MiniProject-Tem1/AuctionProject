@@ -231,6 +231,7 @@ public class AuctionController {
 
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
+                                     @RequestParam(required = false) String sort,
                                      @PageableDefault(page = 0, size = 12) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("auction/getAuctionList.html");
@@ -265,7 +266,7 @@ public class AuctionController {
 
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", sort, targetList, statusList);
             mav.addObject("auctionList", auctionPage);
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
@@ -273,11 +274,11 @@ public class AuctionController {
 
             if (paramMap.get("subCategory") != null) {
                 Long subCategoryId = Long.valueOf(String.valueOf(paramMap.get("subCategory")));
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", targetList, statusList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", sort, targetList, statusList));
             } else if (paramMap.get("etc") != null) {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", targetList, statusList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", sort, targetList, statusList));
             } else {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", targetList, statusList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", sort, targetList, statusList));
             }
         }
 
@@ -319,7 +320,7 @@ public class AuctionController {
             List<AuctionDTO> searchResult = auctionService.searchAuctions(searchQuery, statusList);
 
             // 전체 항목을 가져오기
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, targetList, statusList);
             List<AuctionDTO> allAuctions = auctionPage.getContent();
 
             if (!searchResult.isEmpty()) {
@@ -335,7 +336,7 @@ public class AuctionController {
             }
         } else {
             // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", targetList, statusList);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, targetList, statusList);
             List<AuctionDTO> allAuctions = auctionPage.getContent();
             mav.addObject("auctionList", auctionPage);
         }

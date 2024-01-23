@@ -1,18 +1,14 @@
 $(document).ready(function () {
-    // 현재 URL에서 "target" 파라미터 값을 가져옴
     var urlParams = new URLSearchParams(window.location.search);
     var targetParamValues = urlParams.get("target");
 
-    // ','로 구분된 값이 있을 경우 배열로 분리
     var selectedValues = targetParamValues ? targetParamValues.split(',') : [];
 
-    // 가져온 파라미터 값과 일치하는 모든 체크박스에 checked 속성 추가
     selectedValues.forEach(function (paramValue) {
         $('input[name="goods-target"][value="' + paramValue + '"]').prop('checked', true);
         addFilterTag(paramValue);
     });
 
-    // 필터 태그를 추가하는 함수
     function addFilterTag(paramValue) {
         var filterName;
         switch (paramValue) {
@@ -33,59 +29,73 @@ $(document).ready(function () {
                 break;
         }
 
-        // 새로운 필터 태그를 생성
         var newFilterTag = $('<div class="filter-tag"><i class="bi bi-funnel"></i><span>' + filterName + '</span></div>');
 
-        // 생성된 필터 태그를 .filter-tag-group에 추가
         $('.filter-tag-group').append(newFilterTag);
+
+        var sortOption = urlParams.get('sort');
+        var buttonElement = $('.filter-sorting .btn');
+
+        switch (sortOption) {
+            case 'byViews':
+                buttonElement.text('조회순');
+                break;
+            case 'byRegistration':
+                buttonElement.text('등록순');
+                break;
+            case 'byClosingSoon':
+                buttonElement.text('마감 임박순');
+                break;
+            case 'byLowPrice':
+                buttonElement.text('낮은 가격순');
+                break;
+            case 'byHighPrice':
+                buttonElement.text('높은 가격순');
+                break;
+            case 'byMostBids':
+                buttonElement.text('입찰 많은순');
+                break;
+            case 'byMostInterest':
+                buttonElement.text('관심 많은순');
+                break;
+            default:
+                buttonElement.text('조회순');
+                break;
+        }
     }
 
-    // 체크박스 변경 이벤트 핸들러
     $('input[name="goods-target"]').change(function () {
         var currentURL = new URL(window.location.href);
         var paramKey = "target";
-
-        // 이미 있는 파라미터 확인
         var existingParamValues = currentURL.searchParams.getAll(paramKey);
-
-        // 선택된 값
         var selectedValues = $('input[name="goods-target"]:checked').map(function () {
             return this.value;
         }).get();
 
-        // 기존 값 제거
         existingParamValues.forEach(function (existingValue) {
             currentURL.searchParams.delete(paramKey, existingValue);
         });
 
-        // 선택된 값 추가
         if (selectedValues.length > 0) {
             currentURL.searchParams.append(paramKey, selectedValues.join(','));
         } else {
-            // 선택된 값이 없으면 해당 파라미터 제거
             currentURL.searchParams.delete(paramKey);
         }
 
-        // 현재 URL에 파라미터가 없는 경우
         if (!existingParamValues.length && !selectedValues.length) {
             return;
         }
         window.location.href = currentURL;
     });
 
-    // 현재 URL 가져오기
     var currentUrl = window.location.href;
-
-    // closing 파라미터의 존재 여부 확인
     var hasClosingParam = currentUrl.includes('closing=E');
 
-    // #closing-auction-checkbox 체크 여부 설정
     $('#closing-auction-checkbox').prop('checked', hasClosingParam);
 
     if (hasClosingParam) {
         var newFilterTag = $('<div class="filter-tag"><i class="bi bi-funnel"></i><span>' + '마감경매포함' + '</span></div>');
 
-        // 생성된 필터 태그를 .filter-tag-group에 추가
         $('.filter-tag-group').append(newFilterTag);
     }
 
@@ -101,5 +111,46 @@ $(document).ready(function () {
         }
 
         window.location.href = currentUrl;
+    });
+
+    $('.filter-sorting .dropdown-item').click(function () {
+        var koreanSortOption = $(this).text().trim();
+        var englishSortOption;
+
+        switch (koreanSortOption) {
+            case '조회순':
+                englishSortOption = 'byViews';
+                break;
+            case '등록순':
+                englishSortOption = 'byRegistration';
+                break;
+            case '마감 임박순':
+                englishSortOption = 'byClosingSoon';
+                break;
+            case '낮은 가격순':
+                englishSortOption = 'byLowPrice';
+                break;
+            case '높은 가격순':
+                englishSortOption = 'byHighPrice';
+                break;
+            case '입찰 많은순':
+                englishSortOption = 'byMostBids';
+                break;
+            case '관심 많은순':
+                englishSortOption = 'byMostFavorite';
+                break;
+            default:
+                englishSortOption = 'unknown';
+                break;
+        }
+
+        var currentUrl = window.location.href;
+
+        var urlWithoutSort = currentUrl.replace(/([&?]sort=)[^&]*(&|$)/, '$2');
+
+        var newUrl = urlWithoutSort + (urlWithoutSort.includes('?') ? '&' : '?') + 'sort=' + encodeURIComponent(englishSortOption);
+
+
+        window.location.href = newUrl;
     });
 });

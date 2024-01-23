@@ -36,9 +36,10 @@
             <ul>
                 <li th:each="category : ${categoryList}">
                     <a href="#" th:if="${param.category} == null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
-                    <a href="#" th:unless="${param.category} == null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, subCategory=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:if="${param.category} != null and ${category.topCategory} == null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, subCategory=${category.id})}" th:text="${category.name}"></a>
+                    <a href="#" th:if="${param.category} != null and ${category.topCategory} != null" th:href="@{/auction/goods-list(category=${category.id})}" th:text="${category.name}"></a>
                 </li>
-                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${category.topCategory.id}, etc=1)}">기타</a></li>
+                <li><a href="#" th:if="${param.category} != null" th:href="@{/auction/goods-list(category=${param.category}, etc=1)}">기타</a></li>
             </ul>
         </div>
         <div class="filter-list">
@@ -97,14 +98,14 @@
                 <div class="filter-sorting btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
                             data-bs-display="static" aria-expanded="false">
-                        인기순
+                        조회순
                     </button>
                     <ul class="dropdown-menu dropdown-menu-lg-end">
                         <li><a class="dropdown-item" href="#">조회순</a></li>
                         <li><a class="dropdown-item" href="#">등록순</a></li>
+                        <li><a class="dropdown-item" href="#">마감 임박순</a></li>
                         <li><a class="dropdown-item" href="#">낮은 가격순</a></li>
                         <li><a class="dropdown-item" href="#">높은 가격순</a></li>
-                        <li><a class="dropdown-item" href="#">마감 임박순</a></li>
                         <li><a class="dropdown-item" href="#">입찰 많은순</a></li>
                         <li><a class="dropdown-item" href="#">관심 많은순</a></li>
                     </ul>

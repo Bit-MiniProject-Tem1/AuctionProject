@@ -48,17 +48,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String filter, List<String> target, List<Character> status) {
+    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String categoryOption, String sortOption, List<String> target, List<Character> status) {
         List<Long> categoryIdList = new ArrayList<>();
 
-        if (filter.equals("top")) {
+        if (categoryOption.equals("top")) {
             categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
             categoryIdList.add(categoryId);
-        } else if (filter.equals("all")) {
+        } else if (categoryOption.equals("all")) {
             categoryId = 0L;
         }
 
-        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, target, status);
+        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, sortOption, target, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
 
         return auctionDTOPageList;

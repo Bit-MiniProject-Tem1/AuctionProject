@@ -4,6 +4,8 @@ import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.repository.AuctionImgRepository;
 import com.bit.auction.goods.repository.AuctionRepositoryCustom;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -39,12 +41,13 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     }
 
     @Override
-    public Page<Auction> searchAll(Pageable pageable, Long categoryId, List<Long> subCategoryIdList, List<String> targetList, List<Character> statusList) {
+    public Page<Auction> searchAll(Pageable pageable, Long categoryId, List<Long> subCategoryIdList, String sortOption, List<String> targetList, List<Character> statusList) {
         List<Auction> auctionList = jpaQueryFactory
                 .selectFrom(auction)
                 .where(eqCategoryId(categoryId, subCategoryIdList),
                         eqTarget(targetList),
                         eqStatus(statusList))
+                .orderBy(auctionSort(sortOption))
                 .fetch();
 
         auctionList.forEach(a -> {
@@ -59,13 +62,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
             a.representativeImgUrl(url);
         });
 
-        long totalCnt = jpaQueryFactory
-                .select(auction.count())
-                .where(eqCategoryId(categoryId, subCategoryIdList),
-                        eqTarget(targetList),
-                        eqStatus(statusList))
-                .from(auction)
-                .fetchOne();
+        long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
@@ -89,11 +86,13 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
             a.representativeImgUrl(url);
         });
 
-        long totalCnt = jpaQueryFactory
-                .select(auction.count())
-                .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
-                .from(auction)
-                .fetchOne();
+        // long totalCnt = jpaQueryFactory
+        //         .select(auction.count())
+        //         .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
+        //         .from(auction)
+        //         .fetchOne();
+
+        long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
@@ -173,5 +172,29 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         }
 
         return booleanBuilder;
+    }
+
+    private OrderSpecifier<?> auctionSort(String sortOption) {
+        if (sortOption != null) {
+            switch (sortOption) {
+                case "byViews":
+                    return new OrderSpecifier(Order.DESC, auction.view);
+                case "byRegistration":
+                    return new OrderSpecifier(Order.ASC, auction.regDate);
+                case "byClosingSoon":
+                    return new OrderSpecifier(Order.ASC, auction.endDate);
+                case "byLowPrice":
+                    return new OrderSpecifier(Order.ASC, auction.currentBiddingPrice);
+                case "byHighPrice":
+                    return new OrderSpecifier(Order.DESC, auction.currentBiddingPrice);
+                // case "byMostBids":
+                //     return new OrderSpecifier(Order.DESC, auction.bidding 카운트 뽑기);
+                // case "byMostFavorite":
+                //     return new OrderSpecifier(Order.DESC, auction.favorite 수);
+                default:
+                    break;
+            }
+        }
+        return new OrderSpecifier(Order.DESC, auction.view);
     }
 }
