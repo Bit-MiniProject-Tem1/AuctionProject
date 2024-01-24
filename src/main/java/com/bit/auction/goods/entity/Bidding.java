@@ -1,5 +1,6 @@
 package com.bit.auction.goods.entity;
 
+import com.bit.auction.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,23 +15,21 @@ import java.time.LocalDateTime;
 @Table(name = "bidding")
 public class Bidding {
 
-//    @Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "auction_id")
-//    private Auction auction;
+@Id
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "auction_id")
+private Auction auction;
 
-//    @Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
+//@Id
+//@ManyToOne(fetch = FetchType.LAZY)
+//@JoinColumn(name = "user_id")
+//private User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bidderId;
+    private Long biddingId;
 
     private String userId;
-
-    private Long auctionId;
 
     private int biddingPrice;
 
@@ -41,10 +40,10 @@ public class Bidding {
     private LocalDateTime date = LocalDateTime.now();
 
     @Builder
-    public Bidding(Long bidderId, String userId, Long auctionId, int biddingPrice, boolean status, int payment) {
-        this.bidderId = bidderId;
+    public Bidding(Long biddingId, String userId, Auction auction, int biddingPrice, boolean status, int payment) {
+        this.biddingId = biddingId;
         this.userId = userId;
-        this.auctionId = auctionId;
+        this.auction = auction;
         this.biddingPrice = biddingPrice;
         this.status = status;
         this.payment = payment;

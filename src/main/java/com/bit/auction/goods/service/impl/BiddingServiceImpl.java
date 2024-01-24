@@ -1,5 +1,6 @@
 package com.bit.auction.goods.service.impl;
 
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingRequestDTO;
 import com.bit.auction.goods.entity.Bidding;
 import com.bit.auction.goods.repository.BiddingRepository;

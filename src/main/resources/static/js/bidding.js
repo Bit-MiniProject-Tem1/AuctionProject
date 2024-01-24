@@ -24,13 +24,13 @@ function save() {
 
 	const price = document.getElementById('price');
 	const params = {
-		title: form.title.value,
-		writer: form.writer.value,
+		biddingPrice: form.title.value,
+		payment: form.writer.value,
 		content: form.content.value,
 		deleteYn: 'N'
 	};
 
-	fetch('/api/boards', {
+	fetch('/api/bidding', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
