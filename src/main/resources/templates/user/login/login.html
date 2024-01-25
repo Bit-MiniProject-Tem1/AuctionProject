@@ -7,31 +7,53 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
     </th:block>
-    <!--    <th:block layout:fragment="script">-->
-    <!--        <script th:src="@{/js/to_price_comma.js}"></script>-->
-    <!--    </th:block>-->
+        <th:block layout:fragment="script">
+            <script>
+                $(() => {
+                    // 현재 url 주소 가져오기
+                    const url = new URL(location.href);
+
+                    // url에서 쿼리스트링으로 넘어온 데이터 꺼내기
+                    const urlParams = url.searchParams;
+
+                    if(urlParams.get("error")) {
+                        const errorMsg = urlParams.get("errorMsg");
+
+                        if(errorMsg === "비밀번호 불일치") {
+                            alert("잘못된 비밀번호입니다.");
+                            $("#userPw").focus();
+                        } else if(errorMsg === "사용자 없음") {
+                            alert("존재하지 않는 아이디입니다.");
+                            $("#userId").focus();
+                        } else {
+                            alert("알 수 없는 에러입니다. 관리자에게 문의하세요.");
+                        }
+                    }
+                });
+            </script>
+        </th:block>
     <title>로그인</title>
 </head>
 <body>
     <div layout:fragment="content" class="login_container">
-        <a href="/"><img src="https://i.namu.wiki/i/TzNoXw8pP9JTAtztdigof-bT1Ix2ahdTfX-hr6Wc3VCw8SOK68WtM7oJ9tCk4DYqyMCfIL0H2mYred0fPz5ukg.webp"
-         class="login_logo"></a>
+        <form id="loginForm" action="/user/login" method="post">
+        <a href="/"><img src="/img/logoo.png" class="login_logo"></a>
 
         <div>
-            <label class="login_name">아이디</label>
+            <label class="login_name" for="userId">아이디</label>
         </div>
         <div>
-            <input type="text" class="input_border" placeholder="BitCamp">
+            <input type="text" id="userId" name="userId" class="input_border" placeholder="BitCamp">
         </div>
 
         <div>
-            <label class="login_name">비밀번호</label>
+            <label class="login_name" for="userPw">비밀번호</label>
         </div>
         <div>
-            <input type="password"  class="input_border" placeholder="영문, 숫자, 특수문자 조합 8-16자">
+            <input type="password"  id="userPw" name="userPw" class="input_border" placeholder="영문, 숫자, 특수문자 조합 8-16자">
         </div>
         <div>
-            <a href="/"><button class="login_btn">로그인</button></a>
+            <button type="submit" class="login_btn" id="btnLogin">로그인</button>
         </div>
 
         <div class="find_div">
@@ -42,15 +64,18 @@
                 <a href="/user/find_id">아이디 찾기</a>
             </span>
             <span class="pwfind_view">
-                <a href="/user/find_password">비밀번호 찾기</a>
+                <a href="/user/find_pw">비밀번호 찾기</a>
             </span>
         </div>
 
-        <div>
-            <button class="kakaologin_btn">카카오 로그인</button>
-        </div>
+<!--        <div class="kakaologin_box">-->
+<!--            <a href="/oauth2/authorization/kakao" class="kakaologin_btn" >-->
+<!--                <img class="kakaologin_img" src="/img/kakao_login.png" >-->
+<!--            </a>-->
+<!--        </div>-->
 
-
+        </form>
     </div>
+
 </body>
 </html>

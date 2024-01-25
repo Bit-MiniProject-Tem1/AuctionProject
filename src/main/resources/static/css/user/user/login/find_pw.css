@@ -1,4 +1,4 @@
-.find_id_container {
+.find_pw_container {
     width: 1200px;
 }
 
@@ -6,20 +6,20 @@ body {
     font-family: Pretendard;
 }
 
-.find_id_title {
+.find_pw_title {
     margin-top: 100px;
     margin-bottom: 50px;
     font-size: 35px;
     text-align: center;
 }
-.find_id_line {
+.find_pw_line {
     width: 400px;
     height: 2px;
     background-color: #bcbcbc;
     margin-left: 400px;
 }
 
-.find_id_textBox {
+.find_pw_textBox {
     width: 600px;
     margin-left: 400px;
     margin-top: 50px;
@@ -29,7 +29,7 @@ h3 {
     font-size: 15px;
 }
 
-.find_id_phoneNum {
+.find_pw_phoneNum {
     width: 600px;
     margin-left: 400px;
     margin-top: 50px;
@@ -37,31 +37,20 @@ h3 {
 }
 
 input {
-    margin-bottom: 20px;
     padding: 10px;
     width: 400px;
     margin-left: 400px;
 
 }
-
-.find_id_input {
-    border-width: 0 0 1px;
-}
-
-
-.find_id_btn {
+.find_pw_btn {
     width: 400px;
     height: 50px;
     font-size: 20px;
     background-color: #e2e3e5;
     font-weight: bold;
     margin-left: 400px;
+    margin-top: 20px;
+    margin-bottom: 50px;
     color: white;
     border:none;
-    margin-bottom: 100px;
-    text-align: center;
-
 }
-
-
-
