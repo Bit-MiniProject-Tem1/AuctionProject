@@ -147,7 +147,6 @@ public class AuctionController {
 
             auctionService.insertAuction(auctionDTO, categoryId);
 
-
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "정상적으로 입력되었습니다.");
 
@@ -176,6 +175,32 @@ public class AuctionController {
         mav.setViewName("auction/updateAuction.html");
 
         return mav;
+    }
+
+    @GetMapping("/recent-items")
+    public List<AuctionDTO> updateGoods(@RequestParam("recentItems") String recentItems) {
+        System.out.println(recentItems);
+
+        recentItems = recentItems.replace("[", "");
+        recentItems = recentItems.replace("]", "");
+        recentItems = recentItems.replace("\"", "");
+
+        String[] itemsArray = recentItems.split(",");
+
+        long[] itemsIds = new long[itemsArray.length];
+
+        for(int i = 0; i < itemsArray.length; i++) {
+            itemsIds[i] = Long.parseLong(itemsArray[i]);
+        }
+
+        List<AuctionDTO> auctionDTOList = new ArrayList<>();
+
+        for(int i = 0; i < itemsIds.length; i++) {
+
+            auctionDTOList.add(auctionService.getAuctionGoods(itemsIds[i]));
+        }
+
+        return auctionDTOList;
     }
 
     @PutMapping("/goods-update")
@@ -251,7 +276,6 @@ public class AuctionController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
 
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
