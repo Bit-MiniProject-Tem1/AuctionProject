@@ -19,8 +19,8 @@ public class AuctionDTO {
     private String regUserId; // fk
     private CategoryDTO category;
     private Long categoryId;
-//    private String title;
-//    private String description;
+    private String title;
+    private String description;
     private String originDescription;
     private String target;
     private char status;
