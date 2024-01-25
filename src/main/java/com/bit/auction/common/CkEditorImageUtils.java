@@ -75,32 +75,8 @@ public class CkEditorImageUtils {
         }
 
         descriptionImgDTO.setFileName(imgName);
-        descriptionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/" + imgPath);
+        descriptionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/"+bucketName+"/" + imgPath);
 
         return descriptionImgDTO;
-    }
-
-    public String parseFileInto(MultipartFile uploadFile) throws IOException {
-        SimpleDateFormat formater = new SimpleDateFormat("yyyyMMddHHmmsss");
-        Date nowDate = new Date();
-        String nowDateStr = formater.format(nowDate);
-
-        UUID uuid = UUID.randomUUID();
-        String originalFileName = uploadFile.getOriginalFilename();
-        String imgName = nowDateStr + "_" + uuid.toString() + "_" + originalFileName.substring(originalFileName.indexOf("."));
-
-
-        // String originalFileName = uploadFile.getOriginalFilename();
-        // String ext = originalFileName.substring(originalFileName.indexOf("."));
-        // String newFileName = UUID.randomUUID() + ext;
-        String realPath = System.getProperty("user.dir") + "\\src\\";
-
-        String savePath = realPath + "/main/resources/static/upload/" + imgName;
-        String uploadPath = realPath + "\\main\\resources\\static\\upload\\" + imgName;
-
-        Path path = Paths.get(savePath).toAbsolutePath();
-        uploadFile.transferTo(path.toFile());
-
-        return uploadPath;
     }
 }

@@ -12,16 +12,16 @@ var categoryId;
 var checkUnload;
 
 var fileNo = 0;
-var filesArr = new Array(); //originFiles
+var filesArr = new Array();
 var representativeImg;
 var representativeName;
 
-const deletefilesArr = new Array();
+const deleteFilesArr = new Array();
 
 function addFile(obj) {
     var maxFileCnt = 5;
     var attFileCnt = document.querySelectorAll('.filebox').length;
-    var delFileCnt = deletefilesArr.length;
+    var delFileCnt = deleteFilesArr.length;
     var remainFileCnt = maxFileCnt - attFileCnt;
     var curFileCnt = obj.files.length;
 
@@ -81,11 +81,37 @@ function validation(obj) {
 }
 
 function deleteFile(num) {
+    var originFile;
+
     if (document.querySelector("#file" + num).hasAttribute('data-saveDB')) {
-        deletefilesArr.push(num);
+        deleteFilesArr.push(num);
+
+        originFile = originFileArr.find(function (item, index, arr) {
+            return item.id === num;
+        });
     } else {
         filesArr[num].is_delete = true;
     }
+
+    if (originFile.fileName === representativeName || filesArr[num].name === representativeName) {
+        var originRemainingNumber = originFileArr.length - deleteFilesArr.length;
+
+        if (filesArr.length > 0 && originRemainingNumber === 0) {
+            representativeFile(0);
+        } else if (originRemainingNumber > 0) {
+            var id;
+            
+            for (let i = 0; i < originFileArr.length; i++) {
+                if (!deleteFilesArr.includes(originFileArr[i].id)) {
+                    id = originFileArr[i].id;
+                    break;
+                }
+            }
+
+            representativeFile(id);
+        }
+    }
+
     document.querySelector("#file" + num).remove();
 }
 
@@ -102,8 +128,8 @@ function representativeFile(num) {
     if (originFileArr != null) {
         for (var i = 0; i < originFileArr.length; i++) {
             check = $("#file" + originFileArr[i].id + " .represent i");
-            console.log(originFileArr[i].id);
-            if (originFileArr[i].id != num) {
+
+            if (originFileArr[i].id !== num) {
                 check.addClass("bi-check-circle");
                 check.removeClass("bi-check-circle-fill");
             } else {
@@ -196,7 +222,7 @@ $(() => {
 
         var formData = new FormData($("#insertForm")[0]);
 
-        formData.set("deleteAuctionImgList", deletefilesArr);
+        formData.set("deleteAuctionImgList", deleteFilesArr);
         formData.set("currentBiddingPrice", 0);
         formData.set("representativeImgName", representativeName);
 

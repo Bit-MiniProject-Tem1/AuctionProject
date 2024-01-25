@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // 이 코드는 searchInput 엘리먼트에서 data-show-alert-th 데이터 속성 값을 가져와서, 이 값이 문자열 'true'와 일치하는지 확인하여 showAlertValue 변수에 할당합니다.
     var showAlertValue = document.getElementById('searchInput').dataset.showAlertTh === 'true';
 
-    console.log(showAlertValue);
-
     if (showAlertValue) {
-        alert('검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.');
+        setTimeout(function() {
+            alert('검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.');
+        }, 80);
     }
 
 // 알림 메시지를 표시하는 함수

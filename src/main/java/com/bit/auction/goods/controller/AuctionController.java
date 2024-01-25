@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -147,7 +148,6 @@ public class AuctionController {
 
             auctionService.insertAuction(auctionDTO, categoryId);
 
-
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "정상적으로 입력되었습니다.");
 
@@ -176,6 +176,31 @@ public class AuctionController {
         mav.setViewName("auction/updateAuction.html");
 
         return mav;
+    }
+
+    @GetMapping("/recent-items")
+    public List<AuctionDTO> updateGoods(@RequestParam("recentItems") String recentItems) {
+
+        recentItems = recentItems.replace("[", "");
+        recentItems = recentItems.replace("]", "");
+        recentItems = recentItems.replace("\"", "");
+
+        String[] itemsArray = recentItems.split(",");
+
+        long[] itemsIds = new long[itemsArray.length];
+
+        for (int i = 0; i < itemsArray.length; i++) {
+            itemsIds[i] = Long.parseLong(itemsArray[i]);
+        }
+
+        List<AuctionDTO> auctionDTOList = new ArrayList<>();
+
+        for (int i = 0; i < itemsIds.length; i++) {
+
+            auctionDTOList.add(auctionService.getAuctionGoods(itemsIds[i]));
+        }
+
+        return auctionDTOList;
     }
 
     @PutMapping("/goods-update")
@@ -252,7 +277,6 @@ public class AuctionController {
         }
     }
 
-
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
                                      @RequestParam(required = false) String sort,
@@ -275,8 +299,7 @@ public class AuctionController {
             targetList = Arrays.asList(paramMap.get("target").toString().split(","));
         }
 
-        List<Character> statusList = new ArrayList<>();
-        statusList.add('S');
+        List<Character> statusList = new ArrayList<>('S');
         if (paramMap.get("closing") != null) {
             statusList.add(paramMap.get("closing").toString().charAt(0));
         }
@@ -309,7 +332,6 @@ public class AuctionController {
         return mav;
     }
 
-
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(required = false) Map<String, Object> paramMap,
                                @PageableDefault(page = 0, size = 12) Pageable pageable,
@@ -328,42 +350,21 @@ public class AuctionController {
             mav.addObject("categoryList", categoryList);
         }
 
-        List<String> targetList = new ArrayList<>();
-        if (paramMap.get("target") != null) {
-            targetList = Arrays.asList(paramMap.get("target").toString().split(","));
-        }
-
         List<Character> statusList = new ArrayList<>();
-        if (paramMap.get("closing") != null) {
-            String[] status = paramMap.get("closing").toString().split(",");
-            for (String s : status) {
-                statusList.add(s.charAt(0));
-            }
-        }
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            List<AuctionDTO> searchResult = auctionService.searchAuctions(searchQuery, statusList);
 
-            // 전체 항목을 가져오기
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, targetList, statusList);
-            List<AuctionDTO> allAuctions = auctionPage.getContent();
-
-            if (!searchResult.isEmpty()) {
+        Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
+        if (auctionDTOList.getTotalElements() != 0) {
                 // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
-                mav.addObject("auctionList", searchResult);
+                mav.addObject("auctionList", auctionDTOList);
                 mav.addObject("topCategoryName", "검색 결과");
-
-            } else {
-                // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
-                mav.addObject("auctionList", allAuctions);
-                mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
-                mav.addObject("showAlertValue", true);
-            }
         } else {
-            // 검색어가 없는 경우에는 전체 목록을 보여줘야 함
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, targetList, statusList);
-            List<AuctionDTO> allAuctions = auctionPage.getContent();
+            // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
+            mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
+            mav.addObject("showAlertValue", true);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, null, statusList);
             mav.addObject("auctionList", auctionPage);
         }
+        System.out.println(mav);
         return mav;
     }
 

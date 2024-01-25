@@ -2,10 +2,13 @@ package com.bit.auction.goods.repository;
 
 import com.bit.auction.goods.entity.Auction;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Transactional
@@ -22,4 +25,10 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query("update Auction a set a.view = a.view + 1 where a.id = :id")
     int updateView(Long id);
 
+    @Query(value = "SELECT a FROM Auction a ORDER BY a.regDate DESC")
+    List<Auction> findByforResent();
+    @Query(value = "SELECT a FROM Auction a ORDER BY a.endDate ASC")
+    List<Auction> findByforFinal();
+    @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
+    Page<Auction> findByAuctionNameContaining(Pageable pageable, String searchQuery, List<Character> statusList);
 }

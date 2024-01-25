@@ -86,45 +86,9 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
             a.representativeImgUrl(url);
         });
 
-        // long totalCnt = jpaQueryFactory
-        //         .select(auction.count())
-        //         .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
-        //         .from(auction)
-        //         .fetchOne();
-
         long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
-    }
-
-    @Override
-    public List<Auction> findByAuctionNameContaining(String searchQuery, List<Character> statusList) {
-        BooleanBuilder whereConditions = new BooleanBuilder()
-                .and(auction.title.containsIgnoreCase(searchQuery))
-                .and(eqStatus(statusList));
-
-        return jpaQueryFactory
-                .selectFrom(auction)
-                .where(whereConditions)
-                .fetch();
-    }
-
-    @Override
-    public List<Auction> findByforResent() {
-
-        return jpaQueryFactory
-                .selectFrom(auction)
-                .orderBy(auction.regDate.desc())
-                .fetch();
-    }
-
-    @Override
-    public List<Auction> findByforFinal() {
-
-        return jpaQueryFactory
-                .selectFrom(auction)
-                .orderBy(auction.endDate.asc())
-                .fetch();
     }
 
     private BooleanBuilder eqCategoryId(Long categoryId, List<Long> subCategoryIdList) {

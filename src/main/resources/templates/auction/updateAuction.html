@@ -35,6 +35,7 @@
 
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
 
+
                 ClassicEditor.create(document.querySelector('#editor'), {
                     toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],
                     shouldNotGroupWhenFull: false,
@@ -161,14 +162,6 @@
                 </tr>
                 <tr>
                     <td align="center">
-                        <!--
-                        <input type="hidden" name="categoryId" id="categoryId" value=""
-                               th:value="${getGoods.category.id}">
-                        <input type="hidden" name="id" id="goodsId" value="" th:value="${getGoods.id}">
-                               <input type="hidden" maxlength="10"
-                               name="representativeImgName" id="representativeImgName"
-                               class="form-control price-comma"/>
-                         -->
                         <button id="update" type="button">수정</button>
                     </td>
                 </tr>

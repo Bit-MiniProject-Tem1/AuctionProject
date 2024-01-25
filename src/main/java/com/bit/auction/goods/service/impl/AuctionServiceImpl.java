@@ -249,18 +249,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status) {
+    public Page<AuctionDTO> searchAuctions(Pageable pageable, String searchQuery, List<Character> status) {
         List<Character> statusList = new ArrayList<>();
         if (status != null || !status.isEmpty()) {
             statusList.add('S');
             statusList.addAll(status);
         }
 
-        return auctionRepository
-                .findByAuctionNameContaining(searchQuery, statusList)
-                .stream()
-                .map(Auction::toDTO)
-                .collect(Collectors.toList());
+        Page<Auction> auctionPageList = auctionRepository.findByAuctionNameContaining(pageable, searchQuery, statusList);
+        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+
+        return auctionDTOPageList;
     }
 
     @Override

@@ -13,10 +13,13 @@
         <script th:inline="javascript">
             $(() => {
                 var description = [[${getGoods.description}]];
-
-                console.log([[${getGoods.auctionImgDTOList}]]);
+                
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
+
+                productId = [[${getGoods.id}]];
+
+                setCookie("itemCookie", productId, 7);
             });
         </script>
     </th:block>
