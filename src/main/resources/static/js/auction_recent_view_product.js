@@ -1,8 +1,10 @@
 let recentItems = [];
 var productId;
+getCookie("itemCookie");
 
 function setCookie(name, value, days) {
-
+    console.log(name);
+    console.log(value);
     let isDuplicate = false;
 
 
