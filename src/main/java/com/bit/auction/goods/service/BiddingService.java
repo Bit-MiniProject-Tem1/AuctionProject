@@ -33,6 +33,7 @@ public interface BiddingService {
 
     default BiddingDTO entityToDTO(Bidding bidding){
         BiddingDTO biddingDTO = BiddingDTO.builder()
+                .biddingId(bidding.getBiddingId())
                 .biddingPrice(bidding.getBiddingPrice())
                 .date(LocalDateTime.now())
                 .status(bidding.getStatus())

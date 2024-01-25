@@ -1,3 +1,4 @@
+var goodsId;
 
 function isValid() {
 
@@ -49,3 +50,9 @@ function save() {
 		alert('오류가 발생하였습니다.');
 	});
 }
+
+$(() => {
+	$("#register").on("click", () => {
+		//굿즈, 사용자가 입찰가격 ajax -> bid link
+	});
+});

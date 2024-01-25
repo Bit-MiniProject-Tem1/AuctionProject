@@ -10,10 +10,12 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/countdown.js}"></script>
+         <script th:src="@{/js/bidding.js}"></script>
         <script th:inline="javascript">
             $(() => {
+                goods = [[${getGoods}]];
                 var description = [[${getGoods.description}]];
-                
+
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
 
