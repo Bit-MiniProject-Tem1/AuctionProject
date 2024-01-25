@@ -35,9 +35,6 @@
 
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
 
-                productId = [[${getGoods.id}]];
-
-                setCookie("itemCookie", productId, 7);
 
                 ClassicEditor.create(document.querySelector('#editor'), {
                     toolbar: ['heading', '|', 'undo', 'redo', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'imageUpload'],

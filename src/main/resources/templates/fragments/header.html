@@ -11,7 +11,6 @@
                 goodsTitle = [[${getGoods.title}]];
                 goodsImg = [[${getGoods.representativeImgUrl}]];
                 console.log(currentItems);
-                console.log("111111");
             });
         </script>
     </th:block>
@@ -37,7 +36,7 @@
                 <img th:src="@{/img/logoo.png}" th:class="logo_bk">
             </a>
 
-            <form th:action="@{/auction/goods-list}" method="get" id="searchForm">
+            <form th:action="@{/auction/search}" method="get" id="searchForm">
                 <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" id="searchInput" name="searchQuery"  th:attr="data-show-alert-th=${showAlertValue}">
             </form>
             <div class="category_menu">
@@ -82,16 +81,6 @@
 
                 <div class="dropdown-content">
                     <ul class="list_box" id="recent-items">
-                        <li style="text-align: left" class="content_box">
-                            <div class="content_boxes">
-                                <div class="list-img">
-                                    <figure class="img_wrapper">
-                                        <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
-                                    </figure>
-                                </div>
-                                <div class="list-title-default">조회 할 상품이 존재하지 않습니다.</div>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>

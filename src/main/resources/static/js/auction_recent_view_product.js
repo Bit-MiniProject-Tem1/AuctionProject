@@ -46,25 +46,34 @@ function setCookie(name, value, days) {
 
 $(() => {
     const itemCookieValue = getCookie("itemCookie");
-    console.log("load", itemCookieValue);
 });
-function getCookie(name) {
+function getCookie(value) {
     let str = document.cookie;
     let tmp1 = '';
     let tmp2 = [];
 
     if (str !== '') {
-        tmp1 = str.split("=")[1];
-    }
+        const cookies = str.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            const cookieParts = cookie.split('=');
+            const name = cookieParts[0];
+            const cookieValue = cookieParts[1];
 
-    if (tmp1 !== '') {
+            if (name === value) {
+                tmp1 = cookieValue;
+                break;
+            }
+        }
+
+
+        if (tmp1 !== '') {
         tmp2 = tmp1.split(",");
     }
 
     for (let i = 0; i < tmp2.length; i++) {
         recentItems[i] = tmp2[i];
     }
-console.log("recentItems : "+recentItems);
     displayRecentItems();
     return recentItems;
 }
@@ -77,14 +86,13 @@ function displayRecentItems() {
             type: "get",
             data: { recentItems: JSON.stringify(recentItems) },
             success: (obj) => {
-                console.log(obj);
 
                 let htmlStr = "";
 
                 for (let i = 0; i < obj.length; i++) {
                     htmlStr += `
                         <li style="text-align: left" class="content_box">
-                            <a class="a_tag" href="/auction/goods-update/${obj[i].id}">
+                            <a class="a_tag" href="/auction/goods/${obj[i].id}">
                                 <div class="content_boxes">
                                     <div class="list-img">
                                         <figure class="img_wrapper">
@@ -107,13 +115,30 @@ function displayRecentItems() {
                 console.log(err);
             }
         });
+    } else {
+        let html = "";
+
+        html += `
+                       <li style="text-align: left" class="content_box">
+                            <div class="content_boxes">
+                                <div class="list-img">
+                                    <figure class="img_wrapper">
+                                        <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
+                                    </figure>
+                                </div>
+                                <div class="list-title-default">조회 할 상품이 존재하지 않습니다.</div>
+                            </div>
+                        </li>
+                    `;
+        $("#recent-items").html(html);
     }
 }
 
-function removeItem(event) {
+
+    function removeItem(event) {
     const productId = $(event.target).data('product-id');
 
-    for (let i = 0; i <= recentItems.length; i++) {
+    for (let i = 0; i < recentItems.length; i++) {
         if (productId == recentItems[i]) {
             recentItems.splice(i, 1);
             break;
@@ -128,7 +153,7 @@ function removeItem(event) {
 function deleteCookie(productId) {
 
     var pastDate = new Date();
-    pastDate.setTime(pastDate.getTime()-1);
+    pastDate.setTime(pastDate.getTime() - 1);
     document.cookie = "itemCookie=; expires=" + pastDate.toUTCString() + "; path=/";
 
     // 쿠키에서 값을 가져옴
@@ -140,7 +165,7 @@ function deleteCookie(productId) {
         var filteredItems = [];
 
         for (let i = 0; i < cookieValue.length; i++) {
-            if(cookieValue[i]!=productId){
+            if (cookieValue[i] != productId) {
                 filteredItems.push(cookieValue[i]);
             }
         }
@@ -148,6 +173,6 @@ function deleteCookie(productId) {
         currentDate.setDate(currentDate.getDate() + 7); // 예시로 하루 뒤에 만료되도록 설정
         document.cookie = "itemCookie=" + filteredItems.join(',') + "; expires=" + currentDate.toUTCString() + "; path=/";
     }
-
+}
 }
 
