@@ -86,12 +86,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
             a.representativeImgUrl(url);
         });
 
-        // long totalCnt = jpaQueryFactory
-        //         .select(auction.count())
-        //         .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
-        //         .from(auction)
-        //         .fetchOne();
-
         long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);

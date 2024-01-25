@@ -57,8 +57,13 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
         });
 
         if (count.get() == 0) {
-            AuctionImg img = auction.getAuctionImgList().get(0);
-            img.setRepresentative(true);
+            jpaQueryFactory
+                    .update(auctionImg)
+                    .set(auctionImg.isRepresentative, true)
+                    .where(auctionImg.id.eq(0L))
+                    .execute();
+            em.clear();
+            em.flush();
         }
     }
 }

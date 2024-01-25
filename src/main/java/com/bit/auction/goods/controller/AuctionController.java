@@ -189,13 +189,13 @@ public class AuctionController {
 
         long[] itemsIds = new long[itemsArray.length];
 
-        for(int i = 0; i < itemsArray.length; i++) {
+        for (int i = 0; i < itemsArray.length; i++) {
             itemsIds[i] = Long.parseLong(itemsArray[i]);
         }
 
         List<AuctionDTO> auctionDTOList = new ArrayList<>();
 
-        for(int i = 0; i < itemsIds.length; i++) {
+        for (int i = 0; i < itemsIds.length; i++) {
 
             auctionDTOList.add(auctionService.getAuctionGoods(itemsIds[i]));
         }
@@ -299,8 +299,7 @@ public class AuctionController {
             targetList = Arrays.asList(paramMap.get("target").toString().split(","));
         }
 
-        List<Character> statusList = new ArrayList<>();
-        statusList.add('S');
+        List<Character> statusList = new ArrayList<>('S');
         if (paramMap.get("closing") != null) {
             statusList.add(paramMap.get("closing").toString().charAt(0));
         }
@@ -332,7 +331,6 @@ public class AuctionController {
 
         return mav;
     }
-
 
     @GetMapping("/search")
     public ModelAndView search(@RequestParam(required = false) Map<String, Object> paramMap,

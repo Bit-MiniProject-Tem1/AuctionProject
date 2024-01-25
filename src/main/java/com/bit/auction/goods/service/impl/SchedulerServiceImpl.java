@@ -17,7 +17,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     @Transactional
-    @Scheduled(cron = "0 33 10 * * *")
+    @Scheduled(cron = "0 0 12 * * *")
     public void setStateChangeFromEndDate() {
         auctionRepository.updateStatusByEndDate(LocalDateTime.now());
     }
