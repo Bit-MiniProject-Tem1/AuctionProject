@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     var showAlertValue = document.getElementById('searchInput').dataset.showAlertTh === 'true';
 
     if (showAlertValue) {
-        alert('검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.');
+        setTimeout(function() {
+            alert('검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.');
+        }, 80);
     }
 
 // 알림 메시지를 표시하는 함수

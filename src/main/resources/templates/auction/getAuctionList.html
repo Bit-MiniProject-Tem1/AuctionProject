@@ -20,6 +20,14 @@
                     $(".sub-category-list").css("display", "block");
                     $(".filter-list").css("display", "block");
                 }
+
+                const searchQuery = urlParams.get('searchQuery');
+                $(".sub-category-title span").text(searchQuery);
+
+                if(searchQuery!=null){
+                    $(".sub-category-list").hide();
+                    $(".filter-list").hide();
+                }
             });
         </script>
     </th:block>
@@ -151,7 +159,7 @@
                 </div>
             </div>
         </div>
-        <nav aria-label="Page navigation example" class="goods-list-page">
+        <nav aria-label="Page navigation example" class="goods-list-page" >
             <ul class="pagination justify-content-center" th:if="${auctionList.totalElements > 0}"
                 th:with="pageNumber = ${auctionList.pageable.pageNumber},
                              pageSize = ${auctionList.pageable.pageSize},

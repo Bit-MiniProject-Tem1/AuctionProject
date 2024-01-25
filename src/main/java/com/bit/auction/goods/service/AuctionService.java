@@ -27,7 +27,7 @@ public interface AuctionService {
 
     void cancelAuction(Long id);
 
-    List<AuctionDTO> searchAuctions(String searchQuery, List<Character> status);
+    Page<AuctionDTO> searchAuctions(Pageable pageable, String searchQuery, List<Character> status);
 
     List<AuctionDTO> findByForRecentList();
 
