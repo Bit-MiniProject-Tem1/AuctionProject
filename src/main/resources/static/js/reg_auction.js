@@ -93,14 +93,12 @@ function deleteFile(num) {
         filesArr[num].is_delete = true;
     }
 
-    if (originFile.fileName === representativeName || filesArr[num].name === representativeName) {
+    if (originFile != null && originFile.fileName === representativeName) {
         var originRemainingNumber = originFileArr.length - deleteFilesArr.length;
 
-        if (filesArr.length > 0 && originRemainingNumber === 0) {
-            representativeFile(0);
-        } else if (originRemainingNumber > 0) {
+        if (originRemainingNumber > 0) {
             var id;
-            
+
             for (let i = 0; i < originFileArr.length; i++) {
                 if (!deleteFilesArr.includes(originFileArr[i].id)) {
                     id = originFileArr[i].id;
@@ -109,6 +107,32 @@ function deleteFile(num) {
             }
 
             representativeFile(id);
+        }
+    }
+
+    if (filesArr.length) {
+        var file0Element = document.getElementById('file' + num);
+        var nameElement = file0Element.querySelector('.name');
+        var nameText = nameElement.textContent;
+
+        if (nameText === representativeName) {
+            var fileContainer = document.querySelector('.file-list');
+
+            console.log("fileContainer: " + fileContainer);
+
+            if (fileContainer && fileContainer.children.length >= 2) {
+                var secondDivId = fileContainer.children[1].id;
+                console.log(secondDivId);
+
+                var numericId = secondDivId.replace('file', '');
+
+                if (!isNaN(numericId)) {
+                    console.log(numericId);
+                    representativeFile(numericId);
+                } else {
+                    console.error("유효하지 않은 숫자 ID: " + numericId);
+                }
+            }
         }
     }
 
