@@ -15,7 +15,6 @@
             $(document).ready(function() {
                 const urlParams = new URL(location.href).searchParams;
                 const name = urlParams.get('regUser');
-                console.log(name);
 
                 if(name==null){
                     $(".sub-category-list").css("display", "block");

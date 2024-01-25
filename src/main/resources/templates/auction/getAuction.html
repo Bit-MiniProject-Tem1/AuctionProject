@@ -13,8 +13,7 @@
         <script th:inline="javascript">
             $(() => {
                 var description = [[${getGoods.description}]];
-
-                console.log([[${getGoods.auctionImgDTOList}]]);
+                
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
             });

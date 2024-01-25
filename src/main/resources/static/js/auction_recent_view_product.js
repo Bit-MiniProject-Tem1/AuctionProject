@@ -1,5 +1,6 @@
 let recentItems = [];
 var productId;
+
 function setCookie(name, value, days) {
 
     let isDuplicate = false;
@@ -27,8 +28,8 @@ function setCookie(name, value, days) {
     let str = "";
 
 
-    for(let i = 0; i < recentItems.length; i++) {
-        if(i != recentItems.length - 1) {
+    for (let i = 0; i < recentItems.length; i++) {
+        if (i != recentItems.length - 1) {
             str += recentItems[i] + ",";
         } else {
             str += recentItems[i];
@@ -44,10 +45,6 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + str + expires + "; path=/";
 }
 
-$(() => {
-    const itemCookieValue = getCookie("itemCookie");
-    console.log("load", itemCookieValue);
-});
 function getCookie(name) {
     let str = document.cookie;
     let tmp1 = '';
@@ -64,7 +61,7 @@ function getCookie(name) {
     for (let i = 0; i < tmp2.length; i++) {
         recentItems[i] = tmp2[i];
     }
-console.log("recentItems : "+recentItems);
+    console.log("recentItems : " + recentItems);
     displayRecentItems();
     return recentItems;
 }
@@ -75,7 +72,7 @@ function displayRecentItems() {
         $.ajax({
             url: "/auction/recent-items",
             type: "get",
-            data: { recentItems: JSON.stringify(recentItems) },
+            data: {recentItems: JSON.stringify(recentItems)},
             success: (obj) => {
                 console.log(obj);
 
@@ -128,7 +125,7 @@ function removeItem(event) {
 function deleteCookie(productId) {
 
     var pastDate = new Date();
-    pastDate.setTime(pastDate.getTime()-1);
+    pastDate.setTime(pastDate.getTime() - 1);
     document.cookie = "itemCookie=; expires=" + pastDate.toUTCString() + "; path=/";
 
     // 쿠키에서 값을 가져옴
@@ -140,7 +137,7 @@ function deleteCookie(productId) {
         var filteredItems = [];
 
         for (let i = 0; i < cookieValue.length; i++) {
-            if(cookieValue[i]!=productId){
+            if (cookieValue[i] != productId) {
                 filteredItems.push(cookieValue[i]);
             }
         }
