@@ -14,9 +14,10 @@ import java.util.Optional;
 @Transactional
 public interface AuctionRepository extends JpaRepository<Auction, Long>, AuctionRepositoryCustom {
 
-    // @Query(value = "select a from Auction a where a.category.id = :categoryId and a.status in :status")
-    // Page<Auction> findBySubCategoryId(Pageable pageable, Long categoryId, List<Character> status);
-
-    // @Query(value = "select a from Auction a where a.category.id in :subCategoryId and a.status in :status")
-    // Page<Auction> findByTopCategoryId(Pageable pageable, List<Long> subCategoryId, List<Character> status);
+    @Query(value = "SELECT a FROM Auction a ORDER BY a.regDate DESC")
+    List<Auction> findByforResent();
+    @Query(value = "SELECT a FROM Auction a ORDER BY a.endDate ASC")
+    List<Auction> findByforFinal();
+    @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
+    List<Auction> findByAuctionNameContaining(String searchQuery, List<Character> statusList);
 }

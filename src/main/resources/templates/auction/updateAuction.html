@@ -18,7 +18,6 @@
                 categoryId = [[${getGoods.categoryId}]];
                 var category = [[${getGoods.categoryName}]];
                 var target = [[${getGoods.target}]];
-
                 $("#startingPrice").val(startingPrice);
                 $("#startingPrice").attr("readonly", true);
                 $("#immediatePrice").val(immediatePrice);
@@ -27,7 +26,12 @@
 
 
                 $("input:radio[name='target'][value='" + target + "']").prop('checked', true);
+
+                productId = [[${getGoods.id}]];
+
+                setCookie("itemCookie", productId, 7);
             });
+
         </script>
         <script th:src="@{/js/reg_auction.js}"></script>
     </th:block>

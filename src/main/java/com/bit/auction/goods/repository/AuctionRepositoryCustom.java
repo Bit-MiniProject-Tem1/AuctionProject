@@ -11,9 +11,4 @@ public interface AuctionRepositoryCustom {
 
     void saveOne(Auction auction);
 
-    List<Auction> findByAuctionNameContaining(String searchQuery, List<Character> statusList);
-
-    List<Auction> findByforResent();
-
-    List<Auction> findByforFinal();
 }

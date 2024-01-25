@@ -32,6 +32,8 @@ public class HomeController {
 
         model.addAttribute("topCategoryName", "전체");
 
+
+
         return "index";
     }
 

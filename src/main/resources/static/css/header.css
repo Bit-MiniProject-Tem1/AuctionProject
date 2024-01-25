@@ -294,8 +294,20 @@ header {
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: center;
-    margin-top: 15px;
     font-weight: 550;
+    font-family: Pretendard;
+    padding-top: 15px;
+}
+
+.main_header .list-title-default {
+    font-size: 15px;
+    color: gray;
+    font-family: Pretendard;
+    padding-top: 15px;
+}
+.main_header .bi-trash {
+    float: right;
+    display: flex;
 }
 
 .main_header .content_box a .list-title{

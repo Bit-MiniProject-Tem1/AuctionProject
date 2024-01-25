@@ -1,16 +1,14 @@
 package com.bit.auction.goods.controller;
-
-import ch.qos.logback.core.model.Model;
 import com.bit.auction.common.CkEditorImageUtils;
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.AuctionImgDTO;
-import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.*;
 
@@ -128,6 +127,8 @@ public class AuctionController {
         }
     }
 
+
+
     @GetMapping("/goods-update/{id}")
     public ModelAndView updateGoods(@PathVariable("id") Long categoryId) {
         ModelAndView mav = new ModelAndView();
@@ -140,6 +141,32 @@ public class AuctionController {
         mav.setViewName("auction/updateAuction.html");
 
         return mav;
+    }
+
+    @GetMapping("/recent-items")
+    public List<AuctionDTO> updateGoods(@RequestParam("recentItems") String recentItems) {
+        System.out.println(recentItems);
+
+        recentItems = recentItems.replace("[", "");
+        recentItems = recentItems.replace("]", "");
+        recentItems = recentItems.replace("\"", "");
+
+        String[] itemsArray = recentItems.split(",");
+
+        long[] itemsIds = new long[itemsArray.length];
+
+        for(int i = 0; i < itemsArray.length; i++) {
+            itemsIds[i] = Long.parseLong(itemsArray[i]);
+        }
+
+        List<AuctionDTO> auctionDTOList = new ArrayList<>();
+
+        for(int i = 0; i < itemsIds.length; i++) {
+
+            auctionDTOList.add(auctionService.getAuctionGoods(itemsIds[i]));
+        }
+
+        return auctionDTOList;
     }
 
     @PutMapping("/goods")
@@ -286,4 +313,7 @@ public class AuctionController {
         mav.addObject("url", descriptionImgDTO.getFileUrl());
         return mav;
     }
+
+
+
 }

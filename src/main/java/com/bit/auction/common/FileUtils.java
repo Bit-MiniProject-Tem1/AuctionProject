@@ -36,7 +36,7 @@ public class FileUtils {
     }
 
     public AuctionImgDTO parseFileInfo(MultipartFile multipartFile, String directory, String representativeImgName) {
-        String bucketName = "bitcamp-bucket-22";
+        String bucketName = "bitcamp-bucket-36";
 
         AuctionImgDTO auctionImgDTO = new AuctionImgDTO();
 
@@ -71,7 +71,7 @@ public class FileUtils {
 
 
         auctionImgDTO.setFileName(imgName);
-        auctionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/" + imgPath);
+        auctionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-36/" + imgPath);
 
         if (auctionImgOrigin.equals(representativeImgName)) {
             auctionImgDTO.setRepresentative(true);

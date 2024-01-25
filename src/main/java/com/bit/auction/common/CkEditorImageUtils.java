@@ -39,7 +39,7 @@ public class CkEditorImageUtils {
     }
 
     public DescriptionImgDTO parseFileInfo(MultipartFile multipartFile, String directory) {
-        String bucketName = "bitcamp-bucket-22";
+        String bucketName = "bitcamp-bucket-36";
 
         DescriptionImgDTO descriptionImgDTO = new DescriptionImgDTO();
 
@@ -73,7 +73,7 @@ public class CkEditorImageUtils {
         }
 
         descriptionImgDTO.setFileName(imgName);
-        descriptionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-122/" + imgPath);
+        descriptionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/bitcamp-bucket-36/" + imgPath);
 
         return descriptionImgDTO;
     }
