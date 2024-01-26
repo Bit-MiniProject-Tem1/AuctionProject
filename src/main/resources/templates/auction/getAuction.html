@@ -155,8 +155,8 @@
                         원하는 입찰 금액을 적어주세요.
                     </div>
                 </div>
-                <a href="#" class="favorite-link">
-                    <i class="bi bi-heart"></i>관심&nbsp;<span>345</span>
+                <a th:onclick="|javascript:toggleHeart('${getGoods.id}')|" class="favorite-link">
+                    <i id="likeStatus" class="bi-heart favorite-icon" th:class="${likeCnt == 0 ? 'bi-heart' : 'bi-heart-fill'}"></i>관심&nbsp;<span id="likeSum" th:text="${likeSum}"></span>
                 </a>
                 <div class="user-bidding-container light-border-top">
                     <div class="user">

@@ -65,6 +65,10 @@ public class Auction {
     @Builder.Default()
     private int view = 0;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Builder.Default()
+    private int likeCnt = 0;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @OrderBy("isRepresentative desc")
     @JsonManagedReference

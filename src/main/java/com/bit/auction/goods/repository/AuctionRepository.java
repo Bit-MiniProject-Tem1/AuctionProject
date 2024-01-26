@@ -1,5 +1,6 @@
 package com.bit.auction.goods.repository;
 
+import com.bit.auction.goods.dto.LikeCntDTO;
 import com.bit.auction.goods.entity.Auction;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -31,4 +32,11 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     List<Auction> findByforFinal();
     @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
     Page<Auction> findByAuctionNameContaining(Pageable pageable, String searchQuery, List<Character> statusList);
+
+//    @Modifying
+//    @Query("update Auction a set a.likeCnt = a.likeCnt + 1 where a.id = :id")
+//    void plusLikeCnt(LikeCntDTO likeCntDTO);
+//    @Modifying
+//    @Query("update Auction a set a.likeCnt = a.likeCnt - 1 where a.id = :id")
+//    void minusLikeCnt(LikeCntDTO likeCntDTO);
 }

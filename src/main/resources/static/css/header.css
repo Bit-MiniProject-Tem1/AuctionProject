@@ -84,6 +84,10 @@ header {
     align-items: center;
 }
 
+.main_header .cart {
+    margin-left: 10px;
+}
+
 .main_header .home {
     color: black;
     font-size: 18px;
@@ -185,7 +189,12 @@ header {
 }
 
 .main_header span {
-    margin-left: 3px;
+    margin-left: 5px;
+    font-family: Pretendard;
+}
+
+.main_header .cart span {
+    margin-left: 2px;
     font-family: Pretendard;
 }
 

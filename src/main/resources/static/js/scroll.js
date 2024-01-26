@@ -23,17 +23,36 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function toggleHeart() {
-    const heartIcon1 = document.getElementsByClassName('favorite-icon')[0];
-    const ClassName1 = "bi-heart";
-    const ClassName2 = "bi-heart-fill";
+function toggleHeart(id) {
+    if($("#likeStatus").hasClass("bi-heart")) {
 
-    if (heartIcon1.classList.contains(ClassName1)) {
-        heartIcon1.classList.remove(ClassName1);
-        heartIcon1.classList.add(ClassName2);
-    } else if (heartIcon1.classList.contains(ClassName2)) {
-        heartIcon1.classList.remove(ClassName2);
-        heartIcon1.classList.add(ClassName1);
+        $.ajax({
+            url: '/like/add/' + id,
+            type: 'post',
+            success: (obj) => {
+                $("#likeStatus").addClass("bi-heart-fill");
+                $("#likeStatus").removeClass("bi-heart");
+
+                $("#likeSum").text(obj.item.likeSum);
+            },
+            error: (err) => {
+
+            }
+        })
+    } else {
+        $.ajax({
+            url: '/like/delete/' + id,
+            type: 'post',
+            success: (obj) => {
+                $("#likeStatus").removeClass("bi-heart-fill");
+                $("#likeStatus").addClass("bi-heart");
+
+                $("#likeSum").text(obj.item.likeSum);
+            },
+            error: (err) => {
+
+            }
+        })
     }
 }
 

@@ -31,6 +31,7 @@ public class AuctionDTO {
     private LocalDateTime endDate;
     private String successfulBidderId; // fk
     private int view;
+    private boolean like;
     private List<AuctionImgDTO> auctionImgDTOList;
     private String representativeImgUrl;
     private String representativeImgName;
