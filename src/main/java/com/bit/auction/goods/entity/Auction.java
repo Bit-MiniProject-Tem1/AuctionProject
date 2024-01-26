@@ -1,6 +1,7 @@
 package com.bit.auction.goods.entity;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,9 @@ public class Auction {
     @Column(name = "auction_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String regUserId; // fk
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User regUser;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
@@ -84,7 +86,7 @@ public class Auction {
         });
         return AuctionDTO.builder()
                 .id(this.id)
-                .regUserId(this.regUserId)
+                .regUserId(this.regUser.getUserId())
                 .category(this.category.toDTO())
                 .title(this.title)
                 .description(this.description)

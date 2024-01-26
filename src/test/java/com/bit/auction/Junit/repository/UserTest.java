@@ -15,8 +15,7 @@ public class UserTest {
     private UserRepository userRepository;
 
     @Test
-
-    void saveUser () {
+    void saveUser() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             User user = User.builder()
                     .userId("testId" + i)
@@ -26,10 +25,10 @@ public class UserTest {
                     .userBirth("testBirth" + i)
                     .userAddress("testAddress" + i)
                     .userTel("testTel" + i)
-                    .userRegdate("testReg" + i)
+                    //.userRegdate("testReg" + i)
                     .build();
 
-                    userRepository.save(user);
+            userRepository.save(user);
 
         });
     }

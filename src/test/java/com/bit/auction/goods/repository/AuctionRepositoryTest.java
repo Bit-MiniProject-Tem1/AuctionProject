@@ -3,6 +3,8 @@ package com.bit.auction.goods.repository;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Category;
 import com.bit.auction.goods.service.AuctionService;
+import com.bit.auction.user.entity.User;
+import com.bit.auction.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,12 +25,16 @@ class AuctionRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @DisplayName("Auction 테이블 insert 테스트")
     @Test
     void insertAuction1() {
         Category category1 = categoryRepository.findById(1L).get();
+        User user = userRepository.findByUserId("kim").get();
         Auction auction1 = Auction.builder()
-                .regUserId("han")
+                .regUser(user)
                 .category(category1)
                 .title("테스트 제목1")
                 .description("테스트 내용")
@@ -43,8 +49,9 @@ class AuctionRepositoryTest {
     @Test
     void insertAuction() {
         Category category1 = categoryRepository.findById(1L).get();
+        User user = userRepository.findByUserId("test").get();
         Auction auction1 = Auction.builder()
-                .regUserId("han")
+                .regUser(user)
                 .category(category1)
                 .title("테스트 제목1")
                 .description("테스트 내용")
@@ -56,7 +63,7 @@ class AuctionRepositoryTest {
 
         Category category2 = categoryRepository.findById(2L).get();
         Auction auction2 = Auction.builder()
-                .regUserId("park")
+                .regUser(user)
                 .category(category2)
                 .title("테스트 제목2")
                 .description("테스트 내용")
@@ -69,7 +76,7 @@ class AuctionRepositoryTest {
 
         Category category3 = categoryRepository.findById(8L).get();
         Auction auction3 = Auction.builder()
-                .regUserId("choi")
+                .regUser(user)
                 .category(category3)
                 .title("테스트 제목3")
                 .description("테스트 내용")
@@ -82,7 +89,7 @@ class AuctionRepositoryTest {
 
         Category category4 = categoryRepository.findById(9L).get();
         Auction auction4 = Auction.builder()
-                .regUserId("han")
+                .regUser(user)
                 .category(category4)
                 .title("테스트 제목4")
                 .description("테스트 내용")
@@ -98,7 +105,7 @@ class AuctionRepositoryTest {
 
         Category category5 = categoryRepository.findById(1L).get();
         Auction auction5 = Auction.builder()
-                .regUserId("han")
+                .regUser(user)
                 .category(category5)
                 .title("테스트 제목4")
                 .description("테스트 내용")

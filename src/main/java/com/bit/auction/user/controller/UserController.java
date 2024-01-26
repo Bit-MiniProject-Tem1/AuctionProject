@@ -3,6 +3,7 @@ package com.bit.auction.user.controller;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +38,6 @@ public class UserController {
     private String findId;
 
 
-
-
     @GetMapping("/join")
     public ModelAndView getJoin() {
         ModelAndView mav = new ModelAndView();
@@ -46,7 +46,6 @@ public class UserController {
 
         return mav;
     }
-
 
 
     @GetMapping("/login")
@@ -95,7 +94,6 @@ public class UserController {
     }
 
 
-
     // --------------------------------------------------------- //
 
     @PostMapping("/id-check")
@@ -108,7 +106,7 @@ public class UserController {
         try {
             int idCheck = userService.idCheck(userDTO.getUserId());
 
-            if(idCheck == 0) {
+            if (idCheck == 0) {
                 returnMap.put("idCheckMsg", "idOk");
             } else {
                 returnMap.put("idCheckMsg", "idFail");
@@ -118,7 +116,7 @@ public class UserController {
             response.setStatusCode(HttpStatus.OK.value());
 
             return ResponseEntity.ok(response);
-        } catch(Exception e) {
+        } catch (Exception e) {
             response.setErrorCode(501);
             response.setErrorMessage(e.getMessage());
             response.setStatusCode(HttpStatus.BAD_REQUEST.value());
@@ -143,10 +141,11 @@ public class UserController {
 
     @GetMapping("/reg-goods")
     public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        String regUserId = "kim";
+        String regUserId = customUserDetails.getUsername();
 
         mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
         mav.setViewName("user/mypage/getMyAuctionList.html");
@@ -160,14 +159,14 @@ public class UserController {
 
         ModelAndView mav = new ModelAndView();
 
-        if(idCheck == 0) {
+        if (idCheck == 0) {
             mav.addObject("loginFailMsg", "idNotExist");
 
             mav.setViewName("user/login/login.html");
         } else {
             UserDTO loginUser = userService.login(userDTO);
 
-            if(loginUser == null) {
+            if (loginUser == null) {
                 mav.addObject("loginFailMsg", "wrongPw");
 
                 mav.setViewName("user/login/login.html");
@@ -182,7 +181,7 @@ public class UserController {
     }
 
     @PostMapping("/find_id")
-    public String  findId(
+    public String findId(
             @RequestParam("userName") String userName,
             @RequestParam("userTel") String userTel) {
 
@@ -201,7 +200,7 @@ public class UserController {
     public ModelAndView getFindId2(Model model) {
         ModelAndView mav = new ModelAndView();
 
-        model.addAttribute("userId",findId);
+        model.addAttribute("userId", findId);
 
         mav.setViewName("user/login/find_id2.html");
 
@@ -237,8 +236,8 @@ public class UserController {
 
     @PostMapping("/find_pw")
     public ResponseEntity<?> findPw(@RequestParam String userId,
-                                               @RequestParam String userName,
-                                               @RequestParam String userTel) {
+                                    @RequestParam String userName,
+                                    @RequestParam String userTel) {
         Optional<User> userOptional = userService.findPw(userId, userName, userTel);
 
         String response = "";
@@ -249,8 +248,6 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
-
-
 
 
 }

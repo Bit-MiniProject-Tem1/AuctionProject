@@ -16,11 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final LoginFailureHandler loginFailureHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) -> {
+                    authorizeRequests.requestMatchers("/auction/register").hasAnyRole("USER", "ADMIN");
                     authorizeRequests.anyRequest().permitAll();
                 })
                 // 로그인, 로그아웃 설정
