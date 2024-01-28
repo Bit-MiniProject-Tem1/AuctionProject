@@ -106,3 +106,13 @@ fieldset {
     font-weight: bold;
     text-align: center;
 }
+
+.category {
+    font-weight: bold;
+    font-family: Pretendard;
+
+}
+
+.title {
+    font-family: Pretendard;
+}

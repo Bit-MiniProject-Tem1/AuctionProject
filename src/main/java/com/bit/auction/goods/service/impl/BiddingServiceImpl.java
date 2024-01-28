@@ -24,34 +24,32 @@ public class BiddingServiceImpl implements BiddingService {
     private final UserRepository userRepository;
 
     @Override
-    public Long insertBid(BiddingDTO biddingDTO){
+    public void setbid(BiddingDTO biddingDTO , Auction auctionId , User userId){
 
-        Bidding bidding = dtoToEntity(biddingDTO);
-
+        Bidding bidding = biddingDTO.toEntity(auctionId, userId);
         biddingRepository.save(bidding);
 
-        return bidding.getBiddingId();
     }
-    @Override
-    public List<BiddingDTO> getBidList(Long auctionId){
-        List<Bidding> result = biddingRepository
-                .getBiddingByAuction(Auction.builder()
-                        .id(auctionId)
-                        .build());
-
-        return result.stream().map(bidding -> entityToDTO(bidding))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<BiddingDTO> getUserBidList(Long userId){
-        List<Bidding> result = biddingRepository
-                .getBiddingByUser(User.builder()
-                        .id(userId)
-                        .build());
-
-        return result.stream().map(bidding -> entityToDTO(bidding))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<BiddingDTO> getBidList(Long auctionId){
+//        List<Bidding> result = biddingRepository
+//                .getBiddingByAuction(Auction.builder()
+//                        .id(auctionId)
+//                        .build());
+//
+//        return result.stream().map(bidding -> entityToDTO(bidding))
+//                .collect(Collectors.toList());
+//    }
+//
+//    @Override
+//    public List<BiddingDTO> getUserBidList(Long userId){
+//        List<Bidding> result = biddingRepository
+//                .getBiddingByUser(User.builder()
+//                        .id(userId)
+//                        .build());
+//
+//        return result.stream().map(bidding -> entityToDTO(bidding))
+//                .collect(Collectors.toList());
+//    }
 
 }

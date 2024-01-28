@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+d<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -53,39 +53,37 @@
                     <div class="title" th:text="${getGoods.title}"></div>
                     </br>
                         <h3 class="head-text">Total Price</h3>
-                        <p class="content-text">product price</p>
+                        <p class="content-text" th:text="${getGoods.immediatePrice}+'원'"></p>
                 </div>
             </div>
         </div>
         <div class="paymentselect-container">
             <h2>Payment Select</h2>
             <hr>
-            <form id="payment" action="auction/bidding/info.do" method="post" enctype="multipart/form-data">
             <fieldset>
               <label>
-                <input type="radio" name="payment-option" value="1" checked />
+                <input type="radio" name="payment-option" value="virtual" checked />
                 <span class="content-text">무통장결제</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="2" />
+                <input type="radio" name="payment-option" value="card" />
                 <span class="content-text">카드</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="3"  />
+                <input type="radio" name="payment-option" value="naverpay"  />
                 <span class="content-text">네이버페이</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="4" />
+                <input type="radio" name="payment-option" value="kakaopay" />
                 <span class="content-text">카카오페이</span>
               </label>
             </fieldset>
-            </form>
             <hr>
             <div class="button-wrapper">
-            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button" id="order">
+            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button">
                 <p class="content-text">주문하기</p>
             </button>
             </div>

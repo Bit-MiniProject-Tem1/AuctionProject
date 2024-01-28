@@ -22,7 +22,7 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public static final QBidding bidding = new QBidding("bidding");
 
-    public final QAuction auction;
+    public final QAuction auctionId;
 
     public final NumberPath<Long> biddingId = createNumber("biddingId", Long.class);
 
@@ -34,7 +34,7 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public final NumberPath<Integer> status = createNumber("status", Integer.class);
 
-    public final com.bit.auction.user.entity.QUser user;
+    public final com.bit.auction.user.entity.QUser userId;
 
     public QBidding(String variable) {
         this(Bidding.class, forVariable(variable), INITS);
@@ -54,8 +54,8 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public QBidding(Class<? extends Bidding> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.auction = inits.isInitialized("auction") ? new QAuction(forProperty("auction"), inits.get("auction")) : null;
-        this.user = inits.isInitialized("user") ? new com.bit.auction.user.entity.QUser(forProperty("user")) : null;
+        this.auctionId = inits.isInitialized("auctionId") ? new QAuction(forProperty("auctionId"), inits.get("auctionId")) : null;
+        this.userId = inits.isInitialized("userId") ? new com.bit.auction.user.entity.QUser(forProperty("userId")) : null;
     }
 
 }

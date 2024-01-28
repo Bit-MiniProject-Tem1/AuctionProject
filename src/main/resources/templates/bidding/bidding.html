@@ -32,15 +32,16 @@
                 <p class="content-text">Pricing Options</p>
                 <div class="pricing-options">
                     <div class="good-bid">
-                        <p class="price-text">₩194,000</p>
+                        <p class="price-text" th:text="${getGoods.startingPrice}+'원'"></p>
+                        <p class="option-text">경매 시작가</p>
+                    </div>
+<!--                    조건 NULL 로 바꿔야함-->
+                    <div th:if="${getGoods.currentBiddingPrice} != 0" class="better-bid">
+                        <p class="price-text"  th:text="${getGoods.currentBiddingPrice}+'원'"></p>
                         <p class="option-text">현재 입찰가</p>
                     </div>
-                    <div class="better-bid">
-                        <p class="price-text">₩204,000</p>
-                        <p class="option-text">최소 입찰가</p>
-                    </div>
                      <div class="buy-now">
-                         <p class="price-text">₩304,000</p>
+                         <p class="price-text" th:text="${getGoods.immediatePrice}+'원'"></p>
                          <p class="option-text">즉시 입찰가</p>
                     </div>
                 </div>

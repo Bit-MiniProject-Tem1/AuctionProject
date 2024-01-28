@@ -23,4 +23,9 @@ public class biddingServiceTest {
         biddingDTOList.forEach(biddingDTO -> System.out.println(biddingDTO));
 
     }
+    @Test
+    public void setbid(){
+
+
+    }
 }

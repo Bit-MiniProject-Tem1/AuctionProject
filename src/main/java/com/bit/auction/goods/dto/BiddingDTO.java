@@ -23,21 +23,23 @@ public class BiddingDTO {
 
     private int payment;
 
-    private Long auctionId;
-
-    private Long userId;
-
     private LocalDateTime date;
 
     private int status;
 
-//    public Bidding toEntity(Auction auction , User user) {
-//        return Bidding.builder()
-//                .auction(auction)
-//                .user(user)
-//                .biddingPrice(this.biddingPrice)
-//                .payment(this.payment)
-//                .date(this.date)
-//                .build();
-//    }
+    //fk
+    private Long auctionId;
+
+    private String userId;
+
+
+    public Bidding toEntity(Auction auctionId , User userId) {
+        return Bidding.builder()
+                .auctionId(auctionId)
+                .userId(userId)
+                .biddingPrice(this.biddingPrice)
+                .payment(this.payment)
+                .date(LocalDateTime.now())
+                .build();
+    }
 }
