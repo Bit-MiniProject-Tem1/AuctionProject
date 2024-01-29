@@ -122,7 +122,7 @@
                         <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                     </div>
                     <div class="favorite-view-group">
-                        <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
+                        <a th:onclick="|javascript:toggleHeart('${auction.id}')|" th:id="'toggleHeartBtn_' + ${auction.id}">
                             <i id="likeStatus" class="bi-heart favorite-icon" th:class="${likeCnt == 0 ? 'bi-heart' : 'bi-heart-fill'}"></i>관심&nbsp;<span id="likeSum" th:text="${likeSum}"></span>
                         </a>
                         <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>

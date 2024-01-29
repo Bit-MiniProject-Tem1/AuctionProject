@@ -10,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.bit.auction.goods.service.AuctionService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+
 import org.springframework.ui.Model;
 
 
@@ -27,24 +25,27 @@ public class HomeController {
     private final LikeCntService likeCntService;
     @GetMapping("/")
     public String home(AuctionDTO auctionDTO, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
+        for (AuctionDTO auction : recentAuctions) {
+            long likeSum = likeCntService.findByAuctionId(auction.getId());
+            model.addAttribute("likeSum_" + auction.getId(), likeSum);
+        }
         model.addAttribute("recentAuctions", recentAuctions);
 
-        List<AuctionDTO> fianlAuctions = auctionService.findByForFinalList();
-        model.addAttribute("fianlAuctions", fianlAuctions);
+        List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
+        model.addAttribute("finalAuctions", finalAuctions);
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), auctionDTO.getId());
             model.addAttribute("likeCnt", likeCnt);
         }
 
         long likeSum = likeCntService.findByAuctionId(auctionDTO.getId());
+
         model.addAttribute("likeSum", likeSum);
 
         model.addAttribute("topCategoryName", "전체");
 
         return "index";
     }
-
 }
