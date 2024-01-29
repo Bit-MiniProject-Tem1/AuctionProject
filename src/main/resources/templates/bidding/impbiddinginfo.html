@@ -7,6 +7,9 @@ d<!DOCTYPE html>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bid/biddinginfo.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/impbidding.js}"></script>
+    </th:block>
 </head>
 <body>
 <div layout:fragment="content">
@@ -53,7 +56,8 @@ d<!DOCTYPE html>
                     <div class="title" th:text="${getGoods.title}"></div>
                     </br>
                         <h3 class="head-text">Total Price</h3>
-                        <p class="content-text" th:text="${getGoods.immediatePrice}+'원'"></p>
+                        <input type="hidden" th:value="${getGoods.immediatePrice}" id="biddingPrice" name="biddingPrice">
+                        <p class="content-text" th:text="${getGoods.immediatePrice}+'원'"></p>원
                 </div>
             </div>
         </div>
@@ -62,7 +66,7 @@ d<!DOCTYPE html>
             <hr>
             <fieldset>
               <label>
-                <input type="radio" name="payment-option" value="virtual" checked />
+                <input type="radio" name="payment-option" value="virtual" checked/>
                 <span class="content-text">무통장결제</span>
               </label>
                 </br>
@@ -83,11 +87,53 @@ d<!DOCTYPE html>
             </fieldset>
             <hr>
             <div class="button-wrapper">
-            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button">
+            <button type="button" value="order" onclick="save()" class="order-button">
                 <p class="content-text">주문하기</p>
             </button>
             </div>
         </div>
+         <script th:inline="javascript">
+
+
+function save() {
+	var radioVal = $('input[name="payment-option"]:checked').val();
+    var biddingPrice = $("#biddingPrice").val();
+    var auctionId = [[${getGoods.id}]];
+    var userId = [[${getGoods.regUserId}]];
+	console.log(radioVal);
+	console.log(biddingPrice);
+	console.log(auctionId);
+	console.log(userId);
+		var parameter = {
+			payment: radioVal,
+			biddingPrice: biddingPrice,
+            auctionId : auctionId,
+            userId : userId
+		};
+
+		var param = JSON.stringify(parameter);
+		var url = "/auction/impbiddinginfo/" + auctionId;
+		console.log(param);
+		console.log(parameter);
+		console.log(url);
+
+		$.ajax({
+			url: url,
+			method: 'POST',
+			contentType: "application/json",
+			data: param,
+			success: () => {
+				alert("success");
+				location.href = "/";
+			},
+			error: (err) => {
+				console.log(err);
+				alert(err.responseJSON.errorMessage);
+			}
+		});
+}
+
+         </script>
     </div>
 </div>
 </body>

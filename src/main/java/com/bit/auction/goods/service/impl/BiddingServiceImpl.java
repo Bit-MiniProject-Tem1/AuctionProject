@@ -25,7 +25,6 @@ public class BiddingServiceImpl implements BiddingService {
 
     @Override
     public void setbid(BiddingDTO biddingDTO , Auction auctionId , User userId){
-
         Bidding bidding = biddingDTO.toEntity(auctionId, userId);
         biddingRepository.save(bidding);
 
