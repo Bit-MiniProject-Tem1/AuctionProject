@@ -101,10 +101,11 @@ public class AuctionController {
 
     @GetMapping("/reg-goods")
     public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        String regUserId = "kim";
+        String regUserId = customUserDetails.getUsername();
 
         mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
         mav.setViewName("user/mypage/getMyAuctionList.html");
@@ -172,10 +173,39 @@ public class AuctionController {
     }
 
     @GetMapping("/goods-update/{id}")
-    public ModelAndView updateGoods(@PathVariable("id") Long categoryId) {
+    public ModelAndView updateGoods(
+            HttpServletRequest request,
+            @PathVariable("id") Long auctionId,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        mav.addObject("getGoods", auctionService.getAuctionGoods(categoryId));
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(auctionId);
+        if (auctionDTO == null) {
+            mav.setViewName("auction/loadFail.html");
+
+            return mav;
+        }
+
+        mav.addObject("getGoods", auctionDTO);
+
+        if (customUserDetails == null) {
+            mav.addObject("msg", "수정은 로그인 후 가능합니다.");
+            mav.addObject("url", "/user/login");
+            mav.setViewName("alert.html");
+            return mav;
+        } else {
+            if (!customUserDetails.getUsername().equals(auctionDTO.getRegUserId())) {
+                mav.addObject("msg", "경매를 등록한 사용자가 아닙니다.");
+                mav.setViewName("alert.html");
+                if (request.getHeader("Referer") != null && request.getHeader("Referer").equals("auction/goods-update/" + auctionId)) {
+                    mav.addObject("msg", "2222");
+                    mav.addObject("url", request.getHeader("Referer"));
+                } else if (request.getHeader("Referer") == null) {
+                    mav.addObject("url", "/");
+                }
+                return mav;
+            }
+        }
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
