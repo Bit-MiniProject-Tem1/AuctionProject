@@ -13,7 +13,7 @@
         <script th:inline="javascript">
             $(() => {
                 var description = [[${getGoods.description}]];
-                
+
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
 
@@ -131,7 +131,7 @@
                 <div class="container">
                     <div class="link-group">
                         <a href="#" class="link btn-red">
-                            <div class="link-title">
+                            <div class="link-title immediately">
                                 즉시<br>입찰
                             </div>
                             <div class="link-description">
@@ -142,14 +142,8 @@
                     </div>
                     <div class="link-group">
                         <a href="#" class="link btn-green">
-                            <div class="link-title">
+                            <div class="link-title voluntary">
                                 자율<br>입찰
-                            </div>
-                            <div class="link-description">
-                                자율 입찰가<br>
-                                <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);"
-                                       name="bidding_price" class="form-control"/>
-                                <span class="price won">원</span>
                             </div>
                         </a>
                         원하는 입찰 금액을 적어주세요.
