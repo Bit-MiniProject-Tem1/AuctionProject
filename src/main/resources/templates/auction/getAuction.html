@@ -80,7 +80,7 @@
                               th:if="${getGoods.category.topCategory} ne null"></span>
                     </a>
                     <a href="#"
-                       th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
+                       th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'&subCategory='+${getGoods.category.id}"
                        th:if="${getGoods.category.topCategory} ne null">
                         <span th:text="${getGoods.category.name}"
                               th:if="${getGoods.category.topCategory} ne null"></span>
