@@ -66,7 +66,12 @@
     cursor: pointer;
 }
 
-.price-option div:nth-child(2) {
+.price-option .good-bid {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.price-option .buy-now {
     margin-left: 24px;
     margin-right: 24px;
 }
@@ -90,8 +95,9 @@
 }
 
  .bid-input{
-    width: 300px;
-    height: 50px;
+    width: 446px;
+    height: 55px;
+    margin-left: 24px;
  }
 
  .head-text{
@@ -112,6 +118,10 @@
      font-size: 15px;
      padding: 20px 0px 3px 24px;
  }
+
+.input-text .bid-input{
+    text-align: right;
+}
 
  .subtotal .price-text{
       padding: 20px 0px 3px 24px;

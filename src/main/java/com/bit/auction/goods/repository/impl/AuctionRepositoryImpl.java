@@ -33,6 +33,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
+
             if (auction.getAuctionImgList() != null || auction.getAuctionImgList().size() != 0) {
                 auctionImgRepository.updateRepresentativeImg(auction);
             }
@@ -71,7 +72,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     public Page<Auction> searchMyAuctionList(Pageable pageable, String regUserId, List<Character> statusList) {
         List<Auction> auctionList = jpaQueryFactory
                 .selectFrom(auction)
-                .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
+                .where(auction.regUser.userId.eq(regUserId).and(eqStatus(statusList)))
                 .fetch();
 
         auctionList.forEach(a -> {

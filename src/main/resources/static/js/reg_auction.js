@@ -93,14 +93,12 @@ function deleteFile(num) {
         filesArr[num].is_delete = true;
     }
 
-    if (originFile.fileName === representativeName || filesArr[num].name === representativeName) {
+    if (originFile != null && originFile.fileName === representativeName) {
         var originRemainingNumber = originFileArr.length - deleteFilesArr.length;
 
-        if (filesArr.length > 0 && originRemainingNumber === 0) {
-            representativeFile(0);
-        } else if (originRemainingNumber > 0) {
+        if (originRemainingNumber > 0) {
             var id;
-            
+
             for (let i = 0; i < originFileArr.length; i++) {
                 if (!deleteFilesArr.includes(originFileArr[i].id)) {
                     id = originFileArr[i].id;
@@ -109,6 +107,32 @@ function deleteFile(num) {
             }
 
             representativeFile(id);
+        }
+    }
+
+    if (filesArr.length) {
+        var file0Element = document.getElementById('file' + num);
+        var nameElement = file0Element.querySelector('.name');
+        var nameText = nameElement.textContent;
+
+        if (nameText === representativeName) {
+            var fileContainer = document.querySelector('.file-list');
+
+            console.log("fileContainer: " + fileContainer);
+
+            if (fileContainer && fileContainer.children.length >= 2) {
+                var secondDivId = fileContainer.children[1].id;
+                console.log(secondDivId);
+
+                var numericId = secondDivId.replace('file', '');
+
+                if (!isNaN(numericId)) {
+                    console.log(numericId);
+                    representativeFile(numericId);
+                } else {
+                    console.error("유효하지 않은 숫자 ID: " + numericId);
+                }
+            }
         }
     }
 
@@ -152,7 +176,7 @@ function representativeFile(num) {
     }
 }
 
-$(() => {
+$(document).ready(function () {
     const today = new Date();
     const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3);
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
@@ -189,23 +213,26 @@ $(() => {
             return false;
         }
 
-        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+        startingPrice = parseInt($("#startingPrice").val(), 10);
+        immediatePrice = parseInt($("#immediatePrice").val(), 10);
+
+        if (startingPrice <= 0 || immediatePrice <= 0) {
             alert('가격은 0이거나 음수일 수 없습니다.');
             return false;
         }
 
-        if ($("#startingPrice").val() > $("#immediatePrice").val()) {
+        if (startingPrice < 5000) {
+            alert('경매는 시작가는 5000원 이상이어야 합니다.');
+            $("#startingPrice").focus();
+            return false;
+        }
+
+        if (startingPrice >= immediatePrice) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;
         }
-
-        if (currentBiddingPrice > $("#immediatePrice").val()) {
-            alert('즉시 입찰가는 현재 최고 입찰가보다 낮을 수 없습니다.');
-            $("#immediatePrice").focus();
-            return false;
-        }
-
+        
         let dt = new DataTransfer();
         for (var i = 0; i < filesArr.length; i++) {
             if (!filesArr[i].is_delete) {
@@ -285,18 +312,21 @@ $(() => {
             return false;
         }
 
-        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+        startingPrice = parseInt($("#startingPrice").val(), 10);
+        immediatePrice = parseInt($("#immediatePrice").val(), 10);
+
+        if (startingPrice <= 0 || immediatePrice <= 0) {
             alert('가격은 0이거나 음수일 수 없습니다.');
             return false;
         }
 
-        if ($("#startingPrice").val() < 5000) {
+        if (startingPrice < 5000) {
             alert('경매는 시작가는 5000원 이상이어야 합니다.');
             $("#startingPrice").focus();
             return false;
         }
 
-        if ($("#startingPrice").val() > $("#immediatePrice").val()) {
+        if (startingPrice >= immediatePrice) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;

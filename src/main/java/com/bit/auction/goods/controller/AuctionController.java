@@ -9,16 +9,17 @@ import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
+import com.bit.auction.user.entity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -85,6 +86,11 @@ public class AuctionController {
         mav.addObject("topCategoryList", categoryList);
 
         AuctionDTO auctionDTO = auctionService.getAuctionGoods(categoryId);
+        if (auctionDTO == null) {
+            mav.setViewName("auction/loadFail.html");
+
+            return mav;
+        }
         auctionService.updateView(auctionDTO.getId(), request, response);
 
         mav.addObject("getGoods", auctionDTO);
@@ -122,7 +128,8 @@ public class AuctionController {
     public ResponseEntity<?> registerAuction(AuctionDTO auctionDTO,
                                              @RequestParam(value = "uploadFiles", required = false) MultipartFile[] uploadFiles,
                                              @RequestParam(value = "topCategory", required = false) Long topCategoryId,
-                                             @RequestParam(value = "subCategory", required = false) Long subCategoryId) {
+                                             @RequestParam(value = "subCategory", required = false) Long subCategoryId,
+                                             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         String representativeImgName = auctionDTO.getRepresentativeImgName();
@@ -146,7 +153,7 @@ public class AuctionController {
             auctionService.removeDescriptionImg(auctionDTO.getDescription(), auctionDTO.getOriginDescription(), temporaryImage);
             temporaryImage.clear();
 
-            auctionService.insertAuction(auctionDTO, categoryId);
+            auctionService.setAuction(auctionDTO, categoryId, customUserDetails.getUser());
 
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "정상적으로 입력되었습니다.");
@@ -207,7 +214,8 @@ public class AuctionController {
     public ResponseEntity<?> updateAuction(AuctionDTO auctionDTO,
                                            @RequestParam(value = "uploadFiles", required = false) MultipartFile[] uploadFiles,
                                            @RequestParam(value = "topCategory", required = false) Long topCategoryId,
-                                           @RequestParam(value = "subCategory", required = false) Long subCategoryId) {
+                                           @RequestParam(value = "subCategory", required = false) Long subCategoryId,
+                                           @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         String representativeImgName = auctionDTO.getRepresentativeImgName();
@@ -236,7 +244,7 @@ public class AuctionController {
             auctionService.removeDescriptionImg(auctionDTO.getDescription(), auctionDTO.getOriginDescription(), temporaryImage);
             temporaryImage.clear();
 
-            auctionService.updateAuction(auctionDTO, categoryId);
+            auctionService.setAuction(auctionDTO, categoryId, customUserDetails.getUser());
 
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "정상적으로 수정되었습니다.");
@@ -354,9 +362,9 @@ public class AuctionController {
 
         Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
         if (auctionDTOList.getTotalElements() != 0) {
-                // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
-                mav.addObject("auctionList", auctionDTOList);
-                mav.addObject("topCategoryName", "검색 결과");
+            // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
+            mav.addObject("auctionList", auctionDTOList);
+            mav.addObject("topCategoryName", "검색 결과");
         } else {
             // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
             mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");

@@ -10,7 +10,6 @@ import java.util.List;
 @Setter
 public class ResponseDTO<T> {
     private List<T> items;
-
     //페이징 처리된 데이터 목록
     private Page<T> pageItems;
 

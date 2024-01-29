@@ -30,15 +30,14 @@ public class BiddingTest {
 
         IntStream.rangeClosed(1, 100).forEach(i -> {
             long id = (long)(Math.random() * 100) + 1;
-            long id2 = (long)(Math.random() * 5) + 1;
-            User user = User.builder().id(id).build();
-            Auction auction = Auction.builder().id(id2).build();
+            User user = userRepository.findByUserId("testId1").get();
+            Auction auction = Auction.builder().id(id).build();
             Bidding bidding = Bidding.builder()
-                    .biddingPrice(i += 1)
+                    .biddingPrice(i * i)
                     .date(LocalDateTime.now())
                     .payment(1)
-                    .auction(auction)
-                    .user(user)
+                    .auctionId(auction)
+                    .userId(user)
                     .build();
 
                     biddingRepository.save(bidding);

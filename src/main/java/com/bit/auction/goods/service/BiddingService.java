@@ -11,10 +11,11 @@ import java.util.List;
 
 public interface BiddingService {
 
-    Long insertBid(BiddingDTO biddingDTO);
-    List<BiddingDTO> getBidList(Long auctionId);
-    List<BiddingDTO> getUserBidList(Long userId);
+    void setbid(BiddingDTO biddingDTO , Auction auctionId , User userId);
+//    List<BiddingDTO> getBidList(Long auctionId);
+//    List<BiddingDTO> getUserBidList(Long userId);
 
+<<<<<<< HEAD
     default Bidding dtoToEntity(BiddingDTO biddingDTO){
         Auction auction = Auction.builder().id(biddingDTO.getAuctionId()).build();
         User user = User.builder().id(biddingDTO.getUserId()).build();
@@ -40,4 +41,6 @@ public interface BiddingService {
                 .build();
         return  biddingDTO;
     }
+=======
+>>>>>>> e949af7b3f9a9cbeae7c2cdf9fe64fd1fcb18b0d
 }

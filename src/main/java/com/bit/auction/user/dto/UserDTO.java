@@ -2,14 +2,16 @@ package com.bit.auction.user.dto;
 
 
 import com.bit.auction.user.entity.User;
-import jakarta.persistence.Column;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Setter
+@ToString
 public class UserDTO {
     private long id;
     private String userId;
@@ -19,18 +21,23 @@ public class UserDTO {
     private String userTel;
     private String userAddress;
     private String userEmail;
-    private String userRegdate;
+    private LocalDateTime userRegdate;
+    private String role;
 
+
+
+public User toEntity() {
+    return User.builder()
+            .id(this.id)
+            .userId(this.userId)
+            .userPw(this.userPw)
+            .userName(this.userName)
+            .userBirth(this.userBirth)
+            .userTel(this.userTel)
+            .userAddress(this.userAddress)
+            .userEmail(this.userEmail)
+            .userRegdate(LocalDateTime.now())
+            .role(this.role)
+            .build();
+    }
 }
-
-//public User toEntity() {
-//    return User.builder()
-//            .id(this.id)
-//            .userId(this.userId)
-//            .userName(this.userName)
-//            .userBirth(this.userBirth)
-//            .userTel(this.userTel)
-//            .userAddress(this.userAddress)
-//            .userEmail(this.userEmail)
-//            .build();
-//}

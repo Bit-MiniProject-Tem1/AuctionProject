@@ -22,9 +22,8 @@
                 }
 
                 const searchQuery = urlParams.get('searchQuery');
-                $(".sub-category-title span").text(searchQuery);
-
                 if(searchQuery!=null){
+                    $(".sub-category-title span").text(searchQuery);
                     $(".sub-category-list").hide();
                     $(".filter-list").hide();
                 }

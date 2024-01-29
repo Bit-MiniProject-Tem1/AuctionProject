@@ -1,6 +1,7 @@
 package com.bit.auction.goods.service;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
@@ -15,9 +16,7 @@ public interface AuctionService {
 
     Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status);
 
-    void insertAuction(AuctionDTO auctionDTO, Long categoryId);
-
-    void updateAuction(AuctionDTO auctionDTO, Long categoryId);
+    void setAuction(AuctionDTO auctionDTO, Long categoryId, User user);
 
     void removeDescriptionImg(String description, String originDescription, List<String> temporaryImageList);
 

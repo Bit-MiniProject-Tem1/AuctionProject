@@ -7,9 +7,11 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/login/find_id2.css}">
     </th:block>
-    <!--    <th:block layout:fragment="script">-->
-    <!--        <script th:src="@{/js/to_price_comma.js}"></script>-->
-    <!--    </th:block>-->
+        <th:block layout:fragment="script">
+            <script>
+
+            </script>
+        </th:block>
     <title>아이디 찾기</title>
 </head>
 
@@ -19,7 +21,7 @@
     <div class="find_id2_line"></div>
         <div class="find_id_box">
             <p class="id_txt">아이디</p>
-            <p class="id_result"><span>******0826</span></p>
+            <p class="id_result"><span th:text="${userId}"></span></p>
         </div>
     <div class="view_box">
         <a href="/user/find_password"><button class="findpw_view">비밀번호 찾기</button></a>

@@ -1,0 +1,72 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    display: block;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    color: black;
+}
+
+li, ol, ul {
+    list-style: none;
+}
+
+a, a:active, a:focus, a:hover {
+    text-decoration: none;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.menu_link
+{
+    line-height: 18px;
+    font-size: 15px;
+    letter-spacing: -.15px;
+    color: rgba(34,34,34,.5);
+}
+
+.menu_item+.menu_item
+{
+    margin-top: 12px;
+}
+
+.container.my .snb_main_title
+{
+    line-height: 29px;
+    padding-bottom: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -.15px;
+}
+
+.snb_title
+{
+    line-height: 22px;
+    margin-bottom: 12px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 18px;
+    letter-spacing: -.27px;
+    font-weight: 700;
+}
+
+.snb_list+.snb_list
+{
+    margin-top: 40px;
+}
+
+/* ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+} */

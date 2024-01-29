@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface BiddingRepository extends JpaRepository<Bidding, Long> {
 
-    List<Bidding> getBiddingByAuction(Auction auction);
-    List<Bidding> getBiddingByUser(User user);
+//    List<Bidding> getBiddingByAuction(Auction auction);
+//    List<Bidding> getBiddingByUser(User user);
 }

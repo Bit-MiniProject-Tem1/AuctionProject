@@ -1,0 +1,140 @@
+body, button, dd, div, dl, dt, fieldset, figcaption, figure, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, select, table, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+*, :after, :before {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+body, button, input, select, table, textarea {
+    color: #222;
+}
+.header.lg, .header.md {
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+    min-height: 100px;
+}
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+}
+div {
+    display: block;
+}
+li, ol, ul {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+a, a:active, a:focus, a:hover {
+    text-decoration: none;
+}
+a {
+    color:black;
+}
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+nav {
+    display: block;
+}
+.header .header_top {
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 10%);
+}
+.header .top_inner {
+    display: flex;
+    padding: 8px 40px;
+}
+.header .top_list {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin:0;
+    margin-left: auto;
+}
+.header .top_link {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: -.06px;
+    color: rgba(34,34,34,.8);
+}
+.header .top_item+.top_item {
+    margin-left: 24px;
+}
+.header .main_inner {
+    display: flex;
+    padding: 0 40px;
+    height: 68px;
+    min-width: 320px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.header .gnb_area, .header .gnb_list {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.header .gnb_area {
+    margin-left: auto;
+}
+.header .nav_btn_box {
+    display: none;
+}
+.header .logo {
+    display: flex;
+    width: 120px;
+    height: 24px;
+}
+.header .gnb_link, .header .search_btn_box {
+    display: flex;
+}
+.header .gnb_link, .header .search_btn_box {
+    display: flex;
+}
+.header .gnb_link {
+    position: relative;
+    font-size: 15px;
+    letter-spacing: -.15px;
+}
+.header .gnb_item {
+    margin-right: 40px;
+}
+.header .btn_search {
+    display: inherit;
+    border: none!important;
+}
+.btn_search img{
+    width: 50%;
+    height: 50%;
+}
+.header .nav-search {
+    width: 28px;
+    height: 28px;
+}
+.logo img{
+    width: 150px;
+    height: 30px;
+}
