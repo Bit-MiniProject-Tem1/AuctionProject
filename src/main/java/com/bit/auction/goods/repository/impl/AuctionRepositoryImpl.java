@@ -34,7 +34,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
             em.persist(auction);
         } else {
 
-            if (auction.getAuctionImgList() != null || auction.getAuctionImgList().size() != 0) {
+            if (auction.getAuctionImgList() != null || !auction.getAuctionImgList().isEmpty()) {
                 auctionImgRepository.updateRepresentativeImg(auction);
             }
             em.merge(auction);
@@ -99,7 +99,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if (subCategoryIdList != null) {
+        if (!subCategoryIdList.isEmpty()) {
             booleanBuilder.or(auction.category.id.eq(categoryId));
             for (Long subCategoryId : subCategoryIdList) {
                 booleanBuilder.or(auction.category.topCategoryId.eq(subCategoryId));

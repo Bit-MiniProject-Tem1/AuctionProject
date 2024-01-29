@@ -104,7 +104,7 @@
                                 <span th:if="${auction.status} eq 'C'">경매취소</span>
                             </div>
                             <div class="link-group" th:if="${auction.status} eq 'S'">
-                                <a href="#" class="link btn-green" th:href="'auction/goods-update/'+${auction.id}"
+                                <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}"
                                    th:if="${auction.status} eq 'S'">수정</a><br>
                                 <a href="#" class="link btn-red btn-cancel" th:if="${auction.status} eq 'S'" th:data-id="${auction.id}">취소</a>
                             </div>

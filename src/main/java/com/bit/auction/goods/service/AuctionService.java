@@ -12,7 +12,9 @@ import java.util.List;
 public interface AuctionService {
     AuctionDTO getAuctionGoods(Long id);
 
-    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String categoryOption, String sortOption, List<String> target, List<Character> status);
+    List<Long> getSubCategoryIdList(Long categoryId);
+
+    Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String sortOption, List<String> target, List<Character> status);
 
     Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status);
 

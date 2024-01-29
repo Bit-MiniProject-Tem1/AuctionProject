@@ -36,6 +36,7 @@ public class AuctionServiceImpl implements AuctionService {
     private final CategoryRepository categoryRepository;
     private final AuctionImgRepository auctionImgRepository;
     private final FileUtils fileUtils;
+    private List<Long> categoryIdList = new ArrayList<>();
 
     @Override
     public AuctionDTO getAuctionGoods(Long id) {
@@ -44,19 +45,18 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String categoryOption, String sortOption, List<String> target, List<Character> status) {
-        List<Long> categoryIdList = new ArrayList<>();
+    public List<Long> getSubCategoryIdList(Long categoryId) {
+        categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
+        categoryIdList.add(categoryId);
+        return categoryIdList;
+    }
 
-        if (categoryOption.equals("top")) {
-            categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
-            categoryIdList.add(categoryId);
-        } else if (categoryOption.equals("all")) {
-            categoryId = 0L;
-        }
 
+    @Override
+    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String sortOption, List<String> target, List<Character> status) {
         Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, sortOption, target, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
-
+        categoryIdList.clear();
         return auctionDTOPageList;
     }
 

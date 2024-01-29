@@ -321,7 +321,7 @@ public class AuctionController {
 
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", sort, targetList, statusList);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, sort, targetList, statusList);
             mav.addObject("auctionList", auctionPage);
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
@@ -329,11 +329,12 @@ public class AuctionController {
 
             if (paramMap.get("subCategory") != null) {
                 Long subCategoryId = Long.valueOf(String.valueOf(paramMap.get("subCategory")));
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, "sub", sort, targetList, statusList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, subCategoryId, sort, targetList, statusList));
             } else if (paramMap.get("etc") != null) {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "etc", sort, targetList, statusList));
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             } else {
-                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, "top", sort, targetList, statusList));
+                auctionService.getSubCategoryIdList(categoryId);
+                mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             }
         }
 
@@ -369,7 +370,7 @@ public class AuctionController {
             // 검색 결과가 없으면 전체 항목을 보여주고 메시지 추가
             mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
             mav.addObject("showAlertValue", true);
-            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, null, "all", null, null, statusList);
+            Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, null, null, statusList);
             mav.addObject("auctionList", auctionPage);
         }
         System.out.println(mav);
