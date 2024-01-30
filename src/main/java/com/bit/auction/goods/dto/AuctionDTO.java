@@ -32,6 +32,8 @@ public class AuctionDTO {
     private LocalDateTime endDate;
     private String successfulBidderId; // fk
     private int view;
+    private long likeCnt;
+    private boolean likeCheck;
     private List<AuctionImgDTO> auctionImgDTOList;
     private String representativeImgUrl;
     private String representativeImgName;
@@ -55,6 +57,7 @@ public class AuctionDTO {
                 .representativeImgUrl(this.representativeImgUrl)
                 .representativeImgName(this.representativeImgName)
                 .view(this.view)
+                .likeCnt(this.likeCnt)
                 .auctionImgList(new ArrayList<>())
                 .build();
     }

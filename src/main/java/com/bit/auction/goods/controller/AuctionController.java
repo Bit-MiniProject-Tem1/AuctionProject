@@ -3,18 +3,18 @@ package com.bit.auction.goods.controller;
 import com.bit.auction.common.CkEditorImageUtils;
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
-import com.bit.auction.goods.dto.AuctionDTO;
-import com.bit.auction.goods.dto.AuctionImgDTO;
-import com.bit.auction.goods.dto.CategoryDTO;
-import com.bit.auction.goods.dto.DescriptionImgDTO;
+import com.bit.auction.goods.dto.*;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
+import com.bit.auction.user.entity.CustomUserDetails;
+import com.bit.auction.goods.service.LikeCntService;
 import com.bit.auction.user.entity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -36,6 +36,7 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryService categoryService;
     private final FileUtils fileUtils;
+    private final LikeCntService likeCntService;
     private List<String> temporaryImage = new ArrayList<>();
 
     @GetMapping("/recentproducts")
@@ -79,11 +80,20 @@ public class AuctionController {
     @GetMapping("/goods/{id}")
     public ModelAndView getGoods(@PathVariable("id") Long categoryId,
                                  HttpServletRequest request,
-                                 HttpServletResponse response) {
+                                 HttpServletResponse response,
+                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
+
+        if(customUserDetails != null) {
+            long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), categoryId);
+            mav.addObject("likeCnt", likeCnt);
+        }
+
+        long likeSum = likeCntService.findByAuctionId(categoryId);
+        mav.addObject("likeSum", likeSum);
 
         AuctionDTO auctionDTO = auctionService.getAuctionGoods(categoryId);
         if (auctionDTO == null) {
@@ -118,6 +128,7 @@ public class AuctionController {
         ModelAndView mav = new ModelAndView();
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
+
         mav.addObject("topCategoryList", categoryList);
 
         mav.setViewName("auction/registerAuction.html");

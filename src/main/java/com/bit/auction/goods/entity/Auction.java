@@ -67,6 +67,10 @@ public class Auction {
     @Builder.Default()
     private int view = 0;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    @Builder.Default()
+    private long likeCnt = 0;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @OrderBy("isRepresentative desc")
     @JsonManagedReference
@@ -99,6 +103,7 @@ public class Auction {
                 .endDate(this.endDate)
                 .successfulBidderId(this.successfulBidderId)
                 .view(this.view)
+                .likeCnt(this.likeCnt)
                 .auctionImgDTOList(this.auctionImgList.stream().map(AuctionImg::toDTO).toList())
                 .representativeImgUrl(this.representativeImgUrl)
                 .representativeImgName(this.representativeImgName)

@@ -168,6 +168,15 @@
     width: 60%;
 }
 
+.favorite-link .bi-heart {
+    cursor: pointer;
+}
+
+.favorite-link .bi-heart-fill {
+    cursor: pointer;
+    color: red;
+}
+
 .table {
     margin-bottom: 0;
 }
