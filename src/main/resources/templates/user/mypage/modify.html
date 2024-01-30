@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myPageLayout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/mypage/modify.css}">
+    </th:block>
+        <th:block layout:fragment="script">
+            <script>
+                $(() => {
+                    $("#pwValidation").hide();
+                    $("#pwCheckResult").hide();
+
+                    // 비밀번호 유효성 검사 여부
+                    let validationPw = false;
+                    // 비밀번호 일치 여부
+                    let confirmPw = false;
+
+                    // 비밀번호 유효성 검사 정규식
+                    const validatePassword = (userPw) => {
+                        return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
+                    }
+
+                    // 비밀번호 입력 시 비밀번호 유효성 검사
+                    $("#userPw").on("change", () => {
+                        if (validatePassword($("#userPw").val())) {
+                            validationPw = true;
+                            $("#pwValidation").hide();
+                        } else {
+                            validationPw = false;
+                            $("#pwValidation").show();
+                        }
+
+                        if ($("#userPw").val() === $("#userPwCheck").val()) {
+                            confirmPw = true;
+                            $("#pwCheckResult").text("비밀번호가 일치합니다.");
+                            $("#pwCheckResult").css("color", "green");
+                        } else {
+                            confirmPw = false;
+                            $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+                            $("#pwCheckResult").css("color", "red");
+                        }
+                    });
+
+                    // 비밀번호 확인과 비밀번호가 일치하는 지 검사
+                    $("#userPwCheck").on("change", () => {
+                        $("#pwCheckResult").show();
+
+                        if($("#userPw").val() === $("#userPwCheck").val()) {
+                            confirmPw = true;
+                            $("#pwCheckResult").text("비밀번호가 일치합니다.");
+                            $("#pwCheckResult").css("color", "green");
+                            return;
+                        }
+
+                        confirmPw = false;
+                        $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+                        $("#pwCheckResult").css("color", "red");
+                    });
+
+                    $("#modifyBtn").on("click", (e) => {
+                        if($("#userPw").val() === "" || $("#userPw").val() === null) {
+                            validationPw = true;
+                            confirmPw = true;
+                            $("#pwValidation").hide();
+                            $("#pwCheckResult").hide();
+                        }
+
+                        if($("#userPw").val() === $("#curUserPw").val()) {
+                            alert("현재 비밀번호와 동일한 비밀번호로 설정할 수 없습니다.");
+                            return;
+                        }
+
+                        // pw 유효성 검사가 틀렸을 때
+                        if(!validationPw) {
+                            alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정하세요.");
+                            $("#userPw").focus();
+                            return;
+                        }
+
+                        // pw가 일치하지 않을 때
+                        if(!confirmPw) {
+                            alert("비밀번호가 일치하지 않습니다.");
+                            $("#userPwCheck").focus();
+                            return;
+                        }
+
+
+                        $.ajax({
+                            url: '/user/modify',
+                            type: 'put',
+                            data: $("#modifyForm").serialize(),
+                            success: (obj) => {
+                                alert(obj.item.msg);
+                                // 화면 새로고침
+                                location.reload();
+                            },
+                            error: (err) => {
+                                if(err.responseJSON.errorCode === 900) {
+                                    alert("현재 비밀번호를 잘못 입력하셨습니다.");
+                                    $("#curUserPw").focus();
+                                    return;
+                                } else {
+                                    alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
+                                    return;
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>
+        </th:block>
+    <title>프로필</title>
+</head>
+<body>
+    <div layout:fragment="content" class="profile_container">
+        <form id="modifyForm" action="/user/join" method="post">
+            <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
+        <div class="profile_box1">
+            <h2>프로필 수정</h2>
+        </div>
+        <div class="profile_box2">
+            <p>내 계정</p>
+        </div>
+
+            <div class="profile_box3">
+                <label for="userId">아이디</label>
+            </div>
+            <div class="profile_input1">
+                <input type="text" id="userId" name="userId"  class="input_box1" required th:value="${#authentication.principal.username}" readonly>
+            </div>
+
+            <div class="profile_box3">
+                <label for="userPw"> 현재 비밀번호</label>
+            </div>
+            <div class="profile_input2">
+                <input type="password" id="curUserPw" name="curUserPw" class="input_box2" required>
+            </div>
+
+            <div class="profile_box3">
+                <label for="userPw">비밀번호</label>
+            </div>
+            <div class="profile_input2">
+                <input type="password" id="userPw" name="userPw" class="input_box2">
+            </div>
+
+            <p id="pwValidation" style="color: red; font-size: 0.8rem;">
+                비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
+            </p>
+
+            <div class="profile_box3">
+                <label for="userPwCheck">비밀번호 확인</label>
+            </div>
+            <div class="profile_input2">
+                <input type="password" id="userPwCheck" name="userPwCheck" class="input_box2">
+            </div>
+
+            <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
+
+
+        <div class="profile_box3">
+            <label for="userName">이 름</label>
+        </div>
+        <div class="profile_input1">
+                <input type="text" id="userName" name="userName"  th:value="${#authentication.principal.user.userName}" class="input_box1" required readonly>
+        </div>
+
+
+        <div class="profile_box3">
+            <label for="userBirth">생년월일</label>
+        </div>
+        <div class="profile_input2">
+                <input type="text" class="input_box2" id="userBirth" name="userBirth" th:value="${#authentication.principal.user.userBirth}" placeholder="생년월일 6자리만 입력하세요." required readonly>
+        </div>
+
+
+            <div class="profile_box3">
+                <label for="userTel">휴대폰 번호</label>
+            </div>
+            <div class="profile_input2">
+                <input type="tel" id="userTel" name="userTel" th:value="${#authentication.principal.user.userTel}" class="input_box2" placeholder="-없이 11자리 입력하세요." required>
+            </div>
+
+            <div class="profile_box3">
+                <label for="userAddress">기본 배송지</label>
+            </div>
+            <div class="profile_input2">
+                <input type="text" id="userAddress" name="userAddress" th:value="${#authentication.principal.user.userAddress}" class="input_box2" required>
+            </div>
+        <div class="profile_box3">
+            <label for="userEmail">이메일</label>
+        </div>
+        <div class="profile_input2">
+                <input type="email" id="userEmail" name="userEmail" th:value="${#authentication.principal.user.userEmail}" class="input_box2" required>
+        </div>
+            <button type="button" class="profile_btn" id="modifyBtn">회원정보 수정</button>
+        </form>
+    </div>
+</body>
+</html>

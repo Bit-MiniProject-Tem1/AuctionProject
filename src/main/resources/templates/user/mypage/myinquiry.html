@@ -18,13 +18,35 @@
         <h2>마이 문의</h2>
     </div>
 
+    <div class="myinquiry_box2">
+        <table class="table">
+            <thead>
+            <tr class="table_tr">
+                <th scope="col" class="table_th1">체크</th>
+                <th scope="col" class="table_th2">문의번호</th>
+                <th scope="col" class="table_th3">제 목</th>
+                <th scope="col" class="table_th4">문의유형</th>
+                <th scope="col" class="table_th5">등록일자</th>
+                <th scope="col" class="table_th6">답변상태</th>
 
-<div class="myinquiry_history">
-    <div class="myinquiry_history_title">
-        <h3 class="myinquiry_history_content">문의 내역이 없습니다.</h3>
-        <h3 class="myinquiry_history_content">문의번호, 문의제목, 문의 작성자(아이디), 문의작성날짜 // 구현해야함</h3>
+            </tr>
+            </thead>
+            <tr class="table_tr" th:each="inquiry: ${inquiryList}">
+                <td>
+                    <input type="checkbox" name="chk">
+                </td>
+                <td th:text="${inquiry.inquiryNo}">
+                    <a href="inquiry/1">문의 번호</a>
+                </td>
+                <td name="inquiryTitleTd" th:text="${inquiry.inquiryTitle}" th:href="@{|/inquiry/$inquiry.inquiryNo|}">
+                    <a href="inquiry/1">문의 제목</a>
+                </td>
+                <td th:text="${inquiry.inquiryType}">문의유형</td>
+                <td th:text="${inquiry.inquiryRegdate}">문의등록한 날짜</td>
+                <td th:text="${inquiry.inquiryAnswer}">문의 답변</td>
+            </tr>
+        </table>
     </div>
-</div>
 
 </div>
 

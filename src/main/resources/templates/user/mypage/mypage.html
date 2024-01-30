@@ -14,14 +14,15 @@
 </head>
 <body>
     <div layout:fragment="content" class="mypage_container">
+        <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
         <div class="mypage_box1">
             <img src="https://png.pngtree.com/png-clipart/20191121/original/pngtree-user-vector-icon-png-image_5152508.jpg"
             class="user_img">
 
             <div class="user_info">
-                <strong class="user_name">홍길동</strong>
-                <p class="user_email">bitcamp@naver.com</p>
-                <a class="profile_update" type="button" href="/user/profile">프로필 수정</a>
+                <strong id="userName" name="userName" class="user_name" th:text="${#authentication.principal.user.userName}"></strong>
+                <p id="userEmail" name="userEmail" class="user_email" th:text="${#authentication.principal.user.userEmail}"></p>
+                <a class="profile_update" type="button" href="/user/modify-view">프로필 수정</a>
                 <a class="user_point" type="button" href="#">포인트</a>
                 <a class="user_inquiry" type="button" href="#">문 의</a>
             </div>

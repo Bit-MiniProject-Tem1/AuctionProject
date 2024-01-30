@@ -24,19 +24,30 @@ body{
     font-weight: normal;
 }
 
-.inquiry_choice {
+.inquiry_choice_box {
     width: 1020px;
     height: 30px;
+    margin-top: 5px;
     background-color: #fffa3b;
+}
+
+.inquiry_choice{
+    width: 1020px;
+    height: 30px;
+    border-radius: 10px;
 }
 
 .inquiry_title {
     margin-top: 5px;
     width: 1020px;
     height: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
 }
 
+
 .inquiry_content {
+    border-radius: 10px;
     margin-top: 5px;
     width: 1020px;
     height: 200px;
@@ -46,14 +57,16 @@ body{
     margin-top: 5px;
     width: 1020px;
     height: 100px;
-    background-color: #cccccc;
     display: flex;
+    border-radius: 10px;
 }
 
 .inquiry_file{
     width: 820px;
     height: 100px;
     text-align: center;
+    border-radius: 10px;
+    border: 1px solid black;
 }
 
 .inquiry_file_box label {
@@ -65,6 +78,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 }
 
 .inquiry_file_box input[type="file"] {
@@ -78,7 +92,18 @@ body{
 
 .inquiry_content2 {
     margin-top: 5px;
-    margin-bottom: 50px;
     width: 1020px;
     height: 200px;
+    border-radius: 10px;
+}
+
+.inquiry_btn {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    background-color: black;
+    color: white;
+    width: 100px;
+    height: 50px;
+    border-radius: 15px;
+    float: right;
 }

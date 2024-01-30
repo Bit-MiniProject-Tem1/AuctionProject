@@ -76,5 +76,23 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserIdAndUserNameAndUserTel(userId, userName, userTel);
     }
 
+    @Override
+    public void modify(UserDTO userDTO) {
+        User user = userRepository.findById(userDTO.getId()).get();
+
+        if (!passwordEncoder.matches(userDTO.getCurUserPw(), user.getUserPw())){
+            throw new RuntimeException("wrong password");
+        }
+
+        userDTO.setRole(user.getRole());
+
+        if (userDTO.getUserPw() == null || userDTO.getUserPw().equals("")) {
+            userDTO.setUserPw(passwordEncoder.encode(userDTO.getCurUserPw()));
+        } else {
+            userDTO.setUserPw(passwordEncoder.encode(userDTO.getUserPw()));
+        }
+
+        userRepository.save(userDTO.toEntity());
+    }
 
 }

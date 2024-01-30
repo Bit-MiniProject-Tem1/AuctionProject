@@ -26,7 +26,7 @@ public class UserTest {
                     .userBirth("testBirth" + i)
                     .userAddress("testAddress" + i)
                     .userTel("testTel" + i)
-                    .userRegdate("testReg" + i)
+//                    .userRegdate("testReg" + i)
                     .build();
 
                     userRepository.save(user);

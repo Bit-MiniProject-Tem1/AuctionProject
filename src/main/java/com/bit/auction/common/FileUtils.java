@@ -11,11 +11,16 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.bit.auction.configuration.NaverConfiguration;
 import com.bit.auction.goods.dto.AuctionImgDTO;
+import com.bit.auction.user.dto.InquiryDTO;
+import com.bit.auction.user.dto.InquiryFileDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -87,4 +92,72 @@ public class FileUtils {
     public void deleteObject(String url) {
         s3.deleteObject(new DeleteObjectRequest(bucketName, url));
     }
+
+
+    //*********************************************************************************************************************************************
+    // 김종범 꺼. (Inquiry File)
+
+    public InquiryFileDTO parseFileInfo(MultipartFile multipartFile, String directory) {
+        String bucketName = "bitcamp-bucket-22";
+
+        InquiryFileDTO inquiryFileDTO = new InquiryFileDTO();
+
+        String inquiryFileOrigin = multipartFile.getOriginalFilename();
+
+        SimpleDateFormat formater = new SimpleDateFormat("yyyyMMddHHmmsss");
+        Date nowDate = new Date();
+
+        String nowDateStr = formater.format(nowDate);
+
+        UUID uuid = UUID.randomUUID();
+
+        String inquiryFileName = nowDateStr + "_" + uuid.toString() + "_" + inquiryFileOrigin;
+
+        String inquiryFilePath = directory;
+
+        try (InputStream fileInputStream = multipartFile.getInputStream()) {
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(multipartFile.getContentType());
+
+            PutObjectRequest putObjectRequest = new PutObjectRequest(
+                    bucketName,
+                    directory + inquiryFileName,
+                    fileInputStream,
+                    objectMetadata
+            ).withCannedAcl(CannedAccessControlList.PublicRead);
+
+            s3.putObject(putObjectRequest);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        File checkImage = new File(inquiryFileOrigin);
+
+        String type = "";
+
+        try {
+            type = Files.probeContentType(checkImage.toPath());
+        } catch (IOException ie) {
+            System.out.println(ie.getMessage());
+        }
+
+        if (type != "") {
+            if (type.startsWith("image")) {
+                inquiryFileDTO.setInquiryFileCate("image");
+            } else {
+                inquiryFileDTO.setInquiryFileCate("etc");
+            }
+        } else {
+            inquiryFileDTO.setInquiryFileCate("etc");
+        }
+
+        inquiryFileDTO.setInquiryFileName(inquiryFileName);
+        inquiryFileDTO.setInquiryFilePath(inquiryFilePath);
+        inquiryFileDTO.setInquiryFileOrigin(inquiryFileOrigin);
+
+        return inquiryFileDTO;
+    }
+
+
+
+
 }
