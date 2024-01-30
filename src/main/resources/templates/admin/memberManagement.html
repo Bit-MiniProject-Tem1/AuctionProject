@@ -62,7 +62,7 @@
                                        style="width: 750px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
                                        th:value="${searchKeyword }">
                             </div>
-                            <button type="submit" id="btnSearch" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                            <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
                                 <i class="bi bi-search search_icon"></i>
                             </button>
                         </td>
@@ -72,8 +72,8 @@
         </div>
         <div class="board">
 <!--            <table id="boardTable" class="table" border="1" style="width: 700px; border-collapse: collapse;">-->
-            <table id="board_table" >
-                <tr id="board_table_header">
+            <table id="table_form" >
+                <tr id="table_header">
                     <th style="width: 70px;">번호</th>
                     <th style="width: 100px;">이름</th>
                     <th style="width: 150px;">아이디</th>
