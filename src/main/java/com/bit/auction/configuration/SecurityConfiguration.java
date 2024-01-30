@@ -36,11 +36,11 @@ public class SecurityConfiguration {
                     authorizeRequests.requestMatchers("/img/**").permitAll();
                     // /user/로 시작하는 요청
                  //   authorizeRequests.requestMatchers("/user/**").permitAll();
-                authorizeRequests.requestMatchers("/user/id-check").permitAll();
-                authorizeRequests.requestMatchers("/user/join").permitAll();
-                authorizeRequests.requestMatchers("/user/login").permitAll();
-                authorizeRequests.requestMatchers("/user/join-view").permitAll();
-               authorizeRequests.requestMatchers("/user/login-view").permitAll();
+//                    authorizeRequests.requestMatchers("/user/id-check").permitAll();
+//                    authorizeRequests.requestMatchers("/user/join").permitAll();
+//                    authorizeRequests.requestMatchers("/user/login").permitAll();
+//                    authorizeRequests.requestMatchers("/user/join-view").permitAll();
+//                    authorizeRequests.requestMatchers("/user/login-view").permitAll();
 //                    authorizeRequests.requestMatchers("/user/inquiry-view").permitAll();
 //                    authorizeRequests.requestMatchers("/user/inquiry").permitAll();
 
@@ -55,16 +55,18 @@ public class SecurityConfiguration {
                     // 관리자 페이지에 대한 접근제어
 //                    authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
                     // 위에 설정한 요청외의 모든 요청은 인증된 사용자(로그인한 사용자)만 접근가능하도록 설정
-                    authorizeRequests.anyRequest().authenticated();
                     authorizeRequests.requestMatchers("/auction/register").hasAnyRole("USER", "ADMIN");
+                    authorizeRequests.requestMatchers("/mypage/**").hasRole("USER");
+                 //   authorizeRequests.anyRequest().authenticated();
                     authorizeRequests.anyRequest().permitAll();
+
                 })
                 // 로그인, 로그아웃 설정
                 .formLogin((formLogin) -> {
-                    formLogin.loginPage("/user/login");
+                    formLogin.loginPage("/user/login-view");
                     formLogin.usernameParameter("userId");
                     formLogin.passwordParameter("userPw");
-                    formLogin.loginProcessingUrl("/user/login");
+                    formLogin.loginProcessingUrl("/user/loginProc");
                     formLogin.failureHandler(loginFailureHandler);
                     formLogin.defaultSuccessUrl("/");
                 })

@@ -3,6 +3,7 @@ package com.bit.auction.user.controller;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;

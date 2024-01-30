@@ -20,7 +20,7 @@ import java.security.Principal;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/mypage")
 @RequiredArgsConstructor
 @Controller
 public class MyPageController {
