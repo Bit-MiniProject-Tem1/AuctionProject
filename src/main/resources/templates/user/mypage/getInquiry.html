@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myPageLayout2}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/mypage/inquiry.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+
+        </script>
+    </th:block>
+    <title>문의 상세페이지</title>
+</head>
+<body>
+<div layout:fragment="content" class="inquiry_container">
+    <form id="insertForm" action="/user/inquiry" method="post" enctype="multipart/form-data">
+
+        <div class="inquiry_box1">
+            <h2>문 의</h2>
+        </div>
+
+
+        <div class="inquiry_box2">
+            <h3 for="inquiryType" class="inquiry_box2_content">문의 유형</h3>
+        </div>
+
+        <!--메뉴 만들기-->
+        <div class="inquiry_choice_box">
+            <select id="inquiryType" name="inquiryType" class="inquiry_choice">
+                <option>일반 문의</option>
+                <option>상품 문의</option>
+            </select>
+        </div>
+
+        <div class="inquiry_box2">
+            <h3 for="inquiryTitle" class="inquiry_box2_content">제 목</h3>
+        </div>
+        <input type="text" id="inquiryTitle" name="inquiryTitle" class="inquiry_title" placeholder="제목을 입력해주세요.">
+
+        <div class="inquiry_box2">
+            <h3 for="inquiryContent" class="inquiry_box2_content">내 용</h3>
+        </div>
+
+        <textarea class="inquiry_content" id="inquiryContent" name="inquiryContent" cols="40" rows="10" placeholder="내용을 입력해주세요."></textarea>
+
+        <div class="inquiry_box2">
+            <h3 class="inquiry_box2_content">첨부 파일</h3>
+        </div>
+
+        <div class="inquiry_file_box">
+        <textarea class="inquiry_file" readonly>
+
+            파일 추가(이미지 파일만 업로드 해주세요.)
+            최대 5개까지 업로드할 수 있습니다.
+        </textarea>
+            <label for="uploadFiles">첨부파일 업로드</label>
+            <input type="file" id="uploadFiles" name="uploadFiles" multiple>
+        </div>
+        <div id="attachZone"
+             data-placeholder="파일을 첨부하려면 파일선택 버튼을 누르세요.">
+        </div>
+
+        <div class="inquiry_box2">
+            <h3 for="inquiryAnswer" class="inquiry_box2_content">문의 답변</h3>
+        </div>
+
+        <textarea id="inquiryAnswer" name="inquiryAnswer" class="inquiry_content2" placeholder="문의 하신 내용에 답변이 완료 되지 않았습니다." readonly></textarea>
+
+        <button class="inquiry_btn" type="button" id="insertBtn">등 록</button>
+    </form>
+</div>
+</body>
+</html>

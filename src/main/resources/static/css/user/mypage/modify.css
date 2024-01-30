@@ -26,12 +26,15 @@ body{
     margin-top: 20px;
     font-size: 15px;
     color: lightgrey;
+    margin-left: 25%;
 }
 .profile_input1 {
     width: 510px;
     height: 40px;
     font-size: 15px;
     border-bottom: 1px solid lightgrey;
+    margin-left: 25%;
+
 }
 .input_box1 {
     width: 510px;
@@ -47,6 +50,7 @@ body{
     border-bottom: 1px solid lightgrey;
     display: flex;
     justify-content: space-between;
+    margin-left: 25%;
 }
 .profile_input2 form{
     width: 100%;
@@ -58,14 +62,16 @@ body{
 
 }
 
-.profile_input_box1 {
-    width: 49px;
-    height: 39px;
-    background-color: white;
+.profile_btn {
+    width: 510px;
+    height: 40px;
+    background-color: #e2e3e5;
     border: 1px solid;
-    float: right;
     border-radius: 10px;
-    font-size: 13px;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 25%;
 }
 
 .profile_input3 {
@@ -76,6 +82,10 @@ body{
     display: flex;
     justify-content: space-between;
     margin-bottom: 100px;
+}
+
+p {
+    margin-left: 25%;
 }
 
 
