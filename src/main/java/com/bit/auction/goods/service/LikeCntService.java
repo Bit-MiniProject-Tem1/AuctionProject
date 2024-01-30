@@ -8,4 +8,6 @@ public interface LikeCntService {
     void insertLike(User user, Long categoryId);
     void deleteLike(User user, Long categoryId);
     long findByAuctionId(Long categoryId);
+
+
 }

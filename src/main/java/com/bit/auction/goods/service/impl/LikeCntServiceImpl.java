@@ -21,7 +21,6 @@ public class LikeCntServiceImpl implements LikeCntService {
 
     private final AuctionRepository auctionRepository;
     private final LikeCntRepository likeCntRepository;
-    private final UserRepository userRepository;
 
     @Override
     public long findByUserIdAndAuctionId(long userId, Long auctionId) {

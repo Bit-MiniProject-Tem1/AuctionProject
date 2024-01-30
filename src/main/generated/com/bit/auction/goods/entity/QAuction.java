@@ -36,7 +36,7 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final NumberPath<Integer> immediatePrice = createNumber("immediatePrice", Integer.class);
 
-    public final NumberPath<Integer> likeCnt = createNumber("likeCnt", Integer.class);
+    public final NumberPath<Long> likeCnt = createNumber("likeCnt", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 

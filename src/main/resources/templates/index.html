@@ -122,8 +122,8 @@
                         <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                     </div>
                     <div class="favorite-view-group">
-                        <a th:onclick="|javascript:toggleHeart('${auction.id}')|" th:id="'toggleHeartBtn_' + ${auction.id}">
-                            <i id="likeStatus" class="bi-heart favorite-icon" th:class="${likeCnt == 0 ? 'bi-heart' : 'bi-heart-fill'}"></i>관심&nbsp;<span id="likeSum" th:text="${likeSum}"></span>
+                        <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
+                            <i id="likeStatus" class="bi-heart favorite-icon" th:class="${auction.likeCnt == 0 ? 'bi-heart' : 'bi-heart-fill'}"></i>관심&nbsp;<span id="likeSum" th:text="${auction.likeCnt}"></span>
                         </a>
                         <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                     </div>
@@ -147,7 +147,7 @@
                     </div>
                 </div>
                 <div class="container search-goods-list2">
-                    <div class="search-goods" th:each="auction : ${fianlAuctions}">
+                    <div class="search-goods" th:each="auction : ${finalAuctions}">
                         <div class="goods-img">
                             <figure class="img_wrapper">
                                 <a th:href="@{'/auction/goods/' + ${auction.id}}">

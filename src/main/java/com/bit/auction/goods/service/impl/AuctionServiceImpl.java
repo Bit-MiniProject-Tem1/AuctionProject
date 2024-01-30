@@ -8,6 +8,7 @@ import com.bit.auction.goods.entity.Category;
 import com.bit.auction.goods.repository.AuctionImgRepository;
 import com.bit.auction.goods.repository.AuctionRepository;
 import com.bit.auction.goods.repository.CategoryRepository;
+import com.bit.auction.goods.repository.LikeCntRepository;
 import com.bit.auction.goods.service.AuctionService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
@@ -35,6 +37,7 @@ public class AuctionServiceImpl implements AuctionService {
     private final CategoryRepository categoryRepository;
     private final AuctionImgRepository auctionImgRepository;
     private final FileUtils fileUtils;
+    private final LikeCntRepository likeCntRepository;
 
     @Override
     public AuctionDTO getAuctionGoods(Long id) {
@@ -262,15 +265,14 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionDTOPageList;
     }
 
-    @Override
     public List<AuctionDTO> findByForRecentList() {
-
-        List<Auction> recentAuctions = auctionRepository.findByforResent();
-        return recentAuctions.stream()
+        List<Auction> finalAuctions = auctionRepository.findByforResent();
+        return finalAuctions.stream()
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
-
     }
+
+
 
     @Override
     public List<AuctionDTO> findByForFinalList() {
@@ -278,6 +280,11 @@ public class AuctionServiceImpl implements AuctionService {
         return finalAuctions.stream()
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Map<String, Long>> getLikeSumList() {
+        return likeCntRepository.countGroupByAuctionId();
     }
 
 
