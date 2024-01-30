@@ -53,17 +53,17 @@
                     <div class="title" th:text="${getGoods.title}"></div>
                     </br>
                         <h3 class="head-text">Total Price</h3>
-                        <p class="content-text">product price</p>
+                        <input type="hidden" th:value="${getGoods.immediatePrice}" id="biddingPrice" name="biddingPrice">
+                        <p class="content-text" th:text="${getGoods.immediatePrice}+'원'"></p>원
                 </div>
             </div>
         </div>
         <div class="paymentselect-container">
             <h2>Payment Select</h2>
             <hr>
-            <form id="payment" action="auction/bidding/info.do" method="post" enctype="multipart/form-data">
             <fieldset>
               <label>
-                <input type="radio" name="payment-option" value="1" checked />
+                <input type="radio" name="payment-option" value="1" checked/>
                 <span class="content-text">무통장결제</span>
               </label>
                 </br>
@@ -82,14 +82,61 @@
                 <span class="content-text">카카오페이</span>
               </label>
             </fieldset>
-            </form>
             <hr>
             <div class="button-wrapper">
-            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button" id="order">
-                <p class="content-text">주문하기</p>
-            </button>
+            <button type="button" value="order" id="bid-button" class="content-text">주문하기</button>
             </div>
         </div>
+     <script th:inline="javascript" >
+                //  $("#bid-button").on("click", () =>{
+                //     var auctionId = [[${getGoods.id}]];
+                //     var url = "/auction/impbiddinginfo/" + auctionId;
+                //
+                //         $.ajax({
+                //         url: url,
+                //         method: 'POST',
+                //         async: false,
+                //         success: () => {
+                //             alert("success");
+                //         },
+                //         error: () => {
+                //             alert("fail");
+                //         }
+                //     });
+                // });
+
+                $("#bid-button").on("click", () =>{
+                var radioVal = $('input[name="payment-option"]:checked').val();
+                var biddingPrice = $("#biddingPrice").val();
+                var auctionId = [[${getGoods.id}]];
+                var userId = [[${getGoods.regUserId}]];
+
+                    var parameter = {
+                        payment: radioVal,
+                        biddingPrice: biddingPrice,
+                        auctionId : auctionId,
+                        userId : userId
+                    };
+
+                    var param = JSON.stringify(parameter);
+                    var url = "/auction/impbiddinginfo/" + auctionId;
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        contentType: "application/json",
+                        data: param,
+                        async: false,
+                        success: () => {
+                            alert("success");
+                        },
+                        error: () => {
+                            alert("fail");
+                        }
+                    });
+                });
+
+        </script>
     </div>
 </div>
 </body>

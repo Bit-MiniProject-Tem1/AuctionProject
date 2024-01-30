@@ -49,7 +49,7 @@ class AuctionRepositoryTest {
     @Test
     void insertAuction() {
         Category category1 = categoryRepository.findById(1L).get();
-        User user = userRepository.findByUserId("test").get();
+        User user = userRepository.findByUserId("testId1").get();
         Auction auction1 = Auction.builder()
                 .regUser(user)
                 .category(category1)

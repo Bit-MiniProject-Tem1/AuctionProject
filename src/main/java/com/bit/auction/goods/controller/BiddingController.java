@@ -1,16 +1,17 @@
 package com.bit.auction.goods.controller;
 
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingDTO;
+import com.bit.auction.goods.entity.Auction;
+import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
+import com.bit.auction.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -21,42 +22,55 @@ import java.util.List;
 @Log4j2
 public class BiddingController {
     private final BiddingService biddingService;
+    private final AuctionService auctionService;
 
-    @GetMapping("/bid")
-    public ModelAndView bidding() {
+
+
+    @GetMapping("/bidding/{id}")
+    public ModelAndView bidding(@PathVariable("id") Long id) {
 
         ModelAndView mav = new ModelAndView();
+
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(id);
+        mav.addObject("getGoods" , auctionDTO);
         mav.setViewName("bidding/bidding.html");
         return mav;
 
     }
 
-    @GetMapping("/bidinfo")
-    public ModelAndView biddinginfo() {
+    @GetMapping("/bidding/info/{id}")
+    public ModelAndView biddinginfo(@PathVariable("id") Long id) {
 
         ModelAndView mav = new ModelAndView();
+
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(id);
+        mav.addObject("getGoods" , auctionDTO);
         mav.setViewName("bidding/biddinginfo.html");
         return mav;
 
     }
 
-    @GetMapping(value = "/bidding/{auctionId}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<BiddingDTO>> getListByAuction(@PathVariable("auctionId") Long auctionId){
+    @GetMapping("/impbiddinginfo/{id}")
+    public ModelAndView biddingInfo(@PathVariable("id") Long id) {
 
-        log.info("auctionId" + auctionId);
-        return new ResponseEntity<>( biddingService.getBidList(auctionId), HttpStatus.OK);
+        ModelAndView mav = new ModelAndView();
+
+        AuctionDTO auctionDTO = auctionService.getAuctionGoods(id);
+        mav.addObject("getGoods" , auctionDTO);
+        mav.setViewName("bidding/impbiddinginfo.html");
+        return mav;
+
     }
 
-    @GetMapping(value = "/mypage/bidding/{userId}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<BiddingDTO>> getListByUser(@PathVariable("userId") Long userId){
+    @PostMapping("/impbiddinginfo/{id}")
+    public void bidding(@RequestBody BiddingDTO biddingDTO){
+        biddingService.updateBidStatus();
+        biddingService.setbid(biddingDTO);
 
-        log.info("userId" + userId);
-        return new ResponseEntity<>( biddingService.getUserBidList(userId), HttpStatus.OK);
     }
 
-//    @PostMapping("/bidinfo")
-//    public void bidding(BiddingDTO biddingDTO ,Long auctionId , Long userId ){
-//        biddingService.insertBid(biddingDTO,auctionId , userId);
+//   @PutMapping("/impbiddinginfo/{id}")
+//    public void updateBidStatus(){
+//        biddingService.updateBidStatus();
 //    }
-
 }
