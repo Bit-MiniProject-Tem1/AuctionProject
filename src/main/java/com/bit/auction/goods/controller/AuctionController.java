@@ -337,7 +337,7 @@ public class AuctionController {
             targetList = Arrays.asList(paramMap.get("target").toString().split(","));
         }
 
-        List<Character> statusList = new ArrayList<>('S');
+        List<Character> statusList = new ArrayList<>(List.of('S'));
         if (paramMap.get("closing") != null) {
             statusList.add(paramMap.get("closing").toString().charAt(0));
         }
