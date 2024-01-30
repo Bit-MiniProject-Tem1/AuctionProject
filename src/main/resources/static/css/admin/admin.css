@@ -1,7 +1,8 @@
 .content_area {
     width: 1020px;
-    margin: 0 auto;
-    border: 1px solid black;
+    margin: 0 auto 100px;
+    box-sizing: border-box;
+/*    border: 1px solid black;               !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
 .title_area {
@@ -29,7 +30,7 @@
     height: 40px;
     border-collapse: collapse;
     font-size: 24px;
-    margin: 50px 15px;
+    margin: 60px 15px;
 }
 
 .search_item {
@@ -56,7 +57,7 @@
 
 input::placeholder {
     font-size: 14px;
-    color: #999;
+    color: #999999;
 }
 
 .board {
@@ -66,20 +67,54 @@ input::placeholder {
     align-items: center;
 }
 
-#board_table_header {
+#table_header {
     /*width: 990px;*/
     height: 40px;
     border-collapse: collapse;
     background-color: #f4f4f4;
+    border-top: 0.5px solid #e2e3e5;
     font-size: 18px;
     text-align: center;
 }
 
-#board_table {
+#table_form {
     width: 990px;
     border-collapse: collapse;
     /*background-color: skyblue;  !*#f4f4f4;*!*/
     margin: 10px 15px 20px;
+}
+.table_colName {
+    vertical-align: middle;
+    font-weight: 550;
+}
+#table_header_bottom {
+    height:4px;
+    border-top: 2px solid #999999;
+    border-bottom: 2px solid #999999;
+}
+
+.table_row {
+    text-align: center;
+    height: 35px;
+    border-bottom: 1px solid #e2e3e5;
+}
+
+.table_row td {
+    vertical-align: middle;
+}
+
+#table_body_bottom {
+    height:1px;
+    border-top: 2px solid #dedede;
+}
+
+.title_textArea {
+    text-align: left;
+    text-indent: 20px;
+    white-space: nowrap;         /* 텍스트가 줄 바꿈되지 않도록 설정 */
+    overflow: hidden;            /* 넘치는 부분을 감추기 */
+    text-overflow: ellipsis;     /* 생략 기호 (...)로 표시 */
+    max-width: 560px;
 }
 
 /*----------------------------------------------------------*/
@@ -93,27 +128,65 @@ input::placeholder {
 /*}*/
 
 .detailView_area {
-    border: 1px solid lightblue;      /* <--- 영역 구분을 위한 임시 테두리 */
+/*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0;
     padding: 0 15px;
     color:rgb(107, 107, 107);
 }
 
-#category {
-    border: 1.5px solid #dedede;
-    /*border: 1px solid #797979;*/
+#search_area #category {
+   /* border: 1.5px solid #dedede;
+    !*border: 1px solid #797979;*!
     display: inline-block;
     font-size: 16px;
     padding: 5px;
-    border-radius: 7px;
+*/
+    width: 168px;
+    text-indent: 12px;
+    border-radius: 10px;
 }
+/*.detailView_area*/
+#faq_add_container #category {
+    border: 2px solid #dedede;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 3px 8px;
+}
+
+#faq_detail_container #category {
+    border: 2px solid lavender;
+    letter-spacing: 1.5px;
+    border-radius: 5px;
+    background-color: ghostwhite;
+    display: inline-block;
+    padding: 3px 8px;
+}
+
+#category-parent {
+    padding: 1px;
+    border: 1px solid lavender;
+    display: inline-block;
+    border-radius: 6px;
+    /*background-color: ghostwhite;*/
+}
+/*style="padding: 2px; border: 1px solid #dedede; display: inline-block; border-radius: 6px;"*/
+/*
+#faq_detail_container #category-parent {
+    !*width: calc(100% + 4px);*!
+    !*height: calc(100% + 4px);*!
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+}*/
+/*#f4f3f1*/
+/*style="background-color: #f4f3f1; border-radius: 5px; border: 1px solid #dedede; letter-spacing: 1.5px;"*/
 
 .detail_item {
     width: 990px;
     display: block;
     box-sizing: border-box;
-    border: 1px solid mediumpurple;    /* <--- 영역 구분을 위한 임시 테두리 */
+/*    border: 1px solid mediumpurple;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0 10px;
+    /*--viewbox-hieght: 40;*/          /* <--- 변수 설정*/
 }
 
 .item_label_area {
@@ -135,10 +208,22 @@ input::placeholder {
     box-sizing: border-box;
     border-radius: 10px;
     width: 990px;
-    padding: 10px 20px;
+    padding: 7px 20px;
     border: 2px solid #dedede;
     height: auto;
     font-size: 18px;
+}
+
+.view_color {
+    /*background-color: ghostwhite;*/
+}
+
+/*#title_box, #file_box {
+    height: var(--viewbox-hieght)px;
+}*/
+
+#content_box {
+    padding: 15px 20px;
 }
 
 .text_area {
@@ -148,11 +233,13 @@ input::placeholder {
     table-layout: auto;
     width: 100%;
     overflow-y: hidden;
+    background-color: rgba(255, 255, 255, 0);
+    height: 28px;
 
-    border: 1px dashed red;    /* <--- 영역 구분을 위한 임시 테두리 */
+/*    border: 1px dashed red;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
-.text_area:focus {
+.text_area:focus, .detailView_area #category, .search_item {
     outline: none;
 }
 
@@ -259,3 +346,40 @@ input::placeholder {
 #purchaseHistory>table, #salesHistory>table {
     width: 100%;
 }
+
+
+/*----------------------------------------------------------*/
+
+.button_area {
+    margin: 60px 0 0;
+    --btn-height: 45px;
+    height: var(--btn-height);
+    display: flex;
+    justify-content: flex-end; /* 자식 요소를 컨테이너의 끝으로 정렬 */
+}
+
+.textTypeBtn {
+    width: 85px;
+    height: var(--btn-height);
+    /*background-color: #dedede;*/
+    border-radius: 8px;
+    position: absolute;
+    font-size: 20px;
+    border: 1px solid #dedede;
+}
+
+.pageMoveBtn {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 5px;
+    transition: font-weight, border; /* 트랜지션 효과 추가 (부드러운 변화) */
+}
+
+.pageMoveBtn:hover, #searchBtn:hover {
+    border: 2px solid #dedede;
+    font-weight: 550;
+}
+
