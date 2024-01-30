@@ -1,14 +1,15 @@
 package com.bit.auction.goods.repository;
 
-import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Bidding;
-import com.bit.auction.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 
 public interface BiddingRepository extends JpaRepository<Bidding, Long> {
 
-//    List<Bidding> getBiddingByAuction(Auction auction);
-//    List<Bidding> getBiddingByUser(User user);
+    @Modifying
+    @Query("update Bidding b set b.status = 0  where b.status =  1 ")
+    void updateBidStatus();
+
 }

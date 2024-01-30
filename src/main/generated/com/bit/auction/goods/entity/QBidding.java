@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -18,11 +17,9 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     private static final long serialVersionUID = -780246847L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QBidding bidding = new QBidding("bidding");
 
-    public final QAuction auctionId;
+    public final NumberPath<Long> auctionId = createNumber("auctionId", Long.class);
 
     public final NumberPath<Long> biddingId = createNumber("biddingId", Long.class);
 
@@ -34,28 +31,18 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public final NumberPath<Integer> status = createNumber("status", Integer.class);
 
-    public final com.bit.auction.user.entity.QUser userId;
+    public final StringPath userId = createString("userId");
 
     public QBidding(String variable) {
-        this(Bidding.class, forVariable(variable), INITS);
+        super(Bidding.class, forVariable(variable));
     }
 
     public QBidding(Path<? extends Bidding> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QBidding(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QBidding(PathMetadata metadata, PathInits inits) {
-        this(Bidding.class, metadata, inits);
-    }
-
-    public QBidding(Class<? extends Bidding> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.auctionId = inits.isInitialized("auctionId") ? new QAuction(forProperty("auctionId"), inits.get("auctionId")) : null;
-        this.userId = inits.isInitialized("userId") ? new com.bit.auction.user.entity.QUser(forProperty("userId")) : null;
+        super(Bidding.class, metadata);
     }
 
 }

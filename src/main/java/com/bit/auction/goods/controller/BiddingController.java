@@ -61,20 +61,16 @@ public class BiddingController {
         return mav;
 
     }
-//    @PostMapping("/bidding/info/{id}")
-//    public void bidding(BiddingDTO biddingDTO , Auction auctionId , User userId){
-//        biddingService.setbid(biddingDTO, auctionId.getId() , userId.getUserId());
-//    }
 
-        @PostMapping("/impbiddinginfo/{id}")
-    public void bidding(BiddingDTO biddingDTO , Long auctionId , String userId){
-        Auction auction = Auction.builder()
-                .id(auctionId)
-                .build();
-           User user = User.builder()
-                .userId(userId)
-                .build();
-        biddingService.setbid(biddingDTO, auction , user);
+    @PostMapping("/impbiddinginfo/{id}")
+    public void bidding(@RequestBody BiddingDTO biddingDTO){
+        biddingService.updateBidStatus();
+        biddingService.setbid(biddingDTO);
+
     }
 
+//   @PutMapping("/impbiddinginfo/{id}")
+//    public void updateBidStatus(){
+//        biddingService.updateBidStatus();
+//    }
 }

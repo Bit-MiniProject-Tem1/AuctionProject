@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @Table(name = "bidding")
 public class Bidding {
 
-@ManyToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "auction_id")
-private Auction auctionId;
-
-@ManyToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "user_id")
-private User userId;
+//@ManyToOne(cascade = CascadeType.ALL)
+//@JoinColumn(name = "auction_id")
+//private Auction auction;
+//
+//@ManyToOne(cascade = CascadeType.ALL)
+//@JoinColumn(name = "user_id")
+//private User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,15 +40,19 @@ private User userId;
 
     private LocalDateTime date;
 
-    public BiddingDTO toDTO(){
-        return BiddingDTO.builder()
-                .auctionId(this.auctionId.getId())
-                .userId(this.userId.getUserId())
-                .biddingPrice(this.biddingPrice)
-                .date(this.date)
-                .status(this.status)
-                .build();
-    }
+    private Long auctionId;
+
+    private String userId;
+
+//    public BiddingDTO toDTO(){
+//        return BiddingDTO.builder()
+//                .auctionId(this.auctionId.getId())
+//                .userId(this.userId.getUserId())
+//                .biddingPrice(this.biddingPrice)
+//                .date(this.date)
+//                .status(this.status)
+//                .build();
+//    }
 
 
 }

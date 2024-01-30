@@ -1,4 +1,4 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -6,9 +6,6 @@ d<!DOCTYPE html>
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bid/biddinginfo.css}">
-    </th:block>
-    <th:block layout:fragment="script">
-        <script th:src="@{/js/impbidding.js}"></script>
     </th:block>
 </head>
 <body>
@@ -66,74 +63,80 @@ d<!DOCTYPE html>
             <hr>
             <fieldset>
               <label>
-                <input type="radio" name="payment-option" value="virtual" checked/>
+                <input type="radio" name="payment-option" value="1" checked/>
                 <span class="content-text">무통장결제</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="card" />
+                <input type="radio" name="payment-option" value="2" />
                 <span class="content-text">카드</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="naverpay"  />
+                <input type="radio" name="payment-option" value="3"  />
                 <span class="content-text">네이버페이</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="kakaopay" />
+                <input type="radio" name="payment-option" value="4" />
                 <span class="content-text">카카오페이</span>
               </label>
             </fieldset>
             <hr>
             <div class="button-wrapper">
-            <button type="button" value="order" onclick="save()" class="order-button">
-                <p class="content-text">주문하기</p>
-            </button>
+            <button type="button" value="order" id="bid-button" class="content-text">주문하기</button>
             </div>
         </div>
-         <script th:inline="javascript">
+     <script th:inline="javascript" >
+                //  $("#bid-button").on("click", () =>{
+                //     var auctionId = [[${getGoods.id}]];
+                //     var url = "/auction/impbiddinginfo/" + auctionId;
+                //
+                //         $.ajax({
+                //         url: url,
+                //         method: 'POST',
+                //         async: false,
+                //         success: () => {
+                //             alert("success");
+                //         },
+                //         error: () => {
+                //             alert("fail");
+                //         }
+                //     });
+                // });
 
+                $("#bid-button").on("click", () =>{
+                var radioVal = $('input[name="payment-option"]:checked').val();
+                var biddingPrice = $("#biddingPrice").val();
+                var auctionId = [[${getGoods.id}]];
+                var userId = [[${getGoods.regUserId}]];
 
-function save() {
-	var radioVal = $('input[name="payment-option"]:checked').val();
-    var biddingPrice = $("#biddingPrice").val();
-    var auctionId = [[${getGoods.id}]];
-    var userId = [[${getGoods.regUserId}]];
-	console.log(radioVal);
-	console.log(biddingPrice);
-	console.log(auctionId);
-	console.log(userId);
-		var parameter = {
-			payment: radioVal,
-			biddingPrice: biddingPrice,
-            auctionId : auctionId,
-            userId : userId
-		};
+                    var parameter = {
+                        payment: radioVal,
+                        biddingPrice: biddingPrice,
+                        auctionId : auctionId,
+                        userId : userId
+                    };
 
-		var param = JSON.stringify(parameter);
-		var url = "/auction/impbiddinginfo/" + auctionId;
-		console.log(param);
-		console.log(parameter);
-		console.log(url);
+                    var param = JSON.stringify(parameter);
+                    var url = "/auction/impbiddinginfo/" + auctionId;
 
-		$.ajax({
-			url: url,
-			method: 'POST',
-			contentType: "application/json",
-			data: param,
-			success: () => {
-				alert("success");
-				location.href = "/";
-			},
-			error: (err) => {
-				console.log(err);
-				alert(err.responseJSON.errorMessage);
-			}
-		});
-}
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        contentType: "application/json",
+                        data: param,
+                        async: false,
+                        success: () => {
+                            alert("success");
+                        },
+                        error: () => {
+                            alert("fail");
+                        }
+                    });
+                });
 
-         </script>
+        </script>
     </div>
 </div>
 </body>

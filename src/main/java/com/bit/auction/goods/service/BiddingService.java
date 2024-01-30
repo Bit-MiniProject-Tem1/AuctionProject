@@ -11,9 +11,7 @@ import java.util.List;
 
 public interface BiddingService {
 
-    void setbid(BiddingDTO biddingDTO , Auction auctionId , User userId);
-//    void setbid(BiddingDTO biddingDTO , Long auctionId , String userId);
-//    List<BiddingDTO> getBidList(Long auctionId);
-//    List<BiddingDTO> getUserBidList(Long userId);
+    void setbid(BiddingDTO biddingDTO);
+    void updateBidStatus();
 
 }
