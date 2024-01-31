@@ -42,6 +42,9 @@ public class Inquiry {
     @Column(nullable = false, name = "inquiry_answer")
     private String inquiryAnswer;
 
+    @Column(nullable = false, name = "inquiry_cnt")
+    private int inquiryCnt;
+
     @Column(name = "inquiry_regdate")
     private LocalDateTime inquiryRegdate;
 

@@ -22,6 +22,8 @@ public class QInquiry extends EntityPathBase<Inquiry> {
 
     public final StringPath inquiryAnswer = createString("inquiryAnswer");
 
+    public final NumberPath<Integer> inquiryCnt = createNumber("inquiryCnt", Integer.class);
+
     public final StringPath inquiryContent = createString("inquiryContent");
 
     public final ListPath<InquiryFile, QInquiryFile> inquiryFileList = this.<InquiryFile, QInquiryFile>createList("inquiryFileList", InquiryFile.class, QInquiryFile.class, PathInits.DIRECT2);

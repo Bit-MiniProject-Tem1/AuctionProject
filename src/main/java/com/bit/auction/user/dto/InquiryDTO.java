@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 public class InquiryDTO {
-    private long inquiryNo;
+    private Long inquiryNo;
     private String inquiryType;
     private String inquiryTitle;
     private String inquiryContent;
@@ -25,19 +25,6 @@ public class InquiryDTO {
     private String searchKeyword;
 
 
-    public static InquiryDTO toinquiryDTO(Inquiry inquiry) {
-        InquiryDTO inquiryDTO = new InquiryDTO();
-        inquiryDTO.setInquiryNo(inquiry.getInquiryNo());
-        inquiryDTO.setInquiryType(inquiryDTO.getInquiryType());
-        inquiryDTO.setInquiryTitle(inquiryDTO.getInquiryTitle());
-        inquiryDTO.setInquiryContent(inquiryDTO.getInquiryContent());
-        inquiryDTO.setInquiryAnswer(inquiryDTO.getInquiryAnswer());
-        inquiryDTO.setInquiryRegdate(inquiryDTO.getInquiryRegdate());
-        inquiryDTO.setInquiryFileDTOList(inquiryDTO.getInquiryFileDTOList());
-        inquiryDTO.setSearchCondition(inquiryDTO.getSearchCondition());
-        inquiryDTO.setSearchKeyword(inquiryDTO.getSearchKeyword());
-        return inquiryDTO;
-    }
 
 public Inquiry toEntity() {
     return Inquiry.builder()

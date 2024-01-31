@@ -8,7 +8,268 @@
         <link rel="stylesheet" th:href="@{/css/user/mypage/inquiry.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script>
+        <script th:inline="javascript">
+            const uploadFiles = [];
+            const originFiles = [];
+            const changeFiles = [];
+
+            $(() => {
+                const loginUser = /*[[${#authentication.principal.user}]]*/;
+
+                if (loginUser == null) {
+                    $("#deleteBtn").hide();
+                    $("#brnUpdate").hide();
+                    $("#inquiryTitle").attr("readonly", true);
+                    $("#inquiryContent").attr("readonly", true);
+                }
+
+                for (let i = 0; i < $("#inqyiryFileCnt").val(); i++) {
+                    const originFileObj = {
+                        inquiryNo: $("#inquiryNo" + i).val(),
+                        inquiryFileNo: $("#inquiryFileNo" + i).val(),
+                        inquiryFileName: $("#inquiryFileName" + i).val(),
+                        inquiryFileStatus:"N"
+                    }
+
+                    originFiles.push(originFileObj);
+                }
+
+
+                $("#uploadFiles").on("change", (e) => {
+                    const files = e.target.files;
+
+                    const fileArr = Array.prototype.slice.call(files);
+
+                    for (file of fileArr) {
+                        imageLoader(file);
+                    }
+                });
+
+
+                $("#btnUpdate").on("click", (e) => {
+                    let dt1 = new DataTransfer();
+
+                    for (i in uploadFiles) {
+                        const file = uploadFiles[i];
+                        dt1.items.add(file);
+                    }
+
+                    $("#uploadFiles")[0].files = dt1.files;
+
+                    let dt2 = new DataTransfer();
+
+                    for(i in changeFiles) {
+                        const file = changeFiles[i];
+                        dt2.items.add(file);
+                    }
+
+                    $("#changeFiles")[0].files = dt2.files;
+
+
+                    $("#originFiles").val(JSON.stringify(originFiles));
+
+                    const formData = new FormData($("#updateForm")[0]);
+
+                    // form 서브밋은 post와 get방식만 지원한다.
+                    $.ajax({
+                        url: '/inquiry/inquiry',
+                        type: 'put',
+                        enctype: "multipart/form-data",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (obj) => {
+                            alert(obj.item.msg);
+                            location.href = `/inquiry/inquiry/${$("#inquiryNo").val()}`;
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    });
+                });
+
+                $("#deleteBtn").on("click", (e) => {
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: `/inquiry/inquiry/${$("#inquiryNo").val()}`,
+                        type: 'delete',
+                        success: (obj) => {
+                            alert(obj.item.msg);
+                            location.href = "/inquiry/inquiry-list";
+                        },
+                        error: (err) => {
+                            console.log(err);
+                        }
+                    });
+                });
+            });
+
+
+            const fnFileChange = (inquiryFileNo) => {
+                const changeFileInput = document.getElementById("changeFile" + inquiryFileNo);
+
+                changeFileInput.click();
+            }
+
+            // 파일을 변경했을 때 동작할 메소드
+            const fnGetChangeFileInfo = (inquiryFileNo, e) => {
+                // 변경된 파일 변수로 받기
+                const files = e.target.files;
+
+                // 받아온 파일 배열로 변경
+                const fileArr = Array.prototype.slice.call(files);
+
+                // 변경된 파일을 changeFiles 배열에 담아준다
+                changeFiles.push(fileArr[0]);
+
+                // 미리보기 화면에 변경된 파일 출력
+                const reader = new FileReader();
+
+                reader.onload = (ee) => {
+                    const img = document.getElementById("img" + inquiryFileNo);
+                    const p = document.getElementById("fileName" + inquiryFileNo);
+
+                    if(fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                        img.src = ee.target.result;
+                    } else {
+                        img.src = "/images/defaultFileImg.png";
+                    }
+
+                    p.textContent = fileArr[0].name;
+                }
+
+                reader.readAsDataURL(fileArr[0]);
+
+                // originFiles에 담겨있던 기존 파일에 대한 정보 수정
+                for(let i = 0; i < originFiles.length; i++) {
+                    if(inquiryFileNo == originFiles[i].inquiryFileNo) {
+                        originFiles[i].inquiryFileStatus = "U";
+                        originFiles[i].newFileName = fileArr[0].name;
+                    }
+                }
+            }
+
+            const fnDeleteFile = (e) => {
+                // 클릭된 태그
+                const ele = e.srcElement;
+
+                // deleteFile 속성 값 가져오기
+                const deleteFile = ele.getAttribute("data-deleteFile");
+
+                // originFiles에 담겨있던 기존 파일에 대한 정보 수정
+                for(let i = 0; i < originFiles.length; i++) {
+                    if(deleteFile === originFiles[i].inquiryFileNo) {
+                        originFiles[i].inquiryFileStatus = "D";
+                    }
+                }
+
+                // 부모 요소 div 삭제
+                const div = ele.parentNode;
+                $(div).remove();
+            }
+
+            // 미리보기 처리 메소드
+            // 미리보기될 파일은 업로드가 되어있는 상태가 아니기 때문에
+            // 파일 자체를 Base64 인코딩 방식으로 문자열로 변환해서 이미지로 호출
+            // 이미지가 들어갈 태그 생성 및 파일을 Base64 인코딩
+            const imageLoader = (file) => {
+                // 추가된 파일 배열에 담기
+                uploadFiles.push(file);
+
+                let reader = new FileReader();
+
+                reader.onload = (e) => {
+                    // 이미지 표출할 img 태그 생성
+                    let img = document.createElement("img");
+                    img.setAttribute("style", "width: 100%; height: 100%; z-index: none;");
+
+                    // 이미지 파일인지 아닌지 판단
+                    if(file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                        img.src = e.target.result;
+                    } else {
+                        img.src = "/images/defaultFileImg.png";
+                    }
+
+                    // 미리보기 영역에 추가
+                    // 미리보기 이미지 태그와 삭제버튼 그리고 파일명을 표출하는 태그 묶은 div 태그를 만들어주는 메소드 호출
+                    $("#attachZone").append(makeDiv(img, file));
+                }
+
+                // 파일을 Base64 인코딩한 문자열로 로드
+                reader.readAsDataURL(file);
+            }
+
+            // 미리보기 영역에 추가될 div를 만들어주는 메소드
+            const makeDiv = (img, file) => {
+                // div 태그 생성
+                let div = document.createElement("div");
+
+                div.setAttribute("style", "display: inline-block; position: relative;" +
+                    " width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;");
+
+                // 잘못 올렸을 때 삭제할 수 있는 삭제 버튼 생성
+                let btn = document.createElement("input");
+                btn.setAttribute("type", "button");
+                btn.setAttribute("value", "x");
+                // 사용자 정의 속성 추가
+                btn.setAttribute("deleteFile", file.name);
+                btn.setAttribute("style", "width: 30px; height: 30px; position: absolute;" +
+                    " right: 0; bottom: 0; z-index: 999; background-color: rgba(255, 255, 255, 0.1);" +
+                    " color: #f00;");
+
+                // 위에서 생성한 버튼 클릭했을 때 파일 삭제되는 기능 구현
+                btn.onclick = (e) => {
+                    // 클릭된 버튼
+                    const ele = e.srcElement;
+
+                    const deleteFile = ele.getAttribute("deleteFile");
+
+                    for(let i = 0; i < uploadFiles.length; i++) {
+                        //배열에서도 같은 이름의 파일 삭제
+                        if(deleteFile === uploadFiles[i].name) {
+                            uploadFiles.splice(i, 1);
+                        }
+                    }
+
+                    // 버튼 클릭 했을 때 input에 첨부된 파일도 삭제
+                    // input type="file"은 첨부된 파일들을 fileList 형태로 관리
+                    // fileList는 File 객체에 바로 담을 수 없다.
+                    // DataTransfer라는 클래스를 이용해서 변환 후에 사용한다.
+
+                    let dt = new DataTransfer();
+
+                    for(i in uploadFiles) {
+                        const file = uploadFiles[i];
+                        dt.items.add(file);
+                    }
+
+                    $("#uploadFiles")[0].files = dt.files;
+
+                    // 해당 img 태그를 가지고 있는 div 태그 삭제
+                    const parentDiv = ele.parentNode;
+                    $(parentDiv).remove();
+                }
+
+                // 파일 명을 표출할 p 태그 생성
+                let fileNameP = document.createElement("p");
+                fileNameP.setAttribute("style", "display: inline-block; font-size: 8px;");
+                fileNameP.textContent = file.name;
+
+                // div 태그에 img, button, p태그 추가
+                div.appendChild(img);
+                div.appendChild(btn);
+                div.appendChild(fileNameP);
+
+                return div;
+            }
+
+            // 파일다운로드
+            const fnFileDown = (inquiryNo, inquiryFileNo) => {
+                // a태그의 href와 동일한 기능
+                window.location = '/inquiry/fileDown.do?inquiryNo=' + inquiryNo
+                    + '&inquiryFileNo=' + inquiryFileNo;
+            }
 
         </script>
     </th:block>
@@ -16,8 +277,9 @@
 </head>
 <body>
 <div layout:fragment="content" class="inquiry_container">
-    <form id="insertForm" action="/user/inquiry" method="post" enctype="multipart/form-data">
-
+    <form id="updateForm" action="/inquiry/inquiry" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="inquiryNo" id="inquiryNo" th:value="${getInquiry.inquiryNo }">
+        <input type="hidden" name="originFiles" id="originFiles">
         <div class="inquiry_box1">
             <h2>문 의</h2>
         </div>
@@ -29,23 +291,20 @@
 
         <!--메뉴 만들기-->
         <div class="inquiry_choice_box">
-            <select id="inquiryType" name="inquiryType" class="inquiry_choice">
-                <option>일반 문의</option>
-                <option>상품 문의</option>
-            </select>
+            <input type="text" id="inquiryType" name="inquiryType" class="inquiry_choice" th:value="${getInquiry.inquiryTitle}">
         </div>
-
+        
         <div class="inquiry_box2">
             <h3 for="inquiryTitle" class="inquiry_box2_content">제 목</h3>
         </div>
-        <input type="text" id="inquiryTitle" name="inquiryTitle" class="inquiry_title" placeholder="제목을 입력해주세요.">
+        <input type="text" id="inquiryTitle" name="inquiryTitle" class="inquiry_title" th:value="${getInquiry.inquiryTitle}">
 
         <div class="inquiry_box2">
             <h3 for="inquiryContent" class="inquiry_box2_content">내 용</h3>
         </div>
 
-        <textarea class="inquiry_content" id="inquiryContent" name="inquiryContent" cols="40" rows="10" placeholder="내용을 입력해주세요."></textarea>
-
+        <textarea class="inquiry_content" id="inquiryContent" name="inquiryContent" cols="40" rows="10" th:text="${getInquiry.inquiryContent}"></textarea>
+        <!--20240131 여기까지 했음 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!김종범-->
         <div class="inquiry_box2">
             <h3 class="inquiry_box2_content">첨부 파일</h3>
         </div>
@@ -58,9 +317,51 @@
         </textarea>
             <label for="uploadFiles">첨부파일 업로드</label>
             <input type="file" id="uploadFiles" name="uploadFiles" multiple>
+            <input type="file" id="changeFiles" name="changeFiles" style="display: none;" multiple>
         </div>
-        <div id="attachZone"
-             data-placeholder="파일을 첨부하려면 파일선택 버튼을 누르세요.">
+        <div id="attachZone">
+            <div th:each="file : ${getInquiry.inquiryFileDTOList}" style="display: inline-block; position: relative;
+                                         width: 150px; height: 120px; margin: 5px;
+                                         border: 1px solid #00f; z-index: 1;">
+                <input type="hidden" th:id="'inquiryNo' + ${fileStat.index }"
+                       th:value="${file.inquiryNo }">
+                <input type="hidden" th:id="'inquiryFileNo' + ${fileStat.index }"
+                       th:value="${file.inquiryFileNo }">
+                <input type="hidden" th:id="'inquiryFileName' + ${fileStat.index }"
+                       th:value="${file.inquiryFileName }">
+                <input type="file" th:id="'changeFile' + ${file.inquiryFileNo }"
+                       th:name="'changeFile' + ${file.inquiryFileNo }"
+                       style="display: none;"
+                       th:onchange="fnGetChangeFileInfo([[${file.inquiryFileNo }]], event)">
+                <input th:if="${fileStat.last}" type="hidden" id="inquiryFileCnt"
+                       name="inquiryFileCnt" th:value="${fileStat.count }">
+                <img th:if="${file.inquiryFileCate } == 'image'"
+                     th:id="'img' + ${file.inquiryFileNo }"
+                     th:src="@{'https://kr.object.ncloudstorage.com/bitcamp-bucket-22/inquiry/' + ${file.inquiryFileName}}"
+                     style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
+                     class="fileImg"
+                     th:onclick="fnFileChange([[${file.inquiryFileNo}]])">
+                <img th:if="${file.inquiryFileCate} != 'image'"
+                     th:id="'img' + ${file.inquiryFileNo }"
+                     src="/images/defaultFileImg.png"
+                     style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
+                     class="fileImg"
+                     th:onclick="fnFileChange([[${file.inquiryFileNo}]])">
+                <input type="button" class="btnDelete" value="x"
+                       th:data-deleteFile="${file.inquiryFileNo }"
+                       style="width: 30px; height: 30px;
+                                               position: absolute; right: 0; bottom: 0;
+                                               z-index: 999;
+                                               background-color: rgba(255, 255, 255, 0.1);
+                                               color: #f00;"
+                       onclick="fnDeleteFile(event)">
+                <p th:id="'fileName' + ${file.inquiryFileNo }"
+                   style="display: inline-block; font-size: 8px;
+                                           cursor: pointer;"
+                   th:onclick="fnFileDown([[${file.inquiryNo}]], [[${file.inquiryFileNo }]])"
+                   th:text="${file.inquiryFileOrigin}">
+                </p>
+            </div>
         </div>
 
         <div class="inquiry_box2">
