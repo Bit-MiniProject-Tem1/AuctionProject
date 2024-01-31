@@ -13,13 +13,56 @@
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
-    <th:block layout:fragment="script" th:with="requestUrl = ${requestUrl}, status = ${status}">
+    <th:block layout:fragment="script">
         <script>
+/*
+            $(() => {
+                console.log($(".text_area")[0].scrollHeight);
+                console.log($("#title_box").css('height'));
+
+                if($(".text_area")[0].scrollHeight > 30) {
+                    $("#title_box").css('height', 'auto');
+                    $("#title_box").height($(".text_area")[0].scrollHeight);
+                }
+            });
+*/
+
+/*
+            $(document).ready(function() {
+
+                $('.view_box').on( 'keyup', 'textarea', function (e){
+
+                    for (let i=0; i<$('.view_box').length; i++) {
+                        let viewboxHeight = 30;
+                        let id = $('.view_box')[i].getAttribute('id');
+
+                        console.log("id = " + id);
+
+                        if (id == "content_box") {
+                            viewboxHeight = viewboxHeight * 12;
+                        }
+
+                        if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                            $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                        } else {
+                            $("#" + id).height( viewboxHeight );
+                        }
+                    }
+                });
+
+                $('.view_box').find( 'textarea' ).keyup();
+            });
+*/
+
 
             $(() => {
                 console.log($(".text_area")[0].scrollHeight);
                 console.log($("#title_box").css('height'));
 
+                if($(".text_area")[0].scrollHeight > 30) {
+                $("#title_box").css('height', 'auto');
+                $("#title_box").height($(".text_area")[0].scrollHeight);
+                }
 
                 for (let i=0; i<$('.view_box').length; i++) {
                     let viewboxHeight = 30;
@@ -27,9 +70,9 @@
 
                     console.log("id = " + id);
 
-                    if (id == "content_box") {
+                    /*if (id == "content_box") {
                         viewboxHeight = viewboxHeight * 12;
-                    }
+                    }*/
 
                     if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
                         $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
@@ -38,21 +81,7 @@
                     }
                 }
 
-                //------------------------------------------------------------------------------
-
-                /*let requestUrl = /!*[(${requestUrl})]*!/ {};
-                let status = /!*[(${status})]*!/ {};
-
-                console.log(requestUrl);
-                console.log(status);
-
-                if(requestUrl.contains('/faq_add') && status == true){
-                    alert("저장이 완료되었습니다.");
-                }*/
-
             });
-
-
 
         </script>
     </th:block>
@@ -64,12 +93,10 @@
             <strong>자주 묻는 질문 - 상세조회</strong>
         </div>
     </div>
-    <div id="faq_detail_container">
+    <div>
         <div class="detailView_area">
             <form id="detailViewForm" action="" method="post">
-                <div id="category-parent">
-                    <div id="category" name="category" th:text="${faqDTO.category}">카테고리명</div>
-                </div>
+                <div id="category" name="category" th:text="${faqDTO.category}">카테고리명</div>
                 <div class="detail_item">
                     <div>
                         <div class="item_label_area">
@@ -80,8 +107,8 @@
                                 <label class="item_label">제목</label>
                             </strong>
                         </div>
-                        <div class="view_box view_color" id="title_box">
-                            <textarea class="text_area" th:text="${faqDTO.title}" readonly></textarea>
+                        <div class="view_box" id="title_box" style="height: 45px; padding: 5px 20px;">
+                            <textarea class="text_area" th:text="${faqDTO.title}" oninput="autoResize(this)" rows="1"></textarea>
                         </div>
                     </div>
                 </div>
@@ -95,12 +122,12 @@
                                 <label class="item_label">내용</label>
                             </strong>
                         </div>
-                        <div class="view_box view_color" id="content_box">
-                            <textarea class="text_area" th:text="${faqDTO.content}" readonly></textarea>
+                        <div class="view_box" id="content_box" style="height: 400px;">
+                            <textarea class="text_area" th:text="${faqDTO.content}" oninput="autoResize(this)" rows="1"></textarea>
                         </div>
                     </div>
                 </div>
-                <div class="detail_item" th:if="${faqDTO.faqAttachedFileDTOList != null && !faqDTO.faqAttachedFileDTOList.equals('')}">
+                <div class="detail_item">
                     <div>
                         <div class="item_label_area">
                             <div class="label_icon d-flex align-items-center justify-content-center">
@@ -110,21 +137,8 @@
                                 <label class="item_label">첨부파일</label>
                             </strong>
                         </div>
-                        <div class="view_box view_color" id="file_box">
-<!--                            <textarea class="text_area" readonly>-->
-<!--                            <p class="text_area" readonly style="box-sizing: border-box; cursor: default; display: flex; flex-wrap: nowrap;">-->
-                                <p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; cursor: pointer; display: inline-flex; margin: 3px 30px 2px 0; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
-                                    <!--<a th:text="${file.fileName} + '  '"
-                                       th:href="@{/download/{filePath}(filePath=${file.filePath})}"></a>-->
-                                    <i class="bi bi-file-earmark-arrow-down-fill" style="color: #999999; margin-right: 3px;"></i>
-                                    <!--<i class="bi bi-file-earmark-arrow-down" style="color: #999999; margin-right: 3px;"></i>-->
-                                    <!--<i class="bi bi-download" style="color: #999999; margin-right: 3px;"></i>-->
-                                    <a th:text="${file.fileName}"
-                                       th:href="@{/file_download/{faqId}-{fileId}(faqId=${faqDTO.faqId}, fileId=${file.fileId})}"></a>
-                                </p>
-<!--                            </p>-->
-
-<!--                            </textarea>-->
+                        <div class="view_box" id="file_box" style="height: 30px;">
+                            <textarea class="text_area" th:text="${faqDTO.attachedFile}" oninput="autoResize(this)" rows="1"></textarea>
                         </div>
                     </div>
                 </div>

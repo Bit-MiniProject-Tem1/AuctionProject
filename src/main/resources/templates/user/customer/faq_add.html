@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>자주 묻는 질문 - 등록</title>
+<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+
+
+    <th:block layout:fragment="css">
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+
+            $(document).ready(function() {
+
+                $('.view_box').on( 'keyup', 'textarea', function (e){
+
+                    for (let i=0; i<$('.view_box').length; i++) {
+                        let viewboxHeight = 30;
+                        let id = $('.view_box')[i].getAttribute('id');
+
+                        console.log("id = " + id);
+
+                        if (id == "content_box") {
+                            viewboxHeight = viewboxHeight * 12;
+                        }
+
+                        if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                            $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                        } else {
+                            $("#" + id).height( viewboxHeight );
+                        }
+                    }
+                });
+
+                $('.view_box').find( 'textarea' ).keyup();
+            });
+
+/*            function updateFileName() {
+                let uploadFiles = document.getElementById('uploadFiles');
+                let filesName = document.getElementById('filesName');
+
+                if (uploadFiles.files.length > 0) {
+                    filesName.innerText = uploadFiles.files[0].name;
+                } else {
+                    filesName.innerText = '첨부할 파일을 선택하세요.';
+                }
+            }*/
+
+/*
+            $(document).ready(function() {
+
+                $('.view_box').on( 'keyup', 'textarea', function (e){
+                    let basicHeight = 30;
+
+                    if($("#title_box > .text_area")[0].scrollHeight > basicHeight) {
+                        // $("#title_box").css('height', 'auto' );
+                        $("#title_box").height( $("#title_box > .text_area")[0].scrollHeight );
+                    } else {
+                        $("#title_box").height( basicHeight );
+                    }
+
+                    if($("#content_box > .text_area")[0].scrollHeight > basicHeight*10) {
+                        // $("#content_box").css('height', 'auto' );
+                        $("#content_box").height( $("#content_box > .text_area")[0].scrollHeight );
+                    } else {
+                        $("#content_box").height(basicHeight * 10);
+                    }
+
+                    if($("#file_box > .text_area")[0].scrollHeight > basicHeight) {
+                        // $("#file_box").css('height', 'auto' );
+                        $("#file_box").height( $("#file_box > .text_area")[0].scrollHeight );
+                    } else {
+                        $("#file_box").height( basicHeight );
+                    }
+
+                });
+                $('.view_box').find( 'textarea' ).keyup();
+            });
+*/
+
+        </script>
+    </th:block>
+</head>
+<body>
+<div class="content_area" layout:fragment="content" >
+    <div class="title_area">
+        <div class="title">
+            <strong>자주 묻는 질문 - 등록</strong>
+        </div>
+    </div>
+    <div id="faq_add_container">
+        <div class="detailView_area">
+            <form id="detailViewForm" th:action method="post" enctype="multipart/form-data">
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">카테고리</label>
+                            </strong>
+                        </div>
+                        <select name="category" id="category" style="width: 180px; height: 42px; font-size: 18px;">
+
+                                <option value="null" hidden
+                                        th:selected="${category == 'null'}"></option>
+                                <option value="이용정책" style="font-size: 16px;"
+                                        th:selected="${category == '이용정책'}">이용정책</option>
+                                <option value="공통" style="font-size: 16px;"
+                                        th:selected="${category == '공통'}">공통</option>
+                                <option value="구매" style="font-size: 16px;"
+                                        th:selected="${category == '구매'}">구매</option>
+                                <option value="판매" style="font-size: 16px;"
+                                        th:selected="${category == '판매'}">판매</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">제목</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="title_box">
+                            <textarea class="text_area" name="title"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">내용</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="content_box">
+                            <textarea class="text_area" name="content"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">첨부파일</label>
+                            </strong>
+                        </div>
+
+                        <!---------------------------------------------------------------------------->
+
+                        <div class="view_box" id="file_box" style="padding: 7px; height: 48px; display: flex; box-sizing: border-box;">
+                            <div style="font-size: 16px; position: relative; overflow: hidden; display: inline-block; vertical-align: middle;">
+                            <div style="font-size: 16px; position: absolute; vertical-align: middle;">
+                                <label for="uploadFiles" style="width: 80px; height: 30px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e0; border-radius: 5px; background-color: aliceblue;">파일 선택</label>
+                                <span id="filesName"></span>
+                                <input autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple data-placeholder="none">
+<!--                                <input style="position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;" onchange="updateFileName()" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">-->
+                            </div>
+                            <!--<div style="width: 100%">
+                                <textarea class="text_area" name="attachedFile" id="attachedFile"></textarea>
+                            </div>-->
+                        </div>
+
+                        <!---------------------------------------------------------------------------->
+
+                        <!--<div class="view_box" id="file_box" style="padding: 7px; height: 48px; display: flex; box-sizing: border-box;">
+                            <div style="font-size: 16px; position: absolute; vertical-align: middle;">
+                                <input autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple data-placeholder="none">
+                            </div>
+
+                        </div>-->
+
+                        <!---------------------------------------------------------------------------->
+
+                    </div>
+                </div>
+                <div class="button_area">
+                    <button type="submit" id="saveBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

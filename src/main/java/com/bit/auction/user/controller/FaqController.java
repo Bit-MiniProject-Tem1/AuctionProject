@@ -8,8 +8,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,8 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +39,13 @@ public class FaqController {
 
     private final FaqService faqService;
     private final FileUtils fileUtils;
+
+    @Value("${ncp.bucket}")
+    private String bucketName;
+
+    @Value("${ncp.endPoint}")
+    private String storageUrl;
+
 
     @GetMapping(value = {"/faq_main", "/faq_search"})
     public ModelAndView faqMain(@PageableDefault(page = 0, size = 20) Pageable pageable, FaqDTO faqDTO, HttpServletRequest request) {
@@ -105,20 +120,48 @@ public class FaqController {
         return mv;
     }
 
+/*
     @GetMapping("/download")
     public ResponseEntity<byte[]>fileDownload(FaqAttachedFileDTO faqAttachedFileDTO) throws IOException {
         FaqAttachedFileDTO downloadFile = faqService.getFaqAttachedFileDTO(faqAttachedFileDTO);
 
         return fileUtils.getObject(downloadFile.getFilePath());
-    }
-
-/*    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource>fileDownload(@PathVariable Long fileId) throws MalformedURLException {
-        FaqAttachedFileDTO downloadFile = faqa.getFaqAttachedFileDTO(faqAttachedFileDTO);
-
-        return fileUtils.getObject(downloadFile.getFilePath());
     }*/
 
+
+    @GetMapping("/file_download/{faqId}-{fileId}")
+    public ResponseEntity<Resource>fileDownload(@PathVariable Long faqId, @PathVariable Long fileId) throws MalformedURLException {
+        FaqAttachedFileDTO faqAttachedFileDTO = faqService.getFaqAttachedFileDTO(faqId, fileId);
+
+        /*String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath(),
+                StandardCharsets.UTF_8);*/
+
+        
+
+        String filePath = faqAttachedFileDTO.getFilePath();
+
+        String[] splitFilePath = filePath.split("/");
+
+        String realFileName = splitFilePath[splitFilePath.length - 1];
+
+        String fileName = UriUtils.encode(faqAttachedFileDTO.getFileName(),
+                StandardCharsets.UTF_8);
+
+        UrlResource urlResource = new UrlResource("https://kr.object.ncloudstorage.com/bitcamp-bucket-45-mini/faq/" + UriUtils.encode(realFileName, "UTF-8"));
+
+        log.info("######### filePath = {}", filePath);
+        log.info("######### fileName = {}", fileName);
+
+        String contentDisposition = "attachment; filename=\"" + fileName + "\"";
+
+        log.info("######### contentDisposition = {}", contentDisposition);
+
+//        URLEncoder.encode(koreanFilename, "UTF-8")
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(urlResource);
+    }
 
     @GetMapping("/faq_add")
     public String faqAddView() {

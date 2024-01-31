@@ -237,7 +237,7 @@ public class FileUtils {
 
     public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException{
         byte[] bytes = null;
-        storedFileName = storedFileName.replace(storageUrl + "/" + bucketName + "/", "");
+        storedFileName = storedFileName.replace(storageUrl, "");
         S3Object s3Object = s3.getObject(new GetObjectRequest(bucketName, storedFileName));
         S3ObjectInputStream inputStream = s3Object.getObjectContent();
         bytes = IOUtils.toByteArray(inputStream);
