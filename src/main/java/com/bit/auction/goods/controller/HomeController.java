@@ -33,6 +33,8 @@ public class HomeController {
     public String home(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
+        List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
+        List<AuctionDTO> popularAuctions = auctionService.findByForPopularList();
 
         List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
 
@@ -55,8 +57,6 @@ public class HomeController {
             }).collect(Collectors.toList());
         }
 
-        recentAuctions.forEach(auctionDTO -> System.out.println(auctionDTO));
-
         recentAuctions.forEach(auctionDTO -> {
             auctionDTO.setLikeCnt(
                     likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
@@ -65,9 +65,28 @@ public class HomeController {
                     .get("LIKE_SUM"));
         });
 
+        if(!userLikeList.isEmpty()) {
+            finalAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        finalAuctions.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+        model.addAttribute("popularAuctions", popularAuctions);
+
         model.addAttribute("recentAuctions", recentAuctions);
 
-        List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
         model.addAttribute("finalAuctions", finalAuctions);
 
         return "index";

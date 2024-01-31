@@ -82,14 +82,20 @@ public class AuctionController {
                                  HttpServletRequest request,
                                  HttpServletResponse response,
                                  @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
         ModelAndView mav = new ModelAndView();
+        List<Map<String, Long>> userLikeList;
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
 
-        if(customUserDetails != null) {
-            long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), categoryId);
-            mav.addObject("likeCnt", likeCnt);
+        if (customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+
+            boolean likeChk = userLikeList.stream()
+                    .anyMatch(map -> map.get("AUCTION_ID").equals(categoryId));
+
+            mav.addObject("likeChk", likeChk);
         }
 
         long likeSum = likeCntService.findByAuctionId(categoryId);

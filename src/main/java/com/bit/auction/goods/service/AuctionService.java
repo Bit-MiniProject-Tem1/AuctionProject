@@ -38,4 +38,6 @@ public interface AuctionService {
     List<Map<String, Long>> getLikeSumList();
 
     List<Map<String, Long>> getUserLikeList(long id);
+
+    List<AuctionDTO> findByForPopularList();
 }
