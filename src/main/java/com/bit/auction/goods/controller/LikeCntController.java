@@ -2,6 +2,7 @@ package com.bit.auction.goods.controller;
 
 import com.bit.auction.common.dto.ResponseDTO;
 import com.bit.auction.goods.dto.LikeCntDTO;
+import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.LikeCntService;
 import com.bit.auction.user.entity.CustomUserDetails;
 import jakarta.annotation.Nullable;
@@ -23,19 +24,20 @@ import java.util.Map;
 public class LikeCntController {
 
     private final LikeCntService likeCntService;
+    private final AuctionService auctionService;
 
     @PostMapping("/add/{id}")
-    public ResponseEntity<?> addLike(@PathVariable("id") Long categoryId,
+    public ResponseEntity<?> addLike(@PathVariable("id") Long auctionId,
                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
 
         try {
-            likeCntService.insertLike(customUserDetails.getUser(), categoryId);
-
+            likeCntService.insertLike(customUserDetails.getUser(), auctionId);
             Map<String, String> returnMap = new HashMap<>();
 
-            long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), categoryId);
-            long likeSum = likeCntService.findByAuctionId(categoryId);
+            long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), auctionId);
+            long likeSum = likeCntService.findByAuctionId(auctionId);
+
 
             returnMap.put("likeCnt", String.valueOf(likeCnt));
             returnMap.put("likeSum", String.valueOf(likeSum));

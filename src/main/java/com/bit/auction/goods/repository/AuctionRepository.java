@@ -33,10 +33,4 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
     Page<Auction> findByAuctionNameContaining(Pageable pageable, String searchQuery, List<Character> statusList);
 
-//    @Modifying
-//    @Query("update Auction a set a.likeCnt = a.likeCnt + 1 where a.id = :id")
-//    void plusLikeCnt(LikeCntDTO likeCntDTO);
-//    @Modifying
-//    @Query("update Auction a set a.likeCnt = a.likeCnt - 1 where a.id = :id")
-//    void minusLikeCnt(LikeCntDTO likeCntDTO);
 }

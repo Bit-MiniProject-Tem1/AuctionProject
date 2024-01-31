@@ -1,6 +1,7 @@
 package com.bit.auction.goods.service;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
@@ -35,4 +36,6 @@ public interface AuctionService {
     List<AuctionDTO> findByForFinalList();
 
     List<Map<String, Long>> getLikeSumList();
+
+    List<Map<String, Long>> getUserLikeList(long id);
 }

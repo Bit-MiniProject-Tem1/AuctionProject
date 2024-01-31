@@ -27,4 +27,15 @@ public interface LikeCntRepository  extends JpaRepository<LikeCnt, LikeCntId> {
             "           GROUP BY A.AUCTION_ID",
         nativeQuery = true)
     List<Map<String, Long>> countGroupByAuctionId();
+
+    @Query(value = "SELECT A.AUCTION_ID as AUCTION_ID" +
+            "            , B.USER_ID as USER_ID" +
+            "            , IFNULL(COUNT(B.AUCTION_ID), 0) as LIKE_SUM" +
+            "           FROM AUCTION A" +
+            "           LEFT OUTER JOIN LIKE_CNT B" +
+            "           ON A.AUCTION_ID = B.AUCTION_ID" +
+            "           GROUP BY A.AUCTION_ID, B.USER_ID" +
+            "           HAVING B.USER_ID = :id",
+            nativeQuery = true)
+    List<Map<String, Long>> countGroupByAuctionIdUserId(long id);
 }

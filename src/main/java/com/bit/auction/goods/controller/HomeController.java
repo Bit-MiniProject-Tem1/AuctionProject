@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -33,22 +34,28 @@ public class HomeController {
 
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
 
-        /**
-         * [
-         *      {
-         *          "AUCTION_ID": 1,
-         *          "LIKE_SUM": 1
-         *      },
-         *      {
-         *          "AUCTION_ID": 2,
-         *          "LIKE_SUM": 2
-         *      },
-         *      .....
-         *
-         * ]
-         */
-
         List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
+        if(!userLikeList.isEmpty()) {
+            recentAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        recentAuctions.forEach(auctionDTO -> System.out.println(auctionDTO));
 
         recentAuctions.forEach(auctionDTO -> {
             auctionDTO.setLikeCnt(

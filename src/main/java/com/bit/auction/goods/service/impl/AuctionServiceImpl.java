@@ -10,6 +10,7 @@ import com.bit.auction.goods.repository.AuctionRepository;
 import com.bit.auction.goods.repository.CategoryRepository;
 import com.bit.auction.goods.repository.LikeCntRepository;
 import com.bit.auction.goods.service.AuctionService;
+import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -273,7 +274,6 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
 
-
     @Override
     public List<AuctionDTO> findByForFinalList() {
         List<Auction> finalAuctions = auctionRepository.findByforFinal();
@@ -287,5 +287,8 @@ public class AuctionServiceImpl implements AuctionService {
         return likeCntRepository.countGroupByAuctionId();
     }
 
-
+    @Override
+    public List<Map<String, Long>> getUserLikeList(long id) {
+        return likeCntRepository.countGroupByAuctionIdUserId(id);
+    }
 }
