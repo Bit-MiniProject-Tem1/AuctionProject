@@ -232,7 +232,7 @@ $(document).ready(function () {
             $("#immediatePrice").focus();
             return false;
         }
-        
+
         let dt = new DataTransfer();
         for (var i = 0; i < filesArr.length; i++) {
             if (!filesArr[i].is_delete) {
@@ -351,7 +351,7 @@ $(document).ready(function () {
         formData.set("currentBiddingPrice", 0);
         formData.set("representativeImgName", representativeImg.name);
         formData.set("description", editor.getData());
-
+        console.log(...formData);
         $.ajax({
             method: 'POST',
             url: '/auction/register',

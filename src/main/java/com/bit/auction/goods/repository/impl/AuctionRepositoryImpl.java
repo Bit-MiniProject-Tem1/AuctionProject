@@ -99,12 +99,8 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if (subCategoryIdList.size() > 1) {
-            for (Long subCategoryId : subCategoryIdList) {
-                booleanBuilder.or(auction.category.topCategoryId.eq(subCategoryId));
-            }
-        } else {
-            booleanBuilder.and(auction.category.id.eq(subCategoryIdList.get(0)));
+        for (Long subCategoryId : subCategoryIdList) {
+            booleanBuilder.or(auction.category.id.eq(subCategoryId));
         }
 
         return booleanBuilder;

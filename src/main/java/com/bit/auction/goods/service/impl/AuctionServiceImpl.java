@@ -49,7 +49,6 @@ public class AuctionServiceImpl implements AuctionService {
 
     public List<Long> getSubCategoryIdList(Long categoryId) {
         categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
-        categoryIdList.add(categoryId);
         return categoryIdList;
     }
 
@@ -241,7 +240,6 @@ public class AuctionServiceImpl implements AuctionService {
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
     }
-
 
 
     @Override
