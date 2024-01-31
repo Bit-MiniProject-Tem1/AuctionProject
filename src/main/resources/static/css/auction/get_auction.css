@@ -85,11 +85,18 @@
 }
 
 .link-title {
-    width: 25%;
     padding: 2px 4px;
     font-weight: 700;
     font-size: 16px;
     text-align: center;
+}
+
+.immediately {
+    width: 25%;
+}
+
+.voluntary {
+    width: 100%;
 }
 
 .link-description {

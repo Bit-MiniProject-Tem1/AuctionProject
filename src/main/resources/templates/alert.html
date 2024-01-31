@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <script th:inline="javascript">
+        const msg = [[${msg}]];
+        alert(msg);
+        window.location.replace([[${url}]]);
+    </script>
+</head>
+</html>

@@ -40,7 +40,7 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
 
-    public final StringPath regUserId = createString("regUserId");
+    public final com.bit.auction.user.entity.QUser regUser;
 
     public final NumberPath<Integer> startingPrice = createNumber("startingPrice", Integer.class);
 
@@ -73,6 +73,7 @@ public class QAuction extends EntityPathBase<Auction> {
     public QAuction(Class<? extends Auction> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.category = inits.isInitialized("category") ? new QCategory(forProperty("category"), inits.get("category")) : null;
+        this.regUser = inits.isInitialized("regUser") ? new com.bit.auction.user.entity.QUser(forProperty("regUser")) : null;
     }
 
 }

@@ -38,33 +38,26 @@ public class AuctionServiceImpl implements AuctionService {
     private final CategoryRepository categoryRepository;
     private final AuctionImgRepository auctionImgRepository;
     private final FileUtils fileUtils;
+    private List<Long> categoryIdList = new ArrayList<>();
     private final LikeCntRepository likeCntRepository;
 
     @Override
     public AuctionDTO getAuctionGoods(Long id) {
         Optional<Auction> optionalAuction = auctionRepository.findById(id);
+        return optionalAuction.map(Auction::toDTO).orElse(null);
+    }
 
-        if (optionalAuction.isEmpty()) {
-            throw new RuntimeException("data not exist");
-        }
-
-        return optionalAuction.get().toDTO();
+    public List<Long> getSubCategoryIdList(Long categoryId) {
+        categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
+        return categoryIdList;
     }
 
     @Override
-    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String categoryOption, String sortOption, List<String> target, List<Character> status) {
-        List<Long> categoryIdList = new ArrayList<>();
-
-        if (categoryOption.equals("top")) {
-            categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
-            categoryIdList.add(categoryId);
-        } else if (categoryOption.equals("all")) {
-            categoryId = 0L;
-        }
-
-        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryId, categoryIdList, sortOption, target, status);
+    public Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String sortOption, List<String> target, List<Character> status) {
+        categoryIdList.add(categoryId);
+        Page<Auction> auctionPageList = auctionRepository.searchAll(pageable, categoryIdList, sortOption, target, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
-
+        categoryIdList.clear();
         return auctionDTOPageList;
     }
 
@@ -92,7 +85,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Transactional
     @Override
-    public void insertAuction(AuctionDTO auctionDTO, Long categoryId) {
+    public void setAuction(AuctionDTO auctionDTO, Long categoryId, User user) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
 
         String stripTitle = auctionDTO.getTitle().strip();
@@ -103,32 +96,7 @@ public class AuctionServiceImpl implements AuctionService {
         auctionDTO.setRegUserId("kim");
         auctionDTO.setStatus('S');
 
-        Auction auction = auctionDTO.toEntity(category);
-
-        List<AuctionImg> auctionImgList = auctionDTO.getAuctionImgDTOList().stream()
-                .map(auctionImgDTO -> auctionImgDTO.toEntity(auction))
-                .toList();
-
-        auctionImgList.forEach(auctionImg -> {
-            auction.addAuctionImg(auctionImg);
-        });
-
-        auctionRepository.saveOne(auction);
-    }
-
-    @Override
-    public void updateAuction(AuctionDTO auctionDTO, Long categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found"));
-
-        String stripTitle = auctionDTO.getTitle().strip();
-        String stripDescription = auctionDTO.getDescription().strip();
-
-        auctionDTO.setTitle(stripTitle);
-        auctionDTO.setDescription(stripDescription);
-        auctionDTO.setRegUserId("kim");
-        auctionDTO.setStatus('S');
-
-        Auction auction = auctionDTO.toEntity(category);
+        Auction auction = auctionDTO.toEntity(category, user);
 
         if (auctionDTO.getAuctionImgDTOList() != null) {
             List<AuctionImg> auctionImgList = auctionDTO.getAuctionImgDTOList().stream()

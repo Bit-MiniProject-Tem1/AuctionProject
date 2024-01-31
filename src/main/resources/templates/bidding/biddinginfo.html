@@ -32,8 +32,25 @@
                 </figure>
             </div>
                 <div class="product-info">
-                        <h3 class="head-text">Product Title</h3>
-                        <p class="content-text">product name</p>
+                    <div class="category">
+                        <a href="#" th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}"
+                           th:if="${getGoods.category.topCategory} ne null">
+                        <span th:text="'[' + ${getGoods.category.topCategory.name}+'> '"
+                              th:if="${getGoods.category.topCategory} ne null"></span>
+                        </a>
+                        <a href="#"
+                           th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
+                           th:if="${getGoods.category.topCategory} ne null">
+                        <span th:text="${getGoods.category.name}+']'"
+                              th:if="${getGoods.category.topCategory} ne null"></span>
+                        </a>
+                        <a href="#"
+                           th:href="'/auction/goods-list?category='+${getGoods.category.id}">
+                        <span th:text="${getGoods.category.name}"
+                              th:if="${getGoods.category.topCategory} eq null"></span>
+                        </a>
+                    </div>
+                    <div class="title" th:text="${getGoods.title}"></div>
                     </br>
                         <h3 class="head-text">Total Price</h3>
                         <p class="content-text">product price</p>
@@ -43,30 +60,32 @@
         <div class="paymentselect-container">
             <h2>Payment Select</h2>
             <hr>
+            <form id="payment" action="auction/bidding/info.do" method="post" enctype="multipart/form-data">
             <fieldset>
               <label>
-                <input type="radio" name="payment-option" value="virtual" checked />
+                <input type="radio" name="payment-option" value="1" checked />
                 <span class="content-text">무통장결제</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="card" />
+                <input type="radio" name="payment-option" value="2" />
                 <span class="content-text">카드</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="naverpay"  />
+                <input type="radio" name="payment-option" value="3"  />
                 <span class="content-text">네이버페이</span>
               </label>
                 </br>
               <label>
-                <input type="radio" name="payment-option" value="kakaopay" />
+                <input type="radio" name="payment-option" value="4" />
                 <span class="content-text">카카오페이</span>
               </label>
             </fieldset>
+            </form>
             <hr>
             <div class="button-wrapper">
-            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button">
+            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button" id="order">
                 <p class="content-text">주문하기</p>
             </button>
             </div>

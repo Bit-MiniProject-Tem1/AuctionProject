@@ -89,14 +89,14 @@ fieldset {
     margin-top: 40px;
 }
 
-.order-button{
+#bid-button{
     width: 100px;
     height: 50px;
     border-radius: 10px;
     background-color: white;
 }
 
-.order-button:hover{
+#bid-button:hover{
     transition: 500ms;
     background-color: rgba(128, 128, 128, 0.15);
 }
@@ -105,4 +105,14 @@ fieldset {
     font-family: Pretendard;
     font-weight: bold;
     text-align: center;
+}
+
+.category {
+    font-weight: bold;
+    font-family: Pretendard;
+
+}
+
+.title {
+    font-family: Pretendard;
 }

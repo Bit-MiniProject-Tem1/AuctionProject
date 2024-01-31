@@ -12,20 +12,21 @@ body{
     border-bottom: 1px solid black;
 }
 
-.myinquiry_history {
-    height: 200px;
+.myinquiry_box2{
     width: 1020px;
-    margin-top: 20px;
-    display: flex;
-}
-
-.myinquiry_history_title {
-    height: 180px;
-    width: 1020px;
+    height: 40px;
+    background-color: #cccccc;
 
 }
-.myinquiry_history_content {
-    margin: 80px;
+
+.table_tr {
     text-align: center;
-    font-size: 17px;
 }
+
+table_th1, table_th2, table_th3, table_th4,table_th5 {
+    margin: auto;
+    border: solid 1px black;
+}
+
+
+

@@ -13,7 +13,7 @@
         <script th:inline="javascript">
             $(() => {
                 var description = [[${getGoods.description}]];
-                
+
                 $(".goods-detail").append(description);
                 $(".carousel-item").first().addClass("active view");
 
@@ -80,7 +80,7 @@
                               th:if="${getGoods.category.topCategory} ne null"></span>
                     </a>
                     <a href="#"
-                       th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
+                       th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'&subCategory='+${getGoods.category.id}"
                        th:if="${getGoods.category.topCategory} ne null">
                         <span th:text="${getGoods.category.name}"
                               th:if="${getGoods.category.topCategory} ne null"></span>
@@ -130,8 +130,8 @@
                 </div>
                 <div class="container">
                     <div class="link-group">
-                        <a href="#" class="link btn-red">
-                            <div class="link-title">
+                        <a href="#" th:href="'/auction/impbiddinginfo/'+${getGoods.id}" class="link btn-red">
+                            <div class="link-title immediately">
                                 즉시<br>입찰
                             </div>
                             <div class="link-description">
@@ -141,15 +141,9 @@
                         </a>
                     </div>
                     <div class="link-group">
-                        <a href="#" class="link btn-green">
-                            <div class="link-title">
+                        <a href="#" th:href="'/auction/bidding/'+${getGoods.id}" class="link btn-green">
+                            <div class="link-title voluntary">
                                 자율<br>입찰
-                            </div>
-                            <div class="link-description">
-                                자율 입찰가<br>
-                                <input type="text" maxlength="10" onkeyup="inputNumberFormat(this);"
-                                       name="bidding_price" class="form-control"/>
-                                <span class="price won">원</span>
                             </div>
                         </a>
                         원하는 입찰 금액을 적어주세요.

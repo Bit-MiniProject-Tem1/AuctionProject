@@ -2,6 +2,7 @@ package com.bit.auction.goods.dto;
 
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Category;
+import com.bit.auction.user.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -38,10 +39,10 @@ public class AuctionDTO {
     private String representativeImgName;
     private List<Long> deleteAuctionImgList;
 
-    public Auction toEntity(Category category) {
+    public Auction toEntity(Category category, User regUser) {
         return Auction.builder()
                 .id(this.id)
-                .regUserId(this.regUserId)
+                .regUser(regUser)
                 .category(category)
                 .title(this.title)
                 .description(this.description)

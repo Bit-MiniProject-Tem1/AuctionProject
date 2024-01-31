@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>자주 묻는 질문 - 상세조회</title>
+<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+
+
+    <th:block layout:fragment="css">
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+/*
+            $(() => {
+                console.log($(".text_area")[0].scrollHeight);
+                console.log($("#title_box").css('height'));
+
+                if($(".text_area")[0].scrollHeight > 30) {
+                    $("#title_box").css('height', 'auto');
+                    $("#title_box").height($(".text_area")[0].scrollHeight);
+                }
+            });
+*/
+
+/*
+            $(document).ready(function() {
+
+                $('.view_box').on( 'keyup', 'textarea', function (e){
+
+                    for (let i=0; i<$('.view_box').length; i++) {
+                        let viewboxHeight = 30;
+                        let id = $('.view_box')[i].getAttribute('id');
+
+                        console.log("id = " + id);
+
+                        if (id == "content_box") {
+                            viewboxHeight = viewboxHeight * 12;
+                        }
+
+                        if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                            $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                        } else {
+                            $("#" + id).height( viewboxHeight );
+                        }
+                    }
+                });
+
+                $('.view_box').find( 'textarea' ).keyup();
+            });
+*/
+
+
+            $(() => {
+                console.log($(".text_area")[0].scrollHeight);
+                console.log($("#title_box").css('height'));
+
+                if($(".text_area")[0].scrollHeight > 30) {
+                $("#title_box").css('height', 'auto');
+                $("#title_box").height($(".text_area")[0].scrollHeight);
+                }
+
+                for (let i=0; i<$('.view_box').length; i++) {
+                    let viewboxHeight = 30;
+                    let id = $('.view_box')[i].getAttribute('id');
+
+                    console.log("id = " + id);
+
+                    /*if (id == "content_box") {
+                        viewboxHeight = viewboxHeight * 12;
+                    }*/
+
+                    if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                        $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                    } else {
+                        $("#" + id).height( viewboxHeight );
+                    }
+                }
+
+            });
+
+        </script>
+    </th:block>
+</head>
+<body>
+<div class="content_area" layout:fragment="content">
+    <div class="title_area">
+        <div class="title">
+            <strong>자주 묻는 질문 - 상세조회</strong>
+        </div>
+    </div>
+    <div>
+        <div class="detailView_area">
+            <form id="detailViewForm" action="" method="post">
+                <div id="category" name="category" th:text="${faqDTO.category}">카테고리명</div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">제목</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="title_box" style="height: 45px; padding: 5px 20px;">
+                            <textarea class="text_area" th:text="${faqDTO.title}" oninput="autoResize(this)" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">내용</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="content_box" style="height: 400px;">
+                            <textarea class="text_area" th:text="${faqDTO.content}" oninput="autoResize(this)" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">첨부파일</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="file_box" style="height: 30px;">
+                            <textarea class="text_area" th:text="${faqDTO.attachedFile}" oninput="autoResize(this)" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

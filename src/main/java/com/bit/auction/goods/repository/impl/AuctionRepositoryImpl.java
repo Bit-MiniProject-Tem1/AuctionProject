@@ -33,7 +33,8 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
-            if (auction.getAuctionImgList() != null || auction.getAuctionImgList().size() != 0) {
+
+            if (auction.getAuctionImgList() != null || !auction.getAuctionImgList().isEmpty()) {
                 auctionImgRepository.updateRepresentativeImg(auction);
             }
             em.merge(auction);
@@ -41,10 +42,10 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     }
 
     @Override
-    public Page<Auction> searchAll(Pageable pageable, Long categoryId, List<Long> subCategoryIdList, String sortOption, List<String> targetList, List<Character> statusList) {
+    public Page<Auction> searchAll(Pageable pageable, List<Long> subCategoryIdList, String sortOption, List<String> targetList, List<Character> statusList) {
         List<Auction> auctionList = jpaQueryFactory
                 .selectFrom(auction)
-                .where(eqCategoryId(categoryId, subCategoryIdList),
+                .where(eqCategoryId(subCategoryIdList),
                         eqTarget(targetList),
                         eqStatus(statusList))
                 .orderBy(auctionSort(sortOption))
@@ -71,7 +72,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     public Page<Auction> searchMyAuctionList(Pageable pageable, String regUserId, List<Character> statusList) {
         List<Auction> auctionList = jpaQueryFactory
                 .selectFrom(auction)
-                .where(auction.regUserId.eq(regUserId).and(eqStatus(statusList)))
+                .where(auction.regUser.userId.eq(regUserId).and(eqStatus(statusList)))
                 .fetch();
 
         auctionList.forEach(a -> {
@@ -91,20 +92,15 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
 
-    private BooleanBuilder eqCategoryId(Long categoryId, List<Long> subCategoryIdList) {
-        if (categoryId == 0L) {
+    private BooleanBuilder eqCategoryId(List<Long> subCategoryIdList) {
+        if (subCategoryIdList.get(0) == 0L) {
             return null;
         }
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if (subCategoryIdList != null) {
-            booleanBuilder.or(auction.category.id.eq(categoryId));
-            for (Long subCategoryId : subCategoryIdList) {
-                booleanBuilder.or(auction.category.topCategoryId.eq(subCategoryId));
-            }
-        } else {
-            booleanBuilder.and(auction.category.id.eq(categoryId));
+        for (Long subCategoryId : subCategoryIdList) {
+            booleanBuilder.or(auction.category.id.eq(subCategoryId));
         }
 
         return booleanBuilder;

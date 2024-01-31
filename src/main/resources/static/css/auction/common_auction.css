@@ -68,6 +68,10 @@
     color: white;
 }
 
+.btn-white {
+    border: 1px solid #ebebeb;
+}
+
 .link {
     border-radius: 0.375rem;
 }

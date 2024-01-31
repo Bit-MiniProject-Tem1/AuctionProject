@@ -1,13 +1,10 @@
 package com.bit.auction.goods.dto;
 
-import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Bidding;
-import com.bit.auction.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -23,21 +20,23 @@ public class BiddingDTO {
 
     private int payment;
 
-    private Long auctionId;
-
-    private Long userId;
-
     private LocalDateTime date;
 
-    private int status;
+    private int status = 1;
 
-//    public Bidding toEntity(Auction auction , User user) {
-//        return Bidding.builder()
-//                .auction(auction)
-//                .user(user)
-//                .biddingPrice(this.biddingPrice)
-//                .payment(this.payment)
-//                .date(this.date)
-//                .build();
-//    }
+    private Long auctionId;
+
+    private String userId;
+
+
+    public Bidding toEntity() {
+        return Bidding.builder()
+                .auctionId(auctionId)
+                .userId(userId)
+                .biddingPrice(biddingPrice)
+                .payment(payment)
+                .status(status)
+                .date(LocalDateTime.now())
+                .build();
+    }
 }

@@ -176,7 +176,7 @@ function representativeFile(num) {
     }
 }
 
-$(() => {
+$(document).ready(function () {
     const today = new Date();
     const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 3);
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -5);
@@ -213,19 +213,22 @@ $(() => {
             return false;
         }
 
-        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+        startingPrice = parseInt($("#startingPrice").val(), 10);
+        immediatePrice = parseInt($("#immediatePrice").val(), 10);
+
+        if (startingPrice <= 0 || immediatePrice <= 0) {
             alert('가격은 0이거나 음수일 수 없습니다.');
             return false;
         }
 
-        if ($("#startingPrice").val() > $("#immediatePrice").val()) {
-            alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
-            $("#immediatePrice").focus();
+        if (startingPrice < 5000) {
+            alert('경매는 시작가는 5000원 이상이어야 합니다.');
+            $("#startingPrice").focus();
             return false;
         }
 
-        if (currentBiddingPrice > $("#immediatePrice").val()) {
-            alert('즉시 입찰가는 현재 최고 입찰가보다 낮을 수 없습니다.');
+        if (startingPrice >= immediatePrice) {
+            alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;
         }
@@ -309,18 +312,21 @@ $(() => {
             return false;
         }
 
-        if ($("#startingPrice").val() <= 0 || $("#immediatePrice").val() <= 0) {
+        startingPrice = parseInt($("#startingPrice").val(), 10);
+        immediatePrice = parseInt($("#immediatePrice").val(), 10);
+
+        if (startingPrice <= 0 || immediatePrice <= 0) {
             alert('가격은 0이거나 음수일 수 없습니다.');
             return false;
         }
 
-        if ($("#startingPrice").val() < 5000) {
+        if (startingPrice < 5000) {
             alert('경매는 시작가는 5000원 이상이어야 합니다.');
             $("#startingPrice").focus();
             return false;
         }
 
-        if ($("#startingPrice").val() > $("#immediatePrice").val()) {
+        if (startingPrice >= immediatePrice) {
             alert('즉시 입찰가는 시작가보다 낮을 수 없습니다.');
             $("#immediatePrice").focus();
             return false;
@@ -345,7 +351,7 @@ $(() => {
         formData.set("currentBiddingPrice", 0);
         formData.set("representativeImgName", representativeImg.name);
         formData.set("description", editor.getData());
-
+        console.log(...formData);
         $.ajax({
             method: 'POST',
             url: '/auction/register',

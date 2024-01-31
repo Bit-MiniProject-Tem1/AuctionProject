@@ -23,6 +23,7 @@ public class UserDTO {
     private String userEmail;
     private LocalDateTime userRegdate;
     private String role;
+    private String curUserPw;
 
 
 

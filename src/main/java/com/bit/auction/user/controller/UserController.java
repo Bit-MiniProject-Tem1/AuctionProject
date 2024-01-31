@@ -3,9 +3,11 @@ package com.bit.auction.user.controller;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;
+import com.bit.auction.user.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,12 +42,13 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final AuctionService auctionService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private String findId;
 
 
 
 
-    @GetMapping("/join")
+    @GetMapping("/join-view")
     public ModelAndView getJoin() {
         ModelAndView mav = new ModelAndView();
 
@@ -49,7 +59,7 @@ public class UserController {
 
 
 
-    @GetMapping("/login")
+    @GetMapping("/login-view")
     public ModelAndView getLogin() {
         ModelAndView mav = new ModelAndView();
 
@@ -58,45 +68,6 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/mypage")
-    public ModelAndView getMyPage() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/mypage.html");
-
-        return mav;
-    }
-
-    @GetMapping("/profile")
-    public ModelAndView getMyProfile() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/profile.html");
-
-        return mav;
-    }
-
-    @GetMapping("/myInquiry")
-    public ModelAndView getMyInquiry() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/myinquiry.html");
-
-        return mav;
-    }
-
-    @GetMapping("/inquiry")
-    public ModelAndView getInquiry() {
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("user/mypage/inquiry.html");
-
-        return mav;
-    }
-
-
-
-    // --------------------------------------------------------- //
 
     @PostMapping("/id-check")
     public ResponseEntity<?> idCheck(UserDTO userDTO) {
@@ -143,10 +114,11 @@ public class UserController {
 
     @GetMapping("/reg-goods")
     public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        String regUserId = "kim";
+        String regUserId = customUserDetails.getUsername();
 
         mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
         mav.setViewName("user/mypage/getMyAuctionList.html");
@@ -181,6 +153,7 @@ public class UserController {
         return mav;
     }
 
+
     @PostMapping("/find_id")
     public String  findId(
             @RequestParam("userName") String userName,
@@ -197,7 +170,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/find_id2")
+    @GetMapping("/find_id2-view")
     public ModelAndView getFindId2(Model model) {
         ModelAndView mav = new ModelAndView();
 
@@ -208,7 +181,7 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/find_id")
+    @GetMapping("/find_id-view")
     public ModelAndView getFindId() {
         ModelAndView mav = new ModelAndView();
 
@@ -217,7 +190,7 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/find_pw")
+    @GetMapping("/find_pw-view")
     public ModelAndView getFindPw() {
         ModelAndView mav = new ModelAndView();
 
@@ -250,10 +223,58 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/modify-view")
+    public ModelAndView getModify() {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/modify.html");
+
+        return mav;
+    }
 
 
+    @PutMapping("/modify")
+    public ResponseEntity<?> modify(UserDTO userDTO, HttpSession session) {
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
-}
+        try {
+            userService.modify(userDTO);
+
+            Map<String, String> retunMap = new HashMap<>();
+
+            retunMap.put("msg", "정상적으로 수정되었습니다.");
+
+            response.setItem(retunMap);
+            response.setStatusCode(HttpStatus.OK.value());
+
+            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userDTO.getUserId());
+
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities()
+            );
+
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+
+            securityContext.setAuthentication(authentication);
+
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e){
+            if (e.getMessage().equals("wrong password")) {
+                response.setErrorCode(900);
+            } else {
+                response.setErrorCode(901);
+            }
+            response.setErrorMessage(e.getMessage());
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+            return ResponseEntity.badRequest().body(response);
+        }
+     }
+    }
 
 
 
