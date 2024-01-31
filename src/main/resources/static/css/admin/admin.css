@@ -40,7 +40,9 @@
     display: inline;
     padding: 0;
     margin: 0;
-    border: 1px solid #dedede;
+    /*border: 1px solid #dedede;*/
+    /*border: 1px solid rgb(153, 153, 153);*/
+    border: 1px solid #bcbcbc;
 }
 
 #search_area {
