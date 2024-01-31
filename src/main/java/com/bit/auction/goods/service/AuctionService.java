@@ -36,4 +36,8 @@ public interface AuctionService {
     List<AuctionDTO> findByForFinalList();
 
     List<Map<String, Long>> getLikeSumList();
+
+    List<Map<String, Long>> getUserLikeList(long id);
+
+    List<AuctionDTO> findByForPopularList();
 }

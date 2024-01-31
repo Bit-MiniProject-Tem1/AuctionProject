@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="container search-goods-list1">
-                <div class="search-goods" th:each="auction : ${recentAuctions}">
+                <div class="search-goods" th:each="auction : ${recentAuctions}" >
                     <div class="goods-img">
                         <figure class="img_wrapper">
                             <a th:href="@{'/auction/goods/' + ${auction.id}}">
@@ -123,7 +123,7 @@
                     </div>
                     <div class="favorite-view-group">
                         <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
-                            <i id="likeStatus" class="bi-heart favorite-icon" th:class="${auction.likeCnt == 0 ? 'bi-heart' : 'bi-heart-fill'}"></i>관심&nbsp;<span id="likeSum" th:text="${auction.likeCnt}"></span>
+                            <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
                         </a>
                         <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                     </div>
@@ -173,7 +173,9 @@
                             <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                         </div>
                         <div class="favorite-view-group">
-                            <i class="bi bi-heart"></i>관심상품&nbsp;<span>345</span>
+                            <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
+                                <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                            </a>
                             <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                         </div>
                     </div>

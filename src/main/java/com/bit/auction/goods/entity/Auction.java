@@ -71,6 +71,9 @@ public class Auction {
     @Builder.Default()
     private long likeCnt = 0;
 
+    @Transient
+    private boolean likeChk;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     @OrderBy("isRepresentative desc")
     @JsonManagedReference
@@ -107,6 +110,7 @@ public class Auction {
                 .auctionImgDTOList(this.auctionImgList.stream().map(AuctionImg::toDTO).toList())
                 .representativeImgUrl(this.representativeImgUrl)
                 .representativeImgName(this.representativeImgName)
+                .likeChk(this.likeChk)
                 //   .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
                 .build();
     }

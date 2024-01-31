@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -26,10 +27,10 @@ public class UserTest {
                     .userBirth("testBirth" + i)
                     .userAddress("testAddress" + i)
                     .userTel("testTel" + i)
-                    //.userRegdate("testReg" + i)
+                    .userRegdate(LocalDateTime.parse("testReg" + i))
                     .build();
 
-            userRepository.save(user);
+                    userRepository.save(user);
 
         });
     }

@@ -33,7 +33,7 @@ public class AuctionDTO {
     private String successfulBidderId; // fk
     private int view;
     private long likeCnt;
-    private boolean likeCheck;
+    private boolean likeChk;
     private List<AuctionImgDTO> auctionImgDTOList;
     private String representativeImgUrl;
     private String representativeImgName;

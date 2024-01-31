@@ -1,5 +1,6 @@
 package com.bit.auction.goods.repository;
 
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.LikeCntDTO;
 import com.bit.auction.goods.entity.Auction;
 import jakarta.transaction.Transactional;
@@ -33,10 +34,10 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
     Page<Auction> findByAuctionNameContaining(Pageable pageable, String searchQuery, List<Character> statusList);
 
-//    @Modifying
-//    @Query("update Auction a set a.likeCnt = a.likeCnt + 1 where a.id = :id")
-//    void plusLikeCnt(LikeCntDTO likeCntDTO);
-//    @Modifying
-//    @Query("update Auction a set a.likeCnt = a.likeCnt - 1 where a.id = :id")
-//    void minusLikeCnt(LikeCntDTO likeCntDTO);
+    @Query(value = "SELECT a.auction.id, COUNT(a.auction.id) AS user_count " +
+            "FROM LikeCnt a " +
+            "INNER JOIN Auction b ON a.auction.id = b.id " +
+            "GROUP BY a.auction.id " +
+            "ORDER BY user_count DESC")
+    List<Auction> countGroupByAuctionId();
 }
