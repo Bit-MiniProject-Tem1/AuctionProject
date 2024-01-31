@@ -112,17 +112,13 @@
                         </div>
                         <div class="view_box view_color" id="file_box">
 <!--                            <textarea class="text_area" readonly>-->
-<!--                            <p class="text_area" readonly style="box-sizing: border-box; cursor: default; display: flex; flex-wrap: nowrap;">-->
-                                <p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; cursor: pointer; display: inline-flex; margin: 3px 30px 2px 0; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
-                                    <!--<a th:text="${file.fileName} + '  '"
-                                       th:href="@{/download/{filePath}(filePath=${file.filePath})}"></a>-->
+                                <p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
                                     <i class="bi bi-file-earmark-arrow-down-fill" style="color: #999999; margin-right: 3px;"></i>
                                     <!--<i class="bi bi-file-earmark-arrow-down" style="color: #999999; margin-right: 3px;"></i>-->
                                     <!--<i class="bi bi-download" style="color: #999999; margin-right: 3px;"></i>-->
                                     <a th:text="${file.fileName}"
                                        th:href="@{/file_download/{faqId}-{fileId}(faqId=${faqDTO.faqId}, fileId=${file.fileId})}"></a>
                                 </p>
-<!--                            </p>-->
 
 <!--                            </textarea>-->
                         </div>

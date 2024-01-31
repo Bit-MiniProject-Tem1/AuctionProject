@@ -132,13 +132,18 @@ public class FaqController {
     @GetMapping("/file_download/{faqId}-{fileId}")
     public ResponseEntity<Resource>fileDownload(@PathVariable Long faqId, @PathVariable Long fileId) throws MalformedURLException {
         FaqAttachedFileDTO faqAttachedFileDTO = faqService.getFaqAttachedFileDTO(faqId, fileId);
+        String replaceText = storageUrl + "/" + bucketName + "/";
 
         /*String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath(),
                 StandardCharsets.UTF_8);*/
 
-        
+        String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath().replace(replaceText, ""), StandardCharsets.UTF_8);
 
-        String filePath = faqAttachedFileDTO.getFilePath();
+        String fileName = UriUtils.encode(faqAttachedFileDTO.getFileName(), StandardCharsets.UTF_8);
+
+        UrlResource urlResource = new UrlResource(replaceText + filePath);
+
+        /*String filePath = faqAttachedFileDTO.getFilePath();
 
         String[] splitFilePath = filePath.split("/");
 
@@ -148,7 +153,7 @@ public class FaqController {
                 StandardCharsets.UTF_8);
 
         UrlResource urlResource = new UrlResource("https://kr.object.ncloudstorage.com/bitcamp-bucket-45-mini/faq/" + UriUtils.encode(realFileName, "UTF-8"));
-
+*/
         log.info("######### filePath = {}", filePath);
         log.info("######### fileName = {}", fileName);
 
