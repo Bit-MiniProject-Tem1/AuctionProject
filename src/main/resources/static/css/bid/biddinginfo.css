@@ -1,45 +1,32 @@
-.shipping-container{
+.userinfo-container{
     margin-top: 20px;
 }
 
 .paymentselect-container label {
-  font-size: 18px;
-  line-height: 2rem;
-  padding: 0.2em 0.4em;
+    font-size: 18px;
+    line-height: 2rem;
+    padding: 0.2em 0.4em;
     font-family: Pretendard;
-}
-
-.address-container{
-    margin-top: 20px;
-    width: 400px;
-    height: 500px;
-    background-color: beige;
 }
 
 .productinfo-container{
     margin-top: 30px;
-
 }
 
 .info-container{
-    height: 400px;
+    height: 220px;
+    display: inline-flex;
 }
-
-.info-container .product-info{
-    text-align: center;
-    padding-top: 120px;
-}
-
 
 .paymentselect-container{
-    margin-top: 30px;
+    margin-top: 60px;
 }
 
- .img_wrapper img {
-    margin-top: 60px;
-    position: absolute;
-    width: 300px;
-    height: 300px;
+.img_wrapper img {
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 165px;
+    height: 165px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -47,41 +34,41 @@
 
 
 [type="radio"], span {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 [type="radio"] {
-  appearance: none;
-  border: max(2px, 0.1em) solid gray;
-  border-radius: 50%;
-  width: 1.25em;
-  height: 1.25em;
-  transition: border 0.5s ease-in-out;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.5s ease-in-out;
 }
 
 [type="radio"]:checked {
-  border: 0.4em solid #47acff;
+    border: 0.4em solid #47acff;
 }
 
 [type="radio"]:focus-visible {
-  outline-offset: max(2px, 0.1em);
-  outline: max(2px, 0.1em) dotted tomato;
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) dotted tomato;
 }
 
 [type="radio"]:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-  cursor: pointer;
+    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+    cursor: pointer;
 }
 
 [type="radio"]:hover + span {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 fieldset {
-  display: inline;
-  border: none;
-  margin: 0;
-  padding: 40px 20px;
+    display: inline;
+    border: none;
+    margin: 0;
+    padding: 40px 20px;
 }
 .button-wrapper{
     text-align: center;
@@ -115,4 +102,46 @@ fieldset {
 
 .title {
     font-family: Pretendard;
+}
+
+.infoTable {
+    margin-top: 30px;
+    width: 900px;
+    height: 140px;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.userinfoTable {
+    margin-top: 30px;
+    width: 1100px;
+    height: 210px;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
+
+}
+
+thead{
+    border-bottom: 2px solid #000;
+    color: #000;
+}
+
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    padding: 8px;
+    text-align: left;
+    text-align: center;
+
+}
+
+td:nth-child(1) {
+    width: 15%;
+    background-color: rgba(140, 140, 140, 0.1);
 }

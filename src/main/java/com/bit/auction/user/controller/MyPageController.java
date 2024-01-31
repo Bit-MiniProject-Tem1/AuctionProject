@@ -1,5 +1,8 @@
 package com.bit.auction.user.controller;
 
+import com.bit.auction.goods.dto.PointDTO;
+import com.bit.auction.goods.entity.Point;
+import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
@@ -27,6 +30,7 @@ public class MyPageController {
 
     @Autowired
     private UserService userService;
+    private PointService pointService;
 
     @GetMapping("/mypage-view")
     public ModelAndView getMyPage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -44,9 +48,22 @@ public class MyPageController {
 
     }
 
+@GetMapping("/point")
+public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
+        ModelAndView mav = new ModelAndView();
 
+        UserDTO loginUser = customUserDetails.getUser().toDTO();
 
-
+        String userId = customUserDetails.getUsername();
+        PointDTO pointDTO = pointService.getPoint(userId);
+        mav.addObject("getPoint", pointDTO);
+        if (loginUser == null) {
+            mav.setViewName("user/login/login");
+        } else {
+            mav.setViewName("user/mypage/mypoint.html");
+        }
+        return mav;
+}
 
 }

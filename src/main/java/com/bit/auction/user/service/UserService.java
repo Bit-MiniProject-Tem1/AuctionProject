@@ -17,4 +17,7 @@ public interface UserService {
     Optional<User> findPw(String userId, String userName, String userTel);
 
     void modify(UserDTO userDTO);
+
+    UserDTO findUser (String userId);
+
 }

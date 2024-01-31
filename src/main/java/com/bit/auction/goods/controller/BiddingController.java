@@ -2,19 +2,17 @@ package com.bit.auction.goods.controller;
 
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingDTO;
-import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
-import com.bit.auction.user.entity.User;
+import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.CustomUserDetails;
+import com.bit.auction.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 @RequestMapping("/auction")
 @RestController
@@ -23,6 +21,7 @@ import java.util.List;
 public class BiddingController {
     private final BiddingService biddingService;
     private final AuctionService auctionService;
+    private final UserService userService;
 
 
 
@@ -51,12 +50,18 @@ public class BiddingController {
     }
 
     @GetMapping("/impbiddinginfo/{id}")
-    public ModelAndView biddingInfo(@PathVariable("id") Long id) {
+    public ModelAndView biddingInfo(@PathVariable("id") Long id,
+                                    @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
 
         AuctionDTO auctionDTO = auctionService.getAuctionGoods(id);
+        String userId = customUserDetails.getUsername();
+
+        UserDTO userDTO = userService.findUser(userId);
+
         mav.addObject("getGoods" , auctionDTO);
+        mav.addObject("getUser" , userDTO);
         mav.setViewName("bidding/impbiddinginfo.html");
         return mav;
 
@@ -69,8 +74,6 @@ public class BiddingController {
 
     }
 
-//   @PutMapping("/impbiddinginfo/{id}")
-//    public void updateBidStatus(){
-//        biddingService.updateBidStatus();
-//    }
+
+
 }

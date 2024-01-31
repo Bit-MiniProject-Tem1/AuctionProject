@@ -1,13 +1,9 @@
 package com.bit.auction.goods.entity;
 
-import com.bit.auction.goods.dto.BiddingDTO;
-import com.bit.auction.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
