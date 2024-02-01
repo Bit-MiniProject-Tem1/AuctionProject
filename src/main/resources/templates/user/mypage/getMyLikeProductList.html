@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/myPageLayout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/login/login.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/get_auction_list.css}">
+        <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/countdown.js}"></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content">
+        <div class="container">
+            <h1 class="page-title">관심 상품</h1>
+            <div class="container search-goods-list">
+                <ul class="search-goods grid4" th:each="auction : ${likeList}" >
+                    <div class="goods-img">
+                        <figure class="img_wrapper">
+                            <a href="#" th:href="'/auction/goods/'+${auction.id}">
+                                <img class="d-block w-100"
+                                     src=""
+                                     th:src="@{/img/no-preview.jpeg}"
+                                     th:if="${auction.representativeImgUrl} eq null"
+                                     alt=""/>
+                                <img class="d-block w-100"
+                                     src=""
+                                     th:src="${auction.representativeImgUrl}"
+                                     th:if="${auction.representativeImgUrl} ne null"
+                                     alt=""/>
+                            </a>
+                        </figure>
+                        <div class="remaining-time">남은시간<br>
+                            <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
+                            <span class="months">0</span>
+                            <span class="days">0</span><br>
+                            <span class="hours">0</span>
+                            <span class="minutes">0</span>
+                            <span class="seconds">0</span>
+                        </div>
+                    </div>
+                    <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span th:text="${auction.title}"></span></a></div>
+                    <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
+                    <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
+                    <div class="user-name">
+                        <i class="bi bi-person"></i><a href="#" th:href="'/auction/goods-list?regUser='+${auction.regUserId}"> <span th:text="${auction.regUserId}"></span></a>
+                    </div>
+                    <div class="favorite-view-group">
+                        <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
+                            <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                        </a>
+                        <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
