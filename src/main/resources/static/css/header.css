@@ -316,6 +316,14 @@ header {
     font-family: Pretendard;
     padding-top: 15px;
 }
+
+.main_header .list-title-default-1 {
+    font-size: 15px;
+    color: gray;
+    font-family: Pretendard;
+    padding-top: 15px;
+    padding-left: 120px;
+}
 .main_header .bi-trash {
     float: right;
     display: flex;

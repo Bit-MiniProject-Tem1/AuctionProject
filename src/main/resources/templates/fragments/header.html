@@ -22,13 +22,14 @@
             <ul class="top_list">
 
                 <li>
-                    <a th:href="@{/board}" class="top_link"> 고객센터 </a>
+                    <a href="/faq_main" class="top_link"> 고객센터 </a>
                 </li>
-
-                <li>
-                    <a th:href="@{/user/login-view}" class="top_link1"> 로그인/회원가입 </a>
+                <li th:if="${customUserDetails == null}" class="top_link1">
+                    <a th:href="@{/user/login-view}">로그인/회원가입</a>
                 </li>
-
+                <li th:if="${customUserDetails != null}" class="top_link1">
+                    <a th:href="@{/user/logout}">로그아웃</a>
+                </li>
             </ul>
         </div>
         <div th:class="header_main">
@@ -140,37 +141,17 @@
                 <div class="dropdown-content">
                     <ul class="list_box">
                         <li style="text-align: left" class="content_box">
-                            <a th:href="@{/board}" class="a_tag">
+                            <a href="/user/login-view" class="a_tag">
                                 <div class="content_boxes">
                                     <div class="list-img">
                                         <figure class="img_wrapper">
-                                            <img class="d-block w-100"
-                                                 src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
-                                                 alt="">
+                                            <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
                                         </figure>
                                     </div>
-                                    <div class="list-title">가나다라마바사아자차카타파하</div>
+                                    <div th:if="${customUserDetails == null}" class="list-title-default-1">로그인 후 이용해주세요.</div>
+                                    <div th:if="${customUserDetails != null}" class="list-title-default"><a href="/auction/goods-list">관심 등록 상품이 존재하지 않습니다.</a></div>
                                 </div>
                             </a>
-                            <i class="bi-heart favorite-icon" onclick="toggleHeart()"></i>
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 2
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 3
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 4
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 5
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 6
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            관심 항목 파일 7
                         </li>
                     </ul>
                 </div>

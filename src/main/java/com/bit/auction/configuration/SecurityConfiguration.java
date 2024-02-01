@@ -75,7 +75,7 @@ public class SecurityConfiguration {
                 .logout((logout) -> {
                     logout.logoutUrl("/user/logout");
                     logout.invalidateHttpSession(true);
-                    logout.logoutSuccessUrl("/user/login");
+                    logout.logoutSuccessUrl("/user/login-view");
                 })
                 .build();
     }

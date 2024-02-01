@@ -83,6 +83,28 @@ public class HomeController {
                             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
                             .get("LIKE_SUM"));
         });
+
+        if(!userLikeList.isEmpty()) {
+            popularAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        popularAuctions.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+
+        model.addAttribute("customUserDetails", customUserDetails);
+
         model.addAttribute("popularAuctions", popularAuctions);
 
         model.addAttribute("recentAuctions", recentAuctions);

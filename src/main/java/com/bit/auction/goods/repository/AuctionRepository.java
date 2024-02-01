@@ -34,10 +34,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(value = "SELECT a FROM Auction a WHERE LOWER(a.title) LIKE LOWER(concat('%', :searchQuery, '%')) AND a.status IN :statusList ORDER BY a.regDate DESC")
     Page<Auction> findByAuctionNameContaining(Pageable pageable, String searchQuery, List<Character> statusList);
 
-    @Query(value = "SELECT a.auction.id, COUNT(a.auction.id) AS user_count " +
-            "FROM LikeCnt a " +
-            "INNER JOIN Auction b ON a.auction.id = b.id " +
-            "GROUP BY a.auction.id " +
-            "ORDER BY user_count DESC")
+    @Query(value = "SELECT a, COALESCE(count(b.auction.id), 0) as count FROM Auction a LEFT JOIN LikeCnt b on a.id = b.auction.id GROUP BY a.id ORDER BY count DESC")
     List<Auction> countGroupByAuctionId();
 }

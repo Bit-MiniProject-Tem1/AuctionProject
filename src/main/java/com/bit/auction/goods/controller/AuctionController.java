@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -40,13 +41,41 @@ public class AuctionController {
     private List<String> temporaryImage = new ArrayList<>();
 
     @GetMapping("/recentproducts")
-    public ModelAndView RentAuctionProducts() {
+    public ModelAndView RentAuctionProducts(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
 
+        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
+        if(!userLikeList.isEmpty()) {
+            recentAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        recentAuctions.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+
         mav.addObject("auctionList", recentAuctions);
-        mav.addObject("topCategoryName", "전체");
 
         mav.setViewName("auction/getAuctionforRecent.html");
 
@@ -55,13 +84,41 @@ public class AuctionController {
 
 
     @GetMapping("/finalproducts")
-    public ModelAndView FinalAuctionProducts() {
+    public ModelAndView FinalAuctionProducts(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
         List<AuctionDTO> fianlAuctions = auctionService.findByForFinalList();
 
+        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
+        if(!userLikeList.isEmpty()) {
+            fianlAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        fianlAuctions.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+
         mav.addObject("auctionList", fianlAuctions);
-        mav.addObject("topCategoryName", "전체");
 
         mav.setViewName("auction/getAuctionforFinal.html");
 
@@ -69,8 +126,41 @@ public class AuctionController {
     }
 
     @GetMapping("/popularproducts")
-    public ModelAndView PopularAuctionProducts() {
+    public ModelAndView PopularAuctionProducts(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
+
+        List<AuctionDTO> popularAuctions = auctionService.findByForPopularList();
+
+        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
+        if(!userLikeList.isEmpty()) {
+            popularAuctions.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        popularAuctions.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+
+        mav.addObject("auctionList", popularAuctions);
 
         mav.setViewName("auction/getAuctionforPopular.html");
 
@@ -335,9 +425,20 @@ public class AuctionController {
     @GetMapping("/goods-list")
     public ModelAndView getGoodsList(@RequestParam(required = false) Map<String, Object> paramMap,
                                      @RequestParam(required = false) String sort,
-                                     @PageableDefault(page = 0, size = 12) Pageable pageable) {
+                                     @PageableDefault(page = 0, size = 12) Pageable pageable,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("auction/getAuctionList.html");
+
+        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
@@ -369,6 +470,24 @@ public class AuctionController {
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, sort, targetList, statusList);
+            if(!userLikeList.isEmpty()) {
+                auctionPage.stream().map(auctionDTO -> {
+                    userLikeList.forEach(map -> {
+                        if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                            auctionDTO.setLikeChk(true);
+                        }
+                    });
+                    return auctionDTO;
+                }).collect(Collectors.toList());
+            }
+
+            auctionPage.forEach(auctionDTO -> {
+                auctionDTO.setLikeCnt(
+                        likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                                .flatMap(map -> map.entrySet().stream())
+                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                                .get("LIKE_SUM"));
+            });
             mav.addObject("auctionList", auctionPage);
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
