@@ -2,15 +2,25 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 <head>
     <th:block layout:fragment="script">
         <script th:inline="javascript">
             $(() => {
-                goodsId = [[${getGoods.id}]];
-                goodsTitle = [[${getGoods.title}]];
-                goodsImg = [[${getGoods.representativeImgUrl}]];
-                console.log(currentItems);
+
+                alert(11111111111111);
+
+                $.ajax({
+                    url: '/like/getLikeList',
+                    type: 'get',
+                    success: (obj) => {
+                        console.log(obj);
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                })
             });
         </script>
     </th:block>
@@ -20,14 +30,13 @@
     <div class="main_header">
         <div class="header_top">
             <ul class="top_list">
-
                 <li>
                     <a href="/faq_main" class="top_link"> 고객센터 </a>
                 </li>
-                <li th:if="${customUserDetails == null}" class="top_link1">
+                <li sec:authorize="!isAuthenticated()" class="top_link1">
                     <a th:href="@{/user/login-view}">로그인/회원가입</a>
                 </li>
-                <li th:if="${customUserDetails != null}" class="top_link1">
+                <li sec:authorize="isAuthenticated()" class="top_link1">
                     <a th:href="@{/user/logout}">로그아웃</a>
                 </li>
             </ul>
@@ -78,7 +87,6 @@
                     </svg>
                     <span class="dropbtn">최근 본 상품</span>
                 </div>
-
                 <div class="dropdown-content">
                     <ul class="list_box" id="recent-items">
                         <li style="text-align: left" class="content_box">
@@ -101,55 +109,33 @@
                         <path fill-rule="evenodd"
                               d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                     </svg>
-                    <span class="dropbtn">최근 알림</span>
+                    <span class="dropbtn ">관심 항목</span>
                 </div>
                 <div class="dropdown-content">
-                    <ul class="list_box">
-                        <li style="text-align: left" class="content_box">
-                            카톡1
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡2
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡3
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡4
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡5
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡6
-                        </li>
-                        <li style="text-align: left" class="content_box">
-                            카톡7
+                    <ul sec:authorize="isAuthenticated()" class="list_box" id="heart-items">
+                        <li style="text-align: left" class="content_box" th:each="auction : ${likeList}">
+                            <a th:href="@{'/auction/goods/' + ${auction.id}}" class="a_tag">
+                                <div class="content_boxes">
+                                    <div class="list-img">
+                                        <figure class="img_wrapper">
+                                            <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg" th:src="${auction.representativeImgUrl}">
+                                        </figure>
+                                    </div>
+                                    <div class="list-title" th:text="${auction.title}"></div>
+                                </div>
+                            </a>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div class="dropdown">
-                <div class="dropdown-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                    <span class="dropbtn">관심 항목</span>
-                </div>
-                <div class="dropdown-content">
-                    <ul class="list_box">
-                        <li style="text-align: left" class="content_box">
-                            <a href="/user/login-view" class="a_tag">
+                    <ul sec:authorize="!isAuthenticated()" class="list_box">
+                        <li style="text-align: left" class="content_box" >
+                            <a thref="/user/login-view" class="a_tag">
                                 <div class="content_boxes">
                                     <div class="list-img">
                                         <figure class="img_wrapper">
                                             <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
                                         </figure>
                                     </div>
-                                    <div th:if="${customUserDetails == null}" class="list-title-default-1">로그인 후 이용해주세요.</div>
-                                    <div th:if="${customUserDetails != null}" class="list-title-default"><a href="/auction/goods-list">관심 등록 상품이 존재하지 않습니다.</a></div>
+                                    <div class="list-title-default-1"><a href="/user/login-view">로그인을 해야합니다.</a></div>
                                 </div>
                             </a>
                         </li>

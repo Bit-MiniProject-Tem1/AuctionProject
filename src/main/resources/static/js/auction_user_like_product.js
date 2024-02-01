@@ -1,9 +1,8 @@
-function displayRecentItems() {
-    if (recentItems.length > 0) {
+function displayHeartItems() {
+    if ("${customUserDetails != null}") {
         $.ajax({
-            url: "/auction/recent-items",
+            url: "/auction/heart-items",
             type: "get",
-            data: { recentItems: JSON.stringify(recentItems) },
             success: (obj) => {
                 let htmlStr = "";
 
@@ -19,12 +18,10 @@ function displayRecentItems() {
                                     <div class="list-title">${obj[i].title}</div>
                                 </div>
                             </a>
-                            <i class="bi bi-trash trash-icon" data-product-id="${obj[i].id}"></i>
+                            <i class="bi" data-product-id="${obj[i].id}"></i>
                         </li>`;
                 }
                 $("#recent-items").html(htmlStr);
-
-                $(".trash-icon").click(removeItem);
             },
             error: (err) => {
                 console.log(err);

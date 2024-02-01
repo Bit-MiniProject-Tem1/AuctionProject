@@ -6,12 +6,13 @@
 <body>
 <head>
     <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/user/fragment/mypage_navbar.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script src="/js/my/mypage_navbar.js"></script>
     </th:block>
 </head>
-<div th:fragment="myNav" style="float: left; width: 180px; height: 600px;">
+<div th:fragment="myNav" style="float: left; width: 180px; height: 600px;" class="mypape_layout">
     <div class="snb_area"><a href="/mypage/mypage-view" class="nuxt-link-active">
         <h2 class="snb_main_title">마이 페이지</h2>
     </a>
@@ -20,7 +21,7 @@
                 <ul class="snb_menu">
                     <li class="menu_item"><a name="buying" href="#" class="menu_link">입찰 내역 </a></li>
                     <li class="menu_item"><a name="selling" href="#" class="menu_link">낙찰 내역 </a></li>
-                    <li class="menu_item"><a name="wish" href="#" class="menu_link">관심상품 </a></li>
+                    <li class="menu_item"><a name="wish" href="/mypage/mylikeproduct" class="menu_link">관심상품 </a></li>
                 </ul>
             </div>
             <div class="snb_list"><strong class="snb_title">내 정보</strong>

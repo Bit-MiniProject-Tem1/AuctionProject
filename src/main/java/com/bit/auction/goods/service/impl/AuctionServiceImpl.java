@@ -267,4 +267,12 @@ public class AuctionServiceImpl implements AuctionService {
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AuctionDTO> findByUserId(long id) {
+        List<Auction> likelist = auctionRepository.findByUserId(id);
+        return likelist.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+    }
 }
