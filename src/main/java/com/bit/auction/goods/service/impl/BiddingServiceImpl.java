@@ -1,12 +1,20 @@
 package com.bit.auction.goods.service.impl;
 
 import com.bit.auction.goods.dto.BiddingDTO;
+import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Bidding;
 import com.bit.auction.goods.repository.BiddingRepository;
 import com.bit.auction.goods.service.BiddingService;
+import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +33,12 @@ public class BiddingServiceImpl implements BiddingService {
     @Override
     public void updateBidStatus(){
         biddingRepository.updateBidStatus();
+    }
+
+    @Override
+    public BiddingDTO getbid(Long auctionId, String userId){
+        Optional<Bidding> optionalBidding = biddingRepository.findByAuctionIdAndUserId(auctionId , userId);
+        return optionalBidding.map(Bidding::toDTO).orElse(null);
     }
 
 }

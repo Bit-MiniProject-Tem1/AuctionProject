@@ -1,5 +1,6 @@
 package com.bit.auction.goods.entity;
 
+import com.bit.auction.goods.dto.BiddingDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,15 +41,16 @@ public class Bidding {
 
     private String userId;
 
-//    public BiddingDTO toDTO(){
-//        return BiddingDTO.builder()
-//                .auctionId(this.auctionId.getId())
-//                .userId(this.userId.getUserId())
-//                .biddingPrice(this.biddingPrice)
-//                .date(this.date)
-//                .status(this.status)
-//                .build();
-//    }
+    public BiddingDTO toDTO(){
+        return BiddingDTO.builder()
+                .auctionId(auctionId)
+                .userId(userId)
+                .biddingPrice(biddingPrice)
+                .payment(payment)
+                .status(status)
+                .date(LocalDateTime.now())
+                .build();
+    }
 
 
 }

@@ -6,6 +6,7 @@ import com.bit.auction.goods.repository.AuctionRepositoryCustom;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static com.bit.auction.goods.entity.QAuction.auction;
 import static com.bit.auction.goods.entity.QAuctionImg.auctionImg;
+import static com.bit.auction.goods.entity.QBidding.bidding;
 
 @Repository
 @RequiredArgsConstructor
@@ -91,7 +93,35 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
+        @Override
+    public Page<Auction> searchMyBiddingList(Pageable pageable, String userId) {
+        List<Auction> auctionList = jpaQueryFactory
+                .selectFrom(auction)
+                .where(auction.id.in(
+                        JPAExpressions
+                        .select(bidding.auctionId)
+                    .from(bidding)
+                    .where(bidding.userId.eq(userId))
+                    )
+                )
+                .fetch();
 
+        auctionList.forEach(a -> {
+            String url = jpaQueryFactory
+                    .select(auctionImg.fileUrl)
+                    .from(auctionImg)
+                    .where(auctionImg.auction.id.eq(a.getId())
+                            .and(auctionImg.isRepresentative.eq(true))
+                    )
+                    .fetchOne();
+
+            a.representativeImgUrl(url);
+        });
+
+        long totalCnt = auctionList.size();
+
+        return new PageImpl<>(auctionList, pageable, totalCnt);
+    }
     private BooleanBuilder eqCategoryId(List<Long> subCategoryIdList) {
         if (subCategoryIdList.get(0) == 0L) {
             return null;

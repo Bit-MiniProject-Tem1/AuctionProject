@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userDTO.toEntity());
     }
 
-        @Override
+    @Override
     public UserDTO findUser(String userId) {
         Optional<User> optionalUser = userRepository.findUserByUserId(userId);
         return optionalUser.map(User::toDTO).orElse(null);

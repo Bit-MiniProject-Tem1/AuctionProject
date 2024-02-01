@@ -13,4 +13,5 @@ public interface AuctionRepositoryCustom {
 
     void saveOne(Auction auction);
 
+    Page<Auction> searchMyBiddingList(Pageable pageable, String userId);
 }

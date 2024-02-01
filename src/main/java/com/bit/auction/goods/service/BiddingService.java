@@ -1,17 +1,18 @@
 package com.bit.auction.goods.service;
 
 
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingDTO;
-import com.bit.auction.goods.entity.Auction;
-import com.bit.auction.goods.entity.Bidding;
-import com.bit.auction.user.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
-import java.util.List;
+
 
 public interface BiddingService {
 
     void setbid(BiddingDTO biddingDTO);
     void updateBidStatus();
+
+    BiddingDTO getbid(Long auctionId, String userId);
 
 }

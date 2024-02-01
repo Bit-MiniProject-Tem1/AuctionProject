@@ -2,6 +2,7 @@ package com.bit.auction.goods.service.impl;
 
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.AuctionImg;
 import com.bit.auction.goods.entity.Category;
@@ -78,6 +79,14 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         Page<Auction> auctionPageList = auctionRepository.searchMyAuctionList(pageable, regUserId, statusList);
+        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+
+        return auctionDTOPageList;
+    }
+    @Override
+    public Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId) {
+
+        Page<Auction> auctionPageList = auctionRepository.searchMyBiddingList(pageable,userId);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
 
         return auctionDTOPageList;
@@ -262,8 +271,16 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<AuctionDTO> findByForPopularList() {
-        List<Auction> popularAcutions = auctionRepository.countGroupByAuctionId();
-        return popularAcutions.stream()
+        List<Auction> popularAuctions = auctionRepository.countGroupByAuctionId();
+        return popularAuctions.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuctionDTO> getByuserName(String userName) {
+         List<Auction> BidAuctions = auctionRepository.getByuserName(userName);
+        return BidAuctions.stream()
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
     }

@@ -5,6 +5,8 @@ import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Point;
 import com.bit.auction.goods.repository.PointRepository;
 import com.bit.auction.goods.service.PointService;
+import com.bit.auction.user.dto.UserDTO;
+import com.bit.auction.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +27,9 @@ public class PointServiceImpl implements PointService {
         pointRepository.save(point);
 
     }
-
     @Override
-    public PointDTO getPoint(String userId){
-        Optional<Point> optionalPoint = pointRepository.findByUserId(userId);
+    public PointDTO getPoint(String userId) {
+        Optional<Point> optionalPoint = pointRepository.findPointByUserId(userId);
         return optionalPoint.map(Point::toDTO).orElse(null);
     }
 
