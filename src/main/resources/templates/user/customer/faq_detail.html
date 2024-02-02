@@ -52,6 +52,39 @@
 
             });
 
+/*
+            $(() => {
+                const button_area = document.querySelector(".button_area");
+                let previousPageURL = document.referrer;
+                const modificationBtn = document.createElement('button');
+                // fileNameParagraph.textContent = file.name;
+                modificationBtn.setAttribute("style", "background-color: rgb(90,98,179); color: white; border: none;");
+                modificationBtn.setAttribute("onclick", "redirectToNextPage()");
+                modificationBtn.setAttribute("type", "submit");
+                modificationBtn.innerText = "수정";
+                modificationBtn.id = "modificationBtn";
+                modificationBtn.className = "textTypeBtn";
+
+                // 요청url에 특정 문자열이 포함되어 있으면 버튼 출력
+                if (previousPageURL.includes('/inquiry-management_')) {
+                    // 버튼을 출력
+                    // document.write('<button onclick="redirectToNextPage()" type="submit" id="modificationBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">수정</button>');
+
+                    button_area.appendChild(modificationBtn);
+                }
+
+            });
+*/
+
+
+            function redirectToModificationPage() {
+                window.location.href = '/faq_modification';
+            }
+
+            function redirectToDeletePage() {
+                window.location.href = '/faq_delete/faq-{faqId}';
+            }
+
 
 
         </script>
@@ -114,16 +147,19 @@
 <!--                            <textarea class="text_area" readonly>-->
                                 <p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
                                     <i class="bi bi-file-earmark-arrow-down-fill" style="color: #999999; margin-right: 3px;"></i>
-                                    <!--<i class="bi bi-file-earmark-arrow-down" style="color: #999999; margin-right: 3px;"></i>-->
-                                    <!--<i class="bi bi-download" style="color: #999999; margin-right: 3px;"></i>-->
-                                    <a th:text="${file.fileName}"
-                                       th:href="@{/file_download/{faqId}-{fileId}(faqId=${faqDTO.faqId}, fileId=${file.fileId})}"></a>
+                                        <a th:text="${file.fileName}"
+                                           th:href="@{/file_download(fileName=${file.fileName}, filePath=${file.filePath})}"></a>
                                 </p>
-
-<!--                            </textarea>-->
                         </div>
                     </div>
                 </div>
+
+<!--                <th:block th:if="${requestUrl.contains('/inquiry-management_')}">-->
+                    <div class="button_area">
+                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="redirectToModificationPage()" type="submit" id="modificationBtn" class="textTypeBtn">수정</button>
+                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="redirectToDeletePage()" type="submit" id="deleteBtn" class="textTypeBtn">삭제</button>
+                    </div>
+<!--                </th:block>-->
             </form>
         </div>
     </div>
