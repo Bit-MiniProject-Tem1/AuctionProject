@@ -109,12 +109,13 @@ public class FaqController {
     }
 
     @GetMapping("/faq_detail/faq-{faqId}")
-    public ModelAndView getBoard(@PathVariable("faqId") Long faqId) {
+    public ModelAndView getBoard(@PathVariable("faqId") Long faqId, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         /*FaqDTO faqDTO = faqService.findById(faqId);
         faqService.updateViewsCount(faqId);*/
 
         mv.addObject("faqDTO", faqService.updateViewsCount(faqId));
+        mv.addObject("requestUrl", request.getRequestURL().toString());
         mv.setViewName("/user/customer/faq_detail.html");
 
         return mv;
@@ -129,13 +130,13 @@ public class FaqController {
     }*/
 
 
+
+/*
+
     @GetMapping("/file_download/{faqId}-{fileId}")
     public ResponseEntity<Resource>fileDownload(@PathVariable Long faqId, @PathVariable Long fileId) throws MalformedURLException {
         FaqAttachedFileDTO faqAttachedFileDTO = faqService.getFaqAttachedFileDTO(faqId, fileId);
         String replaceText = storageUrl + "/" + bucketName + "/";
-
-        /*String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath(),
-                StandardCharsets.UTF_8);*/
 
         String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath().replace(replaceText, ""), StandardCharsets.UTF_8);
 
@@ -143,17 +144,6 @@ public class FaqController {
 
         UrlResource urlResource = new UrlResource(replaceText + filePath);
 
-        /*String filePath = faqAttachedFileDTO.getFilePath();
-
-        String[] splitFilePath = filePath.split("/");
-
-        String realFileName = splitFilePath[splitFilePath.length - 1];
-
-        String fileName = UriUtils.encode(faqAttachedFileDTO.getFileName(),
-                StandardCharsets.UTF_8);
-
-        UrlResource urlResource = new UrlResource("https://kr.object.ncloudstorage.com/bitcamp-bucket-45-mini/faq/" + UriUtils.encode(realFileName, "UTF-8"));
-*/
         log.info("######### filePath = {}", filePath);
         log.info("######### fileName = {}", fileName);
 
@@ -161,168 +151,30 @@ public class FaqController {
 
         log.info("######### contentDisposition = {}", contentDisposition);
 
-//        URLEncoder.encode(koreanFilename, "UTF-8")
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(urlResource);
+    }
+*/
+
+
+    @GetMapping("/file_download")
+    public ResponseEntity<Resource>fileDownload(HttpServletRequest request) throws MalformedURLException {
+        String replaceText = storageUrl + "/" + bucketName + "/";
+
+        String filePath = UriUtils.encode(request.getParameter("filePath").replace(replaceText, ""), StandardCharsets.UTF_8);
+
+        String fileName = UriUtils.encode(request.getParameter("fileName"), StandardCharsets.UTF_8);
+
+        UrlResource urlResource = new UrlResource(replaceText + filePath);
+
+        String contentDisposition = "attachment; filename=\"" + fileName + "\"";
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(urlResource);
     }
 
-    @GetMapping("/faq_add")
-    public String faqAddView() {
-        return "/user/customer/faq_add";
-    }
-
-
-/*
-
-    @ResponseBody
-    @PostMapping("/faq_add")
-    public ResponseEntity<FaqDTO> faqSave(FaqDTO faqDTO) {
-
-        faqService.insertFaq(faqDTO);
-
-        log.info("### category : {}", faqDTO.getCategory());
-        log.info("### title : {}", faqDTO.getTitle());
-        log.info("### content : {}", faqDTO.getContent());
-
-        return new ResponseEntity<>(faqDTO, HttpStatus.OK);
-    }
-*/
-
-/*
-    @PostMapping("/faq_add_t")
-    public ResponseEntity<?> faqSaveT(FaqDTO faqDTO, RedirectAttributes redirectAttributes,
-                          MultipartFile[] uploadFiles, HttpServletRequest request) {
-
-        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
-
-        try {
-            List<FaqAttachedFileDTO> faqAttachedFileDTOList = new ArrayList<>();
-
-            for (MultipartFile file : uploadFiles) {
-                if (file.getOriginalFilename() != null &&
-                        !file.getOriginalFilename().equals("")) {
-                    FaqAttachedFileDTO faqAttachedFileDTO = fileUtils.parseFileInfo(file, "faq/");
-
-                    faqAttachedFileDTO.setFaqId(faqDTO.getFaqId());
-
-                    faqAttachedFileDTOList.add(faqAttachedFileDTO);
-                }
-            }
-            faqDTO.setFaqAttachedFileDTOList(faqAttachedFileDTOList);
-            faqService.insertFaq(faqDTO);
-            Map<String, String> returnMap = new HashMap<>();
-
-            returnMap.put("msg", "정상적으로 저장되었습니다.");
-
-            response.setItem(returnMap);
-            response.setStatusCode(HttpStatus.OK.value());
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            if (faqDTO.getCategory().equals("")) {
-                response.setErrorCode(602);
-                response.setErrorMessage("카테고리를 입력하세요.");
-            } else if (faqDTO.getTitle().equals("")) {
-                response.setErrorCode(603);
-                response.setErrorMessage("제목을 입력하세요.");
-            } else if (faqDTO.getContent().equals("")) {
-                response.setErrorCode(604);
-                response.setErrorMessage("내용을 입력하세요.");
-            } else {
-                response.setErrorCode(605);
-                response.setErrorMessage(e.getMessage());
-            }
-            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
-*/
-
-
-    @PostMapping("/faq_add")
-    public String faqSave(FaqDTO faqDTO, RedirectAttributes redirectAttributes, MultipartFile[] uploadFiles, HttpServletRequest request, HttpServletResponse response) {
-
-        String fileNames = "";
-
-        try {
-            List<FaqAttachedFileDTO> faqAttachedFileDTOList = new ArrayList<>();
-
-            for (MultipartFile file : uploadFiles) {
-                if (file.getOriginalFilename() != null &&
-                        !file.getOriginalFilename().equals("")) {
-                    FaqAttachedFileDTO faqAttachedFileDTO = fileUtils.parseFaqAttachedFileInfo(file, "faq/");
-
-                    faqAttachedFileDTO.setFaqId(faqDTO.getFaqId());
-
-                    faqAttachedFileDTOList.add(faqAttachedFileDTO);
-
-                    fileNames = fileNames + faqAttachedFileDTO.getFileName() + "  ";
-                }
-            }
-            fileNames.trim();
-            faqDTO.setFaqAttachedFileDTOList(faqAttachedFileDTOList);
-            faqService.insertFaq(faqDTO);
-            Map<String, String> returnMap = new HashMap<>();
-
-            returnMap.put("msg", "정상적으로 저장되었습니다.");
-
-            /*response.setItem(returnMap);
-            response.setStatusCode(HttpStatus.OK.value());*/
-            response.setStatus(HttpStatus.OK.value());
-//            redirectAttributes.addAttribute("StatusCode", HttpStatus.OK.value());
-
-//            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            if (faqDTO.getCategory().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 602);
-                redirectAttributes.addAttribute("ErrorMessage", "카테고리를 입력하세요.");
-            } else if (faqDTO.getTitle().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 603);
-                redirectAttributes.addAttribute("ErrorMessage", "제목을 입력하세요.");
-            } else if (faqDTO.getContent().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 604);
-                redirectAttributes.addAttribute("ErrorMessage", "내용을 입력하세요.");
-            } else {
-                redirectAttributes.addAttribute("ErrorCode", 605);
-                redirectAttributes.addAttribute("ErrorMessage", e.getMessage());
-            }
-//            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-//            redirectAttributes.addAttribute("StatusCode", HttpStatus.BAD_REQUEST.value());
-
-            faqService.insertFaq(faqDTO);
-        }
-
-
-        redirectAttributes.addFlashAttribute("faqDTO", faqDTO);
-        redirectAttributes.addFlashAttribute("fileNames", fileNames);
-        redirectAttributes.addAttribute("itemId", faqDTO.getFaqId());
-        redirectAttributes.addAttribute("status", true);
-//        redirectAttributes.addAttribute("requestUrl", request.getRequestURL().toString());
-
-        log.info("############ fileNames : " + fileNames);
-
-        return "redirect:/faq_detail";
-    }
-
-
-
-/*
-    @PostMapping("/faq_add")
-    public String faqSave(FaqDTO faqDTO, RedirectAttributes redirectAttributes, MultipartFile[] uploadFiles, HttpServletRequest request) {
-        faqService.insertFaq(faqDTO);
-
-        redirectAttributes.addFlashAttribute("faqDTO", faqDTO);
-        redirectAttributes.addAttribute("itemId", faqDTO.getFaqId());
-        redirectAttributes.addAttribute("status", true);
-//        redirectAttributes.addAttribute("requestUrl", request.getRequestURL().toString());
-
-        return "redirect:/faq_detail";
-    }
-*/
 
 
 /*

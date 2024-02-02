@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>문의 관리</title>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            function handleMouseover(parentId) {
+                let element = document.getElementById(parentId).getElementsByTagName('i')[0];
+                element.classList.add(' fa fa-star fa-bold');
+            }
+
+            function handleMouseout(parentId) {
+                let element = document.getElementById(parentId).getElementsByTagName('i')[0];;
+                element.classList.remove(' fa fa-star fa-bold');
+            }
+
+            function navigateToLink(clickedElement, className) {
+                if (clickedElement.classList.contains(className)) {
+                    // 지정한 클래스명을 가지고 있는 요소들을 NodeList로 가져오기
+                    let elementsWithClass = document.querySelectorAll('.' + className);
+
+                    // 클릭한 요소의 인덱스 찾기
+                    let idx = Array.from(elementsWithClass).indexOf(clickedElement);
+
+                    // 인덱스 출력
+                    console.log("Clicked element index " + className + " : ", idx);
+
+                    // a 태그의 href 속성 값 가져오기
+                    let findElement = document.querySelectorAll('.' + className + ' a')[idx];
+                    let href = findElement.getAttribute('href');
+
+                    // 해당 링크로 이동
+                    window.location.href = href;
+                }
+            }
+
+            function redirectToFaqAdd() {
+                window.location.href = '/faq_add';
+            }
+
+        </script>
+    </th:block>
+
+</head>
+<body>
+<div class="content_area" layout:fragment="content" >
+    <div class="title_area">
+        <div class="title">
+            <strong>문의 관리</strong>
+        </div>
+    </div>
+    <div id="inquiryManagement_container">
+        <div>
+            <div style="margin: 40px 0 0; padding: 0 15px; color:rgb(107, 107, 107); display: flex;">
+                <div class="item_label_area" style="width: auto; margin-right: 20px;">
+                    <div class="label_icon d-flex align-items-center justify-content-center">
+                        <i class="bi bi-record-fill"></i>
+                    </div>
+                    <strong>
+                        <label class="item_label" style="font-size: 22px;">자주 묻는 질문</label>
+                    </strong>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div class="button_area" style="margin-top: 0; width: 90px; display: flex; justify-content: center; align-items: center;">
+                        <button onclick="redirectToFaqAdd()" type="submit" id="registrationBtn" class="textTypeBtn" style="margin-top: 0; background-color: rgb(90,98,179); color: white; border: none; width: 70px; height: 35px;">등록</button>
+                    </div>
+                </div>
+            </div>
+            <!--                <div style="border-top: 2px solid #dedede; border-bottom: 2px solid #dedede; width: 380px; min-height: 6px; margin-left: 18px;"></div>-->
+        </div>
+        <div class="search">
+            <form id="searchForm" action="/inquiry-management_search" method="get">
+                <table id="search_table">
+                    <tr >
+                        <td id="search_area">
+                            <select name="category" id="category" class="search_item">
+                                <option value="전체"
+                                        th:selected="${category == '전체' || category == '' ||
+                                                       category == null}">전체</option>
+                                <option value="이용정책"
+                                        th:selected="${category == '이용정책'}">이용정책</option>
+                                <option value="공통"
+                                        th:selected="${category == '공통'}">공통</option>
+                                <option value="구매"
+                                        th:selected="${category == '구매'}">구매</option>
+                                <option value="판매"
+                                        th:selected="${category == '판매'}">판매</option>
+                            </select>
+                            <div style="display: flex;">
+                                <select name="searchCondition" class="search_item" style="width: 130px; text-indent: 12px;">
+                                    <option value="전체"
+                                            th:selected="${searchCondition == '전체' || searchCondition == '' ||
+                                                       searchCondition == null}">전체</option>
+                                    <option value="제목"
+                                            th:selected="${searchCondition == '제목'}">제목</option>
+                                    <option value="내용"
+                                            th:selected="${searchCondition == '내용'}">내용</option>
+                                </select>
+                                <input type="text" name="searchKeyword" class="search_item" autocomplete="off"
+                                       style="width: 620px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
+                                       th:value="${searchKeyword}">
+                            </div>
+                            <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                                <i class="bi bi-search search_icon font-weight-bold"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="board">
+            <table id="table_form" >
+                <thead>
+                <tr id="table_header">
+                    <th class="table_colName" style="width: 70px;">번호</th>
+                    <th class="table_colName" style="width: 140px;">카테고리</th>
+                    <th class="table_colName" style="width: 560px;">제목</th>
+                    <th class="table_colName" style="width: 140px;">등록일자</th>
+                    <th class="table_colName" style="width: 80px;">조회수</th>
+                </tr>
+                <tr id="table_header_bottom"></tr>
+                </thead>
+                <tbody>
+                <tr class="table_row" th:each="faq : ${faqList}">
+                    <td th:text="${faq.faqId}"></td>
+                    <td th:text="${faq.category}"></td>
+                    <td class="title_textArea" onclick="navigateToLink(this, this.className)">
+                        <a th:href="@{/inquiry_management/faq_detail/faq-{faqId} (faqId=${faq.faqId})}" th:text="${faq.title}"></a>
+                    </td>
+                    <td th:text="${faq.regdate}"></td>
+                    <td th:text="${faq.viewsCount}"></td>
+                </tr>
+                <tr id="table_body_bottom"></tr>
+                </tbody>
+            </table>
+            <br/>
+            <div style="text-align: center;">
+                <ul class="pagination" th:if="${faqList.totalElements > 0}"
+                    th:with="pageNumber = ${faqList.pageable.pageNumber},
+                             pageSize = ${faqList.pageable.pageSize},
+                             totalPages = ${faqList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+                    <li class="pagination-btn" th:if="${pageNumber > 0}">
+                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                            <a th:if="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_main(page=${pageNumber - 1})}">
+                                <i class="bi bi-chevron-double-left"></i> Prev
+                            </a>
+                            <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
+                                <i class="bi bi-chevron-double-left"></i> Prev
+                            </a>
+                        </div>
+                    </li>
+                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <div class="pageMoveBtn" onclick="navigateToLink(this, this.className)"
+                             th:style="${page == pageNumber + 1 ? 'font-weight: 550;' : ''}">
+                            <a th:if="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_main(page=${page - 1})}" th:text="${page} "></a>
+                            <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
+                               th:text="${page} "></a>
+                        </div>
+                    </li>
+                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
+                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                            <a th:if="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_main(page=${pageNumber + 1})}">Next
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                            <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
+                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+</body>
+</html>
