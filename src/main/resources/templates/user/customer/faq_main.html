@@ -2,12 +2,11 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/myPageLayout2}">
+<!--      layout:decorate="~{layouts/layout}">-->
+
 <head>
     <title>자주 묻는 질문</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
@@ -47,56 +46,57 @@
 
 </head>
 <body>
-<div class="content_area" layout:fragment="content" >
-    <div class="title_area">
-        <div class="title">
-            <strong>자주 묻는 질문</strong>
+<div class="content_area" layout:fragment="content">
+<!--    <div style="width: 1020px;">-->
+        <div class="title_area">
+            <div class="title">
+                <strong>자주 묻는 질문</strong>
+            </div>
         </div>
-    </div>
-    <div id="faq_main_container">
-        <div class="search">
-            <form id="searchForm" action="/faq_search" method="get">
-                <table id="search_table">
-                    <tr >
-                        <td id="search_area">
-                            <select name="category" id="category" class="search_item">
-                                <option value="전체"
-                                        th:selected="${category == '전체' || category == '' ||
-                                                       category == null}">전체</option>
-                                <option value="이용정책"
-                                        th:selected="${category == '이용정책'}">이용정책</option>
-                                <option value="공통"
-                                        th:selected="${category == '공통'}">공통</option>
-                                <option value="구매"
-                                        th:selected="${category == '구매'}">구매</option>
-                                <option value="판매"
-                                        th:selected="${category == '판매'}">판매</option>
-                            </select>
-                            <div style="display: flex;">
-                                <select name="searchCondition" class="search_item" style="width: 130px; text-indent: 12px;">
+        <div id="faq_main_container">
+            <div class="search">
+                <form id="searchForm" action="/faq_search" method="get">
+                    <table id="search_table">
+                        <tr >
+                            <td id="search_area">
+                                <select name="category" id="category" class="search_item">
                                     <option value="전체"
-                                            th:selected="${searchCondition == '전체' || searchCondition == '' ||
-                                                       searchCondition == null}">전체</option>
-                                    <option value="제목"
-                                            th:selected="${searchCondition == '제목'}">제목</option>
-                                    <option value="내용"
-                                            th:selected="${searchCondition == '내용'}">내용</option>
+                                            th:selected="${category == '전체' || category == '' ||
+                                                       category == null}">전체</option>
+                                    <option value="이용정책"
+                                            th:selected="${category == '이용정책'}">이용정책</option>
+                                    <option value="공통"
+                                            th:selected="${category == '공통'}">공통</option>
+                                    <option value="구매"
+                                            th:selected="${category == '구매'}">구매</option>
+                                    <option value="판매"
+                                            th:selected="${category == '판매'}">판매</option>
                                 </select>
-                                <input type="text" name="searchKeyword" class="search_item" autocomplete="off"
-                                       style="width: 620px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
-                                        th:value="${searchKeyword}">
-                            </div>
-                            <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
-                                <i class="bi bi-search search_icon font-weight-bold"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div class="board">
-            <table id="table_form" >
-                <thead>
+                                <div style="display: flex;">
+                                    <select name="searchCondition" class="search_item" style="width: 130px; text-indent: 12px;">
+                                        <option value="전체"
+                                                th:selected="${searchCondition == '전체' || searchCondition == '' ||
+                                                       searchCondition == null}">전체</option>
+                                        <option value="제목"
+                                                th:selected="${searchCondition == '제목'}">제목</option>
+                                        <option value="내용"
+                                                th:selected="${searchCondition == '내용'}">내용</option>
+                                    </select>
+                                    <input type="text" name="searchKeyword" class="search_item" autocomplete="off"
+                                           style="width: 620px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
+                                           th:value="${searchKeyword}">
+                                </div>
+                                <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                                    <i class="bi bi-search search_icon font-weight-bold"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="board">
+                <table id="table_form" >
+                    <thead>
                     <tr id="table_header">
                         <th class="table_colName" style="width: 70px;">번호</th>
                         <th class="table_colName" style="width: 140px;">카테고리</th>
@@ -105,8 +105,8 @@
                         <th class="table_colName" style="width: 80px;">조회수</th>
                     </tr>
                     <tr id="table_header_bottom"></tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr class="table_row" th:each="faq : ${faqList}">
                         <td th:text="${faq.faqId}"></td>
                         <td th:text="${faq.category}"></td>
@@ -117,60 +117,60 @@
                         <td th:text="${faq.viewsCount}"></td>
                     </tr>
                     <tr id="table_body_bottom"></tr>
-                </tbody>
-            </table>
-            <br/>
-            <div style="text-align: center;">
-                <ul class="pagination" th:if="${faqList.totalElements > 0}"
-                    th:with="pageNumber = ${faqList.pageable.pageNumber},
+                    </tbody>
+                </table>
+                <br/>
+                <div style="text-align: center;">
+                    <ul class="pagination" th:if="${faqList.totalElements > 0}"
+                        th:with="pageNumber = ${faqList.pageable.pageNumber},
                              pageSize = ${faqList.pageable.pageSize},
                              totalPages = ${faqList.totalPages},
                              startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
                              tempEndPage = ${startPage + pageSize - 1},
                              endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
-                    <li class="pagination-btn" th:if="${pageNumber > 0}">
-                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
-                            <a th:if="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_main(page=${pageNumber - 1})}">
-                                <i class="bi bi-chevron-double-left"></i> Prev
-                            </a>
-                            <a th:unless="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
-                                <i class="bi bi-chevron-double-left"></i> Prev
-                            </a>
-                        </div>
-                    </li>
-                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                        <div class="pageMoveBtn" onclick="navigateToLink(this, this.className)"
-                             th:style="${page == pageNumber + 1 ? 'font-weight: 550;' : ''}">
-                            <a th:if="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_main(page=${page - 1})}" th:text="${page} "></a>
-                            <a th:unless="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
-                               th:text="${page} "></a>
-                        </div>
-                    </li>
-                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
-                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
-                            <a th:if="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_main(page=${pageNumber + 1})}">Next
-                                <i class="bi bi-chevron-double-right"></i>
-                            </a>
-                            <a th:unless="${requestUrl.contains('/faq_main')}"
-                               th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
-                                <i class="bi bi-chevron-double-right"></i>
-                            </a>
-                        </div>
-                    </li>
+                        <li class="pagination-btn" th:if="${pageNumber > 0}">
+                            <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                                <a th:if="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_main(page=${pageNumber - 1})}">
+                                    <i class="bi bi-chevron-double-left"></i> Prev
+                                </a>
+                                <a th:unless="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
+                                    <i class="bi bi-chevron-double-left"></i> Prev
+                                </a>
+                            </div>
+                        </li>
+                        <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                            <div class="pageMoveBtn" onclick="navigateToLink(this, this.className)"
+                                 th:style="${page == pageNumber + 1 ? 'font-weight: 550;' : ''}">
+                                <a th:if="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_main(page=${page - 1})}" th:text="${page} "></a>
+                                <a th:unless="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
+                                   th:text="${page} "></a>
+                            </div>
+                        </li>
+                        <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
+                            <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                                <a th:if="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_main(page=${pageNumber + 1})}">Next
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                                <a th:unless="${requestUrl.contains('/faq_main')}"
+                                   th:href="@{/faq_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </a>
+                            </div>
+                        </li>
 
-                    <!----------------------------------------------------------->
+                        <!----------------------------------------------------------->
 
-                </ul>
+                    </ul>
+                </div>
+                <br/>
             </div>
-            <br/>
         </div>
-    </div>
-
+<!--    </div>-->
 
 </div>
 </body>

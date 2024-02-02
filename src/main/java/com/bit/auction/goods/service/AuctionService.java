@@ -43,4 +43,5 @@ public interface AuctionService {
 
     List<AuctionDTO> findByForPopularList();
 
+    List<AuctionDTO> findByUserId(long id);
 }

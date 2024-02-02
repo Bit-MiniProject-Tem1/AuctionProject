@@ -37,4 +37,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
     @Query(value = "SELECT a, COALESCE(count(b.auction.id), 0) as count FROM Auction a LEFT JOIN LikeCnt b on a.id = b.auction.id GROUP BY a.id ORDER BY count DESC")
     List<Auction> countGroupByAuctionId();
 
+    @Query(value = "SELECT A, B FROM Auction A join LikeCnt B ON A.id = B.auction.id WHERE B.user.id = :id")
+    List<Auction> findByUserId(long id);
 }

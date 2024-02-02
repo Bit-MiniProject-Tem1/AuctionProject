@@ -35,13 +35,14 @@ public class HomeController {
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
         List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
         List<AuctionDTO> popularAuctions = auctionService.findByForPopularList();
-
         List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
 
         List<Map<String, Long>> userLikeList;
 
         if(customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+            List<AuctionDTO> likeList = auctionService.findByUserId(customUserDetails.getUser().getId());
+            model.addAttribute("likeList", likeList);
         } else {
             userLikeList = new ArrayList<>();
         }

@@ -16,6 +16,8 @@
     <th:block layout:fragment="script">
         <script>
 
+            let attachedFileList = [];
+
             $(document).ready(function() {
 
                 $('.view_box').on( 'keyup', 'textarea', function (e){
@@ -24,7 +26,7 @@
                         let viewboxHeight = 30;
                         let id = $('.view_box')[i].getAttribute('id');
 
-                        console.log("id = " + id);
+                        // console.log("id = " + id);
 
                         if (id == "content_box") {
                             viewboxHeight = viewboxHeight * 12;
@@ -42,183 +44,187 @@
             });
 
 
-            function updateFileName() {
+
+            function updateFiles() {
                 // 파일 선택 input 요소
                 const fileInput = document.getElementById('uploadFiles');
+                const newFiles = fileInput.files;
+                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
 
-                // 파일 이름을 출력할 span 요소
+                console.log('1')
+                let fileDataTransfer = new DataTransfer();
+                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
+
+                console.log('2')
+                fileInput.files = fileDataTransfer.files;
+
+                console.log('3')
+
+                console.log('===============================');
+
+                for(const file of attachedFileList) {
+                    console.log(file.name);
+                }
+
+                console.log('----------------------');
+                for(const file of fileInput.files) {
+                    console.log(file.name);
+                }
+
+                // 파일 이름을 출력할 요소
                 const fileNamesContainer = document.getElementById('fileNames');
 
                 // 기존에 출력된 파일 이름들을 지우기
                 fileNamesContainer.innerHTML = '';
 
+
+                // 선택된 파일들의 이름을 출력
+                /*for (const file of fileInput.files) {
+                    const fileNameParagraph = document.createElement('p');
+                    fileNameParagraph.textContent = file.name;
+                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
+                    fileNamesContainer.appendChild(fileNameParagraph);
+                }*/
+
+                console.log('1');
+/*
+
+                fileNamesPrint(fileInput, fileNamesContainer);
+*/
+
+                // for (const file of fileInput.files) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    console.log('3');
+
+                    // span 태그 생성
+                    // let addEle = document.createElement("div");
+
+                    //파일 이름이 출력될 p태그 생성
+                    const fileNameParagraph = document.createElement('p');
+                    // fileNameParagraph.textContent = file.name;
+                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
+                        "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
+                        "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
+
+                    console.log('4');
+
+                    let aTag = document.createElement("a");
+                    aTag.textContent = file.name;
+                    aTag.setAttribute("href", "");
+
+
+                    let deleteBtnBox = document.createElement("span");
+                    deleteBtnBox.setAttribute("style", "color: #bcbcbc; padding-left: 4px;")
+
+                    let deleteBtn = document.createElement("botton");
+                    // deleteBtn.setAttribute("className", "bi bi-x-square");
+                    deleteBtn.setAttribute("data-delete-filename", file.name);
+                    // deleteBtn.setAttribute("className", "deleteBtn bi bi-file-earmark-arrow-down-fill");
+                    deleteBtn.className = "deleteBtn bi bi-x-square";   //bi bi-x-square  //bi bi-x-square-fill
+                    deleteBtn.setAttribute("style", "style", "width: 16px; height: 16px; position: absolute; right: 0;" +
+                        " bottom: 0; z-index: 999; ");  //rgb(203, 213, 224)
+                    // deleteBtn.id = 'deleteBtn' + i;
+
+
+
+                    console.log('5');
+
+                    deleteBtn.onclick = (e) => {
+
+                        const deleteFileName = e.target.getAttribute("data-delete-filename");
+
+                        console.log('6');
+
+                        for(let i = 0; i < attachedFileList.length; i++) {
+                            if(deleteFileName === attachedFileList[i].name) {
+                                attachedFileList.splice(i, 1);
+                            }
+                        }
+
+                        console.log('7');
+
+                        // input에 첨부된 파일 삭제
+                        let inputDataTransfer = new DataTransfer();
+
+                        for(i in attachedFileList) {
+                            inputDataTransfer.items.add(attachedFileList[i]);
+                        }
+
+                        fileInput.files = inputDataTransfer.files;
+
+                        // 클릭된 버튼의 파일 삭제
+                        const parentTag = e.target.parentNode.parentNode;
+                        parentTag.remove();
+                    }
+
+
+                    /*addEle.appendChild(fileNameParagraph);
+                    addEle.appendChild(deleteBtn);*/
+                    fileNameParagraph.appendChild(aTag);
+                    // deleteBtn.appendChild(iTag);
+                    deleteBtnBox.appendChild(deleteBtn);
+                    // fileNameParagraph.appendChild(deleteBtn);
+                    fileNameParagraph.appendChild(deleteBtnBox);
+                    fileNamesContainer.appendChild(fileNameParagraph);
+                }
+
+                $("#file_box").height( $("#fileNames").height());
+
+            }
+
+            function focusChild() {
+                document.getElementsByName('content')[0].focus();
+            }
+
+// 파일명 출력 및 다운로드 까지 완성
+/*
+            function updateFiles() {
+                // 파일 선택 input 요소
+                const fileInput = document.getElementById('uploadFiles');
+                const newFiles = fileInput.files;
+                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
+
+                console.log('1')
+                let fileDataTransfer = new DataTransfer();
+                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
+
+                console.log('2')
+                fileInput.files = fileDataTransfer.files;
+
+                console.log('3')
+
+                console.log('===============================');
+
+                for(const file of attachedFileList) {
+                    console.log(file.name);
+                }
+
+                console.log('----------------------');
+                for(const file of fileInput.files) {
+                    console.log(file.name);
+                }
+
+                // 파일 이름을 출력할 요소
+                const fileNamesContainer = document.getElementById('fileNames');
+
+                // 기존에 출력된 파일 이름들을 지우기
+                fileNamesContainer.innerHTML = '';
+
+
                 // 선택된 파일들의 이름을 출력
                 for (const file of fileInput.files) {
                     const fileNameParagraph = document.createElement('p');
                     fileNameParagraph.textContent = file.name;
-                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;")
+                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;")
                     fileNamesContainer.appendChild(fileNameParagraph);
                 }
-            }
 
-/*
-            $(() => {
+                $("#file_box").height( $("#fileNames").height());
 
-                $('#uploadFiles').on( 'change', function (e) {
-
-                    const files = document.getElementById('uploadFiles').files;
-                    let fileDataTransfer = new DataTransfer();
+            }*/
 
 
-                    for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-
-                        fileDataTransfer.items.add(file);
-
-                        console.log("FileName-" + (i + 1) + " : " + file.name);
-                        console.log(file);
-                    }
-
-                    // $("#fileNames").files = fileDT.files;
-
-                    const makeElements = (file) => {
-                        let pTag = document.createElement("p");
-
-                        pTag.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
-                            "display: inline-flex; margin-right: 40px; text-decoration-thick: auto; " +
-                            "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;")
-
-                        // 파일 삭제 버튼
-                        let deleteBtn = document.createElement("input");
-                        deleteBtn.setAttribute("type", "button");
-                        deleteBtn.setAttribute("value", "x");
-                        deleteBtn.setAttribute("deleteFileName", file.name);
-                        deleteBtn.setAttribute("style", "width: 16px; height: 16px; position: absolute; right: 0;" +
-                            " bottom: 0; z-index: 999; background-color: #dedede; color: #999999; margin-right: 3px;");
-
-                        deleteBtn.onclick = (e) => {
-
-                            const ele = e.srcElement;
-
-                            const deleteFileName = ele.getAttribute("deleteFileName");
-
-                            for(let i = 0; i < files.length; i++) {
-                                if(deleteFileName === files[i].name) {
-                                    files.splice(i, 1);
-                                }
-                            }
-
-                            // 버튼 클릭 했을 때 input에 첨부된 파일도 삭제
-                            // input type="file"은 첨부된 파일들을 fileList 형태로 관리
-                            // fileList는 File 객체에 바로 담을 수 없다.
-                            // DataTransfer라는 클래스를 이용해서 변환 후에 사용한다.
-
-                            let dt = new DataTransfer();
-
-                            for(i in uploadFiles) {
-                                const file = uploadFiles[i];
-                                dt.items.add(file);
-                            }
-
-                            $("#uploadFiles")[0].files = dt.files;
-
-                            // 해당 img 태그를 가지고 있는 div 태그 삭제
-                            const parentDiv = ele.parentNode;
-                            $(parentDiv).remove();
-                        }
-                    }
-
-                    /!*---------------------------------------------------------------------------------------------------*!/
-                    /!*<p th:each="file : ${faqDTO.faqAttachedFileDTOList}"
-                       style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
-                        <i className="bi bi-file-earmark-arrow-down-fill"
-                           style="color: #999999; margin-right: 3px;"></i>
-                        &lt;!&ndash;<i className="bi bi-file-earmark-arrow-down"
-                                       style="color: #999999; margin-right: 3px;"></i>&ndash;&gt;
-                        &lt;!&ndash;<i className="bi bi-download"
-                                       style="color: #999999; margin-right: 3px;"></i>&ndash;&gt;
-                        <a th:text="${file.fileName}"
-                           th:href="@{/file_download/{faqId}-{fileId}(faqId=${faqDTO.faqId}, fileId=${file.fileId})}"></a>
-                    </p>
-*!/
-
-                    /!*                    const makeDiv = (img, file) => {
-                                            // div 태그 생성
-                                            let div = document.createElement("div");
-
-                                            div.setAttribute("style", "display: inline-block; position: relative;" +
-                                                " width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;");
-
-                                            // 잘못 올렸을 때 삭제할 수 있는 삭제 버튼 생성
-                                            let btn = document.createElement("input");
-                                            btn.setAttribute("type", "button");
-                                            btn.setAttribute("value", "x");
-                                            // 사용자 정의 속성 추가
-                                            btn.setAttribute("deleteFile", file.name);
-                                            btn.setAttribute("style", "width: 30px; height: 30px; position: absolute;" +
-                                                " right: 0; bottom: 0; z-index: 999; background-color: rgba(255, 255, 255, 0.1);" +
-                                                " color: #f00;");
-
-                                            // 위에서 생성한 버튼 클릭했을 때 파일 삭제되는 기능 구현
-                                            btn.onclick = (e) => {
-                                                // 클릭된 버튼
-                                                const ele = e.srcElement;
-
-                                                const deleteFile = ele.getAttribute("deleteFile");
-
-                                                for(let i = 0; i < uploadFiles.length; i++) {
-                                                    //배열에서도 같은 이름의 파일 삭제
-                                                    if(deleteFile === uploadFiles[i].name) {
-                                                        uploadFiles.splice(i, 1);
-                                                    }
-                                                }
-
-                                                // 버튼 클릭 했을 때 input에 첨부된 파일도 삭제
-                                                // input type="file"은 첨부된 파일들을 fileList 형태로 관리
-                                                // fileList는 File 객체에 바로 담을 수 없다.
-                                                // DataTransfer라는 클래스를 이용해서 변환 후에 사용한다.
-
-                                                let dt = new DataTransfer();
-
-                                                for(i in uploadFiles) {
-                                                    const file = uploadFiles[i];
-                                                    dt.items.add(file);
-                                                }
-
-                                                $("#uploadFiles")[0].files = dt.files;
-
-                                                // 해당 img 태그를 가지고 있는 div 태그 삭제
-                                                const parentDiv = ele.parentNode;
-                                                $(parentDiv).remove();
-                                            }
-
-                                            // 파일 명을 표출할 p 태그 생성
-                                            let fileNameP = document.createElement("p");
-                                            fileNameP.setAttribute("style", "display: inline-block; font-size: 8px;");
-                                            fileNameP.textContent = file.name;
-
-                                            // div 태그에 img, button, p태그 추가
-                                            div.appendChild(img);
-                                            div.appendChild(btn);
-                                            div.appendChild(fileNameP);
-
-                                            return div;
-                                        }
-                    *!/
-
-                });
-            });*/
-
-            /*            function updateFileName() {
-                            let uploadFiles = document.getElementById('uploadFiles');
-                            let filesName = document.getElementById('filesName');
-
-                            if (uploadFiles.files.length > 0) {
-                                filesName.innerText = uploadFiles.files[0].name;
-                            } else {
-                                filesName.innerText = '첨부할 파일을 선택하세요.';
-                            }
-                        }*/
 
             /*
                         $(document).ready(function() {
@@ -315,7 +321,7 @@
                                 <label class="item_label">내용</label>
                             </strong>
                         </div>
-                        <div class="view_box" id="content_box">
+                        <div class="view_box" id="content_box" onclick="focusChild()">
                             <textarea class="text_area" name="content"></textarea>
                         </div>
                     </div>
@@ -347,7 +353,7 @@
                                     </p>&ndash;&gt;
                                 </span>
 &lt;!&ndash;                                <input autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple data-placeholder="none">&ndash;&gt;
-                                <input style="position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;" onchange="updateFileName()" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
+                                <input style="position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;" onchange="updateFiles()" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
                             </div>
                             &lt;!&ndash;<div style="width: 100%">
                                 <textarea class="text_area" name="attachedFile" id="attachedFile"></textarea>
@@ -356,16 +362,19 @@
 
                         <!---------------------------------------------------------------------------->
 
-                        <div class="view_box" id="file_box" style="padding: 7px; height: 48px; display: flex; box-sizing: border-box;">
-                            <div>
-                                <label for="uploadFiles" style="font-size: 16px; width: 80px; height: 30px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e0; border-radius: 5px; background-color: aliceblue;">파일 선택</label>
-                            </div>
-                            <div style="margin-left: 10px;">
-                                <div style="font-size: 16px; position: absolute; vertical-align: middle;">
-                                    <span id="fileNames" style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-left: 5px; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
+                        <div class="view_box" id="file_box" style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
+                            <!--<span>
+                                <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: aliceblue;">파일 선택</label>
+                            </span>-->
+                            <span>
 
-                                    </span>
-                                    <input style="position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;" onchange="updateFileName()" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
+                                <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: #dedede;">파일 선택</label>  <!--background-color: aliceblue;-->
+
+                                <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
+
+                            </span>
+                            <div style="margin: 0 10px 0 10px; padding-left: 15px; border-left: 2px solid #dedede;">
+                                <div id="fileNames" style="font-size: 16px; vertical-align: middle;">
                                 </div>
                             </div>
                         </div>
@@ -384,11 +393,12 @@
                     </div>
                 </div>
                 <div class="button_area">
-                    <button type="submit" id="saveBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">저장</button>
+                    <button type="submit" id="saveBtn" class="textTypeBtn">저장</button>
                 </div>
             </form>
         </div>
     </div>
+
 </div>
 </body>
 </html>

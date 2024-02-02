@@ -5,6 +5,14 @@ html, body {
 html {
     background-color: #fff;
 }
+.bi-heart::before {
+    content: "\f417";
+    color: red;
+}
+.bi-heart-fill::before {
+    content: "\f415";
+    color: red;
+}
 
 header {
     justify-content: space-between;

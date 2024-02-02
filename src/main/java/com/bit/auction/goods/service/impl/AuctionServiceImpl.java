@@ -271,10 +271,17 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<AuctionDTO> findByForPopularList() {
-        List<Auction> popularAuctions = auctionRepository.countGroupByAuctionId();
-        return popularAuctions.stream()
+        List<Auction> popularAcutions = auctionRepository.countGroupByAuctionId();
+        return popularAcutions.stream()
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<AuctionDTO> findByUserId(long id) {
+        List<Auction> likelist = auctionRepository.findByUserId(id);
+        return likelist.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
+    }
 }

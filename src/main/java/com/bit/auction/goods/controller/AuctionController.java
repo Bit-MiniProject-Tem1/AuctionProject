@@ -8,13 +8,11 @@ import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
 import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.goods.service.LikeCntService;
-import com.bit.auction.user.entity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -508,9 +506,9 @@ public class AuctionController {
     }
 
     @GetMapping("/search")
-    public ModelAndView search(@RequestParam(required = false) Map<String, Object> paramMap,
-                               @PageableDefault(page = 0, size = 12) Pageable pageable,
-                               @RequestParam(required = false) String searchQuery) {
+    public ModelAndView search(@PageableDefault(page = 0, size = 12) Pageable pageable,
+                               @RequestParam(required = false) String searchQuery,
+                               @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("auction/getAuctionList.html");
@@ -518,16 +516,39 @@ public class AuctionController {
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
 
-        if (paramMap.get("category") == null) {
-            mav.addObject("categoryList", categoryList);
-        } else {
-            categoryList = categoryService.searchSubCategoryList(Long.valueOf(String.valueOf(paramMap.get("category"))));
-            mav.addObject("categoryList", categoryList);
-        }
-
         List<Character> statusList = new ArrayList<>();
 
+        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+
+        List<Map<String, Long>> userLikeList;
+
+        if(customUserDetails != null) {
+            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
         Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
+
+        if(!userLikeList.isEmpty()) {
+            auctionDTOList.stream().map(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+                return auctionDTO;
+            }).collect(Collectors.toList());
+        }
+
+        auctionDTOList.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+
         if (auctionDTOList.getTotalElements() != 0) {
             // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
             mav.addObject("auctionList", auctionDTOList);
