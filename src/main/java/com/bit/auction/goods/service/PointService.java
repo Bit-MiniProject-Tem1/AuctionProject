@@ -6,4 +6,7 @@ public interface PointService {
     void pointJoin (PointDTO pointDTO);
 
     PointDTO getPoint(String userId);
+
+    void pointCharge (int point, String userId);
+    void pointWithdraw (int point, String userId);
 }

@@ -25,11 +25,19 @@
             <form onsubmit="return sendit()">
             <div class="button-container">
                 <button id="chargePoint" onclick="charge()">충전하기</button>
-                <button id="withdrawPoint">인출하기</button>
+                <button id="withdrawPoint" onclick="withdraw()">인출하기</button>
             </div>
             </form>
         </div>
+        <script>
+            function charge(){
+                window.open("chargeForm" , "point" , "width=600, height=400");
+            }
+            function withdraw(){
+                window.open("withdrawForm" , "point" , "width=600, height=400");
+            }
 
+        </script>
 
     </div>
 </body>

@@ -21,6 +21,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,4 +95,32 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
         return mav;
     }
 
+    @GetMapping("/chargeForm")
+    public ModelAndView chargeFrom(){
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/chargeForm.html");
+        return mav;
+    }
+
+    @PostMapping("/chargeForm")
+    public void chargePoint(@RequestParam int point,
+                            @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        String userId = customUserDetails.getUsername();
+        pointService.pointCharge(point, userId);
+    }
+        @GetMapping("/withdrawForm")
+    public ModelAndView withdrawFrom(){
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/mypage/withdrawForm.html");
+        return mav;
+    }
+
+    @PostMapping("/withdrawForm")
+    public void withdrawPoint(@RequestParam int point,
+                            @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        String userId = customUserDetails.getUsername();
+        pointService.pointWithdraw(point, userId);
+    }
 }

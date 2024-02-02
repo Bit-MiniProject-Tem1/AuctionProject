@@ -32,5 +32,12 @@ public class PointServiceImpl implements PointService {
         Optional<Point> optionalPoint = pointRepository.findPointByUserId(userId);
         return optionalPoint.map(Point::toDTO).orElse(null);
     }
-
+    @Override
+    public void pointCharge(int point, String userId) {
+        pointRepository.pointCharge(point, userId);
+    }
+        @Override
+    public void pointWithdraw(int point, String userId) {
+        pointRepository.pointWithdraw(point, userId);
+    }
 }
