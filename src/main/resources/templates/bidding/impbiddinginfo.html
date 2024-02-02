@@ -89,12 +89,12 @@
                                 <td><p class="content-text" th:text="${getUser.userEmail}"></p></td>
                             </tr>
                             <tr>
-                                <td>연락처</td>
-                                <td><p class="content-text" th:text="${getUser.userTel}"></p></td>
-                            </tr>
-                            <tr>
                                 <td>배송지</td>
                                 <td><p class="content-text" th:text="${getUser.userAddress}"></p></td>
+                            </tr>
+                            <tr>
+                                <td>보유포인트량</td>
+                                <td><p class="content-text" th:text="${getPoint.point} + ' P'"></p></td>
                             </tr>
                             </tbody>
                         </table>
@@ -105,7 +105,7 @@
 
 
         <div class="paymentselect-container">
-            <h2>결제방법선택</h2>
+            <h2>포인트결제방법선택</h2>
             <hr>
             <fieldset>
               <label>

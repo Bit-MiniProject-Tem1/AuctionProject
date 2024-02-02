@@ -58,7 +58,7 @@
 
             <div class="subtotal">
                 <p class="content-text">Subtotal</p>
-                <p class="price-text">₩324,000</p>
+                <p class="price-text" ></p>
                 <div class="placeholder-text">
                   <p class="subtotal-description">세금과 배송비를 포함한 가격입니다</p>
                 </div>
@@ -68,7 +68,6 @@
           <script th:inline="javascript">
               function inputValue (){
                     var inputValue = document.getElementById('bid-price').value;
-                    console.log(inputValue)
 
                   var auctionId = [[${getGoods.id}]];
                   var url = "/auction/bidding/info/" + auctionId;

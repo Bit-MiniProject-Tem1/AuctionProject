@@ -96,14 +96,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         @Override
     public Page<Auction> searchMyBiddingList(Pageable pageable, String userId) {
         List<Auction> auctionList = jpaQueryFactory
-//                .selectFrom(auction)
-//                .where(auction.id.in(
-//                        JPAExpressions
-//                        .select(bidding.auctionId)
-//                    .from(bidding)
-//                    .where(bidding.userId.eq(userId))
-//                    )
-//                )
                 .selectFrom(auction)
                 .join(bidding)
                 .on(auction.id.eq(bidding.auctionId).and(bidding.userId.eq(userId)))
