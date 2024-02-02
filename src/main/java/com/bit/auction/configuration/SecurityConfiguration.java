@@ -21,6 +21,7 @@ import static com.amazonaws.services.ec2.model.PrincipalType.Role;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final LoginFailureHandler loginFailureHandler;
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -60,6 +61,7 @@ public class SecurityConfiguration {
                  //   authorizeRequests.anyRequest().authenticated();
                     authorizeRequests.anyRequest().permitAll();
 
+
                 })
                 // 로그인, 로그아웃 설정
                 .formLogin((formLogin) -> {
@@ -69,6 +71,7 @@ public class SecurityConfiguration {
                     formLogin.loginProcessingUrl("/user/loginProc");
                     formLogin.failureHandler(loginFailureHandler);
                     formLogin.defaultSuccessUrl("/");
+                    formLogin.successHandler(authenticationSuccessHandler);
                 })
 
                 // 로그아웃 처리

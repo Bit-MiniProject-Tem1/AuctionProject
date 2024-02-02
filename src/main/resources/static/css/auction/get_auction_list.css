@@ -2,10 +2,6 @@
     float: left;
     width: 1200px;
 }
-.content {
-    border: 2px solid black;
-    border-radius: 10px;
-}
 
 .content, .container, .column-bind, .column, .inline, .link, .link-title, .link-description, .link-group, .link,
 .link-description input, .favorite-link, .user-bidding-container, .user, .bidding-info, .sub-category > div, .sub-category-list ul,
@@ -28,7 +24,6 @@
     font-size: 14px;
     font-family: Pretendard;
 }
-
 .content {
     float: right;
     width: 1020px;

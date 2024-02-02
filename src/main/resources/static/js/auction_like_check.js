@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.toggleHeart = function(id) {
         const likeStatus = $("#likeStatus_" + id);
 
+        console.log(id);
         if (likeStatus.hasClass("bi-heart")) {
             $.ajax({
                 url: '/like/add/' + id,
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <div class="list-title">${likelist[i].title}</div>
                                 </div>
                             </a>
+                            <i name="heart" data-auction-id="${likelist[i].id}" onclick="toggleHeart(${likelist[i].id})" class="bi-heart-fill favorite-icon"></i>
                         </li>`;
                     }
                     $("#heart-items").html(htmlStr);
@@ -80,9 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     <div class="list-title">${likelist[i].title}</div>
                                 </div>
                             </a>
-                            <a th:onclick="|javascript:toggleHeart('${likelist.id}')|" class="favorite-link">
-                        <i th:id="'likeStatus_' + ${likelist.id}" class="bi-heart favorite-icon"></i>관심&nbsp;<span th:id="'likeSum_' + ${likelist.id}" th:text="${likeSum}"></span>
-                    </a>
+                            <i name="heart" data-auction-id="${likelist[i].id}" onclick="toggleHeart(${likelist[i].id})" class="bi-heart-fill favorite-icon"></i>
                         </li>`;
                         }
                         $("#heart-items").html(htmlStr);

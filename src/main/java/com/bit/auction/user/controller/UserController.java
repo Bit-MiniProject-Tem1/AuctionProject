@@ -10,6 +10,7 @@ import com.bit.auction.user.entity.User;
 import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;
 import com.bit.auction.user.service.impl.UserDetailsServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +65,9 @@ public class UserController {
 
 
     @GetMapping("/login-view")
-    public ModelAndView getLogin() {
+    public ModelAndView getLogin(HttpServletRequest request) {
+        request.getSession().setAttribute("prevPage", request.getHeader("Referer"));
+
         ModelAndView mav = new ModelAndView();
 
         mav.setViewName("user/login/login.html");
@@ -132,30 +136,32 @@ public class UserController {
         return mav;
     }
 
-    @PostMapping("/login")
-    public ModelAndView login(UserDTO userDTO, HttpSession session) {
+    @GetMapping("/login")
+    public ModelAndView login(UserDTO userDTO, HttpSession session, HttpServletRequest request) {
         int idCheck = userService.idCheck(userDTO.getUserId());
-
         ModelAndView mav = new ModelAndView();
 
-        if(idCheck == 0) {
+        if (idCheck == 0) {
             mav.addObject("loginFailMsg", "idNotExist");
-
             mav.setViewName("user/login/login.html");
         } else {
             UserDTO loginUser = userService.login(userDTO);
 
-            if(loginUser == null) {
+            if (loginUser == null) {
                 mav.addObject("loginFailMsg", "wrongPw");
-
                 mav.setViewName("user/login/login.html");
             } else {
-                session.setAttribute("loginUser", loginUser);
-
-                mav.setViewName("index.html");
+                // 로그인 성공 시의 추가 처리 (예: 세션에 사용자 정보 저장 등)
+                session.setAttribute("loggedInUser", loginUser);
+                // 리다이렉션 설정
+                String uri = request.getHeader("Referer");
+                if (uri != null && !uri.contains("/login")) {
+                    request.getSession().setAttribute("prevPage", uri);
+                }
+                // 홈페이지로 리다이렉트
+                mav.setViewName("redirect:/");
             }
         }
-
         return mav;
     }
 
