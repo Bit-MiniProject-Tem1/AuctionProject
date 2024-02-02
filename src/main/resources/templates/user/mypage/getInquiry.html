@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/myPageLayout2}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/user/mypage/inquiry.css}">
+        <link rel="stylesheet" th:href="@{/css/user/mypage/insertInquiry.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script th:inline="javascript">
@@ -13,22 +13,47 @@
             const originFiles = [];
             const changeFiles = [];
 
+
             $(() => {
                 const loginUser = /*[[${#authentication.principal.user}]]*/;
-
-                if (loginUser == null) {
+                const inquiryWriter = /*[[${getInquiry.inquiryWriter}]]*/;
+                const isAdmin = /*[[${#authorization.expression('hasRole(''ROLE_ADMIN'')')}]]*/;
+                //const inquiryAnswer =/*[[${getInquiry.inquiryAnswer}]]*/;
+// if([[${getInquiry.inquiryAnswer}]] === null || [[${getInquiry.inquiryAnswer}]] ===""){
+//     console.log("dd");
+// }
+                if (loginUser == null || loginUser.userId !== inquiryWriter) {
                     $("#deleteBtn").hide();
-                    $("#brnUpdate").hide();
+                    $("#btnUpdate").hide();
                     $("#inquiryTitle").attr("readonly", true);
                     $("#inquiryContent").attr("readonly", true);
+                //    $("#inquiryAnswer").attr("readonly", true);
                 }
 
-                for (let i = 0; i < $("#inqyiryFileCnt").val(); i++) {
+                if (isAdmin) {
+                    // ADMIN 권한이 있는 경우 수정 및 삭제 버튼 표시
+                    $("#deleteBtn").show();
+                    $("#btnUpdate").show();
+                    $("#inquiryTitle").attr("readonly", false);
+                    $("#inquiryContent").attr("readonly", false);
+                  //  $("#inquiryAnswer").attr("readonly", false);
+                }
+
+                // if ([[${getinquiry.inquiryAnswer}]] != "") {
+                //     $("#inquiryAnswer").show();
+                // } else {
+                //     $("#inquiryAnswer").hide();
+                // }
+
+
+
+
+                for (let i = 0; i < $("#inquiryFileCnt").val(); i++) {
                     const originFileObj = {
                         inquiryNo: $("#inquiryNo" + i).val(),
                         inquiryFileNo: $("#inquiryFileNo" + i).val(),
                         inquiryFileName: $("#inquiryFileName" + i).val(),
-                        inquiryFileStatus:"N"
+                        inquiryFileStatus: "N"
                     }
 
                     originFiles.push(originFileObj);
@@ -58,7 +83,7 @@
 
                     let dt2 = new DataTransfer();
 
-                    for(i in changeFiles) {
+                    for (i in changeFiles) {
                         const file = changeFiles[i];
                         dt2.items.add(file);
                     }
@@ -88,20 +113,23 @@
                     });
                 });
 
+
                 $("#deleteBtn").on("click", (e) => {
                     e.preventDefault();
-
-                    $.ajax({
-                        url: `/inquiry/inquiry/${$("#inquiryNo").val()}`,
-                        type: 'delete',
-                        success: (obj) => {
-                            alert(obj.item.msg);
-                            location.href = "/inquiry/inquiry-list";
-                        },
-                        error: (err) => {
-                            console.log(err);
-                        }
-                    });
+                    var confirmDelete = confirm("정말로 이 문의를 삭제하시겠습니까?");
+                    if (confirmDelete) {
+                        $.ajax({
+                            url: `/inquiry/inquiry/${$("#inquiryNo").val()}`,
+                            type: 'delete',
+                            success: (obj) => {
+                                alert(obj.item.msg);
+                                location.href = "/mypage/inquiry";
+                            },
+                            error: (err) => {
+                                console.log(err);
+                            }
+                        });
+                    }
                 });
             });
 
@@ -130,7 +158,7 @@
                     const img = document.getElementById("img" + inquiryFileNo);
                     const p = document.getElementById("fileName" + inquiryFileNo);
 
-                    if(fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                    if (fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
                         img.src = ee.target.result;
                     } else {
                         img.src = "/images/defaultFileImg.png";
@@ -142,8 +170,8 @@
                 reader.readAsDataURL(fileArr[0]);
 
                 // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for(let i = 0; i < originFiles.length; i++) {
-                    if(inquiryFileNo == originFiles[i].inquiryFileNo) {
+                for (let i = 0; i < originFiles.length; i++) {
+                    if (inquiryFileNo == originFiles[i].inquiryFileNo) {
                         originFiles[i].inquiryFileStatus = "U";
                         originFiles[i].newFileName = fileArr[0].name;
                     }
@@ -158,8 +186,8 @@
                 const deleteFile = ele.getAttribute("data-deleteFile");
 
                 // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for(let i = 0; i < originFiles.length; i++) {
-                    if(deleteFile === originFiles[i].inquiryFileNo) {
+                for (let i = 0; i < originFiles.length; i++) {
+                    if (deleteFile === originFiles[i].inquiryFileNo) {
                         originFiles[i].inquiryFileStatus = "D";
                     }
                 }
@@ -185,7 +213,7 @@
                     img.setAttribute("style", "width: 100%; height: 100%; z-index: none;");
 
                     // 이미지 파일인지 아닌지 판단
-                    if(file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                    if (file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
                         img.src = e.target.result;
                     } else {
                         img.src = "/images/defaultFileImg.png";
@@ -225,9 +253,9 @@
 
                     const deleteFile = ele.getAttribute("deleteFile");
 
-                    for(let i = 0; i < uploadFiles.length; i++) {
+                    for (let i = 0; i < uploadFiles.length; i++) {
                         //배열에서도 같은 이름의 파일 삭제
-                        if(deleteFile === uploadFiles[i].name) {
+                        if (deleteFile === uploadFiles[i].name) {
                             uploadFiles.splice(i, 1);
                         }
                     }
@@ -239,7 +267,7 @@
 
                     let dt = new DataTransfer();
 
-                    for(i in uploadFiles) {
+                    for (i in uploadFiles) {
                         const file = uploadFiles[i];
                         dt.items.add(file);
                     }
@@ -277,21 +305,20 @@
 </head>
 <body>
 <div layout:fragment="content" class="inquiry_container">
+    <div class="inquiry_box1">
+        <h2>문 의</h2>
+    </div>
+
     <form id="updateForm" action="/inquiry/inquiry" method="post" enctype="multipart/form-data">
         <input type="hidden" name="inquiryNo" id="inquiryNo" th:value="${getInquiry.inquiryNo }">
         <input type="hidden" name="originFiles" id="originFiles">
-        <div class="inquiry_box1">
-            <h2>문 의</h2>
-        </div>
-
 
         <div class="inquiry_box2">
             <h3 for="inquiryType" class="inquiry_box2_content">문의 유형</h3>
         </div>
 
-        <!--메뉴 만들기-->
         <div class="inquiry_choice_box">
-            <input type="text" id="inquiryType" name="inquiryType" class="inquiry_choice" th:value="${getInquiry.inquiryTitle}">
+            <input type="text" id="inquiryType" name="inquiryType" class="inquiry_choice" th:value="${getInquiry.inquiryType}">
         </div>
         
         <div class="inquiry_box2">
@@ -300,11 +327,17 @@
         <input type="text" id="inquiryTitle" name="inquiryTitle" class="inquiry_title" th:value="${getInquiry.inquiryTitle}">
 
         <div class="inquiry_box2">
+            <h3 for="inquiryWriter" class="inquiry_box2_content">작성자</h3>
+        </div>
+
+        <input type="text" id="inquiryWriter" name="inquiryWriter" class="inquiry_title" th:value="${getInquiry.inquiryWriter}" readonly>
+
+        <div class="inquiry_box2">
             <h3 for="inquiryContent" class="inquiry_box2_content">내 용</h3>
         </div>
 
         <textarea class="inquiry_content" id="inquiryContent" name="inquiryContent" cols="40" rows="10" th:text="${getInquiry.inquiryContent}"></textarea>
-        <!--20240131 여기까지 했음 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!김종범-->
+
         <div class="inquiry_box2">
             <h3 class="inquiry_box2_content">첨부 파일</h3>
         </div>
@@ -365,13 +398,17 @@
         </div>
 
         <div class="inquiry_box2">
-            <h3 for="inquiryAnswer" class="inquiry_box2_content">문의 답변</h3>
+            <h3 for="inquiryAnswer" class="inquiry_box2_content" id="inquiryAnswerSection">문의 답변</h3>
         </div>
+        <textarea id="inquiryAnswer" name="inquiryAnswer" class="inquiry_content2"
+                  th:text="${getInquiry != null ? getInquiry.inquiryAnswer : ''}"
+                  placeholder="문의 하신 내용에 답변이 완료 되지 않았습니다."></textarea>
+        </form>
 
-        <textarea id="inquiryAnswer" name="inquiryAnswer" class="inquiry_content2" placeholder="문의 하신 내용에 답변이 완료 되지 않았습니다." readonly></textarea>
 
-        <button class="inquiry_btn" type="button" id="insertBtn">등 록</button>
-    </form>
+        <button class="inquiry_btn" type="button" id="btnUpdate" >수 정</button>
+        <button class="inquiry_btn2" type="button" id="deleteBtn">삭 제</button>
+
 </div>
 </body>
 </html>

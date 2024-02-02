@@ -39,4 +39,5 @@ public interface InquiryService {
     void updateInquiryCnt(Long inquiryNo);
 
     void saveInquiryList(List<Map<String, String>> changeRowsList);
+
 }

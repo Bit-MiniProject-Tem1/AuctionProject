@@ -8,8 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -56,7 +59,9 @@ public class SecurityConfiguration {
 //                    authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
                     // 위에 설정한 요청외의 모든 요청은 인증된 사용자(로그인한 사용자)만 접근가능하도록 설정
                     authorizeRequests.requestMatchers("/auction/register").hasAnyRole("USER", "ADMIN");
+                    authorizeRequests.requestMatchers("/inquiry/**").hasAnyRole("USER", "ADMIN");
                     authorizeRequests.requestMatchers("/mypage/**").hasRole("USER");
+//                    authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
                  //   authorizeRequests.anyRequest().authenticated();
                     authorizeRequests.anyRequest().permitAll();
 
@@ -84,4 +89,5 @@ public class SecurityConfiguration {
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

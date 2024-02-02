@@ -20,7 +20,7 @@ body{
     margin-left: 25%;
 }
 
-input {
+.login_container input {
     margin-bottom: 20px;
     padding: 10px;
     width: 600px;
@@ -47,11 +47,11 @@ input {
     margin-bottom: 100px;
 }
 
-span {
+.login_container span {
     width: 200px;
 }
 
-a {
+.login_container a {
     width: 133px;
     text-align: center;
     font-size: 20px;

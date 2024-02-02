@@ -42,6 +42,9 @@ public class Inquiry {
     @Column(nullable = false, name = "inquiry_answer")
     private String inquiryAnswer;
 
+    @Column(nullable = false, name = "inquiry_writer")
+    private String inquiryWriter;
+
     @Column(nullable = false, name = "inquiry_cnt")
     private int inquiryCnt;
 
@@ -62,8 +65,10 @@ public class Inquiry {
                 .inquiryType(this.inquiryType)
                 .inquiryTitle(this.inquiryTitle)
                 .inquiryContent(this.inquiryContent)
+                .inquiryWriter(this.inquiryWriter)
                 .inquiryAnswer(this.inquiryAnswer)
                 .inquiryRegdate(LocalDateTime.now())
+                .inquiryCnt(this.inquiryCnt)
                 .inquiryFileDTOList(this.inquiryFileList.stream().map(inquiryFile -> inquiryFile.toDTO()).toList())
                 .build();
     }

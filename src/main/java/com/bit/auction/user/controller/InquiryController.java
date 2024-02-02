@@ -69,11 +69,19 @@ public class InquiryController {
     public ModelAndView getInquiry(@PathVariable("inquiryNo") Long inquiryNo) {
         ModelAndView mav = new ModelAndView();
 
+
         logger.info("inquiryNo: {}", inquiryNo);
         logger.info("getInquiry: {}", inquiryService.getInquiry(inquiryNo));
 
-        mav.addObject("getInquiry", inquiryService.getInquiry(inquiryNo));
+        InquiryDTO inquiryDTO = inquiryService.getInquiry(inquiryNo);
+        if(inquiryDTO.getInquiryAnswer() == null){
+            inquiryDTO.setInquiryAnswer("");
+        }
+        mav.addObject("getInquiry", inquiryDTO);
+
+//        mav.addObject("getInquiry", inquiryService.getInquiry(inquiryNo));
         mav.setViewName("user/mypage/getInquiry.html");
+//        mav.setViewName("user/mypage/testInquiry.html");
 
         return mav;
     }
@@ -151,34 +159,36 @@ public class InquiryController {
                                          @RequestParam("originFiles") String originFiles) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
+        System.out.println(originFiles);
+
         try {
             List<InquiryFileDTO> originFileList = new ObjectMapper().readValue(originFiles,
                     new TypeReference<List<InquiryFileDTO>>() {});
 
             List<InquiryFileDTO> uFileList = new ArrayList<>();
-
+            System.out.println(originFileList);
             for(int i = 0; i < originFileList.size(); i++) {
                 if(originFileList.get(i).getInquiryFileStatus().equals("U")) {
                     for(int j = 0; j < changeFiles.length; j++) {
                         if(originFileList.get(i).getNewFileName().equals(
                                 changeFiles[j].getOriginalFilename())) {
-                            InquiryFileDTO updateinquiryFile = fileUtils.parseFileInfo(changeFiles[j], "inquiry/");
+                            InquiryFileDTO updateInquiryFile = fileUtils.parseFileInfo(changeFiles[j], "inquiry/");
 
-                            updateinquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
-                            updateinquiryFile.setInquiryFileNo(originFileList.get(i).getInquiryFileNo());
-                            updateinquiryFile.setInquiryFileStatus("U");
+                            updateInquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
+                            updateInquiryFile.setInquiryFileNo(originFileList.get(i).getInquiryFileNo());
+                            updateInquiryFile.setInquiryFileStatus("U");
 
-                            uFileList.add(updateinquiryFile);
+                            uFileList.add(updateInquiryFile);
                         }
                     }
                 } else if(originFileList.get(i).getInquiryFileStatus().equals("D")) {
-                    InquiryFileDTO deleteinquiryFile = new InquiryFileDTO();
+                    InquiryFileDTO deleteInquiryFile = new InquiryFileDTO();
 
-                    deleteinquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
-                    deleteinquiryFile.setInquiryFileNo(originFileList.get(i).getInquiryFileNo());
-                    deleteinquiryFile.setInquiryFileStatus("D");
+                    deleteInquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
+                    deleteInquiryFile.setInquiryFileNo(originFileList.get(i).getInquiryFileNo());
+                    deleteInquiryFile.setInquiryFileStatus("D");
 
-                    uFileList.add(deleteinquiryFile);
+                    uFileList.add(deleteInquiryFile);
                 }
             }
 
@@ -186,12 +196,12 @@ public class InquiryController {
                 for(int i = 0; i < uploadFiles.length; i++) {
                     if(!uploadFiles[i].getOriginalFilename().equals("") &&
                             uploadFiles[i].getOriginalFilename() != null) {
-                        InquiryFileDTO insertinquiryFile = fileUtils.parseFileInfo(uploadFiles[i], "inquiry/");
+                        InquiryFileDTO insertInquiryFile = fileUtils.parseFileInfo(uploadFiles[i], "inquiry/");
 
-                        insertinquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
-                        insertinquiryFile.setInquiryFileStatus("I");
+                        insertInquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
+                        insertInquiryFile.setInquiryFileStatus("I");
 
-                        uFileList.add(insertinquiryFile);
+                        uFileList.add(insertInquiryFile);
                     }
                 }
             }
