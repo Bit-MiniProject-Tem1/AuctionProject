@@ -82,19 +82,12 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
 
 
     @GetMapping("/biddingList")
-    public ModelAndView getMyBidding(/*@RequestParam("auctionId") Long auctionId,*/
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+    public ModelAndView getMyBidding(@PageableDefault(page = 0, size = 10) Pageable pageable,
                                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        List<AuctionDTO> biddingList = auctionService.getByuserName(customUserDetails.getUser().getUserName());
-        mav.addObject("BiddingList", biddingList);
-
-
-        /*String userId = customUserDetails.getUsername();
-        BiddingDTO biddingDTO = biddingService.getbid(auctionId , userId);
+        String userId = customUserDetails.getUsername();
         mav.addObject("biddingList", auctionService.getMyBiddingList(pageable, userId));
-        mav.addObject("getBid" , biddingDTO);*/
         mav.setViewName("user/mypage/getMyBiddingList.html");
 
         return mav;

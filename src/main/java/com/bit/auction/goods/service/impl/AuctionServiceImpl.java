@@ -277,11 +277,4 @@ public class AuctionServiceImpl implements AuctionService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<AuctionDTO> getByuserName(String userName) {
-         List<Auction> BidAuctions = auctionRepository.getByuserName(userName);
-        return BidAuctions.stream()
-                .map(Auction::toDTO)
-                .collect(Collectors.toList());
-    }
 }

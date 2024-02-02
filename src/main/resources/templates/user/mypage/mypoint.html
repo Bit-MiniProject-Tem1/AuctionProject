@@ -7,6 +7,10 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/mypage/mypoint.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/mypoint.js}">
+        </script>
+    </th:block>
     <title>포인트페이지</title>
 </head>
 <body>
@@ -18,10 +22,12 @@
             <div class="point-stock">
                 <p th:text="${getPoint.point} + '₩'"></p>
             </div>
+            <form onsubmit="return sendit()">
             <div class="button-container">
-                <button id="chargePoint">충전하기</button>
+                <button id="chargePoint" onclick="charge()">충전하기</button>
                 <button id="withdrawPoint">인출하기</button>
             </div>
+            </form>
         </div>
 
 

@@ -43,5 +43,4 @@ public interface AuctionService {
 
     List<AuctionDTO> findByForPopularList();
 
-    List<AuctionDTO> getByuserName(String userName);
 }

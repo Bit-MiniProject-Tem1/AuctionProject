@@ -34,6 +34,7 @@ public class AuctionDTO {
     private int view;
     private long likeCnt;
     private boolean likeChk;
+    private int biddingPrice;
     private List<AuctionImgDTO> auctionImgDTOList;
     private String representativeImgUrl;
     private String representativeImgName;
@@ -59,6 +60,7 @@ public class AuctionDTO {
                 .view(this.view)
                 .likeCnt(this.likeCnt)
                 .auctionImgList(new ArrayList<>())
+                .biddingPrice(biddingPrice)
                 .build();
     }
 

@@ -84,6 +84,9 @@ public class Auction {
     @Transient
     private String representativeImgName;
 
+    @Transient
+    private int biddingPrice;
+
     public AuctionDTO toDTO() {
         auctionImgList.forEach(auctionImg -> {
             if (auctionImg.isRepresentative()) {
@@ -111,6 +114,7 @@ public class Auction {
                 .representativeImgUrl(this.representativeImgUrl)
                 .representativeImgName(this.representativeImgName)
                 .likeChk(this.likeChk)
+                .biddingPrice(biddingPrice)
                 //   .descriptionImgDTOList(this.descriptionImgList.stream().map(DescriptionImg::toDTO).toList())
                 .build();
     }
