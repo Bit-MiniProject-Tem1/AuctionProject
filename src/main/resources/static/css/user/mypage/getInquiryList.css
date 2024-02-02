@@ -1,0 +1,126 @@
+.myinquiry_container {
+    float: left;
+    width: 1020px;
+}
+body{
+    font-family: Pretendard;
+}
+
+.myinquiry_box1{
+    width: 1020px;
+    height: 40px;
+    border-bottom: 1px solid black;
+}
+
+.select {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100px;
+    height: 30px;
+}
+
+.select_input {
+    width: 200px;
+    height: 30px;
+    border: solid 1px black;
+}
+
+.select_search{
+    border: none;
+    width: 50px;
+    height: 30px;
+}
+
+.myinquiry_box2{
+    width: 1020px;
+    height: 40px;
+    background-color: #cccccc;
+
+}
+
+.table_tr {
+    text-align: center;
+}
+
+.table_th1 {
+    width: 75px;
+}
+
+.table_th2 {
+    width: 240px;
+}
+
+.table_th3{
+    width: 110px;
+}
+
+.table_th4{
+    width: 180px;
+}
+
+.table_th5{
+    width: 75px;
+}
+
+.table_th6{
+    width: 75px;
+}
+
+.table_th7{
+    width: 75px;
+}
+
+
+th {
+    border: solid 1px black;
+}
+
+.inquiryList {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+.crudBox {
+    width: 1020px;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.delRowBtn {
+    background-color: red;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.savRowBtn {
+    background-color: rgb(65, 185, 121);
+    border-radius: 10px;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 30px;
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.insert_btn {
+    background-color: black;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    float: right;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+
+
+

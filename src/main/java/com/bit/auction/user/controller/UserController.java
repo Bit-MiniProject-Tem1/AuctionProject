@@ -42,7 +42,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final AuctionService auctionService;

@@ -66,30 +66,31 @@ function getCookie(value) {
         }
 
 
-    if (tmp1 !== '') {
-        tmp2 = tmp1.split(",");
+        if (tmp1 !== '') {
+            tmp2 = tmp1.split(",");
+        }
+
+        for (let i = 0; i < tmp2.length; i++) {
+            recentItems[i] = tmp2[i];
+        }
+
+        displayRecentItems();
+        return recentItems;
     }
 
-    for (let i = 0; i < tmp2.length; i++) {
-        recentItems[i] = tmp2[i];
-    }
 
-    displayRecentItems();
-    return recentItems;
-}
+    function displayRecentItems() {
+        if (recentItems.length > 0) {
+            $.ajax({
+                url: "/auction/recent-items",
+                type: "get",
+                data: { recentItems: JSON.stringify(recentItems) },
+                success: (obj) => {
+                    let htmlStr = "";
+                    console.log(obj.length);
+                    for (let i = 0; i < obj.length; i++) {
 
-
-function displayRecentItems() {
-    if (recentItems.length > 0) {
-        $.ajax({
-            url: "/auction/recent-items",
-            type: "get",
-            data: { recentItems: JSON.stringify(recentItems) },
-            success: (obj) => {
-                let htmlStr = "";
-
-                for (let i = 0; i < obj.length; i++) {
-                    htmlStr += `<li style="text-align: left" class="content_box">
+                        htmlStr += `<li style="text-align: left" class="content_box">
                             <a class="a_tag" href="/auction/goods/${obj[i].id}">
                                 <div class="content_boxes">
                                     <div class="list-img">
@@ -102,19 +103,19 @@ function displayRecentItems() {
                             </a>
                             <i class="bi bi-trash trash-icon" data-product-id="${obj[i].id}"></i>
                         </li>`;
+                    }
+                    $("#recent-items").html(htmlStr);
+
+                    $(".trash-icon").click(removeItem);
+                },
+                error: (err) => {
+                    console.log(err);
                 }
-                $("#recent-items").html(htmlStr);
+            });
+        } else {
+            let html = "";
 
-                $(".trash-icon").click(removeItem);
-            },
-            error: (err) => {
-                console.log(err);
-            }
-        });
-    } else {
-        let html = "";
-
-        html += `<li style="text-align: left" class="content_box">
+            html += `<li style="text-align: left" class="content_box">
                             <div class="content_boxes">
                                 <div class="list-img">
                                     <figure class="img_wrapper">
@@ -124,48 +125,47 @@ function displayRecentItems() {
                                 <div class="list-title-default">조회 할 상품이 존재하지 않습니다.</div>
                             </div>
                         </li>`;
-        $("#recent-items").html(html);
+            $("#recent-items").html(html);
+        }
     }
-}
 
     function removeItem(event) {
-    const productId = $(event.target).data('product-id');
+        const productId = $(event.target).data('product-id');
 
-    for (let i = 0; i < recentItems.length; i++) {
-        if (productId == recentItems[i]) {
-            recentItems.splice(i, 1);
-            break;
-        }
-    }
-
-    displayRecentItems();
-
-    deleteCookie(productId);
-}
-
-function deleteCookie(productId) {
-
-    var pastDate = new Date();
-    pastDate.setTime(pastDate.getTime() - 1);
-    document.cookie = "itemCookie=; expires=" + pastDate.toUTCString() + "; path=/";
-
-    // 쿠키에서 값을 가져옴
-    var cookieValue = getCookie("itemCookie");
-
-    // 쿠키 값이 존재하는 경우에만 처리
-    if (cookieValue) {
-
-        var filteredItems = [];
-
-        for (let i = 0; i < cookieValue.length; i++) {
-            if (cookieValue[i] != productId) {
-                filteredItems.push(cookieValue[i]);
+        for (let i = 0; i < recentItems.length; i++) {
+            if (productId == recentItems[i]) {
+                recentItems.splice(i, 1);
+                break;
             }
         }
-        var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 7); // 예시로 하루 뒤에 만료되도록 설정
-        document.cookie = "itemCookie=" + filteredItems.join(',') + "; expires=" + currentDate.toUTCString() + "; path=/";
+
+        displayRecentItems();
+
+        deleteCookie(productId);
+    }
+
+    function deleteCookie(productId) {
+
+        var pastDate = new Date();
+        pastDate.setTime(pastDate.getTime() - 1);
+        document.cookie = "itemCookie=; expires=" + pastDate.toUTCString() + "; path=/";
+
+        // 쿠키에서 값을 가져옴
+        var cookieValue = getCookie("itemCookie");
+
+        // 쿠키 값이 존재하는 경우에만 처리
+        if (cookieValue) {
+
+            var filteredItems = [];
+
+            for (let i = 0; i < cookieValue.length; i++) {
+                if (cookieValue[i] != productId) {
+                    filteredItems.push(cookieValue[i]);
+                }
+            }
+            var currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + 7); // 예시로 하루 뒤에 만료되도록 설정
+            document.cookie = "itemCookie=" + filteredItems.join(',') + "; expires=" + currentDate.toUTCString() + "; path=/";
+        }
     }
 }
-}
-

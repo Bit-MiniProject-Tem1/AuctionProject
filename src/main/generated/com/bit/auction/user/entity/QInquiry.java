@@ -36,6 +36,8 @@ public class QInquiry extends EntityPathBase<Inquiry> {
 
     public final StringPath inquiryType = createString("inquiryType");
 
+    public final StringPath inquiryWriter = createString("inquiryWriter");
+
     public QInquiry(String variable) {
         super(Inquiry.class, forVariable(variable));
     }

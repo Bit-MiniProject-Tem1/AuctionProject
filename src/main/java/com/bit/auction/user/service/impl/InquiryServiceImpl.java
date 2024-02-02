@@ -85,8 +85,9 @@ public class InquiryServiceImpl implements InquiryService {
 
     @Override
     public void deleteInquiry(Long inquiryNo) {
-        Inquiry dInquiry = inquiryRepository.findById(inquiryNo).get();
-        inquiryRepository.deleteOne(dInquiry);
+//        Inquiry dInquiry = inquiryRepository.findById(inquiryNo).get();
+//        inquiryRepository.deleteOne(dInquiry);
+        inquiryRepository.deleteById(inquiryNo);
     }
 
 
@@ -163,36 +164,38 @@ public class InquiryServiceImpl implements InquiryService {
     public void saveInquiryList(List<Map<String, String>> changeRowsList) {
         changeRowsList.stream()
                 .forEach(inquiryMap -> {
-                    if(inquiryMap.get("boardStatus").equals("I")) {
-                        Inquiry iInquiry = Inquiry.builder()
-                                .inquiryType(inquiryMap.get("inquiryType"))
-                                .inquiryTitle(inquiryMap.get("inquiryTitle"))
-                                .inquiryContent("")
-                                .inquiryAnswer(inquiryMap.get(""))
-                                .inquiryRegdate(LocalDateTime.now())
-                                .inquiryCnt(Integer.parseInt(inquiryMap.get("inquiryCnt")))
-                                .inquiryFileList(new ArrayList<>())
-                                .build();
-
-                        inquiryRepository.save(iInquiry);
-                    } else if(inquiryMap.get("inquiryStatus").equals("U")) {
-                        System.out.println("inquiryTitle======================>" + inquiryMap.get("inquiryTitle"));
-                        Inquiry uinquiry = Inquiry.builder()
-                                .inquiryNo(Long.parseLong(inquiryMap.get("inquiryNo")))
-                                .inquiryType(inquiryMap.get("inquiryType"))
-                                .inquiryTitle(inquiryMap.get("inquiryTitle"))
-                                .inquiryContent("")
-                                .inquiryAnswer(inquiryMap.get(""))
-                                .inquiryRegdate(LocalDateTime.now())
-                                .inquiryCnt(0)
-                                .build();
-
-                        inquiryRepository.updateInquiryByInquiryNo(uinquiry);
-                    } else if(inquiryMap.get("inquiryStatus").equals("D")) {
+//                    if(inquiryMap.get("inquiryStatus").equals("I")) {
+//                        Inquiry iInquiry = Inquiry.builder()
+//                                .inquiryType(inquiryMap.get("inquiryType"))
+//                                .inquiryTitle(inquiryMap.get("inquiryTitle"))
+//                                .inquiryContent("")
+//                                .inquiryAnswer(inquiryMap.get(""))
+//                                .inquiryRegdate(LocalDateTime.now())
+//                                .inquiryCnt(Integer.parseInt(inquiryMap.get("inquiryCnt")))
+//                                .inquiryFileList(new ArrayList<>())
+//                                .build();
+//
+//                        inquiryRepository.save(iInquiry);
+//                    } else if(inquiryMap.get("inquiryStatus").equals("U")) {
+//                        System.out.println("inquiryTitle======================>" + inquiryMap.get("inquiryTitle"));
+//                        Inquiry uinquiry = Inquiry.builder()
+//                                .inquiryNo(Long.parseLong(inquiryMap.get("inquiryNo")))
+//                                .inquiryType(inquiryMap.get("inquiryType"))
+//                                .inquiryTitle(inquiryMap.get("inquiryTitle"))
+//                                .inquiryContent("")
+//                                .inquiryAnswer(inquiryMap.get(""))
+//                                .inquiryRegdate(LocalDateTime.now())
+//                                .inquiryCnt(0)
+//                                .build();
+//
+//                        inquiryRepository.updateInquiryByInquiryNo(uinquiry);
+//                    } else
+                    if(inquiryMap.get("inquiryStatus").equals("D")) {
                         inquiryRepository.deleteById(Long.parseLong(inquiryMap.get("inquiryNo")));
                     }
                 });
     }
+
 
 
 }

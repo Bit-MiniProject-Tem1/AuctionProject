@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/myPageLayout2}">
+      layout:decorate="~{layouts/myPageLayout}">
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/mypage/getInquiryList.css}">
@@ -183,7 +183,7 @@
 <div layout:fragment="content" class="myinquiry_container">
 
     <div class="myinquiry_box1">
-        <h2>문의 내역</h2>
+        <h2>마이 문의</h2>
     </div>
     <form id="searchForm" action="/inquiry/inquiry-list" method="get">
         <table border="1" style="width: 1020px; border-collapse: collapse;">
@@ -221,7 +221,7 @@
 <!--                <th scope="col" class="table_th8">상 태</th>-->
             </tr>
 
-            <tr th:each="inquiry : ${inquiryList.content}" class="inquiryList">
+            <tr th:each="inquiry : ${inquiryList.content}" class="inquiryList" th:if="${inquiry.inquiryWriter == #authentication.principal.user.userId}">
 <!--                <td>-->
 <!--                    <input type="checkbox" name="chk" th:id="'chk' + ${inquiry.inquiryNo}" th:value="${inquiry.inquiryNo}">-->
 <!--                </td>-->
