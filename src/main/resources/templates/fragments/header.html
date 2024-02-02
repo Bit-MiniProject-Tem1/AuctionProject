@@ -9,7 +9,6 @@
         <script th:inline="javascript">
             $(() => {
 
-                alert(11111111111111);
 
                 $.ajax({
                     url: '/like/getLikeList',
@@ -30,8 +29,9 @@
     <div class="main_header">
         <div class="header_top">
             <ul class="top_list">
+
                 <li>
-                    <a href="/faq_main" class="top_link"> 고객센터 </a>
+                    <a th:href="@{/faq_main}" class="top_link"> 고객센터 </a>
                 </li>
                 <li sec:authorize="!isAuthenticated()" class="top_link1">
                     <a th:href="@{/user/login-view}">로그인/회원가입</a>
@@ -87,6 +87,7 @@
                     </svg>
                     <span class="dropbtn">최근 본 상품</span>
                 </div>
+
                 <div class="dropdown-content">
                     <ul class="list_box" id="recent-items">
                         <li style="text-align: left" class="content_box">

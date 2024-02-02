@@ -19,6 +19,8 @@ public class InquiryDTO {
     private String inquiryTitle;
     private String inquiryContent;
     private String inquiryAnswer;
+    private String inquiryWriter;
+    private int inquiryCnt;
     private LocalDateTime inquiryRegdate;
     private List<InquiryFileDTO> inquiryFileDTOList;
     private String searchCondition;
@@ -32,8 +34,10 @@ public Inquiry toEntity() {
             .inquiryType(this.inquiryType)
             .inquiryTitle(this.inquiryTitle)
             .inquiryContent(this.inquiryContent)
+            .inquiryWriter(this.inquiryWriter)
             .inquiryAnswer(this.inquiryAnswer)
             .inquiryRegdate(LocalDateTime.now())
+            .inquiryCnt(this.inquiryCnt)
             .inquiryFileList(new ArrayList<>())
             .build();
     }

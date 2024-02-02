@@ -5,14 +5,16 @@
       layout:decorate="~{layouts/myPageLayout2}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/user/mypage/inquiry.css}">
+        <link rel="stylesheet" th:href="@{/css/user/mypage/insertInquiry.css}">
     </th:block>
         <th:block layout:fragment="script">
             <script>
                 // 추가된 파일들을 담아줄 배열. File 객체들을 하나씩 저장
                 const uploadFiles = [];
 
+
                 $(() => {
+
                     $("#uploadFiles").on("change", (e) => {
                         // input에 추가된 파일들을 변수로 받기
                         const files = e.target.files;
@@ -26,6 +28,8 @@
                             imageLoader(file);
                         }
                     });
+
+
 
                     // 폼이 서브밋될 때 uploadFiles 배열에 담겨있는 File들을 input에 담아서 서브밋
                     $("#insertBtn").on("click", () => {
@@ -51,7 +55,7 @@
                         //contentType을 false로 지정
                         $.ajax({
                             enctype: 'multipart/form-data',
-                            url: '/user/inquiry',
+                            url: '/inquiry/inquiry',
                             type: 'post',
                             data: formData,
                             processData: false,
@@ -60,7 +64,7 @@
                                 console.log(obj);
 
                                 alert(obj.item.msg);
-                                location.href = "/user/myInquiry-view";
+                                location.href = "/mypage/inquiry";
                             },
                             error: (err) => {
                                 console.log(err);
@@ -68,6 +72,7 @@
                             }
                         });
                     });
+
                 });
 
                 // 미리보기 처리 메소드
@@ -164,6 +169,8 @@
 
                     return div;
                 }
+
+
             </script>
 
 
@@ -195,6 +202,12 @@
         <h3 for="inquiryTitle" class="inquiry_box2_content">제 목</h3>
     </div>
     <input type="text" id="inquiryTitle" name="inquiryTitle" class="inquiry_title" placeholder="제목을 입력해주세요.">
+
+        <div class="inquiry_box2">
+            <h3 for="inquiryWriter" class="inquiry_box2_content">작성자</h3>
+        </div>
+
+        <input type="text" id="inquiryWriter" name="inquiryWriter" class="inquiry_title" th:value="${#authentication.principal.username}" readonly>
 
     <div class="inquiry_box2">
         <h3 for="inquiryContent" class="inquiry_box2_content">내 용</h3>
