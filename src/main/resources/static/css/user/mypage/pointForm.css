@@ -1508,7 +1508,7 @@ progress {
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 600px) {
     .col-lg {
         flex: 1 0 0%;
     }
@@ -1575,7 +1575,7 @@ progress {
 
     .col-lg-5 {
         flex: 0 0 auto;
-        width: 41.66666667%;
+        width: 55.66666667%;
     }
 
     .col-lg-6 {
