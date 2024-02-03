@@ -40,8 +40,6 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
                         .set(auctionImg.isRepresentative, false)
                         .where(auctionImg.id.eq(img.getId()))
                         .execute();
-                em.clear();
-                em.flush();
             } else {
                 if (!img.isRepresentative()) {
                     jpaQueryFactory
@@ -49,11 +47,11 @@ public class AuctionImgRepositoryImpl implements AuctionImgRepositoryCustom {
                             .set(auctionImg.isRepresentative, true)
                             .where(auctionImg.id.eq(img.getId()))
                             .execute();
-                    em.clear();
-                    em.flush();
                 }
             }
-
+            
+            em.clear();
+            em.flush();
         });
 
         if (count.get() == 0) {

@@ -16,7 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.bit.auction.goods.entity.QAuction.auction;
@@ -37,8 +37,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (auction.getId() == null || auction.getId() == 0) {
             em.persist(auction);
         } else {
-
-            if (auction.getAuctionImgList() != null || !auction.getAuctionImgList().isEmpty()) {
+            if (auction.getAuctionImgList() != null) {
                 auctionImgRepository.updateRepresentativeImg(auction);
             }
             em.merge(auction);
@@ -47,7 +46,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
 
     @Override
     public Page<Auction> searchAll(Pageable pageable, List<Long> subCategoryIdList, String sortOption, List<String> targetList, List<Character> statusList) {
-        List<Auction> auctionList = new ArrayList<>();
+        List<Auction> auctionList;
 
         if (sortOption != null && sortOption.equals("byMostFavorite")) {
             auctionList = jpaQueryFactory
@@ -165,7 +164,17 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         for (Character status : statusList) {
-            booleanBuilder.or(auction.status.eq(status));
+            System.out.println(status);
+            if (status.equals('E')) {
+                booleanBuilder.or(
+                        auction.status.eq('S').and(auction.endDate.lt(LocalDateTime.now()))
+                                .or(auction.status.eq('E'))
+                );
+            } else if (status.equals('S')) {
+                booleanBuilder.or(auction.status.eq('S').and(auction.endDate.gt(LocalDateTime.now())));
+            } else if (status.equals('C')) {
+                booleanBuilder.or(auction.status.eq(status));
+            }
         }
 
         return booleanBuilder;
@@ -175,23 +184,21 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         if (sortOption != null) {
             switch (sortOption) {
                 case "byViews":
-                    return new OrderSpecifier(Order.DESC, auction.view);
+                    return new OrderSpecifier<>(Order.DESC, auction.view);
                 case "byRegistration":
-                    return new OrderSpecifier(Order.ASC, auction.regDate);
+                    return new OrderSpecifier<>(Order.ASC, auction.regDate);
                 case "byClosingSoon":
-                    return new OrderSpecifier(Order.ASC, auction.endDate);
+                    return new OrderSpecifier<>(Order.ASC, auction.endDate);
                 case "byLowPrice":
-                    return new OrderSpecifier(Order.ASC, auction.currentBiddingPrice);
+                    return new OrderSpecifier<>(Order.ASC, auction.currentBiddingPrice);
                 case "byHighPrice":
-                    return new OrderSpecifier(Order.DESC, auction.currentBiddingPrice);
+                    return new OrderSpecifier<>(Order.DESC, auction.currentBiddingPrice);
                 // case "byMostBids":
                 //     return new OrderSpecifier(Order.DESC, auction.bidding 카운트 뽑기);
-                // case "byMostFavorite":
-                //     return new OrderSpecifier(Order.DESC, auction.favorite 수);
                 default:
                     break;
             }
         }
-        return new OrderSpecifier(Order.DESC, auction.view);
+        return new OrderSpecifier<>(Order.DESC, auction.view);
     }
 }

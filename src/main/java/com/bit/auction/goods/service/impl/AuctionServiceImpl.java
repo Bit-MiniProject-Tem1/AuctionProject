@@ -2,7 +2,6 @@ package com.bit.auction.goods.service.impl;
 
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.goods.dto.AuctionDTO;
-import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.AuctionImg;
 import com.bit.auction.goods.entity.Category;
@@ -63,30 +62,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status) {
-        List<Character> statusList = new ArrayList<>();
-
-        if (status == null || status.isEmpty()) {
-            statusList.add('S');
-            statusList.add('C');
-            statusList.add('E');
-        } else if (status.equals("S")) {
-            statusList.add('S');
-        } else if (status.equals("E")) {
-            statusList.add('E');
-        } else if (status.equals("C")) {
-            statusList.add('C');
-        }
-
-        Page<Auction> auctionPageList = auctionRepository.searchMyAuctionList(pageable, regUserId, statusList);
+    public Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, List<Character> status) {
+        Page<Auction> auctionPageList = auctionRepository.searchMyAuctionList(pageable, regUserId, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
 
         return auctionDTOPageList;
     }
+
     @Override
     public Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId) {
 
-        Page<Auction> auctionPageList = auctionRepository.searchMyBiddingList(pageable,userId);
+        Page<Auction> auctionPageList = auctionRepository.searchMyBiddingList(pageable, userId);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
 
         return auctionDTOPageList;

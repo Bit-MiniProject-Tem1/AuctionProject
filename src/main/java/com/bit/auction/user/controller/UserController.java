@@ -7,7 +7,6 @@ import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
-import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;
 import com.bit.auction.user.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,21 +19,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -50,8 +45,6 @@ public class UserController {
     private String findId;
 
 
-
-
     @GetMapping("/join-view")
     public ModelAndView getJoin() {
         ModelAndView mav = new ModelAndView();
@@ -60,7 +53,6 @@ public class UserController {
 
         return mav;
     }
-
 
 
     @GetMapping("/login-view")
@@ -85,7 +77,7 @@ public class UserController {
         try {
             int idCheck = userService.idCheck(userDTO.getUserId());
 
-            if(idCheck == 0) {
+            if (idCheck == 0) {
                 returnMap.put("idCheckMsg", "idOk");
             } else {
                 returnMap.put("idCheckMsg", "idFail");
@@ -95,7 +87,7 @@ public class UserController {
             response.setStatusCode(HttpStatus.OK.value());
 
             return ResponseEntity.ok(response);
-        } catch(Exception e) {
+        } catch (Exception e) {
             response.setErrorCode(501);
             response.setErrorMessage(e.getMessage());
             response.setStatusCode(HttpStatus.BAD_REQUEST.value());
@@ -129,7 +121,21 @@ public class UserController {
 
         String regUserId = customUserDetails.getUsername();
 
-        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
+        List<Character> statusList = new ArrayList<>();
+
+        if (status == null || status.isEmpty()) {
+            statusList.add('S');
+            statusList.add('C');
+            statusList.add('E');
+        } else if (status.equals("S")) {
+            statusList.add('S');
+        } else if (status.equals("E")) {
+            statusList.add('E');
+        } else if (status.equals("C")) {
+            statusList.add('C');
+        }
+
+        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, statusList));
         mav.setViewName("user/mypage/getMyAuctionList.html");
 
         return mav;
@@ -166,7 +172,7 @@ public class UserController {
 
 
     @PostMapping("/find_id")
-    public String  findId(
+    public String findId(
             @RequestParam("userName") String userName,
             @RequestParam("userTel") String userTel) {
 
@@ -185,7 +191,7 @@ public class UserController {
     public ModelAndView getFindId2(Model model) {
         ModelAndView mav = new ModelAndView();
 
-        model.addAttribute("userId",findId);
+        model.addAttribute("userId", findId);
 
         mav.setViewName("user/login/find_id2.html");
 
@@ -221,8 +227,8 @@ public class UserController {
 
     @PostMapping("/find_pw")
     public ResponseEntity<?> findPw(@RequestParam String userId,
-                                               @RequestParam String userName,
-                                               @RequestParam String userTel) {
+                                    @RequestParam String userName,
+                                    @RequestParam String userTel) {
         Optional<User> userOptional = userService.findPw(userId, userName, userTel);
 
         String response = "";
@@ -273,7 +279,7 @@ public class UserController {
             session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
             return ResponseEntity.ok(response);
-        } catch (Exception e){
+        } catch (Exception e) {
             if (e.getMessage().equals("wrong password")) {
                 response.setErrorCode(900);
             } else {
@@ -284,8 +290,8 @@ public class UserController {
 
             return ResponseEntity.badRequest().body(response);
         }
-     }
     }
+}
 
 
 
