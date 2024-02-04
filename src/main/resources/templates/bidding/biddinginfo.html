@@ -7,94 +7,224 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/bid/biddinginfo.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/to_price_comma.js}"></script>
+    </th:block>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="content-container">
-        <div class="shipping-container">
-            <div class="shipinfo-container">
-                <h2>Shipping Info</h2>
-                <div class="title2" th:text="${inputValue}"></div>
-                <script>
-                    console.log(inputValue());
-                </script>
-                <hr>
-                <h2>Address</h2>
-                <div class="address-container">
-                </div>
-            </div>
-        </div>
         <div class="productinfo-container">
-            <h2 class="head-text">Product Info</h2>
+            <h2 class="head-text">결제 정보 확인</h2>
             <hr>
             <div class="info-container">
-            <div class="product-image">
-                <figure class="img_wrapper">
-                    <img
-                     src="https://cdn.pixabay.com/photo/2016/06/03/17/35/shoes-1433925_1280.jpg"
-                    alt="productImg"/>
-                </figure>
-            </div>
-                <div class="product-info">
-                    <div class="category">
-                        <a href="#" th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}"
-                           th:if="${getGoods.category.topCategory} ne null">
+                <table class="infoTable">
+                    <thead>
+                    <tr>
+                        <th>상품정보</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>카테고리</td>
+                        <td>
+                            <div class="category">
+                                <a href="#" th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}"
+                                   th:if="${getGoods.category.topCategory} ne null">
                         <span th:text="'[' + ${getGoods.category.topCategory.name}+'> '"
                               th:if="${getGoods.category.topCategory} ne null"></span>
-                        </a>
-                        <a href="#"
-                           th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
-                           th:if="${getGoods.category.topCategory} ne null">
+                                </a>
+                                <a href="#"
+                                   th:href="'/auction/goods-list?category='+${getGoods.category.topCategory.id}+'$subCategory='+${getGoods.category.id}"
+                                   th:if="${getGoods.category.topCategory} ne null">
                         <span th:text="${getGoods.category.name}+']'"
                               th:if="${getGoods.category.topCategory} ne null"></span>
-                        </a>
-                        <a href="#"
-                           th:href="'/auction/goods-list?category='+${getGoods.category.id}">
+                                </a>
+                                <a href="#"
+                                   th:href="'/auction/goods-list?category='+${getGoods.category.id}">
                         <span th:text="${getGoods.category.name}"
                               th:if="${getGoods.category.topCategory} eq null"></span>
-                        </a>
-                    </div>
-                    <div class="title" th:text="${getGoods.title}"></div>
-                    </br>
-                        <h3 class="head-text">Total Price</h3>
-                        <p class="content-text">product price</p>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>품목명</td>
+                        <td>  <div class="title" th:text="${getGoods.title}"></div></td>
+                    </tr>
+                    <tr>
+                        <td>입찰가격</td>
+                        <td><p class="content-text" id="biddingPrice" th:text="${Price}+'원'"></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="product-image" th:each="file: ${getGoods.auctionImgDTOList}">
+                    <figure class="img_wrapper">
+                        <img src=""
+                             th:src="${file.fileUrl}"
+                             alt=""/>
+                    </figure>
                 </div>
             </div>
-        </div>
-        <div class="paymentselect-container">
-            <h2>Payment Select</h2>
-            <hr>
-            <form id="payment" action="auction/bidding/info.do" method="post" enctype="multipart/form-data">
-            <fieldset>
-              <label>
-                <input type="radio" name="payment-option" value="1" checked />
-                <span class="content-text">무통장결제</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="2" />
-                <span class="content-text">카드</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="3"  />
-                <span class="content-text">네이버페이</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="4" />
-                <span class="content-text">카카오페이</span>
-              </label>
-            </fieldset>
-            </form>
-            <hr>
-            <div class="button-wrapper">
-            <button type="submit" value="order" onclick="location.href='http://localhost:8080/auction/goods'" class="order-button" id="order">
-                <p class="content-text">주문하기</p>
-            </button>
+            <div class="userinfo-container">
+                <h2>회원정보확인</h2>
+                <hr>
+                <div class="info-container">
+                    <table class="userinfoTable">
+                        <thead>
+                        <tr>
+                            <th>회원정보</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>이름</td>
+                            <td><p class="content-text" th:text="${getUser.userName}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>이메일</td>
+                            <td><p class="content-text" th:text="${getUser.userEmail}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>배송지</td>
+                            <td><p class="content-text" th:text="${getUser.userAddress}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>보유포인트량</td>
+                            <td><p class="content-text" th:text="${getPoint.point} + ' P'"></p></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
+    <div th:if="${Price} gt ${getPoint.point}">
+    <div class="paymentselect-container">
+        <h2>포인트결제방법선택</h2>
+        <hr>
+        <fieldset>
+            <label>
+                <input type="radio" name="payment-option" value="1" checked/>
+                <span class="content-text">무통장결제</span>
+            </label>
+            </br>
+            <label>
+                <input type="radio" name="payment-option" value="2" />
+                <span class="content-text">카드</span>
+            </label>
+            </br>
+            <label>
+                <input type="radio" name="payment-option" value="3"  />
+                <span class="content-text">네이버페이</span>
+            </label>
+            </br>
+            <label>
+                <input type="radio" name="payment-option" value="4" />
+                <span class="content-text">카카오페이</span>
+            </label>
+        </fieldset>
+    </div>
+        <hr>
+        <div class="button-wrapper">
+            <button type="button" value="order" class="content-text" id="chargePoint" onclick="confirmAndRedirect()">결제하기</button>
+        </div>
+    </div>
+    <div th:if="${Price} le ${getPoint.point}">
+        <hr>
+        <div class="button-wrapper">
+            <button type="button" value="order" id="bid-button" class="content-text">결제하기</button>
+        </div>
+    </div>
+
+
+
+    <script th:inline="javascript" >
+
+        $("#bid-button").on("click", () =>{
+            var radioVal = $('input[name="payment-option"]:checked').val();
+            var biddingPrice = $("#biddingPrice").val();
+            var auctionId = [[${getGoods.id}]];
+            var parameter = {
+                payment: radioVal,
+                biddingPrice: biddingPrice,
+                auctionId : auctionId,
+            };
+
+            var param = JSON.stringify(parameter);
+            var url = "/auction/bidding/info" + auctionId;
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                contentType: "application/json",
+                data: param,
+                async: false,
+                success: () => {
+                    Swal.fire({
+                        title: '입찰 완료',
+                        text: '경매 입찰이 완료되었습니다.',
+                        icon: 'success',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                },
+                error: () => {
+                    alert("fail");
+                }
+            });
+        });
+        var goodsStatus = [[${getGoods.status}]];
+
+        if(goodsStatus === 'C'){
+            Swal.fire({
+                title: '경매 종료 알림',
+                text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+                icon: 'info',
+                showCancelButton: false,
+                confirmButtonText: '예',
+                timer: 2000,
+                allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/";
+                }
+            });
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 3000);
+        } else if(goodsStatus === 'E'){
+            Swal.fire({
+                title: '경매 종료 알림',
+                text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+                icon: 'info',
+                showCancelButton: false,
+                confirmButtonText: '예',
+                timer: 2000,
+                allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/";
+                }
+            });
+            setTimeout(function() {
+                window.location.href = "/";
+            }, 3000);
+        }
+    </script>
+    <script>
+        function confirmAndRedirect() {
+            var userConfirmed = confirm("포인트가 부족합니다 포인트 페이지로 이동하시겠습니까?");
+            if (userConfirmed) {
+                window.location.href = "http://localhost:9090/mypage/point";
+            } else {
+            }
+        }
+    </script>
+</div>
 </div>
 </body>
 </html>

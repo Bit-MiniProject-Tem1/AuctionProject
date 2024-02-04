@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href="/css/user/mypage/pointForm.css" rel="stylesheet" />
     	 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body class="bg-white">
     <div id="layoutAuthentication">
@@ -15,16 +16,16 @@
                         <div class="col-lg-5">
 
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                <div class="card-header justify-content-center text-center text-black fw-600">포인트 인출</div>
+                                <div class="card-header justify-content-center text-center text-black fw-600">포인트 출금</div>
                                 <div class="card-body">
                                         <div class="mb-3">
-                                            <label class="small mb-1" for="inputId">인출</label>
-                                            <input class="form-control form-control-solid" placeholder="인출할 포인트량을 입력하세요." type="text" id="inputId" name="id" maxlength="10" autofocus />
+                                            <label class="small mb-1" for="inputId">출금</label>
+                                            <input class="form-control form-control-solid" placeholder="출금할 포인트량을 입력하세요." type="text" id="inputId" name="id" maxlength="10" autofocus />
                                         </div>
 
                                         <div class="mb-0">
                                             <button type="button" class="btn btn-primary" style="float: right;" id="withdraw-button" >
-                                                인출하기
+                                                출금하기
                                             </button>
                                         </div>
                                 </div>
@@ -40,24 +41,39 @@
            <script>
                 $("#withdraw-button").on("click", () =>{
                 var withdrawPoint = $("#inputId").val();
+                var point =[[${getPoint.point}]];
+                var url = "/mypage/withdrawForm";
+                    if(withdrawPoint > point && point != 0){
+                        alert("출금 가능한 포인트량을 입력해주세요")
+                    } else if(point == 0){
+                        alert("출금 가능한 포인트가 없습니다")
+                    } else{
+                        $.ajax({
+                            url: url,
+                            method: 'POST',
+                            data: {point:withdrawPoint},
+                            success: () => {
+                                Swal.fire({
+                                    title: '출금 완료',
+                                    text: '포인트 출금이 완료되었습니다.',
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false
+                                });
 
-                    var url = "/mypage/withdrawForm";
-
-                    $.ajax({
-                        url: url,
-                        method: 'POST',
-                        data: {point:withdrawPoint},
-                        success: () => {
-                            alert("success");
-                        },
-                        error: () => {
-                            alert("fail");
-                        }
-                    });
+                                // 3초 후에 window.close() 실행
+                                setTimeout(() => {
+                                    window.close();
+                                }, 2000);
+                            },
+                            error: () => {
+                                alert("출금실패");
+                            }
+                        });
+                    }
                 });
-
         </script>
     </div>
-
 </body>
 </html>

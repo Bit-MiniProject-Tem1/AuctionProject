@@ -29,7 +29,7 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public final NumberPath<Integer> payment = createNumber("payment", Integer.class);
 
-    public final NumberPath<Integer> status = createNumber("status", Integer.class);
+    public final ComparablePath<Character> status = createComparable("status", Character.class);
 
     public final StringPath userId = createString("userId");
 

@@ -19,7 +19,7 @@ public class QPoint extends EntityPathBase<Point> {
 
     public static final QPoint point1 = new QPoint("point1");
 
-    public final DateTimePath<java.time.LocalDateTime> modifiedDate = createDateTime("modifiedDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> modifiedDate = createDate("modifiedDate", java.time.LocalDate.class);
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
 

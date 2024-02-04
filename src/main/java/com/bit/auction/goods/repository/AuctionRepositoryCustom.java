@@ -1,6 +1,7 @@
 package com.bit.auction.goods.repository;
 
 import com.bit.auction.goods.entity.Auction;
+import com.bit.auction.goods.entity.Bidding;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +14,4 @@ public interface AuctionRepositoryCustom {
 
     void saveOne(Auction auction);
 
-    Page<Auction> searchMyBiddingList(Pageable pageable, String userId);
 }

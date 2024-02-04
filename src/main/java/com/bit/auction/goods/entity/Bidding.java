@@ -17,21 +17,13 @@ import java.time.LocalDateTime;
 @Table(name = "bidding")
 public class Bidding {
 
-//@ManyToOne(cascade = CascadeType.ALL)
-//@JoinColumn(name = "auction_id")
-//private Auction auction;
-//
-//@ManyToOne(cascade = CascadeType.ALL)
-//@JoinColumn(name = "user_id")
-//private User user;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long biddingId;
 
     private int biddingPrice;
 
-    private int status;
+    private char status;
 
     private int payment;
 
@@ -48,10 +40,9 @@ public class Bidding {
                 .biddingPrice(biddingPrice)
                 .payment(payment)
                 .status(status)
-                .date(LocalDateTime.now())
+                .date(date)
                 .build();
     }
-
 
 }
 

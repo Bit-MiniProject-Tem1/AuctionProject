@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,13 +29,13 @@ public class Point {
 
     private int point;
 
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 
     public PointDTO toDTO() {
         return PointDTO.builder()
                 .userId(userId)
                 .point(point)
-                .modifiedDate(LocalDateTime.now())
+                .modifiedDate(LocalDate.now())
                 .build();
     }
 }

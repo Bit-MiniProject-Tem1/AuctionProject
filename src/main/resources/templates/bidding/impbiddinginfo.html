@@ -140,13 +140,10 @@
                 var radioVal = $('input[name="payment-option"]:checked').val();
                 var biddingPrice = $("#biddingPrice").val();
                 var auctionId = [[${getGoods.id}]];
-                var userId = [[${getUser.userId}]];
-                    console.log(userId);
                     var parameter = {
                         payment: radioVal,
                         biddingPrice: biddingPrice,
                         auctionId : auctionId,
-                        userId : userId
                     };
 
                     var param = JSON.stringify(parameter);
@@ -159,7 +156,14 @@
                         data: param,
                         async: false,
                         success: () => {
-                            alert("success");
+                            Swal.fire({
+                                title: '즉시 구매 완료',
+                                text: '즉시 구매가 완료되었습니다.',
+                                icon: 'success',
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                allowOutsideClick: false
+                            });
                         },
                         error: () => {
                             alert("fail");
@@ -167,7 +171,45 @@
                     });
                 });
 
+                var goodsStatus = [[${getGoods.status}]];
+
+                if(goodsStatus === 'C'){
+                    Swal.fire({
+                        title: '경매 종료 알림',
+                        text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+                        icon: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: '예',
+                        timer: 2000,
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/";
+                        }
+                    });
+                    setTimeout(function() {
+                        window.location.href = "/";
+                    }, 3000);
+                } else if(goodsStatus === 'E'){
+                    Swal.fire({
+                        title: '경매 종료 알림',
+                        text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+                        icon: 'info',
+                        showCancelButton: false,
+                        confirmButtonText: '예',
+                        timer: 2000,
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/";
+                        }
+                    });
+                    setTimeout(function() {
+                        window.location.href = "/";
+                    }, 3000);
+                }
         </script>
+
     </div>
 </div>
 </body>

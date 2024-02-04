@@ -1,12 +1,11 @@
 package com.bit.auction.user.controller;
 
-import com.bit.auction.goods.dto.AuctionDTO;
-import com.bit.auction.goods.dto.BiddingDTO;
-import com.bit.auction.goods.dto.CategoryDTO;
-import com.bit.auction.goods.dto.PointDTO;
+import com.bit.auction.goods.dto.*;
 import com.bit.auction.goods.entity.Point;
+import com.bit.auction.goods.entity.PointHistory;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
+import com.bit.auction.goods.service.PointHistoryService;
 import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.InquiryDTO;
 import com.bit.auction.user.dto.UserDTO;
@@ -49,6 +48,7 @@ public class MyPageController {
     @Autowired
     private final UserService userService;
     private final PointService pointService;
+    private final PointHistoryService pointHistoryService;
     private final BiddingService biddingService;
     private final AuctionService auctionService;
 
@@ -158,7 +158,10 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
 
         PointDTO pointDTO = pointService.getPoint(userId);
 
+        List<PointHistory> pointHistoryList = pointHistoryService.getPointHistory(userId);
         mav.addObject("getPoint", pointDTO);
+
+        mav.addObject("pointHistoryList", pointHistoryList);
 
         if (loginUser == null) {
             mav.setViewName("user/login/login");
@@ -195,7 +198,9 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
         ModelAndView mav = new ModelAndView();
 
         String userId = customUserDetails.getUsername();
-        mav.addObject("biddingList", auctionService.getMyBiddingList(pageable, userId));
+        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable , userId));
+        mav.addObject("biddingInfo", biddingService.getbidone(userId));
+        mav.addObject("sessionId", userId);
         mav.setViewName("user/mypage/getMyBiddingList.html");
 
         return mav;
@@ -214,11 +219,14 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
                             @AuthenticationPrincipal CustomUserDetails customUserDetails){
         String userId = customUserDetails.getUsername();
         pointService.pointCharge(point, userId);
+        char status = 'c';
+        pointHistoryService.setPointHistory(point, userId, status);
     }
-        @GetMapping("/withdrawForm")
-    public ModelAndView withdrawFrom(){
+    @GetMapping("/withdrawForm")
+    public ModelAndView withdrawFrom(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         ModelAndView mav = new ModelAndView();
-
+        PointDTO pointDTO = pointService.getPoint(customUserDetails.getUsername());
+        mav.addObject("getPoint", pointDTO);
         mav.setViewName("user/mypage/withdrawForm.html");
         return mav;
     }
@@ -228,5 +236,7 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
                             @AuthenticationPrincipal CustomUserDetails customUserDetails){
         String userId = customUserDetails.getUsername();
         pointService.pointWithdraw(point, userId);
+        char status = 'w';
+        pointHistoryService.setPointHistory(point, userId, status);
     }
 }

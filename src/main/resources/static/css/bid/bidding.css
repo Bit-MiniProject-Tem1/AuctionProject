@@ -55,7 +55,7 @@
 
 .pricing-options div:nth-child(n){
     border: solid 1px;
-    border-color: #cbd5e0;
+    border-color: #1a2028;
     display: flex;
     flex: 1 0 0px;
     flex-direction: column;
@@ -66,12 +66,16 @@
     cursor: pointer;
 }
 
-.price-option .good-bid {
+.clicked {
+    background-color: rgba(244, 243, 241, 0.75);
+}
+
+.price-option #good-bid {
     margin-left: 24px;
     margin-right: 24px;
 }
 
-.price-option .buy-now {
+.price-option #buy-now {
     margin-left: 24px;
     margin-right: 24px;
 }
@@ -98,7 +102,15 @@
     width: 446px;
     height: 55px;
     margin-left: 24px;
+     font-size: 22px;
+     font-family: Pretendard;
+     padding-left: 20px;
  }
+
+#realTimeValue{
+    font-size: 20px;
+    font-family: GmarketSans;
+}
 
  .head-text{
      margin-bottom: 20px;
@@ -119,12 +131,12 @@
      padding: 20px 0px 3px 24px;
  }
 
-.input-text .bid-input{
-    text-align: right;
-}
-
  .subtotal .price-text{
       padding: 20px 0px 3px 24px;
+ }
+
+ .subtotal-description{
+     margin-top: 20px;
  }
 
  .nav-area{
@@ -136,19 +148,23 @@
     border-radius: 5px;
     background-color: white;
  }
+
 .navicon-container{
     margin-top: 30px;
 }
+
 .back-navicon-wrapper svg{
     position: absolute;
     width: 50px;
     height: 50px;
     color: #21252969;
 }
+
 .back-navicon-wrapper svg:hover{
     transition: 1s;
     color: rgba(30, 30, 30, 0.8);
 }
+
 .next-navicon-wrapper svg{
     position: relative;
     float: right;

@@ -8,28 +8,74 @@
         <link rel="stylesheet" th:href="@{/css/user/mypage/mypoint.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/mypoint.js}">
-        </script>
+        <script th:src="@{/js/mypoint.js}"></script>
+        <script th:src="@{/js/to_price_comma.js}"></script>
     </th:block>
     <title>포인트페이지</title>
 </head>
 <body>
-    <div layout:fragment="content" class="mypage_container">
-        <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
-        <h3>옥션 포인트</h3>
+    <div layout:fragment="content">
+        <div class="pointpage-container">
+        <p id="top-text">옥션 포인트<p/>
+            <hr>
         <div class="point-container">
             <p class="head-text" >보유 중인 포인트</p>
             <div class="point-stock">
                 <p id="point" th:text="${getPoint.point} + ' P'"></p>
             </div>
-            <div class="button-container">
-                <button id="chargePoint" onclick="charge()">충전하기</button>
-                <button id="withdrawPoint" onclick="withdraw()">인출하기</button>
-            </div>
         </div>
+            <div class="button-container">
+                <div class="button-area">
+                <button id="chargePoint" onclick="charge()">충전하기</button>
+                    <div class='v-line'></div>
+                <button id="withdrawPoint" onclick="withdraw()">출금하기</button>
+                </div>
+            </div>
+        <div class="pointList-container">
+            <table>
+            <thead>
+            <tr>
+                <th scope="row" class="first">일자</th>
+                <th >구분</th>
+                <th >내역</th>
+                <th >금액</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="list" th:each="pointHistory : ${pointHistoryList}">
+                <td class="center" th:text="${#temporals.format(pointHistory.modifiedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <div class="e" th:if="${pointHistory.status} == 'e'">
+                    <td class="center" >적립</td>
+                    <td class="left" >최초가입적립금</td>
+                    <td class="right" th:text=" '+' + ${pointHistory.point} + ' P'"></td>
+                </div>
+                <div class="c" th:if="${pointHistory.status} == 'c'">
+                    <td class="center" >적립</td>
+                    <td class="left" >포인트충전</td>
+                    <td class="right" th:text=" '+' + ${pointHistory.point} + ' P'"></td>
+                </div>
+                <div class="w" th:if="${pointHistory.status} == 'w'">
+                    <td class="center" >차감</td>
+                    <td class="left" >포인트출금</td>
+                    <td class="right" th:text=" '-' + ${pointHistory.point} + ' P'"></td>
+                </div>
+                <div class="b" th:if="${pointHistory.status} == 'b'">
+                    <td class="center" >차감</td>
+                    <td class="left" >입찰포인트결제</td>
+                    <td class="right" th:text=" '-' + ${pointHistory.point} + ' P'"></td>
+                </div>
+                <div class="r" th:if="${pointHistory.status} == 'r'">
+                    <td class="center" >적립</td>
+                    <td class="left" >입찰포인트환불</td>
+                    <td class="right" th:text=" '+' + ${pointHistory.point} + ' P'"></td>
+                </div>
+            </tr>
+            </tbody>
+            </table>
+    </div>
         <script>
             function charge(){
-                window.open("chargeForm" , "point" , "width=600, height=400");
+                window.open("chargeForm" , "point" , width=600, height=400");
             }
             function withdraw(){
                 window.open("withdrawForm" , "point" , "width=600, height=400");

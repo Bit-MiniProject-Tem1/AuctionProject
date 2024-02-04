@@ -1,5 +1,6 @@
 package com.bit.auction.goods.service.impl;
 
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingDTO;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.Bidding;
@@ -13,7 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,6 +42,23 @@ public class BiddingServiceImpl implements BiddingService {
     public BiddingDTO getbid(Long auctionId, String userId){
         Optional<Bidding> optionalBidding = biddingRepository.findByAuctionIdAndUserId(auctionId , userId);
         return optionalBidding.map(Bidding::toDTO).orElse(null);
+    }
+
+    @Override
+    public List<BiddingDTO> getbidone(String userId){
+        List<Bidding> List = biddingRepository.findByUserId(userId);
+        return List.stream()
+                .map(Bidding::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId) {
+
+        Page<Auction> auctionPageList = biddingRepository.searchMyBiddingList(pageable,userId);
+        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+
+        return auctionDTOPageList;
     }
 
 }

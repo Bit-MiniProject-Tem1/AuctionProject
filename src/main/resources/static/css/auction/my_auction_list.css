@@ -63,7 +63,7 @@
 
 .state-title {
     margin-bottom: 4px;
-    color: rgb(239, 98, 83);
+    color: rgb(46, 204, 113);
     text-align: center;
 }
 
@@ -98,4 +98,8 @@
     font-size: 14px;
     font-weight: 700;
     border: none;
+}
+
+.biddingStatus{
+    color: #1a2028;
 }

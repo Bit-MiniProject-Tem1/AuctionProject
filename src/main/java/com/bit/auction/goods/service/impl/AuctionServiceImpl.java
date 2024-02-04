@@ -83,14 +83,6 @@ public class AuctionServiceImpl implements AuctionService {
 
         return auctionDTOPageList;
     }
-    @Override
-    public Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId) {
-
-        Page<Auction> auctionPageList = auctionRepository.searchMyBiddingList(pageable,userId);
-        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
-
-        return auctionDTOPageList;
-    }
 
     @Transactional
     @Override
@@ -283,5 +275,10 @@ public class AuctionServiceImpl implements AuctionService {
         return likelist.stream()
                 .map(Auction::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void setCurrentBiddingPrice(Long auctionId, int BiddingPrice) {
+        auctionRepository.updateCurrentBiddingPrice(auctionId, BiddingPrice);
     }
 }

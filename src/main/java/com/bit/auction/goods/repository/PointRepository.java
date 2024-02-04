@@ -15,11 +15,12 @@ public interface PointRepository extends JpaRepository<Point, Long> {
 
         @Modifying
         @Transactional
-        @Query("update Point P set P.point = P.point + :point  where P.userId =  :userId ")
+        @Query("update Point P set P.point = P.point + :point  where P.userId = :userId ")
         void pointCharge(int point , String userId);
 
-                @Modifying
+        @Modifying
         @Transactional
-        @Query("update Point P set P.point = P.point - :point  where P.userId =  :userId ")
+        @Query("update Point P set P.point = P.point - :point  where P.userId = :userId ")
         void pointWithdraw(int point , String userId);
+
 }

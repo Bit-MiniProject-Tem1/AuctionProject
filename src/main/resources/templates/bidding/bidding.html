@@ -16,12 +16,12 @@
 <div layout:fragment="content">
  <div class="content-container">
     <div class="product-container">
-         <h2 class="head-text">Product name</h2>
-        <div class="product-image">
+         <h2 th:text="${getGoods.title}" class="head-text"></h2>
+        <div class="product-image" th:each="file: ${getGoods.auctionImgDTOList}">
             <figure class="img_wrapper">
-            <img
-             src="https://cdn.pixabay.com/photo/2016/06/03/17/35/shoes-1433925_1280.jpg"
-            alt="productImg"/>
+                <img src=""
+                     th:src="${file.fileUrl}"
+                     alt=""/>
             </figure>
         </div>
     </div>
@@ -31,24 +31,23 @@
             <div class="price-option">
                 <p class="content-text">Pricing Options</p>
                 <div class="pricing-options">
-                    <div class="good-bid">
-                        <p class="price-text" th:text="${getGoods.startingPrice}+'원'"></p>
+                    <div class="bid-button" id="good-bid" th:attr="startingPrice=${#numbers.formatInteger(getGoods.startingPrice,3,'COMMA')}" onclick="javascript:updateRealTimeValue(this.getAttribute('startingPrice'));changeColor(this);">
+                        <p class="price-text" th:text="'₩' + ${#numbers.formatInteger(getGoods.startingPrice,3,'COMMA')}"></p>
                         <p class="option-text">경매 시작가</p>
                     </div>
-<!--                    조건 NULL 로 바꿔야함-->
-                    <div th:if="${getGoods.currentBiddingPrice} != 0" class="better-bid">
-                        <p class="price-text"  th:text="${getGoods.currentBiddingPrice}+'원'"></p>
+                    <div class="bid-button" th:if="${getGoods.currentBiddingPrice} lt ${getGoods.immediatePrice} and ${getGoods.currentBiddingPrice} ne 0" id="better-bid" th:attr="currentBiddingPrice=${#numbers.formatInteger(getGoods.currentBiddingPrice,3,'COMMA')}" onclick="javascript:updateRealTimeValue(this.getAttribute('currentBiddingPrice'));changeColor(this);">
+                        <p class="price-text" th:text="'₩' + ${#numbers.formatInteger(getGoods.currentBiddingPrice,3,'COMMA')}"></p>
                         <p class="option-text">현재 입찰가</p>
                     </div>
-                     <div class="buy-now">
-                         <p class="price-text" th:text="${getGoods.immediatePrice}+'원'"></p>
+                     <div class="bid-button" id="buy-now" th:attr="immediatePrice=${#numbers.formatInteger(getGoods.immediatePrice,3,'COMMA')}" onclick="javascript:updateRealTimeValue(this.getAttribute('immediatePrice'));changeColor(this);">
+                         <p class="price-text" th:text="'₩' + ${#numbers.formatInteger(getGoods.immediatePrice,3,'COMMA')}"></p>
                          <p class="option-text">즉시 입찰가</p>
                     </div>
                 </div>
                     <div class="name-price">
                     <p class="content-text">자율 입찰가 입력</p>
                      <div class="input-text">
-                        <input type="number" id="bid-price" class="bid-input" placeholder="여기에 입력해주세요" oninput="inputValue()" >
+                         <input type="text" id="bid-price" class="bid-input" placeholder="₩" oninput="updateRealTimeValue(this.value)" />
                     </div>
                     <div class="placeholder-text">
                         <p id="price" class="price-description">희망하는 입찰가를 입력해주세요</p>
@@ -58,36 +57,118 @@
 
             <div class="subtotal">
                 <p class="content-text">Subtotal</p>
-                <p class="price-text" ></p>
                 <div class="placeholder-text">
-                  <p class="subtotal-description">세금과 배송비를 포함한 가격입니다</p>
+                    <div id="realTimeValue"></div>
+                    <p class="subtotal-description">세금과 배송비를 포함한 가격입니다</p>
                 </div>
             </div>
         </div>
     </div>
-          <script th:inline="javascript">
-              function inputValue (){
-                    var inputValue = document.getElementById('bid-price').value;
-
-                  var auctionId = [[${getGoods.id}]];
-                  var url = "/auction/bidding/info/" + auctionId;
-
-                  $.ajax({
-                      type: 'GET',
-                      url: url,
-                      data: inputValue ,
-                      success: () => {
-                          // alert("success");
-                          console.log(inputValue);
-                      },
-                      error: () => {
-                          alert("fail");
-                      }
-                  })
-              }
-
-          </script>
 </div>
+    <div class="nav-container">
+        <div class="nav-area">
+            <div class="navbar-bid">
+                <div class="navicon-container">
+                    <a href="#" th:href="'/auction/goods/'+${getGoods.id}" class="back-navicon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                        </svg>
+                    </a>
+                    <a href="#" th:href="'/auction/bidding/info/'+${getGoods.id} + '?biddingPrice=1234' " class="next-navicon-wrapper" id="next">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
+                            <path id="next" fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+    var price;
+        $("#next").on("click", () =>{
+            var auctionId = [[${getGoods.id}]];
+            var inputValue = $("#bid-price").val();
+            var price = Number(inputValue.replaceAll(',', ''));
+            var url = "/auction/bidding/info/" + auctionId + "?biddingPrice=" + price;
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: () => {
+
+                },
+                error: () => {
+                }
+            })
+        });
+        var imPrice = [[${getGoods.immediatePrice}]];
+        const input = document.querySelector('#bid-price');
+        input.addEventListener('keyup', function(e) {
+            let value = e.target.value;
+            value = Number(value.replaceAll(',', ''));
+            if(isNaN(value)) {
+                input.value = 0;
+            }else {
+                if(value>=imPrice){
+                    value = imPrice;
+                    const formatValue = value.toLocaleString('ko-KR');
+                    input.value = formatValue;
+                }else{
+                    const formatValue = value.toLocaleString('ko-KR');
+                    input.value = formatValue;
+                }
+            }
+            updateRealTimeValue(input.value);
+        })
+        function updateRealTimeValue(value) {
+
+            $('#realTimeValue').text(value);
+            document.getElementById('bid-price').value = value;
+        }
+        function changeColor(button) {
+            var buttons = document.querySelectorAll('.bid-button');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('clicked');
+            });
+            button.classList.add('clicked');
+        }
+    var goodsStatus = [[${getGoods.status}]];
+
+    if(goodsStatus === 'C'){
+        Swal.fire({
+            title: '경매 종료 알림',
+            text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: '예',
+            timer: 2000,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/";
+            }
+        });
+        setTimeout(function() {
+            window.location.href = "/";
+        }, 3000);
+    } else if(goodsStatus === 'E'){
+        Swal.fire({
+            title: '경매 종료 알림',
+            text: '이미 종료된 경매입니다. 3초 후 자동으로 메인화면으로 이동합니다',
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: '예',
+            timer: 2000,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/";
+            }
+        });
+        setTimeout(function() {
+            window.location.href = "/";
+        }, 3000);
+    }
+    </script>
 </div>
 </body>
 </html>

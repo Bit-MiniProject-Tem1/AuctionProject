@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href="/css/user/mypage/pointForm.css" rel="stylesheet" />
     	 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body class="bg-white">
     <div id="layoutAuthentication">
@@ -49,14 +50,26 @@
                         method: 'POST',
                         data: {point:chargePoint},
                         success: () => {
-                            alert("success");
+                            Swal.fire({
+                                title: '충전 완료',
+                                text: '포인트 충전이 완료되었습니다.',
+                                icon: 'success',
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                allowOutsideClick: false
+                            });
+
+                            // 3초 후에 window.close() 실행
+                            setTimeout(() => {
+                                window.close();
+                            }, 2000);
                         },
                         error: () => {
-                            alert("fail");
+                            alert("충천실패");
+                            window.close();
                         }
                     });
                 });
-
         </script>
     </div>
 

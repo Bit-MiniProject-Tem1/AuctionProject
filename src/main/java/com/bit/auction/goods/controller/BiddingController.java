@@ -5,15 +5,19 @@ import com.bit.auction.goods.dto.BiddingDTO;
 import com.bit.auction.goods.dto.PointDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
+import com.bit.auction.goods.service.PointHistoryService;
 import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.time.LocalDateTime;
 
 
 @RequestMapping("/auction")
@@ -25,6 +29,7 @@ public class BiddingController {
     private final AuctionService auctionService;
     private final UserService userService;
     private final PointService pointService;
+    private final PointHistoryService pointHistoryService;
 
 
 
@@ -40,13 +45,25 @@ public class BiddingController {
 
     }
 
+
     @GetMapping("/bidding/info/{id}")
-    public ModelAndView biddinginfo(@PathVariable("id") Long id) {
+    public ModelAndView info(@PathVariable Long id,
+                             @RequestParam int biddingPrice,
+                             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
 
         AuctionDTO auctionDTO = auctionService.getAuctionGoods(id);
+
+        String userId = customUserDetails.getUsername();
+        UserDTO userDTO = userService.findUser(userId);
+
+        PointDTO pointDTO = pointService.getPoint(userId);
+
         mav.addObject("getGoods" , auctionDTO);
+        mav.addObject("getUser" , userDTO);
+        mav.addObject("getPoint" , pointDTO);
+        mav.addObject("Price", biddingPrice);
         mav.setViewName("bidding/biddinginfo.html");
         return mav;
 
@@ -78,12 +95,32 @@ public class BiddingController {
     public void bidding(@RequestBody BiddingDTO biddingDTO,
                         @AuthenticationPrincipal CustomUserDetails customUserDetails){
         biddingService.updateBidStatus();
+        biddingDTO.setStatus('u');
+        biddingDTO.setUserId(customUserDetails.getUsername());
+        biddingDTO.setDate(LocalDateTime.now());
         biddingService.setbid(biddingDTO);
         pointService.pointWithdraw(biddingDTO.getBiddingPrice() , customUserDetails.getUsername());
+        pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
 
+        Long auctionId = biddingDTO.getAuctionId();
+        int BiddingPrice = biddingDTO.getBiddingPrice();
+        auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
     }
 
+    @PostMapping("/bidding/info/{id}?biddingPrice=1234")
+    public void bidding2(@RequestBody BiddingDTO biddingDTO,
+                                            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
+        biddingService.updateBidStatus();
+        biddingDTO.setStatus('u');
+        biddingDTO.setUserId(customUserDetails.getUsername());
+        biddingDTO.setDate(LocalDateTime.now());
+        biddingService.setbid(biddingDTO);
+        pointService.pointWithdraw(biddingDTO.getBiddingPrice() , customUserDetails.getUsername());
+        pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
 
-
+        Long auctionId = biddingDTO.getAuctionId();
+        int BiddingPrice = biddingDTO.getBiddingPrice();
+        auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
+    }
 }

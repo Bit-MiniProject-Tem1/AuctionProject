@@ -30,61 +30,30 @@
                 <strong id="userName" name="userName" class="user_name" th:text="${#authentication.principal.user.userName}"></strong>
                 <p id="userEmail" name="userEmail" class="user_email" th:text="${#authentication.principal.user.userEmail}"></p>
                 <a class="profile_update" type="button" href="/user/modify-view">프로필 수정</a>
-                <a class="user_point" type="button" href="#">포인트</a>
+                <a class="user_point" type="button" href="/mypage/point">포인트</a>
                 <a class="user_inquiry" type="button" href="#">문 의</a>
             </div>
         </div>
-
-        <div class="mypage_box2">
-            <div class="selling_title">
-                <p class="selling_content">낙찰 내역</p>
-            </div>
-            <div class="selling_view">
-                <a class="selling_btn" type="button" href="#">더보기></a>
-            </div>
-        </div>
-
-        <div class="mypage_box3">
-            <div class="selling_box">
-                <strong>낙찰 대기</strong>
-                <p>0</p>
-            </div>
-            <div class="selling_box">
-                <strong>낙찰 중</strong>
-                <p>0</p>
-            </div>
-            <div class="selling_box">
-                <strong>낙찰 완료</strong>
-                <p>0</p>
-            </div>
-        </div>
-
-        <div class="selling_history">
-            <div class="selling_history_title">
-                <h3 class="selling_history_content">낙찰 내역이 없습니다.</h3>
-            </div>
-        </div>
-
         <div class="mypage_box4">
             <div class="buying_title">
                 <p class="buying_content">입찰 내역</p>
             </div>
             <div class="buying_view">
-                <a class="buying_btn" type="button" href="#">더보기></a>
+                <a class="buying_btn" type="button" href="/mypage/biddingList">더보기></a>
             </div>
         </div>
 
         <div class="mypage_box5">
             <div class="buying_box">
-                <strong>입찰 중</strong>
-                <p>0</p>
-            </div>
-            <div class="buying_box">
                 <strong>진행 중</strong>
                 <p>0</p>
             </div>
             <div class="buying_box">
-                <strong>입찰 완료</strong>
+                <strong>종료</strong>
+                <p>0</p>
+            </div>
+            <div class="buying_box">
+                <strong>취소</strong>
                 <p>0</p>
             </div>
         </div>

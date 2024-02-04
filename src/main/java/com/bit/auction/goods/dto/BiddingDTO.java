@@ -22,7 +22,7 @@ public class BiddingDTO {
 
     private LocalDateTime date;
 
-    private int status = 1;
+    private char status;
 
     private Long auctionId;
 
@@ -36,7 +36,7 @@ public class BiddingDTO {
                 .biddingPrice(biddingPrice)
                 .payment(payment)
                 .status(status)
-                .date(LocalDateTime.now())
+                .date(date)
                 .build();
     }
 }

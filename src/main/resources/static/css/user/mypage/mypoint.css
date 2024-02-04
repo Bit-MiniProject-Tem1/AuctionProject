@@ -1,28 +1,44 @@
 .point-container{
-    width: 580px;
-    height: 400px;
-    background-color: white;
+    height: 200px;
     margin-top: 50px;
-    margin-left: 350px;
-    box-shadow: 0px 0px 1px 2px rgba(0,0,0,0.50);
-    text-align: center;
-    padding: 20px 85px 0px 85px;
-    border-radius: 10px;
+    margin-left: 63px;
+    border: 1px solid #a2b6d7;
+    background: #E0E9F8;
+    width: 480px;
+}
+
+.button-container {
+    margin-top: -200px;
+    margin-right: 35px;
+    float: right;
+    height: 200px;
+    width: 440px;
+    border: 1px solid #ADC0DE;
+    padding: 50px 0px 0px 21.5px;
+}
+
+.button-area{
+    display: inline-flex;
+}
+
+.pointpage-container{
+    margin-left: 150px;
+}
+
+#top-text{
+    margin-left: 30px;
+    font-family: GmarketSans;
+    font-size: 24px;
 }
 
 .head-text{
     margin-bottom: 20px;
     font-size: 22px;
-    font-family: GmarketSans;
-}
-
-.point-stock{
-    width: 410px;
-    height: 210px;
-    background-color: #d3d3d366;
-    text-align: center;
-    padding: 65px 0px 0px 55px;
-    border-radius: 10px;
+    font-weight: bold;
+    font-family: Pretendard;
+    padding-left: 170px;
+    padding-top: 15px;
+    color : #282864;
 }
 
 #point {
@@ -30,27 +46,32 @@
     height: 80px;
     width:  300px;
     padding: 25px;
-    font-family: GmarketSans;
+    font-family: Pretendard;
     font-size: 22px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 1px 2px rgba(0,0,0,0.1);
-
+    margin-left: 90px;
+    text-align: center;
 }
 
 #chargePoint {
-    width: 150px;
-    height: 70px;
-    border-radius: 10px;
-    background-color: white;
-    margin: 10px;
+    width: 180px;
+    height: 100px;
+    background-color: rgba(156, 184, 224, 0.85);
+    margin-right: 8.5px;
+    font-family: Pretendard;
+    font-size: 25px;
+    border: 1px solid;
+    color:white;
 }
 
 #withdrawPoint {
-    width: 150px;
-    height: 70px;
-    border-radius: 10px;
-    background-color: rgba(128, 128, 128, 0.3);
-    margin: 10px 10px 10px 15px;
+    width: 180px;
+    height: 100px;
+    background-color: rgba(156, 184, 224, 0.85);
+    margin-left: 8.5px;
+    font-family: Pretendard;
+    font-size: 25px;
+    border: 1px solid;
+    color:white;
 }
 
 #chargePoint:hover{
@@ -60,8 +81,47 @@
 
 #withdrawPoint:hover{
     transition: 500ms;
-    background-color: rgba(128, 128, 128, 0.75);
+    background-color: rgba(140, 140, 140, 0.15);
 }
-.button-container {
-    margin-top: 15px;
+.v-line {
+    margin: -30px 10px 0px 10px;
+    border-left : 1.1px solid #32a1ce;
+    height : 160px;
+
+}
+
+table {
+    width: 955px;
+    border-collapse: collapse;
+    margin:50px auto;
+}
+
+
+th {
+    background: rgba(52, 155, 219, 0.55);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+}
+
+tbody .center{
+    text-align: center;
+}
+
+tbody .left{
+    text-align: left;
+}
+
+tbody .right{
+    text-align: right;
+}
+
+#list {
+    font-family: Pretendard;
 }

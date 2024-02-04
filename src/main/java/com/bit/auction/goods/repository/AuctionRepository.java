@@ -39,4 +39,8 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, Auction
 
     @Query(value = "SELECT A, B FROM Auction A join LikeCnt B ON A.id = B.auction.id WHERE B.user.id = :id")
     List<Auction> findByUserId(long id);
+
+    @Modifying
+    @Query("update Auction a set a.currentBiddingPrice = :BiddingPrice  where a.id = :auctionId ")
+    void updateCurrentBiddingPrice(Long auctionId, int BiddingPrice);
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,13 +21,13 @@ public class PointDTO {
 
     private int point;
 
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 
     public Point toEntity(){
     return Point.builder()
             .userId(userId)
             .point(point)
-            .modifiedDate(LocalDateTime.now())
+            .modifiedDate(LocalDate.now())
             .build();
 }
 

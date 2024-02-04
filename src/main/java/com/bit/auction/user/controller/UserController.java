@@ -1,7 +1,9 @@
 package com.bit.auction.user.controller;
 
 import com.bit.auction.goods.dto.PointDTO;
+import com.bit.auction.goods.dto.PointHistoryDTO;
 import com.bit.auction.goods.service.AuctionService;
+import com.bit.auction.goods.service.PointHistoryService;
 import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
@@ -47,6 +49,7 @@ public class UserController {
     private final AuctionService auctionService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final PointService pointService;
+    private final PointHistoryService pointHistoryService;
     private String findId;
 
 
@@ -106,13 +109,17 @@ public class UserController {
 
 
     @PostMapping("/join")
-    public ModelAndView join(UserDTO userDTO, PointDTO pointDTO) {
+    public ModelAndView join(UserDTO userDTO, PointDTO pointDTO , PointHistoryDTO pointHistoryDTO) {
         userDTO.setUserPw(passwordEncoder.encode(userDTO.getUserPw()));
         userDTO.setRole("ROLE_USER");
         pointDTO.setUserId(userDTO.getUserId());
-        pointDTO.setPoint(0);
+        pointDTO.setPoint(3000);
+        pointHistoryDTO.setUserId(userDTO.getUserId());
+        pointHistoryDTO.setStatus('e');
+        pointHistoryDTO.setPoint(3000);
         userService.join(userDTO);
         pointService.pointJoin(pointDTO);
+        pointHistoryService.pointHistoryJoin(pointHistoryDTO);
 
         ModelAndView mav = new ModelAndView();
 

@@ -8,29 +8,6 @@
         <link rel="stylesheet" th:href="@{/css/auction/my_auction_list.css}">
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
-<!--    <th:block layout:fragment="script">-->
-<!--        <script>-->
-<!--            $(document).ready(function() {-->
-<!--                $('.btn-cancel').click(function () {-->
-<!--                    var auctionId = $(this).data('id');-->
-
-<!--                    $.ajax({-->
-<!--                        method: 'put',-->
-<!--                        url: '/auction/cancel',-->
-<!--                        data: {id:auctionId},-->
-<!--                        success: (obj) => {-->
-<!--                            alert(obj.item.msg);-->
-<!--                            location.href = "/user/reg-goods";-->
-<!--                        },-->
-<!--                        error: (err) => {-->
-<!--                            console.log(err);-->
-<!--                            alert(err.responseJSON.errorMessage);-->
-<!--                        }-->
-<!--                    });-->
-<!--                });-->
-<!--            });-->
-<!--        </script>-->
-<!--        </th:block>-->
 </head>
 <body>
 <div layout:fragment="content">
@@ -40,16 +17,16 @@
             <div class="goods-filter">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/reg-goods">전체</a>
+                        <a class="nav-link" href="/mypage/biddingList">전체</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/reg-goods?status=S">진행</a>
+                        <a class="nav-link" href="/mypage/biddingList?status=S">진행</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/reg-goods?status=E">종료</a>
+                        <a class="nav-link" href="/mypage/biddingList?status=E">종료</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/reg-goods?status=C">취소</a>
+                        <a class="nav-link" href="/mypage/biddingList?status=C">취소</a>
                     </li>
                 </ul>
             </div>
@@ -93,21 +70,45 @@
                                     <span class="title" th:text="${auction.title}"></span></a>
                             </div>
                         </td>
-                        <td th:text="${#temporals.format(auction.regDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td th:text="${auction.currentBiddingPrice}+'원'"></td>
+                        <div th:each="bidding : ${biddingInfo}" th:if="${auction.id} eq ${bidding.auctionId}">
+                            <td th:text="${#temporals.format(bidding.date, 'yyyy-MM-dd HH:mm')}"></td>
+                        </div>
+                        <td th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd HH:mm')}"></td>
+                        <div th:each="bidding : ${biddingInfo}" th:if="${auction.id} eq ${bidding.auctionId}">
+                            <td th:text="${bidding.biddingPrice}+'원'"></td>
+                        </div>
                         <td th:text="${auction.currentBiddingPrice}+'원'"></td>
                         <td th:text="${auction.immediatePrice}+'원'"></td>
                         <td>
                             <div class="state-title">
-                                <span th:if="${auction.status} eq 'S'">경매중</span>
-                                <span th:if="${auction.status} eq 'E'">경매종료</span>
-                                <span th:if="${auction.status} eq 'C'">경매취소</span>
-                            </div>
-                            <div class="link-group" th:if="${auction.status} eq 'S'">
-                                <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}"
-                                   th:if="${auction.status} eq 'S'">입찰</a><br>
-                                <a href="#" class="link btn-red btn-cancel" th:if="${auction.status} eq 'S'" th:data-id="${auction.id}">취소</a>
+                                <div th:each="bidding : ${biddingInfo}" th:if="${auction.id} eq ${bidding.auctionId}">
+                                    <span th:if="${auction.status} eq 'S'">경매중
+                                        <div th:if="${auction.id} eq ${bidding.auctionId}">
+                                            <div th:if="${sessionId} eq ${bidding.userId}">
+                                                <div th:if="${bidding.status} eq 'l'">
+                                                    <p class="biddingStatus">상회입찰</p>
+                                                 <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}">
+                                                     입찰
+                                                 </a>
+                                                </div>
+                                                <div th:if="${bidding.status} eq 'u'">
+                                                    <p class="biddingStatus">최고입찰중</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <span th:if="${auction.status} eq 'C'" style="color:red;">경매취소
+                                        <p class="biddingStatus">유찰</p>
+                                    </span>
+                                    <span th:if="${auction.status} eq 'E'" style="color:red;">경매종료
+                                        <div th:if="${bidding.status} eq 'u'">
+                                            <p class="biddingStatus">낙찰</p>
+                                        </div>
+                                        <div th:if="${bidding.status} eq 'l'">
+                                            <p class="biddingStatus">패찰</p>
+                                        </div>
+                                    </span>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -141,7 +142,6 @@
                     </li>
                 </ul>
             </nav>
-            <a id="register" href="/auction/register">새 경매 등록</a>
         </div>
     </div>
 </div>
