@@ -1,6 +1,6 @@
-package com.bit.auction.user.dto;
+package com.bit.auction.admin.dto;
 
-import com.bit.auction.user.entity.Faq;
+import com.bit.auction.admin.entity.Faq;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class FaqDTO {
@@ -22,6 +22,10 @@ public class FaqDTO {
     private List<FaqAttachedFileDTO> faqAttachedFileDTOList;
     private String searchCondition;
     private String searchKeyword;
+
+    public FaqDTO() {
+        this.faqAttachedFileDTOList = new ArrayList<>();
+    }
 
     public Faq toEntity() {
         return Faq.builder()

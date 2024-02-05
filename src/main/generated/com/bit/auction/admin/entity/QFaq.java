@@ -1,4 +1,4 @@
-package com.bit.auction.user.entity;
+package com.bit.auction.admin.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QFaq extends EntityPathBase<Faq> {
 
-    private static final long serialVersionUID = -907997707L;
+    private static final long serialVersionUID = 1187006915L;
 
     public static final QFaq faq = new QFaq("faq");
 

@@ -1,4 +1,4 @@
-package com.bit.auction.user.entity;
+package com.bit.auction.admin.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QFaqAttachedFile extends EntityPathBase<FaqAttachedFile> {
 
-    private static final long serialVersionUID = -1851486251L;
+    private static final long serialVersionUID = -671971677L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

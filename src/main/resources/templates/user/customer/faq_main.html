@@ -109,7 +109,7 @@
                     <tr class="table_row" th:each="faq : ${faqList}">
                         <td th:text="${faq.faqId}"></td>
                         <td th:text="${faq.category}"></td>
-                        <td class="title_textArea" onclick="navigateToLink(this, this.className)">
+                        <td class="td_textArea" onclick="navigateToLink(this, this.className)">
                             <a th:href="@{/faq_detail/faq-{faqId} (faqId=${faq.faqId})}" th:text="${faq.title}"></a>
                         </td>
                         <td th:text="${faq.regdate}"></td>

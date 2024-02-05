@@ -16,6 +16,23 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
+    <th:block layout:fragment="script">
+        <script>
+
+            function navigateToLink(clickedElement, className) {
+                if (clickedElement.classList.contains(className)) {
+                    let elementsWithClass = document.querySelectorAll('.' + className);
+                    let idx = Array.from(elementsWithClass).indexOf(clickedElement);
+                    let findElement = document.querySelectorAll('.' + className + ' a')[idx];
+                    let href = findElement.getAttribute('href');
+
+                    window.location.href = href;
+                }
+            }
+
+
+        </script>
+    </th:block>
 
 </head>
 <body>
@@ -31,32 +48,19 @@
                 <table id="search_table">
                     <tr >
                         <td id="search_area">
-                            <!--<select name="categoryCondition" class="search_item" style="width: 168px; text-indent: 12px; border-radius: 10px;">
-                                <option value="all"
-                                        th:selected="${categoryCondition == 'all' || categoryCondition == '' ||
-                                                       categoryCondition == null}">전체</option>
-                                <option value="usePolicy"
-                                        th:selected="${categoryCondition == 'usePolicy'}">이용정책</option>
-                                <option value="common"
-                                        th:selected="${categoryCondition == 'common'}">공통</option>
-                                <option value="purchase"
-                                        th:selected="${categoryCondition == 'purchase'}">구매</option>
-                                <option value="sales"
-                                        th:selected="${categoryCondition == 'sales'}">판매</option>
-                            </select>-->
                             <div style="display: flex;">
                                 <select name="searchCondition" class="search_item" style="width: 180px; text-indent: 12px;">
-                                    <option value="all"
-                                            th:selected="${searchCondition == 'all' || searchCondition == '' ||
+                                    <option value="전체"
+                                            th:selected="${searchCondition == '전체' || searchCondition == '' ||
                                                        searchCondition == null}">전체</option>
-                                    <option value="title"
-                                            th:selected="${searchCondition == 'title'}">이름</option>
-                                    <option value="content"
-                                            th:selected="${searchCondition == 'content'}">아이디</option>
-                                    <option value="content"
-                                            th:selected="${searchCondition == 'content'}">연락처</option>
-                                    <option value="content"
-                                            th:selected="${searchCondition == 'content'}">이메일</option>
+                                    <option value="이름"
+                                            th:selected="${searchCondition == '이름'}">이름</option>
+                                    <option value="아이디"
+                                            th:selected="${searchCondition == '아이디'}">아이디</option>
+                                    <option value="연락처"
+                                            th:selected="${searchCondition == '연락처'}">연락처</option>
+                                    <option value="이메일"
+                                            th:selected="${searchCondition == '이메일'}">이메일</option>
                                 </select>
                                 <input type="text" name="searchKeyword" class="search_item"
                                        style="width: 750px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
@@ -71,50 +75,82 @@
             </form>
         </div>
         <div class="board">
-<!--            <table id="boardTable" class="table" border="1" style="width: 700px; border-collapse: collapse;">-->
             <table id="table_form" >
-                <tr id="table_header">
-                    <th style="width: 70px;">번호</th>
-                    <th style="width: 100px;">이름</th>
-                    <th style="width: 150px;">아이디</th>
-                    <th style="width: 150px;">연락처</th>
-                    <th style="width: 200px;">이메일</th>
-                    <th style="width: 320px;">주소</th>
-                </tr>
-                <tr style="height:4px; border-top: 2px solid #999999; border-bottom: 2px solid #999999;"></tr>
-
-<!--                <tr th:each="board : ${boardList.content}">-->
-<!--                    <td th:text="${board.boardNo}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="@{/board/board/{boardNo} (boardNo=${board.boardNo})}"-->
-<!--                           th:text="${board.boardTitle}"></a>-->
-<!--                    </td>-->
-<!--                    <td th:text="${board.boardTitle }"></td>-->
-<!--                    <td th:text="${board.boardRegdate }"></td>-->
-<!--                    <td th:text="${board.boardCnt }"></td>-->
-                
-<!--                </tr>-->
+                <thead>
+                    <tr id="table_header">
+                        <th class="table_colName" style="width: 70px;">번호</th>
+                        <th class="table_colName" style="width: 100px;">이름</th>
+                        <th class="table_colName" style="width: 150px;">아이디</th>
+                        <th class="table_colName" style="width: 150px;">연락처</th>
+                        <th class="table_colName" style="width: 200px;">이메일</th>
+                        <th class="table_colName" style="width: 320px;">주소</th>
+                    </tr>
+                    <tr id="table_header_bottom"></tr>
+                </thead>
+                <tbody>
+                    <tr class="table_row" th:each="member : ${memberList}">
+                        <td th:text="${member.id}"></td>
+                        <td onclick="navigateToLink(this, this.className)">
+                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
+                        </td>
+                        <td onclick="navigateToLink(this, this.className)">
+                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
+                        </td>
+                        <td th:text="${member.userTel}"></td>
+                        <td th:text="${member.userEmail}"></td>
+                        <td class="td_textArea" th:text="${member.userAddress}"></td>
+                    </tr>
+                    <tr id="table_body_bottom" style="height:4px; border-top: 3px solid #dedede;"></tr>
+                </tbody>
             </table>
             <br/>
-<!--            <div style="text-align: center;">-->
-<!--                <ul class="pagination" th:if="${boardList.totalElements > 0}"-->
-<!--                    th:with="pageNumber = ${boardList.pageable.pageNumber},-->
-<!--                             pageSize = ${boardList.pageable.pageSize},-->
-<!--                             totalPages = ${boardList.totalPages},-->
-<!--                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},-->
-<!--                             tempEndPage = ${startPage + pageSize - 1},-->
-<!--                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">-->
-<!--                    <li class="pagination-btn" th:if="${pageNumber > 0}">-->
-<!--                        <a th:href="@{/board/board-list(page=${pageNumber - 1})}">이전</a>-->
-<!--                    </li>-->
-<!--                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
-<!--                        <a th:href="@{/board/board-list(page=${page - 1})}" th:text="${page} ">이전</a>-->
-<!--                    </li>-->
-<!--                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">-->
-<!--                        <a th:href="@{/board/board-list(page=${pageNumber + 1})}">다음</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
+            <div style="text-align: center;">
+                <ul class="pagination" th:if="${memberList.totalElements > 0}"
+                    th:with="pageNumber = ${memberList.pageable.pageNumber},
+                             pageSize = ${memberList.pageable.pageSize},
+                             totalPages = ${memberList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+                    <li class="pagination-btn" th:if="${pageNumber > 0}">
+                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                            <a th:if="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement_search(searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
+                                <i class="bi bi-chevron-double-left"></i> Prev
+                            </a>
+                            <a th:unless="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement(page=${pageNumber - 1})}">
+                                <i class="bi bi-chevron-double-left"></i> Prev
+                            </a>
+                        </div>
+                    </li>
+                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <div class="pageMoveBtn" onclick="navigateToLink(this, this.className)"
+                             th:style="${page == pageNumber + 1 ? 'font-weight: 550;' : ''}">
+                            <a th:if="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement_search(searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
+                               th:text="${page} "></a>
+                            <a th:unless="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement(page=${page - 1})}" th:text="${page} "></a>
+                        </div>
+                    </li>
+                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
+                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                            <a th:if="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement_search(searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                            <a th:unless="${requestUrl.contains('/memberManagement_search')}"
+                               th:href="@{/admin/memberManagement(page=${pageNumber + 1})}">Next
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </div>
+                    </li>
+
+                    <!----------------------------------------------------------->
+
+                </ul>
+            </div>
             <br/>
         </div>
     </div>

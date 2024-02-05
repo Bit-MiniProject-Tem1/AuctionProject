@@ -13,13 +13,14 @@
 </head>
 <body>
 <div class="content_area" layout:fragment="content" >
+    <div id="memberInfo_container">
     <div class="data_area">
         <div class="title_area">
             <div class="title">
                 <strong>회원 상세정보</strong>
             </div>
             <div style="position: relative;">
-                <button id="closeBtn">
+                <button id="closeBtn" th:onclick="'window.location.href = \'/admin/memberManagement\''">
                     <i class="bi bi-x d-flex align-items-center justify-content-center"></i>
                 </button>
             </div>
@@ -41,32 +42,32 @@
                     </div>
                     <table>
                         <tr>
+                            <th class="joinInfo_key" scope="row">회원번호</th>
+                            <td class="joinInfo_value" th:text="${member.id}"></td>
+                        </tr>
+                        <tr>
                             <th class="joinInfo_key" scope="row">아이디</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userId}"></td>
                         </tr>
                         <tr>
                             <th class="joinInfo_key" scope="row">이름</th>
-                            <td class="joinInfo_value"></td>
-                        </tr>
-                        <tr>
-                            <th class="joinInfo_key" scope="row">닉네임</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userName}"></td>
                         </tr>
                         <tr>
                             <th class="joinInfo_key" scope="row">생년월일</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userBirth}"></td>
                         </tr>
                         <tr>
                             <th class="joinInfo_key" scope="row">연락처</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userTel}"></td>
                         </tr>
                         <tr>
                             <th class="joinInfo_key" scope="row">이메일</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userEmail}"></td>
                         </tr>
                         <tr>
                             <th class="joinInfo_key" scope="row">주소</th>
-                            <td class="joinInfo_value"></td>
+                            <td class="joinInfo_value" th:text="${member.userAddress}"></td>
                         </tr>
                     </table>
                 </div>
@@ -87,13 +88,9 @@
                             <th class="colName">등록일</th>
                             <th class="colName">제목</th>
                         </tr>
-                            <tr>
-                                <td class="cell"></td>
-                                <td class="cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="cell"></td>
-                                <td class="cell"></td>
+                            <tr th:each="inquiry : ${inquiryList}">
+                                <td class="cell" style="text-align: center;" th:text="${#strings.substring(inquiry.inquiryRegdate, 0, 10)}"></td>
+                                <td class="cell memberInfo_inquiryTitle" th:text="${inquiry.inquiryTitle}"></td>
                             </tr>
                     </table>
 
@@ -106,135 +103,36 @@
                         <i class="bi bi-record-fill"></i>
                     </div>
                     <strong>
-                        <label class="item_label">구매 내역</label>
+                        <label class="item_label">경매 입찰 이력</label>
                     </strong>
                 </div>
                 <table>
                     <tr>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
+                        <th class="colName">입찰아이디</th>
+                        <th class="colName">경매아이디</th>
+                        <th class="colName">입찰가격</th>
+                        <th class="colName">입찰상태</th>
+                        <th class="colName">입찰시간</th>
+                        <th class="colName">결제방법</th>
                     </tr>
-                    <tr>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                    </tr>
-                    <tr>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                    </tr>
-                </table>
-
-            </div>
-
-
-            <div class="memberInfo_item" id="salesHistory">
-                <div class="item_label_area">
-                    <div class="label_icon d-flex align-items-center justify-content-center">
-                        <i class="bi bi-record-fill"></i>
-                    </div>
-                    <strong>
-                        <label class="item_label">판매 내역</label>
-                    </strong>
-                </div>
-                <table>
-                    <tr>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                        <th class="colName"></th>
-                    </tr>
-                    <tr>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                    </tr>
-                    <tr>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
-                        <td class="cell"></td>
+                    <tr th:each="bidding : ${biddingList}" style="text-align: center;">
+                        <td class="cell" th:text="${bidding.biddingId}"></td>
+                        <td class="cell" th:text="${bidding.auctionId}"></td>
+                        <td class="cell" th:text="${bidding.biddingPrice}"></td>
+                        <td class="cell" th:text="${bidding.status}"></td>
+                        <td class="cell" th:text="${bidding.date}"></td>
+                        <th:block th:switch="${bidding.payment}">
+                            <td class="cell" th:case="1">무통장결제</td>
+                            <td class="cell" th:case="2">카드</td>
+                            <td class="cell" th:case="3">네이버페이</td>
+                            <td class="cell" th:case="4">카카오페이</td>
+                        </th:block>
                     </tr>
                 </table>
-
             </div>
-        </div>
         </div>
     </div>
-
-
-
-
-    <div>
-
-<!--        <div class="board">-->
-<!--            <table id="boardTable" class="table" border="1" style="width: 700px; border-collapse: collapse;">-->
-<!--            <table id="board_table" >-->
-<!--                <tr id="board_table_header">-->
-<!--                    <th style="width: 70px;">번호</th>-->
-<!--                    <th style="width: 100px;">이름</th>-->
-<!--                    <th style="width: 150px;">아이디</th>-->
-<!--                    <th style="width: 150px;">연락처</th>-->
-<!--                    <th style="width: 200px;">이메일</th>-->
-<!--                    <th style="width: 320px;">주소</th>-->
-<!--                </tr>-->
-<!--                <tr style="height:4px; border-top: 2px solid #999999; border-bottom: 2px solid #999999;"></tr>-->
-
-<!--                <tr th:each="board : ${boardList.content}">-->
-<!--                    <td th:text="${board.boardNo}"></td>-->
-<!--                    <td>-->
-<!--                        <a th:href="@{/board/board/{boardNo} (boardNo=${board.boardNo})}"-->
-<!--                           th:text="${board.boardTitle}"></a>-->
-<!--                    </td>-->
-<!--                    <td th:text="${board.boardTitle }"></td>-->
-<!--                    <td th:text="${board.boardRegdate }"></td>-->
-<!--                    <td th:text="${board.boardCnt }"></td>-->
-<!--                </tr>-->
-            </table>
-            <br/>
-<!--            <div style="text-align: center;">-->
-<!--                <ul class="pagination" th:if="${boardList.totalElements > 0}"-->
-<!--                    th:with="pageNumber = ${boardList.pageable.pageNumber},-->
-<!--                             pageSize = ${boardList.pageable.pageSize},-->
-<!--                             totalPages = ${boardList.totalPages},-->
-<!--                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},-->
-<!--                             tempEndPage = ${startPage + pageSize - 1},-->
-<!--                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">-->
-<!--                    <li class="pagination-btn" th:if="${pageNumber > 0}">-->
-<!--                        <a th:href="@{/board/board-list(page=${pageNumber - 1})}">이전</a>-->
-<!--                    </li>-->
-<!--                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
-<!--                        <a th:href="@{/board/board-list(page=${page - 1})}" th:text="${page} ">이전</a>-->
-<!--                    </li>-->
-<!--                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">-->
-<!--                        <a th:href="@{/board/board-list(page=${pageNumber + 1})}">다음</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-            <br/>
-        </div>
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
-
-    <!---------------------------------------------------------------------------------------------------------------------->
-
-
-<!--    </div>-->
-
-
+    </div>
 </div>
 </body>
 </html>

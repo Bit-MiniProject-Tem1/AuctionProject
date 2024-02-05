@@ -1,25 +1,34 @@
-package com.bit.auction.user.service.impl;
+package com.bit.auction.admin.service.impl;
 
-import com.bit.auction.user.dto.FaqAttachedFileDTO;
-import com.bit.auction.user.dto.FaqDTO;
-import com.bit.auction.user.entity.Faq;
-import com.bit.auction.user.entity.FaqAttachedFile;
-import com.bit.auction.user.repository.FaqAttachedFileRepository;
-import com.bit.auction.user.repository.FaqRepository;
-import com.bit.auction.user.service.FaqService;
+import com.amazonaws.services.kms.model.NotFoundException;
+import com.bit.auction.admin.dto.FaqAttachedFileDTO;
+import com.bit.auction.admin.dto.FaqDTO;
+import com.bit.auction.admin.entity.Faq;
+import com.bit.auction.admin.entity.FaqAttachedFile;
+import com.bit.auction.admin.repository.FaqAttachedFileRepository;
+import com.bit.auction.admin.repository.FaqRepository;
+import com.bit.auction.admin.service.FaqService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class FaqServiceImpl implements FaqService {
 
+    private final EntityManager entityManager;
     private final FaqRepository faqRepository;
 
     private final FaqAttachedFileRepository faqAttachedFileRepository;
@@ -88,12 +97,118 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
-    public void updateFaq(FaqDTO faqDTO, List<FaqAttachedFileDTO> uFileList) {
+    public void updateFaq(FaqDTO faqDTO) {
+        log.info("#### faqId = {}", faqDTO.getFaqId());
 
+        // 1. FaqDTO를 이용하여 Faq 엔티티를 가져옴
+        Faq newFaq = faqDTO.toEntity();
+        log.info("#### newFaq.getFaqId = {}", newFaq.getFaqId());
+
+        // 2. 데이터베이스에서 해당 faqId에 해당하는 기존 Faq 엔티티를 조회
+        Optional<Faq> optionalFaq = faqRepository.findById(faqDTO.getFaqId());
+
+        Faq originFaq = optionalFaq.get();
+        log.info("#### originFaq.getFaqId = {}", originFaq.getFaqId());
+
+        // 3.첨부파일을 엔티티로 변환
+        List<FaqAttachedFile> faqAttachedFileList = faqDTO.getFaqAttachedFileDTOList().stream()
+                .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(newFaq)).toList();
+
+        log.info("----------------------- File Name -----------------------------");
+        for(int i = 0; i<faqAttachedFileList.size(); i++) {
+
+            log.info("#### originFaq.getFaqId = {}", originFaq.getFaqId());
+        }
+        log.info("---------------------------------------------------------------");
+
+        log.info("##### 변경전 엔티티 - 제목 : {}", originFaq.getTitle());
+
+        // 4. 기존 Faq 엔티티의 필드들을 FaqDTO의 값으로 업데이트
+        originFaq.setCategory(faqDTO.getCategory());
+        originFaq.setTitle(faqDTO.getTitle());
+        originFaq.setContent(faqDTO.getContent());
+        originFaq.setRegdate(LocalDateTime.now());
+        originFaq.setViewsCount(faqDTO.getViewsCount());
+        originFaq.setFaqAttachedFileList(faqAttachedFileList);
+
+        log.info("##### 변경후 엔티티 - 제목 : {}", originFaq.getTitle());
+
+
+        // 5. 기존 FaqAttachedFile 엔티티 삭제
+        faqAttachedFileRepository.deleteByFaq(newFaq);
+/*
+
+        // 파일 레포지토리에 파일 추가
+        faqAttachedFileList.stream().forEach(faqAttachedFile -> updateFaq.addFaqAttachedFileList(faqAttachedFile));
+*/
+
+        // 6. 데이터베이스에 업데이트된 Faq 엔티티를 저장
+//        faqRepository.save(originFaq);
+        entityManager.persist(originFaq);
+    }
+
+    @Override
+    public void updateFaq(Long faqId, FaqDTO faqDTO) {
+/*
+        Faq originFaq = entityManager.find(Faq.class, faqId);
+
+
+        List<FaqAttachedFile> faqAttachedFileList = faqDTO.getFaqAttachedFileDTOList().stream()
+                .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(faqDTO.toEntity())).toList();
+
+        originFaq.setCategory(faqDTO.getCategory());
+        originFaq.setTitle(faqDTO.getTitle());
+        originFaq.setContent(faqDTO.getContent());
+        originFaq.setRegdate(LocalDateTime.now());
+        originFaq.setViewsCount(faqDTO.getViewsCount());
+        originFaq.setFaqAttachedFileList(faqAttachedFileList);
+*/
+
+/*
+        Optional<Faq> faq = faqRepository.findById(faqId);
+        faq.get().setViewsCount(faq.get().getViewsCount() + 1);
+        return faqRepository.save(faq.get()).toDTO();
+*/
+
+
+
+
+        Faq originFaq = faqRepository.findById(faqId)
+                .orElseThrow(() -> new NotFoundException("Faq not found with ID: " + faqId));
+
+        // 업데이트를 수행할 수 있는 메소드를 호출 (아래에 구현)
+        updateFaqDTO(originFaq, faqDTO);
+
+        faqRepository.save(originFaq);
+    }
+
+    private void updateFaqDTO(Faq originFaq, FaqDTO faqDTO) {
+        originFaq.setCategory(faqDTO.getCategory());
+        originFaq.setTitle(faqDTO.getTitle());
+        originFaq.setContent(faqDTO.getContent());
+        // 그 외 필요한 필드 업데이트
+
+        // 첨부 파일 업데이트
+        List<FaqAttachedFile> attachedFiles = faqDTO.getFaqAttachedFileDTOList().stream()
+                .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(originFaq))
+                .collect(Collectors.toList());
+        originFaq.setFaqAttachedFileList(attachedFiles);
     }
 
     @Override
     public void deleteFaq(Long faqId) {
+
+        Faq faq = faqRepository.findById(faqId).get();
+        if (faq != null) {
+//            entityManager.remove(faq);
+            faqRepository.delete(faq);
+        }
+    }
+
+    @Override
+    public void delete(FaqDTO faqDTO) {
+
+//        Faq faq =  faqRepository.delete(faqDTO);
 
     }
 
@@ -138,6 +253,7 @@ public class FaqServiceImpl implements FaqService {
         return faqPageList.map(faq -> faq.toDTO());
     }
 
+
 /*
     @Override
     public List<FaqAttachedFileDTO> getFaqAttachedFileList(Long faqId) {
@@ -177,6 +293,12 @@ public class FaqServiceImpl implements FaqService {
     }
 
     @Override
+    public Faq save(Faq faq) {
+        entityManager.persist(faq);
+        return faq;
+    }
+
+    @Override
     public FaqAttachedFileDTO getFaqAttachedFileDTO(FaqAttachedFileDTO faqAttachedFileDTO) {
         return faqAttachedFileRepository.findByFileIdAndFaqFaqId(faqAttachedFileDTO.getFileId(), faqAttachedFileDTO.getFaqId()).orElseThrow().toDTO();
     }
@@ -190,6 +312,28 @@ public class FaqServiceImpl implements FaqService {
     @Override
     public FaqDTO findById(Long faqId) {
         return faqRepository.findById(faqId).get().toDTO();
+    }
+
+    @Override
+    public FaqDTO findTopByOrderByFaqIdDesc() {
+        return faqRepository.findTopByOrderByFaqIdDesc().toDTO();
+    }
+
+
+    @Override
+    public List<Faq> findAllByFaqId(FaqDTO faqDTO) {
+        Faq faq = faqDTO.toEntity();
+        String jpql = "select f from FaqAttachedFile f where faq = :faq";
+
+//        List<Faq> faqAttachedFileList = entityManager.createQuery(jpql, faqDTO.class).getResultList();
+
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(Long faqId) {
+        faqRepository.deleteById(faqId);
     }
 
     @Override

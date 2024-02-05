@@ -1,10 +1,9 @@
-package com.bit.auction.user.entity;
+package com.bit.auction.admin.entity;
 
-import com.bit.auction.user.dto.FaqDTO;
+import com.bit.auction.admin.dto.FaqDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,7 +30,7 @@ public class Faq {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-//    @CreationTimestamp
+    //    @CreationTimestamp
     @Column(name = "REGDATE", columnDefinition = "DATETIME", nullable = false)
     private LocalDateTime regdate;
 
