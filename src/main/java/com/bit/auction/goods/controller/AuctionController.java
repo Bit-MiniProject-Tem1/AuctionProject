@@ -3,11 +3,14 @@ package com.bit.auction.goods.controller;
 import com.bit.auction.common.CkEditorImageUtils;
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
-import com.bit.auction.goods.dto.*;
+import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.AuctionImgDTO;
+import com.bit.auction.goods.dto.CategoryDTO;
+import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.CategoryService;
-import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.goods.service.LikeCntService;
+import com.bit.auction.user.entity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -48,16 +51,16 @@ public class AuctionController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
         } else {
             userLikeList = new ArrayList<>();
         }
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             recentAuctions.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });
@@ -91,16 +94,16 @@ public class AuctionController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
         } else {
             userLikeList = new ArrayList<>();
         }
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             fianlAuctions.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });
@@ -133,16 +136,16 @@ public class AuctionController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
         } else {
             userLikeList = new ArrayList<>();
         }
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             popularAuctions.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });
@@ -199,20 +202,6 @@ public class AuctionController {
 
         mav.addObject("getGoods", auctionDTO);
         mav.setViewName("auction/getAuction.html");
-
-        return mav;
-    }
-
-    @GetMapping("/reg-goods")
-    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
-                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        ModelAndView mav = new ModelAndView();
-
-        String regUserId = customUserDetails.getUsername();
-
-        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, status));
-        mav.setViewName("user/mypage/getMyAuctionList.html");
 
         return mav;
     }
@@ -432,7 +421,7 @@ public class AuctionController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
         } else {
             userLikeList = new ArrayList<>();
@@ -461,17 +450,17 @@ public class AuctionController {
         if (paramMap.get("regUser") != null) {
             String regUserId = paramMap.get("regUser").toString();
             mav.addObject("topCategoryName", regUserId);
-            mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, "S"));
+            mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, statusList));
             return mav;
         }
 
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, sort, targetList, statusList);
-            if(!userLikeList.isEmpty()) {
+            if (!userLikeList.isEmpty()) {
                 auctionPage.stream().map(auctionDTO -> {
                     userLikeList.forEach(map -> {
-                        if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                        if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                             auctionDTO.setLikeChk(true);
                         }
                     });
@@ -522,7 +511,7 @@ public class AuctionController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
         } else {
             userLikeList = new ArrayList<>();
@@ -530,10 +519,10 @@ public class AuctionController {
 
         Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             auctionDTOList.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });

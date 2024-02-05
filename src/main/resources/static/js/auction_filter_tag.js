@@ -32,36 +32,6 @@ $(document).ready(function () {
         var newFilterTag = $('<div class="filter-tag"><i class="bi bi-funnel"></i><span>' + filterName + '</span></div>');
 
         $('.filter-tag-group').append(newFilterTag);
-
-        var sortOption = urlParams.get('sort');
-        var buttonElement = $('.filter-sorting .btn');
-
-        switch (sortOption) {
-            case 'byViews':
-                buttonElement.text('조회순');
-                break;
-            case 'byRegistration':
-                buttonElement.text('등록순');
-                break;
-            case 'byClosingSoon':
-                buttonElement.text('마감 임박순');
-                break;
-            case 'byLowPrice':
-                buttonElement.text('낮은 가격순');
-                break;
-            case 'byHighPrice':
-                buttonElement.text('높은 가격순');
-                break;
-            case 'byMostBids':
-                buttonElement.text('입찰 많은순');
-                break;
-            case 'byMostInterest':
-                buttonElement.text('관심 많은순');
-                break;
-            default:
-                buttonElement.text('조회순');
-                break;
-        }
     }
 
     $('input[name="goods-target"]').change(function () {
@@ -113,6 +83,7 @@ $(document).ready(function () {
         window.location.href = currentUrl;
     });
 
+
     $('.filter-sorting .dropdown-item').click(function () {
         var koreanSortOption = $(this).text().trim();
         var englishSortOption;
@@ -153,4 +124,34 @@ $(document).ready(function () {
 
         window.location.href = newUrl;
     });
+
+    var sortOption = urlParams.get('sort');
+    var buttonElement = $('.filter-sorting .btn');
+
+    switch (sortOption) {
+        case 'byViews':
+            buttonElement.text('조회순');
+            break;
+        case 'byRegistration':
+            buttonElement.text('등록순');
+            break;
+        case 'byClosingSoon':
+            buttonElement.text('마감 임박순');
+            break;
+        case 'byLowPrice':
+            buttonElement.text('낮은 가격순');
+            break;
+        case 'byHighPrice':
+            buttonElement.text('높은 가격순');
+            break;
+        case 'byMostBids':
+            buttonElement.text('입찰 많은순');
+            break;
+        case 'byMostFavorite':
+            buttonElement.text('관심 많은순');
+            break;
+        default:
+            buttonElement.text('조회순');
+            break;
+    }
 });

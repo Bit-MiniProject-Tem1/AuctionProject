@@ -1,6 +1,7 @@
 package com.bit.auction.goods.service;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public interface AuctionService {
 
     Page<AuctionDTO> getAuctionList(Pageable pageable, Long categoryId, String sortOption, List<String> target, List<Character> status);
 
-    Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, String status);
+    Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, List<Character> status);
 
     void setAuction(AuctionDTO auctionDTO, Long categoryId, User user);
 
