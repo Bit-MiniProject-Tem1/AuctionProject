@@ -1,6 +1,5 @@
 package com.bit.auction.goods.repository;
 
-import com.bit.auction.goods.dto.PointHistoryDTO;
 import com.bit.auction.goods.entity.PointHistory;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PointHistoryRepository extends JpaRepository<PointHistory, Long> {
 

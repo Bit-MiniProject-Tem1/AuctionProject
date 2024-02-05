@@ -1,6 +1,5 @@
 package com.bit.auction.goods.repository;
 
-import com.bit.auction.goods.dto.PointDTO;
 import com.bit.auction.goods.entity.Point;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
