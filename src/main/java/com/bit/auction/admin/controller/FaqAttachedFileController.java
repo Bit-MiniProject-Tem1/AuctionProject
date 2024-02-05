@@ -1,4 +1,4 @@
-package com.bit.auction.user.controller;
+package com.bit.auction.admin.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

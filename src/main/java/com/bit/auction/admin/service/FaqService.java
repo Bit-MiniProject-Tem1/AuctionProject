@@ -1,8 +1,8 @@
-package com.bit.auction.user.service;
+package com.bit.auction.admin.service;
 
-import com.bit.auction.user.dto.FaqAttachedFileDTO;
-import com.bit.auction.user.dto.FaqDTO;
-import com.bit.auction.user.entity.Faq;
+import com.bit.auction.admin.dto.FaqAttachedFileDTO;
+import com.bit.auction.admin.dto.FaqDTO;
+import com.bit.auction.admin.entity.Faq;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,7 +15,9 @@ public interface FaqService {
 
     FaqDTO updateViewsCount(Long faqId);
 
-    void updateFaq(FaqDTO faqDTO, List<FaqAttachedFileDTO> uFileList);
+    void updateFaq(FaqDTO faqDTO);
+
+    void updateFaq(Long faqId, FaqDTO faqDTO);
 
     void deleteFaq(Long faqId);
 
@@ -25,13 +27,22 @@ public interface FaqService {
 
     Page<FaqDTO> findAll(Pageable pageable);
 
+    void delete(FaqDTO faqDTO);
+
     void save(FaqDTO faqDTO);
+
+    Faq save(Faq faq);
 
     FaqAttachedFileDTO getFaqAttachedFileDTO(FaqAttachedFileDTO faqAttachedFileDTO);
 
     FaqAttachedFileDTO getFaqAttachedFileDTO(Long faqId, Long fileId);
 
     FaqDTO findById(Long faqId);
+//
+    FaqDTO findTopByOrderByFaqIdDesc();
+
+    List<Faq> findAllByFaqId(FaqDTO faqDTO);
+    void deleteById(Long faqId);
 
     //---------------------------------------------------------------------------
 

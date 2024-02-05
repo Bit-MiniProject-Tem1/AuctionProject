@@ -1,9 +1,12 @@
-package com.bit.auction.user.repository;
+package com.bit.auction.admin.repository;
 
-import com.bit.auction.user.entity.Faq;
+import com.bit.auction.admin.dto.FaqDTO;
+import com.bit.auction.admin.entity.Faq;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface FaqRepository extends JpaRepository<Faq, Long> {
 //
@@ -34,4 +37,11 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     Page<Faq> findByCategoryAndTitleContainingOrContentContaining(Pageable pageable, String category, String title, String content);
 
     Page<Faq> findByCategoryAndTitleContainingOrCategoryAndContentContaining(Pageable pageable, String category1, String title, String category2, String content);
+
+    Faq findTopByOrderByFaqIdDesc();
+
+
+//    void deleteById(Long faqId);
+
+//    Faq save(Faq faq);
 }

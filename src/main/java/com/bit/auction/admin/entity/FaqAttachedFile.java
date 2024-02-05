@@ -1,12 +1,9 @@
-package com.bit.auction.user.entity;
+package com.bit.auction.admin.entity;
 
-import com.bit.auction.user.dto.FaqAttachedFileDTO;
+import com.bit.auction.admin.dto.FaqAttachedFileDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

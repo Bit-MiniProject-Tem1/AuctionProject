@@ -26,8 +26,6 @@
                         let viewboxHeight = 30;
                         let id = $('.view_box')[i].getAttribute('id');
 
-                        // console.log("id = " + id);
-
                         if (id == "content_box") {
                             viewboxHeight = viewboxHeight * 12;
                         }
@@ -51,22 +49,15 @@
                 const newFiles = fileInput.files;
                 attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
 
-                console.log('1')
                 let fileDataTransfer = new DataTransfer();
                 attachedFileList.forEach(file => fileDataTransfer.items.add(file));
 
-                console.log('2')
                 fileInput.files = fileDataTransfer.files;
-
-                console.log('3')
-
-                console.log('===============================');
 
                 for(const file of attachedFileList) {
                     console.log(file.name);
                 }
 
-                console.log('----------------------');
                 for(const file of fileInput.files) {
                     console.log(file.name);
                 }
@@ -77,72 +68,38 @@
                 // 기존에 출력된 파일 이름들을 지우기
                 fileNamesContainer.innerHTML = '';
 
-
-                // 선택된 파일들의 이름을 출력
-                /*for (const file of fileInput.files) {
-                    const fileNameParagraph = document.createElement('p');
-                    fileNameParagraph.textContent = file.name;
-                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
-                    fileNamesContainer.appendChild(fileNameParagraph);
-                }*/
-
-                console.log('1');
-/*
-
-                fileNamesPrint(fileInput, fileNamesContainer);
-*/
-
                 // for (const file of fileInput.files) {
                 for (let i = 0; i < fileInput.files.length; i++) {
                     const file = fileInput.files[i];
-                    console.log('3');
-
-                    // span 태그 생성
-                    // let addEle = document.createElement("div");
 
                     //파일 이름이 출력될 p태그 생성
                     const fileNameParagraph = document.createElement('p');
-                    // fileNameParagraph.textContent = file.name;
                     fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
                         "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
                         "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
-
-                    console.log('4');
 
                     let aTag = document.createElement("a");
                     aTag.textContent = file.name;
                     aTag.setAttribute("href", "");
 
-
                     let deleteBtnBox = document.createElement("span");
                     deleteBtnBox.setAttribute("style", "color: #bcbcbc; padding-left: 4px;")
 
                     let deleteBtn = document.createElement("botton");
-                    // deleteBtn.setAttribute("className", "bi bi-x-square");
                     deleteBtn.setAttribute("data-delete-filename", file.name);
-                    // deleteBtn.setAttribute("className", "deleteBtn bi bi-file-earmark-arrow-down-fill");
                     deleteBtn.className = "deleteBtn bi bi-x-square";   //bi bi-x-square  //bi bi-x-square-fill
                     deleteBtn.setAttribute("style", "style", "width: 16px; height: 16px; position: absolute; right: 0;" +
-                        " bottom: 0; z-index: 999; ");  //rgb(203, 213, 224)
-                    // deleteBtn.id = 'deleteBtn' + i;
-
-
-
-                    console.log('5');
+                        " bottom: 0; z-index: 999; ");
 
                     deleteBtn.onclick = (e) => {
 
                         const deleteFileName = e.target.getAttribute("data-delete-filename");
-
-                        console.log('6');
 
                         for(let i = 0; i < attachedFileList.length; i++) {
                             if(deleteFileName === attachedFileList[i].name) {
                                 attachedFileList.splice(i, 1);
                             }
                         }
-
-                        console.log('7');
 
                         // input에 첨부된 파일 삭제
                         let inputDataTransfer = new DataTransfer();
@@ -159,104 +116,18 @@
                     }
 
 
-                    /*addEle.appendChild(fileNameParagraph);
-                    addEle.appendChild(deleteBtn);*/
                     fileNameParagraph.appendChild(aTag);
-                    // deleteBtn.appendChild(iTag);
                     deleteBtnBox.appendChild(deleteBtn);
-                    // fileNameParagraph.appendChild(deleteBtn);
                     fileNameParagraph.appendChild(deleteBtnBox);
                     fileNamesContainer.appendChild(fileNameParagraph);
                 }
 
                 $("#file_box").height( $("#fileNames").height());
-
             }
 
             function focusChild() {
                 document.getElementsByName('content')[0].focus();
             }
-
-// 파일명 출력 및 다운로드 까지 완성
-/*
-            function updateFiles() {
-                // 파일 선택 input 요소
-                const fileInput = document.getElementById('uploadFiles');
-                const newFiles = fileInput.files;
-                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
-
-                console.log('1')
-                let fileDataTransfer = new DataTransfer();
-                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
-
-                console.log('2')
-                fileInput.files = fileDataTransfer.files;
-
-                console.log('3')
-
-                console.log('===============================');
-
-                for(const file of attachedFileList) {
-                    console.log(file.name);
-                }
-
-                console.log('----------------------');
-                for(const file of fileInput.files) {
-                    console.log(file.name);
-                }
-
-                // 파일 이름을 출력할 요소
-                const fileNamesContainer = document.getElementById('fileNames');
-
-                // 기존에 출력된 파일 이름들을 지우기
-                fileNamesContainer.innerHTML = '';
-
-
-                // 선택된 파일들의 이름을 출력
-                for (const file of fileInput.files) {
-                    const fileNameParagraph = document.createElement('p');
-                    fileNameParagraph.textContent = file.name;
-                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;")
-                    fileNamesContainer.appendChild(fileNameParagraph);
-                }
-
-                $("#file_box").height( $("#fileNames").height());
-
-            }*/
-
-
-
-            /*
-                        $(document).ready(function() {
-
-                            $('.view_box').on( 'keyup', 'textarea', function (e){
-                                let basicHeight = 30;
-
-                                if($("#title_box > .text_area")[0].scrollHeight > basicHeight) {
-                                    // $("#title_box").css('height', 'auto' );
-                                    $("#title_box").height( $("#title_box > .text_area")[0].scrollHeight );
-                                } else {
-                                    $("#title_box").height( basicHeight );
-                                }
-
-                                if($("#content_box > .text_area")[0].scrollHeight > basicHeight*10) {
-                                    // $("#content_box").css('height', 'auto' );
-                                    $("#content_box").height( $("#content_box > .text_area")[0].scrollHeight );
-                                } else {
-                                    $("#content_box").height(basicHeight * 10);
-                                }
-
-                                if($("#file_box > .text_area")[0].scrollHeight > basicHeight) {
-                                    // $("#file_box").css('height', 'auto' );
-                                    $("#file_box").height( $("#file_box > .text_area")[0].scrollHeight );
-                                } else {
-                                    $("#file_box").height( basicHeight );
-                                }
-
-                            });
-                            $('.view_box').find( 'textarea' ).keyup();
-                        });
-            */
 
         </script>
     </th:block>
@@ -336,60 +207,16 @@
                                 <label class="item_label">첨부파일</label>
                             </strong>
                         </div>
-
-                        <!---------------------------------------------------------------------------->
-
-                        <!--<div class="view_box" id="file_box" style="padding: 7px; height: 48px; display: flex; box-sizing: border-box;">
-&lt;!&ndash;                            <div style="font-size: 16px; position: relative; overflow: hidden; display: inline-block; vertical-align: middle;">&ndash;&gt;
-                            <div style="font-size: 16px; position: absolute; vertical-align: middle;">
-                                <label for="uploadFiles" style="width: 80px; height: 30px; text-align: center; vertical-align: middle; border: 1px solid #cbd5e0; border-radius: 5px; background-color: aliceblue;">파일 선택</label>
-                                <span id="fileNames">
-                                    &lt;!&ndash;<p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
-                                        <i class="bi bi-file-earmark-arrow-down-fill" style="color: #999999; margin-right: 3px;"></i>
-                                            &lt;!&ndash;<i class="bi bi-file-earmark-arrow-down" style="color: #999999; margin-right: 3px;"></i>&ndash;&gt;
-                                            &lt;!&ndash;<i class="bi bi-download" style="color: #999999; margin-right: 3px;"></i>&ndash;&gt;
-                                        <a th:text="${file.fileName}"
-                                           th:href="@{/file_download/{faqId}-{fileId}(faqId=${faqDTO.faqId}, fileId=${file.fileId})}"></a>
-                                    </p>&ndash;&gt;
-                                </span>
-&lt;!&ndash;                                <input autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple data-placeholder="none">&ndash;&gt;
-                                <input style="position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;" onchange="updateFiles()" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
-                            </div>
-                            &lt;!&ndash;<div style="width: 100%">
-                                <textarea class="text_area" name="attachedFile" id="attachedFile"></textarea>
-                            </div>&ndash;&gt;
-                        </div>-->
-
-                        <!---------------------------------------------------------------------------->
-
                         <div class="view_box" id="file_box" style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
-                            <!--<span>
-                                <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: aliceblue;">파일 선택</label>
-                            </span>-->
                             <span>
-
                                 <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: #dedede;">파일 선택</label>  <!--background-color: aliceblue;-->
-
                                 <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
-
                             </span>
                             <div style="margin: 0 10px 0 10px; padding-left: 15px; border-left: 2px solid #dedede;">
                                 <div id="fileNames" style="font-size: 16px; vertical-align: middle;">
                                 </div>
                             </div>
                         </div>
-
-                        <!---------------------------------------------------------------------------->
-
-                        <!--<div class="view_box" id="file_box" style="padding: 7px; height: 48px; display: flex; box-sizing: border-box;">
-                            <div style="font-size: 16px; position: absolute; vertical-align: middle;">
-                                <input autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple data-placeholder="none">
-                            </div>
-
-                        </div>-->
-
-                        <!---------------------------------------------------------------------------->
-
                     </div>
                 </div>
                 <div class="button_area">

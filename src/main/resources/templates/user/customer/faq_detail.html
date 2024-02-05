@@ -86,6 +86,25 @@
             }
 
 
+            function deleteFaq() {
+                fetch('/faq_delete', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    // body: JSON.stringify(data),  // 필요한 경우 body에 데이터 추가
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        // 성공 시 처리 로직 추가
+                        window.location.href = '/faq_delete';
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        // 오류 시 처리 로직 추가
+                    });
+            }
 
         </script>
     </th:block>
@@ -155,9 +174,12 @@
                 </div>
 
 <!--                <th:block th:if="${requestUrl.contains('/inquiry-management_')}">-->
-                    <div class="button_area">
-                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="redirectToModificationPage()" type="submit" id="modificationBtn" class="textTypeBtn">수정</button>
-                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="redirectToDeletePage()" type="submit" id="deleteBtn" class="textTypeBtn">삭제</button>
+                    <div class="button_area" th:with="faqId=${faqDTO.faqId}">
+                        <button th:hidden="${requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn" class="textTypeBtn">목록</button>
+                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn">수정</button>
+<!--                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
+                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" onclick="deleteFaq()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>
+                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/inquiry-management_main\''" type="button" id="toInquiryListBtn" class="textTypeBtn">목록</button>
                     </div>
 <!--                </th:block>-->
             </form>

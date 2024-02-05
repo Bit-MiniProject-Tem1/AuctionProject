@@ -107,17 +107,26 @@ input::placeholder {
 }
 
 #table_body_bottom, #inquiry_table_body_bottom {
-    height:1px;
+    height:4px;
     border-top: 2px solid #dedede;
 }
 
-.title_textArea {
+.td_textArea {
     text-align: left;
     text-indent: 20px;
     white-space: nowrap;         /* 텍스트가 줄 바꿈되지 않도록 설정 */
     overflow: hidden;            /* 넘치는 부분을 감추기 */
     text-overflow: ellipsis;     /* 생략 기호 (...)로 표시 */
     max-width: 560px;
+}
+
+.memberInfo_inquiryTitle {
+    text-align: left;
+    text-indent: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
 }
 
 /*----------------------------------------------------------*/
@@ -261,7 +270,6 @@ input::placeholder {
 
 .data_area {
     margin: 0 30px;
-    border: 1px solid skyblue;
     box-sizing: border-box;
 }
 
@@ -298,13 +306,18 @@ input::placeholder {
 
 #joinInfo{
     width: 450px;
-    border: 1px solid purple;
 }
 
 #inquiryHistory {
     width: 450px;
-    border: 1px solid purple;
     margin-left: 60px;
+}
+
+#memberInfo_container {
+    border: 1px solid #999999;
+    margin: 40px 0 40px;
+    padding-bottom: 50px;
+    border-radius: 10px;
 }
 
 .memberInfo_item>table {
@@ -332,6 +345,11 @@ input::placeholder {
     text-align: center;
     background-color: #f4f4f4;
     border: 1px solid #d4d4d4;
+}
+
+.cell {
+    border: 1px solid #d4d4d4;
+
 }
 
 #inquiryHistory .colName:first-child {

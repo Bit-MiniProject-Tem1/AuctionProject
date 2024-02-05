@@ -24,6 +24,8 @@ public class UserDTO {
     private LocalDateTime userRegdate;
     private String role;
     private String curUserPw;
+    private String searchCondition;
+    private String searchKeyword;
 
 
 

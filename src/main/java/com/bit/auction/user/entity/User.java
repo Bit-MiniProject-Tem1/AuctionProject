@@ -42,6 +42,10 @@ public class User {
 
     @Transient
     private String findId;
+    @Transient
+    private String searchCondition;
+    @Transient
+    private String searchKeyword;
 
     public UserDTO toDTO() {
         return UserDTO.builder()

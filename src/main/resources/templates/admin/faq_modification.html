@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>자주 묻는 질문 - 수정</title>
+    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+
+
+    <th:block layout:fragment="css">
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+
+        <script th:inline="javascript">
+            // 서버에서 받은 faqDTO와 base64DataList 데이터
+            /*<![CDATA[*/
+            let faqDTO = /*[[${faqDTO}]]*/ null;
+            let fileDataList = /*[[${fileDataList}]]*/ null;
+            /*]]>*/
+
+/*
+            /!*<![CDATA[*!/
+            let base64DataList = /!*[[${base64DataList}]]*!/ null;
+            /!*]]>*!/
+*/
+
+            console.log('@1');
+            // let fileList = faqDTO.faqAttachedFileDTOList ? JSON.parse(faqDTO.faqAttachedFileDTOList) : [];
+
+            // console.log('#base64DataList is null = ' + (base64DataList == null));
+            console.log('#fileDataList is null = ' + (fileDataList == null));
+            console.log('@2');
+        </script>
+
+        <script>
+            let attachedFileList = [];
+
+
+            console.log('@3');
+            if (fileDataList != null) {
+                console.log('@4');
+                document.addEventListener('DOMContentLoaded', function () {
+                    console.log('@5');
+                    let dataTransfer = new DataTransfer();
+
+                    fileDataList.forEach(function (fileDataMap) {
+                        console.log('@6');
+                        let binaryData = fileDataMap.data;
+                        let blob = b64toBlob(binaryData, fileDataMap.type);
+                        let file = new File([blob], fileDataMap.name, {type: fileDataMap.type});
+                        dataTransfer.items.add(file);
+                    });
+
+                    let fileInput = document.getElementById('uploadFiles');
+                    fileInput.files = dataTransfer.files;
+
+                    console.log("########### fileInput.files.length = {}", fileInput.files.length);
+                    for (let i = 0; i < fileInput.files.length; i++) {
+                        console.log(fileInput.files[i].name);
+                    }
+
+                    updateFiles();
+                });
+            }
+
+
+
+
+
+
+/*
+
+            console.log('@3');
+            if(faqDTO.faqAttachedFileDTOList != null) {
+
+                console.log('@4');
+                document.addEventListener('DOMContentLoaded', function() {
+
+                    console.log('@5');
+                    // faqDTO에서 fileList 데이터를 가져와서 배열에 저장
+                    console.log('@6');
+                    let fileList = JSON.parse(base64DataList);
+
+
+                    console.log('@7');
+                    // DataTransfer 객체 생성
+                    let dataTransfer = new DataTransfer();
+
+                    // fileList 배열에 있는 파일 정보를 DataTransfer 객체에 추가
+                    fileList.forEach(function(fileInfo) {
+                        console.log('@8');
+                        let idx = fileList.indexOf(fileInfo);
+
+                        // index가 -1이 아닌 경우에만 Blob을 생성하도록 처리
+                        if (idx !== -1) {
+                            // fileList[idx]를 이용하여 데이터에 접근
+                            let binaryData =base64DataList[idx];
+
+                            // let blob = new Blob([binaryData], { type: fileInfo.type });
+                            let blob = b64toBlob(binaryData, fileInfo.type);
+                            let file = new File([blob], fileInfo.name, { type: fileInfo.type });
+                            dataTransfer.items.add(file);
+                        }
+
+                    });
+
+                    // input 태그에 DataTransfer 객체를 설정하여 파일 정보를 추가
+                    let fileInput = document.getElementById('uploadFiles');
+                    fileInput.files = dataTransfer.files;
+
+
+                    console.log("########### fileInput.files.length = {}", fileInput.files.length);
+                    for(let i=0; i<fileInput.files.length; i++) {
+                        console.log(fileInput.files[i].name);
+                    }
+                });
+            }
+*/
+
+            // base64를 Blob으로 변환하는 함수
+            function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+                const byteCharacters = atob(b64Data);
+                const byteArrays = [];
+
+                for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    const slice = byteCharacters.slice(offset, offset + sliceSize);
+                    const byteNumbers = new Array(slice.length);
+
+                    for (let i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    const byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
+                }
+
+                const blob = new Blob(byteArrays, { type: contentType });
+                return blob;
+            }
+
+            $(document).ready(function() {
+
+                $('.view_box').on( 'keyup', 'textarea', function (e){
+
+                    for (let i=0; i<$('.view_box').length-1; i++) {
+                        let viewboxHeight = 30;
+                        let id = $('.view_box')[i].getAttribute('id');
+
+                        if (id == "content_box") {
+                            viewboxHeight = viewboxHeight * 12;
+                        }
+
+                        if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                            $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                        } else {
+                            $("#" + id).height( viewboxHeight );
+                        }
+                    }
+                });
+
+                $('.view_box').find( 'textarea' ).keyup();
+            });
+
+
+
+            function updateFiles() {
+                console.log('5');
+                // 파일 선택 input 요소
+                const fileInput = document.getElementById('uploadFiles');
+                const newFiles = fileInput.files;
+                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
+
+                let fileDataTransfer = new DataTransfer();
+                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
+
+                fileInput.files = fileDataTransfer.files;
+
+                for(const file of attachedFileList) {
+                    console.log(file.name);
+                }
+
+                for(const file of fileInput.files) {
+                    console.log(file.name);
+                }
+
+                // 파일 이름을 출력할 요소
+                const fileNamesContainer = document.getElementById('fileNames');
+
+                // 기존에 출력된 파일 이름들을 지우기
+                fileNamesContainer.innerHTML = '';
+
+                // for (const file of fileInput.files) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+
+                    //파일 이름이 출력될 p태그 생성
+                    const fileNameParagraph = document.createElement('p');
+                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
+                        "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
+                        "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
+
+                    let aTag = document.createElement("a");
+                    aTag.textContent = file.name;
+                    aTag.setAttribute("href", "");
+
+                    let deleteBtnBox = document.createElement("span");
+                    deleteBtnBox.setAttribute("style", "color: #bcbcbc; padding-left: 4px;")
+
+                    let deleteBtn = document.createElement("botton");
+                    deleteBtn.setAttribute("data-delete-filename", file.name);
+                    deleteBtn.className = "deleteBtn bi bi-x-square";   //bi bi-x-square  //bi bi-x-square-fill
+                    deleteBtn.setAttribute("style", "style", "width: 16px; height: 16px; position: absolute; right: 0;" +
+                        " bottom: 0; z-index: 999; ");
+
+                    deleteBtn.onclick = (e) => {
+
+                        const deleteFileName = e.target.getAttribute("data-delete-filename");
+
+                        for(let i = 0; i < attachedFileList.length; i++) {
+                            if(deleteFileName === attachedFileList[i].name) {
+                                attachedFileList.splice(i, 1);
+                            }
+                        }
+
+                        // input에 첨부된 파일 삭제
+                        let inputDataTransfer = new DataTransfer();
+
+                        for(i in attachedFileList) {
+                            inputDataTransfer.items.add(attachedFileList[i]);
+                        }
+
+                        fileInput.files = inputDataTransfer.files;
+
+                        // 클릭된 버튼의 파일 삭제
+                        const parentTag = e.target.parentNode.parentNode;
+                        parentTag.remove();
+                    }
+
+
+                    fileNameParagraph.appendChild(aTag);
+                    deleteBtnBox.appendChild(deleteBtn);
+                    fileNameParagraph.appendChild(deleteBtnBox);
+                    fileNamesContainer.appendChild(fileNameParagraph);
+                }
+
+                $("#file_box").height( $("#fileNames").height());
+            }
+
+            function focusChild() {
+                document.getElementsByName('content')[0].focus();
+            }
+
+        </script>
+
+<!--        <script>
+            // JavaScript 코드에서 fileList를 가져와서 배열에 저장하
+            let fileList = faqDTO.faqAttachedFileDTOList ? JSON.parse(faqDTO.faqAttachedFileDTOList) : [];
+
+            console.log("========== faqAttachedFileDTOList ==========")
+            // fileList 배열 사용 예시
+            for (let i = 0; i < fileList.length; i++) {
+                console.log('File ' + (i + 1) + ':', fileList[i]);
+                // 원하는 로직을 추가할 수 있습니다.
+            }
+
+            $(() => {
+                const fileInput = document.getElementById('uploadFiles');
+                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileList));
+
+                let fileDataTransfer = new DataTransfer();
+                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
+
+                fileInput.files = fileDataTransfer.files;
+
+                for(const file of attachedFileList) {
+                    console.log(file.name);
+                }
+
+                for(const file of fileInput.files) {
+                    console.log(file.name);
+                }
+
+                // 파일 이름을 출력할 요소
+                const fileNamesContainer = document.getElementById('fileNames');
+
+                // 기존에 출력된 파일 이름들을 지우기
+                fileNamesContainer.innerHTML = '';
+
+                // for (const file of fileInput.files) {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+
+                    //파일 이름이 출력될 p태그 생성
+                    const fileNameParagraph = document.createElement('p');
+                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
+                        "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
+                        "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
+
+                    let aTag = document.createElement("a");
+                    aTag.textContent = file.name;
+                    aTag.setAttribute("href", "");
+
+                    let deleteBtnBox = document.createElement("span");
+                    deleteBtnBox.setAttribute("style", "color: #bcbcbc; padding-left: 4px;")
+
+                    let deleteBtn = document.createElement("botton");
+                    deleteBtn.setAttribute("data-delete-filename", file.name);
+                    deleteBtn.className = "deleteBtn bi bi-x-square";   //bi bi-x-square  //bi bi-x-square-fill
+                    deleteBtn.setAttribute("style", "style", "width: 16px; height: 16px; position: absolute; right: 0;" +
+                        " bottom: 0; z-index: 999; ");
+
+                    deleteBtn.onclick = (e) => {
+
+                        const deleteFileName = e.target.getAttribute("data-delete-filename");
+
+                        for(let i = 0; i < attachedFileList.length; i++) {
+                            if(deleteFileName === attachedFileList[i].name) {
+                                attachedFileList.splice(i, 1);
+                            }
+                        }
+
+                        // input에 첨부된 파일 삭제
+                        let inputDataTransfer = new DataTransfer();
+
+                        for(i in attachedFileList) {
+                            inputDataTransfer.items.add(attachedFileList[i]);
+                        }
+
+                        fileInput.files = inputDataTransfer.files;
+
+                        // 클릭된 버튼의 파일 삭제
+                        const parentTag = e.target.parentNode.parentNode;
+                        parentTag.remove();
+                    }
+
+
+                    fileNameParagraph.appendChild(aTag);
+                    deleteBtnBox.appendChild(deleteBtn);
+                    fileNameParagraph.appendChild(deleteBtnBox);
+                    fileNamesContainer.appendChild(fileNameParagraph);
+                }
+
+                $("#file_box").height( $("#fileNames").height());
+            });-->
+        </script>
+    </th:block>
+</head>
+<body>
+<div class="content_area" layout:fragment="content" >
+    <div class="title_area">
+        <div class="title">
+            <strong>자주 묻는 질문 - 수정</strong>
+        </div>
+    </div>
+    <div id="faq_add_container">
+        <div class="detailView_area">
+            <form id="detailViewForm" th:action="@{/faq_modification/faq-{faqId}(faqId=${faqDTO.faqId})}" th:object="${FaqDTO}" method="post" enctype="multipart/form-data">
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">카테고리</label>
+                            </strong>
+                        </div>
+                        <select name="category" id="category" style="width: 180px; height: 42px; font-size: 18px;">
+
+                            <option value="null" hidden
+                                    th:selected="${category == 'null'}"></option>
+                            <option value="이용정책" style="font-size: 16px;"
+                                    th:selected="${category == '이용정책'}">이용정책</option>
+                            <option value="공통" style="font-size: 16px;"
+                                    th:selected="${category == '공통'}">공통</option>
+                            <option value="구매" style="font-size: 16px;"
+                                    th:selected="${category == '구매'}">구매</option>
+                            <option value="판매" style="font-size: 16px;"
+                                    th:selected="${category == '판매'}">판매</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">제목</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="title_box">
+                            <textarea class="text_area" name="title" th:text="${faqDTO.title}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">내용</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="content_box" onclick="focusChild()">
+                            <textarea class="text_area" name="content" th:text="${faqDTO.content}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail_item">
+                    <div>
+                        <div class="item_label_area">
+                            <div class="label_icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-record-fill"></i>
+                            </div>
+                            <strong>
+                                <label class="item_label">첨부파일</label>
+                            </strong>
+                        </div>
+                        <div class="view_box" id="file_box" style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
+                            <span>
+                                <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: #dedede;">파일 선택</label>  <!--background-color: aliceblue;-->
+                                <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
+                            </span>
+                            <div style="margin: 0 10px 0 10px; padding-left: 15px; border-left: 2px solid #dedede;">
+                                <div id="fileNames" style="font-size: 16px; vertical-align: middle;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button_area" th:with="faqId=${faqDTO.faqId}">
+                    <button type="submit" id="saveBtn" class="textTypeBtn">저장</button>
+                    <button th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="submit" id="cancelBtn" class="textTypeBtn">취소</button>
+                </div>
+<!--
+
+                <div class="button_area" th:with="faqId=${faqDTO.faqId}">
+                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn">수정</button>
+                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" onclick="redirectToDeletePage()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>
+                </div>
+-->
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
