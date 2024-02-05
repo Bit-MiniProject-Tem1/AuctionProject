@@ -9,72 +9,87 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:inline="javascript">
+            // 추가된 파일들을 담아줄 배열
             const uploadFiles = [];
+            // 기존의 업로드되어있던 파일들을 담아줄 배열
+            // 게시글번호, 파일번호, 파일이름을 객체형태로 담아준다.
             const originFiles = [];
+            // 변경된 파일들을 담아줄 배열
             const changeFiles = [];
 
-
             $(() => {
+                // session, model에 담겨있는 값을 javascript에서 사용
+                // thymeleaf에서 모델이나 세션에 담겨있는 값을 사용할 때는
+                // script 태그 선언문에 th:inline속성을 선언해줘야한다.
                 const loginUser = /*[[${#authentication.principal.user}]]*/;
                 const inquiryWriter = /*[[${getInquiry.inquiryWriter}]]*/;
                 const isAdmin = /*[[${#authorization.expression('hasRole(''ROLE_ADMIN'')')}]]*/;
-                //const inquiryAnswer =/*[[${getInquiry.inquiryAnswer}]]*/;
-// if([[${getInquiry.inquiryAnswer}]] === null || [[${getInquiry.inquiryAnswer}]] ===""){
-//     console.log("dd");
-// }
-                if (loginUser == null || loginUser.userId !== inquiryWriter) {
+                const inquiryAnswer = /*[[${getInquiry.inquiryAnswer}]]*/;
+
+                if(loginUser == null || loginUser.userId !== inquiryWriter) {
                     $("#deleteBtn").hide();
                     $("#btnUpdate").hide();
                     $("#inquiryTitle").attr("readonly", true);
                     $("#inquiryContent").attr("readonly", true);
-                //    $("#inquiryAnswer").attr("readonly", true);
+                }
+
+                if (inquiryAnswer != "") {
+                    $("#inquiryAnswer").show();
+                    $("#inquiryAnswerBox").show();
+                } else {
+                    $("#inquiryAnswer").hide();
+                    $("#inquiryAnswerBox").hide();
                 }
 
                 if (isAdmin) {
                     // ADMIN 권한이 있는 경우 수정 및 삭제 버튼 표시
                     $("#deleteBtn").show();
                     $("#btnUpdate").show();
+                    $("#inquiryAnswer").show();
+                    $("#inquiryAnswerBox").show();
                     $("#inquiryTitle").attr("readonly", false);
                     $("#inquiryContent").attr("readonly", false);
-                  //  $("#inquiryAnswer").attr("readonly", false);
+                    $("#inquiryAnswer").attr("readonly", false);
                 }
 
-                // if ([[${getinquiry.inquiryAnswer}]] != "") {
-                //     $("#inquiryAnswer").show();
-                // } else {
-                //     $("#inquiryAnswer").hide();
-                // }
 
 
 
 
-                for (let i = 0; i < $("#inquiryFileCnt").val(); i++) {
+                // originFiles 배열에 기존에 업로드된 파일정보들 담기
+                for(let i = 0; i < $("#inquiryFileCnt").val(); i++) {
                     const originFileObj = {
                         inquiryNo: $("#inquiryNo" + i).val(),
                         inquiryFileNo: $("#inquiryFileNo" + i).val(),
                         inquiryFileName: $("#inquiryFileName" + i).val(),
-                        inquiryFileStatus: "N"
+                        inquiryFileStatus: "N" //수정되면 U, 삭제되면 D
                     }
 
                     originFiles.push(originFileObj);
                 }
 
-
                 $("#uploadFiles").on("change", (e) => {
+                    // input에 추가된 파일들을 변수로 받기
                     const files = e.target.files;
 
+                    // 변수로 받아온 파일들 배열로 변환
                     const fileArr = Array.prototype.slice.call(files);
 
-                    for (file of fileArr) {
+                    // 배열에 담긴 파일 하나씩 꺼내서 미리보기 처리
+                    for(file of fileArr) {
+                        // 미리보기 처리 메소드만들어서 호출
                         imageLoader(file);
                     }
                 });
 
-
+                // updateForm 서브밋될 때
+                // uploadFiles 배열에 담겨있는 파일들은 uploadFiles input에 담기
+                // changeFiles 배열에 담겨있는 파일들은 changeFiles input에 담기
+                // originFiles 배열에 담겨있는 객체들은 JSON.stringify로 문자열로 변환 후에 originFiles input에 담기
                 $("#btnUpdate").on("click", (e) => {
                     let dt1 = new DataTransfer();
 
-                    for (i in uploadFiles) {
+                    for(i in uploadFiles) {
                         const file = uploadFiles[i];
                         dt1.items.add(file);
                     }
@@ -83,7 +98,7 @@
 
                     let dt2 = new DataTransfer();
 
-                    for (i in changeFiles) {
+                    for(i in changeFiles) {
                         const file = changeFiles[i];
                         dt2.items.add(file);
                     }
@@ -113,27 +128,26 @@
                     });
                 });
 
-
+                // a태그 클릭하면 get방식으로만 동작하기 때문에 DeleteMapping으로 보내려면
+                // ajax로 처리해야한다.
                 $("#deleteBtn").on("click", (e) => {
                     e.preventDefault();
-                    var confirmDelete = confirm("정말로 이 문의를 삭제하시겠습니까?");
-                    if (confirmDelete) {
-                        $.ajax({
-                            url: `/inquiry/inquiry/${$("#inquiryNo").val()}`,
-                            type: 'delete',
-                            success: (obj) => {
-                                alert(obj.item.msg);
-                                location.href = "/mypage/inquiry";
-                            },
-                            error: (err) => {
-                                console.log(err);
-                            }
-                        });
-                    }
+
+                    $.ajax({
+                        url: `/inquiry/inquiry/${$("#inquiryNo").val()}`,
+                        type: 'delete',
+                        success: (obj) => {
+                            alert(obj.item.msg);
+                            location.href = "/inquiry/inquiry-list";
+                        },
+                        error: (err) => {
+                            console.log(err);
+                        }
+                    });
                 });
             });
 
-
+            // 미리보여지는 업로드된 파일 이미지를 클릭했을 때 display: none;되어있는 input 클릭 이벤트 발생
             const fnFileChange = (inquiryFileNo) => {
                 const changeFileInput = document.getElementById("changeFile" + inquiryFileNo);
 
@@ -158,7 +172,7 @@
                     const img = document.getElementById("img" + inquiryFileNo);
                     const p = document.getElementById("fileName" + inquiryFileNo);
 
-                    if (fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                    if(fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
                         img.src = ee.target.result;
                     } else {
                         img.src = "/images/defaultFileImg.png";
@@ -170,8 +184,8 @@
                 reader.readAsDataURL(fileArr[0]);
 
                 // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for (let i = 0; i < originFiles.length; i++) {
-                    if (inquiryFileNo == originFiles[i].inquiryFileNo) {
+                for(let i = 0; i < originFiles.length; i++) {
+                    if(inquiryFileNo == originFiles[i].inquiryFileNo) {
                         originFiles[i].inquiryFileStatus = "U";
                         originFiles[i].newFileName = fileArr[0].name;
                     }
@@ -186,8 +200,8 @@
                 const deleteFile = ele.getAttribute("data-deleteFile");
 
                 // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for (let i = 0; i < originFiles.length; i++) {
-                    if (deleteFile === originFiles[i].inquiryFileNo) {
+                for(let i = 0; i < originFiles.length; i++) {
+                    if(deleteFile === originFiles[i].inquiryFileNo) {
                         originFiles[i].inquiryFileStatus = "D";
                     }
                 }
@@ -213,7 +227,7 @@
                     img.setAttribute("style", "width: 100%; height: 100%; z-index: none;");
 
                     // 이미지 파일인지 아닌지 판단
-                    if (file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                    if(file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
                         img.src = e.target.result;
                     } else {
                         img.src = "/images/defaultFileImg.png";
@@ -253,9 +267,9 @@
 
                     const deleteFile = ele.getAttribute("deleteFile");
 
-                    for (let i = 0; i < uploadFiles.length; i++) {
+                    for(let i = 0; i < uploadFiles.length; i++) {
                         //배열에서도 같은 이름의 파일 삭제
-                        if (deleteFile === uploadFiles[i].name) {
+                        if(deleteFile === uploadFiles[i].name) {
                             uploadFiles.splice(i, 1);
                         }
                     }
@@ -267,7 +281,7 @@
 
                     let dt = new DataTransfer();
 
-                    for (i in uploadFiles) {
+                    for(i in uploadFiles) {
                         const file = uploadFiles[i];
                         dt.items.add(file);
                     }
@@ -298,7 +312,6 @@
                 window.location = '/inquiry/fileDown.do?inquiryNo=' + inquiryNo
                     + '&inquiryFileNo=' + inquiryFileNo;
             }
-
         </script>
     </th:block>
     <title>문의 상세페이지</title>
@@ -310,7 +323,7 @@
     </div>
 
     <form id="updateForm" action="/inquiry/inquiry" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="inquiryNo" id="inquiryNo" th:value="${getInquiry.inquiryNo }">
+        <input type="hidden" name="inquiryNo" id="inquiryNo" th:value="${getInquiry.inquiryNo}">
         <input type="hidden" name="originFiles" id="originFiles">
 
         <div class="inquiry_box2">
@@ -356,54 +369,52 @@
             <div th:each="file : ${getInquiry.inquiryFileDTOList}" style="display: inline-block; position: relative;
                                          width: 150px; height: 120px; margin: 5px;
                                          border: 1px solid #00f; z-index: 1;">
-                <input type="hidden" th:id="'inquiryNo' + ${fileStat.index }"
-                       th:value="${file.inquiryNo }">
-                <input type="hidden" th:id="'inquiryFileNo' + ${fileStat.index }"
-                       th:value="${file.inquiryFileNo }">
-                <input type="hidden" th:id="'inquiryFileName' + ${fileStat.index }"
-                       th:value="${file.inquiryFileName }">
-                <input type="file" th:id="'changeFile' + ${file.inquiryFileNo }"
-                       th:name="'changeFile' + ${file.inquiryFileNo }"
+                <input type="hidden" th:id="'inquiryNo' + ${fileStat.index}"
+                       th:value="${file.inquiryNo}">
+                <input type="hidden" th:id="'inquiryFileNo' + ${fileStat.index}"
+                       th:value="${file.inquiryFileNo}">
+                <input type="hidden" th:id="'inquiryFileName' + ${fileStat.index}"
+                       th:value="${file.inquiryFileName}">
+                <input type="file" th:id="'changeFile' + ${file.inquiryFileNo}"
+                       th:name="'changeFile' + ${file.inquiryFileNo}"
                        style="display: none;"
-                       th:onchange="fnGetChangeFileInfo([[${file.inquiryFileNo }]], event)">
+                       th:onchange="fnGetChangeFileInfo([[${file.inquiryFileNo}]], event)">
                 <input th:if="${fileStat.last}" type="hidden" id="inquiryFileCnt"
-                       name="inquiryFileCnt" th:value="${fileStat.count }">
-                <img th:if="${file.inquiryFileCate } == 'image'"
-                     th:id="'img' + ${file.inquiryFileNo }"
+                       name="inquiryFileCnt" th:value="${fileStat.count}">
+                <img th:if="${file.inquiryFileCate} == 'image'"
+                     th:id="'img' + ${file.inquiryFileNo}"
                      th:src="@{'https://kr.object.ncloudstorage.com/bitcamp-bucket-22/inquiry/' + ${file.inquiryFileName}}"
                      style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
                      class="fileImg"
                      th:onclick="fnFileChange([[${file.inquiryFileNo}]])">
                 <img th:if="${file.inquiryFileCate} != 'image'"
-                     th:id="'img' + ${file.inquiryFileNo }"
+                     th:id="'img' + ${file.inquiryFileNo}"
                      src="/images/defaultFileImg.png"
                      style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
                      class="fileImg"
                      th:onclick="fnFileChange([[${file.inquiryFileNo}]])">
                 <input type="button" class="btnDelete" value="x"
-                       th:data-deleteFile="${file.inquiryFileNo }"
+                       th:data-deleteFile="${file.inquiryFileNo}"
                        style="width: 30px; height: 30px;
                                                position: absolute; right: 0; bottom: 0;
                                                z-index: 999;
                                                background-color: rgba(255, 255, 255, 0.1);
                                                color: #f00;"
                        onclick="fnDeleteFile(event)">
-                <p th:id="'fileName' + ${file.inquiryFileNo }"
+                <p th:id="'fileName' + ${file.inquiryFileNo}"
                    style="display: inline-block; font-size: 8px;
                                            cursor: pointer;"
-                   th:onclick="fnFileDown([[${file.inquiryNo}]], [[${file.inquiryFileNo }]])"
+                   th:onclick="fnFileDown([[${file.inquiryNo}]], [[${file.inquiryFileNo}]])"
                    th:text="${file.inquiryFileOrigin}">
                 </p>
             </div>
         </div>
 
-        <div class="inquiry_box2">
-            <h3 for="inquiryAnswer" class="inquiry_box2_content" id="inquiryAnswerSection">문의 답변</h3>
+        <div class="inquiry_box2" id="inquiryAnswerBox">
+            <h3 for="inquiryAnswer" class="inquiry_box2_content">문의 답변</h3>
         </div>
-        <textarea id="inquiryAnswer" name="inquiryAnswer" class="inquiry_content2"
-                  th:text="${getInquiry != null ? getInquiry.inquiryAnswer : ''}"
-                  placeholder="문의 하신 내용에 답변이 완료 되지 않았습니다."></textarea>
-        </form>
+        <textarea id="inquiryAnswer" name="inquiryAnswer" class="inquiry_content2" th:text="${getInquiry.inquiryAnswer}" readonly></textarea>
+    </form>
 
 
         <button class="inquiry_btn" type="button" id="btnUpdate" >수 정</button>

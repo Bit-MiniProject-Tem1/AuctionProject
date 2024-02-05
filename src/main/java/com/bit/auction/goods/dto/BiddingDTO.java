@@ -22,6 +22,7 @@ public class BiddingDTO {
 
     private LocalDateTime date;
 
+    @Builder.Default
     private int status = 1;
 
     private Long auctionId;

@@ -26,7 +26,7 @@ class UserControllerTest {
     void join() {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId("admin");
-        userDTO.setUserPw(passwordEncoder.encode("123")); // 패스워드 인코딩 필요
+        userDTO.setUserPw(passwordEncoder.encode("123"));
         userDTO.setUserName("관리자");
         userDTO.setUserBirth("999999");
         userDTO.setUserTel("01099999999");

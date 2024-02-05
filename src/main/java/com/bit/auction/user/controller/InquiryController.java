@@ -74,14 +74,13 @@ public class InquiryController {
         logger.info("getInquiry: {}", inquiryService.getInquiry(inquiryNo));
 
         InquiryDTO inquiryDTO = inquiryService.getInquiry(inquiryNo);
-        if(inquiryDTO.getInquiryAnswer() == null){
-            inquiryDTO.setInquiryAnswer("");
-        }
+
         mav.addObject("getInquiry", inquiryDTO);
 
 //        mav.addObject("getInquiry", inquiryService.getInquiry(inquiryNo));
         mav.setViewName("user/mypage/getInquiry.html");
 //        mav.setViewName("user/mypage/testInquiry.html");
+
 
         return mav;
     }
