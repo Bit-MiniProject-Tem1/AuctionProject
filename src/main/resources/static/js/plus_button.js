@@ -15,17 +15,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // 초기에 표시할 상품 수와 증가할 수를 설정합니다.
     var itemsToShow = [4, 4, 4];
     var increments = [4, 4, 4];
-    var maxItems = 11; // 최대 보여줄 항목 수
+    var maxItems = 12; // 최대 보여줄 항목 수
 
     // 각 컨테이너에 대한 현재 수에 따라 항목을 표시하거나 숨기는 함수를 작성합니다.
     function showHideItems(containerIndex) {
-        var container = containers[containerIndex];
-        var items = container.querySelectorAll('.search-goods');
-        for (var i = 0; i < items.length; i++) {
-            if (i < itemsToShow[containerIndex]) {
-                items[i].style.display = 'block';
-            } else {
-                items[i].style.display = 'none';
+        for (var i = 0; i < containers.length; i++) {
+            var container = containers[i];
+            var items = container.querySelectorAll('.search-goods');
+            for (var j = 0; j < items.length; j++) {
+                if (j < itemsToShow[i]) {
+                    items[j].style.display = 'block';
+                } else {
+                    items[j].style.display = 'none';
+                }
             }
         }
     }
@@ -49,9 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     loadMoreBtns[index].innerText = '더 보기';
                 }
 
+                // 모든 컨테이너에 대해 항목을 숨기거나 표시합니다.
                 showHideItems(index);
 
-                // '더 보기' 버튼을 눌렀을 때만 스크롤합니다.
+                // '더 보기' 또는 '접기' 버튼을 눌렀을 때만 스크롤합니다.
                 if (loadMoreBtns[index].innerText === '더 보기') {
                     containers[index].scrollIntoView({ behavior: 'smooth' });
                 }
