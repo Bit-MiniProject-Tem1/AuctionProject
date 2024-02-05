@@ -98,7 +98,7 @@ body{
 }
 
 .inquiry_btn {
-    margin-top: 10px;
+    margin-top: 50px;
     margin-bottom: 50px;
     margin-left: 10px;
     background-color: black;
@@ -110,7 +110,7 @@ body{
 }
 
 .inquiry_btn2 {
-    margin-top: 10px;
+    margin-top: 50px;
     margin-bottom: 50px;
     background-color: red;
     border-radius: 15px;
