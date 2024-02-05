@@ -103,30 +103,7 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         });
     }
 
-    @Override
-    public Page<Auction> searchMyBiddingList(Pageable pageable, String userId) {
-        List<Auction> auctionList = jpaQueryFactory
-                .selectFrom(auction)
-                .join(bidding)
-                .on(auction.id.eq(bidding.auctionId).and(bidding.userId.eq(userId)))
-                .fetch();
 
-        auctionList.forEach(a -> {
-            String url = jpaQueryFactory
-                    .select(auctionImg.fileUrl)
-                    .from(auctionImg)
-                    .where(auctionImg.auction.id.eq(a.getId())
-                            .and(auctionImg.isRepresentative.eq(true))
-                    )
-                    .fetchOne();
-
-            a.representativeImgUrl(url);
-        });
-
-        long totalCnt = auctionList.size();
-
-        return new PageImpl<>(auctionList, pageable, totalCnt);
-    }
 
     private BooleanBuilder eqCategoryId(List<Long> subCategoryIdList) {
         if (subCategoryIdList.get(0) == 0L) {
