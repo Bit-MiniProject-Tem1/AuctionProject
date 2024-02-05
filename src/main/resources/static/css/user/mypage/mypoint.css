@@ -2,9 +2,10 @@
     height: 200px;
     margin-top: 50px;
     margin-left: 63px;
-    border: 1px solid #a2b6d7;
-    background: #E0E9F8;
+    border: 1px solid black;
+    background: rgba(224,224,224,0.38);
     width: 480px;
+    border-radius: 20px;
 }
 
 .button-container {
@@ -13,8 +14,10 @@
     float: right;
     height: 200px;
     width: 440px;
-    border: 1px solid #ADC0DE;
+    border: 1px solid black;
     padding: 50px 0px 0px 21.5px;
+    background: rgba(224,224,224,0.38);
+    border-radius: 20px;
 }
 
 .button-area{
@@ -55,23 +58,25 @@
 #chargePoint {
     width: 180px;
     height: 100px;
-    background-color: rgba(156, 184, 224, 0.85);
+    background-color: rgb(65, 185, 121);
     margin-right: 8.5px;
     font-family: Pretendard;
     font-size: 25px;
     border: 1px solid;
     color:white;
+    border-radius: 20px;
 }
 
 #withdrawPoint {
     width: 180px;
     height: 100px;
-    background-color: rgba(156, 184, 224, 0.85);
+    background-color: rgb(239, 98, 83);
     margin-left: 8.5px;
     font-family: Pretendard;
     font-size: 25px;
     border: 1px solid;
     color:white;
+    border-radius: 20px;
 }
 
 #chargePoint:hover{
@@ -85,7 +90,7 @@
 }
 .v-line {
     margin: -30px 10px 0px 10px;
-    border-left : 1.1px solid #32a1ce;
+    border-left : 1.1px solid black;
     height : 160px;
 
 }
@@ -98,8 +103,8 @@ table {
 
 
 th {
-    background: rgba(52, 155, 219, 0.55);
-    color: white;
+    background: rgba(224,224,224,0.38);
+    color: black;
     font-weight: bold;
     text-align: center;
 }

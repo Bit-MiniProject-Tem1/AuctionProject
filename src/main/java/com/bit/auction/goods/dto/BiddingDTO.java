@@ -22,6 +22,8 @@ public class BiddingDTO {
 
     private LocalDateTime date;
 
+    private char auctionStatus;
+
     private char status;
 
     private Long auctionId;
@@ -36,6 +38,7 @@ public class BiddingDTO {
                 .biddingPrice(biddingPrice)
                 .payment(payment)
                 .status(status)
+                .auctionStatus(auctionStatus)
                 .date(date)
                 .build();
     }

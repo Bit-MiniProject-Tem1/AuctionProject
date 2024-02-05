@@ -21,6 +21,8 @@ public class QBidding extends EntityPathBase<Bidding> {
 
     public final NumberPath<Long> auctionId = createNumber("auctionId", Long.class);
 
+    public final ComparablePath<Character> auctionStatus = createComparable("auctionStatus", Character.class);
+
     public final NumberPath<Long> biddingId = createNumber("biddingId", Long.class);
 
     public final NumberPath<Integer> biddingPrice = createNumber("biddingPrice", Integer.class);

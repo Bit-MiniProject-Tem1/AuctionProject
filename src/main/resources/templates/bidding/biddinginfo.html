@@ -15,15 +15,10 @@
 <div layout:fragment="content">
     <div class="content-container">
         <div class="productinfo-container">
-            <h2 class="head-text">결제 정보 확인</h2>
+            <h2 class="head-text">결제정보확인</h2>
             <hr>
             <div class="info-container">
                 <table class="infoTable">
-                    <thead>
-                    <tr>
-                        <th>상품정보</th>
-                    </tr>
-                    </thead>
                     <tbody>
                     <tr>
                         <td>카테고리</td>
@@ -54,7 +49,8 @@
                     </tr>
                     <tr>
                         <td>입찰가격</td>
-                        <td><p class="content-text" id="biddingPrice" th:text="${Price}+'원'"></p></td>
+                        <input type="hidden" th:value="${getGoods.immediatePrice}" id="biddingPrice" name="biddingPrice">
+                        <td><p class="content-text" th:text="${Price}+'원'"></p></td>
                     </tr>
                     </tbody>
                 </table>
@@ -72,11 +68,6 @@
                 <hr>
                 <div class="info-container">
                     <table class="userinfoTable">
-                        <thead>
-                        <tr>
-                            <th>회원정보</th>
-                        </tr>
-                        </thead>
                         <tbody>
                         <tr>
                             <td>이름</td>
@@ -100,62 +91,43 @@
             </div>
         </div>
     </div>
-
-    <div th:if="${Price} gt ${getPoint.point}">
-    <div class="paymentselect-container">
-        <h2>포인트결제방법선택</h2>
         <hr>
-        <fieldset>
-            <label>
-                <input type="radio" name="payment-option" value="1" checked/>
-                <span class="content-text">무통장결제</span>
-            </label>
-            </br>
-            <label>
-                <input type="radio" name="payment-option" value="2" />
-                <span class="content-text">카드</span>
-            </label>
-            </br>
-            <label>
-                <input type="radio" name="payment-option" value="3"  />
-                <span class="content-text">네이버페이</span>
-            </label>
-            </br>
-            <label>
-                <input type="radio" name="payment-option" value="4" />
-                <span class="content-text">카카오페이</span>
-            </label>
-        </fieldset>
-    </div>
-        <hr>
-        <div class="button-wrapper">
-            <button type="button" value="order" class="content-text" id="chargePoint" onclick="confirmAndRedirect()">결제하기</button>
-        </div>
-    </div>
-    <div th:if="${Price} le ${getPoint.point}">
-        <hr>
-        <div class="button-wrapper">
-            <button type="button" value="order" id="bid-button" class="content-text">결제하기</button>
-        </div>
-    </div>
+            <div class="button-wrapper">
+                <div th:if="${Price} gt ${getPoint.point}">
+                   <button type="button" value="order" id="charge-button" class="content-text">결제하기</button>
+                </div>
+                <div th:if="${Price} le ${getPoint.point}">
+                   <button type="button" value="order" id="bid-button" class="content-text">결제하기</button>
+                </div>
+            </div>
+     <script th:inline="javascript" >
+                $("#charge-button").on("click", () =>{
+                        var cUrl = "/mypage/point";
+                        Swal.fire({
+                        title: '포인트 부족',
+                        text: '포인트가 부족합니다. 충전 페이지로 이동하시겠습니까?',
+                        icon: 'info',
+                        showCancelButton: true,
+                        cancelButtonText: '아니오',
+                        confirmButtonText: '예',
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = cUrl;
+                        }
+                    });
+                });
 
-
-
-    <script th:inline="javascript" >
-
-        $("#bid-button").on("click", () =>{
-            var radioVal = $('input[name="payment-option"]:checked').val();
-            var biddingPrice = $("#biddingPrice").val();
+            $("#bid-button").on("click", () =>{
+            var biddingPrice = [[${Price}]];
             var auctionId = [[${getGoods.id}]];
             var parameter = {
-                payment: radioVal,
                 biddingPrice: biddingPrice,
                 auctionId : auctionId,
             };
-
             var param = JSON.stringify(parameter);
-            var url = "/auction/bidding/info" + auctionId;
-
+            console.log(param);
+            var url = "/auction/bidding/info/" + auctionId;
             $.ajax({
                 url: url,
                 method: 'POST',
@@ -171,6 +143,9 @@
                         showConfirmButton: false,
                         allowOutsideClick: false
                     });
+                    setTimeout(function() {
+                        window.location.href = "/mypage/biddingList";
+                    }, 2500);
                 },
                 error: () => {
                     alert("fail");
@@ -178,7 +153,11 @@
             });
         });
         var goodsStatus = [[${getGoods.status}]];
-
+        var cPrice = [[${Price}]];
+        var imPrice = [[${getGoods.immediatePrice}]];
+        var sPrice = [[${getGoods.startingPrice}]];
+        var auctionId = [[${getGoods.id}]];
+        var rUrl = "/auction/bidding/" + auctionId;
         if(goodsStatus === 'C'){
             Swal.fire({
                 title: '경매 종료 알림',
@@ -213,6 +192,41 @@
             setTimeout(function() {
                 window.location.href = "/";
             }, 3000);
+        }
+        if(cPrice > imPrice){
+            Swal.fire({
+            title: '입찰가격오류',
+            text: '즉시 구매가보다 작은 금액을 입력해주세요. 입찰페이지로 돌아갑니다.',
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: '예',
+            timer: 4000,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = rUrl;
+            }
+        });
+        setTimeout(function() {
+            window.location.href = rUrl;
+        }, 3000);
+    } else if(cPrice <= sPrice){
+            Swal.fire({
+            title: '입찰가격오류',
+            text: '경매 시작가보다 큰 금액을 입력해주세요. 입찰페이지로 돌아갑니다.',
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonText: '예',
+            timer: 4000,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = rUrl;
+            }
+        });
+        setTimeout(function() {
+            window.location.href = rUrl;
+        }, 3000);
         }
     </script>
     <script>

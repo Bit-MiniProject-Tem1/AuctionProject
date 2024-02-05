@@ -25,6 +25,8 @@ public class Bidding {
 
     private char status;
 
+    private char auctionStatus;
+
     private int payment;
 
     private LocalDateTime date;
@@ -40,6 +42,7 @@ public class Bidding {
                 .biddingPrice(biddingPrice)
                 .payment(payment)
                 .status(status)
+                .auctionStatus(auctionStatus)
                 .date(date)
                 .build();
     }

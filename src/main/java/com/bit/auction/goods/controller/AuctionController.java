@@ -8,6 +8,7 @@ import com.bit.auction.goods.dto.AuctionImgDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
+import com.bit.auction.goods.service.BiddingService;
 import com.bit.auction.goods.service.CategoryService;
 import com.bit.auction.goods.service.LikeCntService;
 import com.bit.auction.user.entity.CustomUserDetails;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 public class AuctionController {
     private final CkEditorImageUtils ckEditorImageUtils;
     private final AuctionService auctionService;
+    private final BiddingService biddingService;
     private final CategoryService categoryService;
     private final FileUtils fileUtils;
     private final LikeCntService likeCntService;
@@ -392,7 +394,7 @@ public class AuctionController {
 
         try {
             auctionService.cancelAuction(id);
-
+            biddingService.setAuctionStatus(id);
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "경매가 취소되었습니다.");
 

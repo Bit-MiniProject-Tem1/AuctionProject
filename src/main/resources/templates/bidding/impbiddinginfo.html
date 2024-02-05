@@ -16,15 +16,10 @@
 
     <div class="content-container">
         <div class="productinfo-container">
-            <h2 class="head-text">결제 정보 확인</h2>
+            <h2 class="head-text">결제정보확인</h2>
             <hr>
             <div class="info-container">
                 <table class="infoTable">
-                    <thead>
-                    <tr>
-                        <th>상품정보</th>
-                    </tr>
-                    </thead>
                     <tbody>
                     <tr>
                         <td>카테고리</td>
@@ -56,7 +51,7 @@
                     <tr>
                         <td>입찰가격</td>
                         <input type="hidden" th:value="${getGoods.immediatePrice}" id="biddingPrice" name="biddingPrice">
-                        <td><p class="content-text" th:text="${getGoods.immediatePrice}+'원'"></p></td>
+                        <td><p class="content-text" th:text="'₩' + ${getGoods.immediatePrice}"></p></td>
                     </tr>
                     </tbody>
                 </table>
@@ -69,110 +64,95 @@
                         </figure>
                     </div>
             </div>
-                <div class="userinfo-container">
-                        <h2>회원정보확인</h2>
-                        <hr>
-                    <div class="info-container">
-                        <table class="userinfoTable">
-                            <thead>
-                            <tr>
-                                <th>회원정보</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>이름</td>
-                                <td><p class="content-text" th:text="${getUser.userName}"></p></td>
-                            </tr>
-                            <tr>
-                                <td>이메일</td>
-                                <td><p class="content-text" th:text="${getUser.userEmail}"></p></td>
-                            </tr>
-                            <tr>
-                                <td>배송지</td>
-                                <td><p class="content-text" th:text="${getUser.userAddress}"></p></td>
-                            </tr>
-                            <tr>
-                                <td>보유포인트량</td>
-                                <td><p class="content-text" th:text="${getPoint.point} + ' P'"></p></td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="userinfo-container">
+                <h2>회원정보확인</h2>
+                <hr>
+                <div class="info-container">
+                    <table class="userinfoTable">
+                        <tbody>
+                        <tr>
+                            <td>이름</td>
+                            <td><p class="content-text" th:text="${getUser.userName}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>이메일</td>
+                            <td><p class="content-text" th:text="${getUser.userEmail}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>배송지</td>
+                            <td><p class="content-text" th:text="${getUser.userAddress}"></p></td>
+                        </tr>
+                        <tr>
+                            <td>보유포인트량</td>
+                            <td><p class="content-text" th:text="${getPoint.point} + ' P'"></p></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            </div>
+             </div>
         </div>
-
-
-        <div class="paymentselect-container">
-            <h2>포인트결제방법선택</h2>
-            <hr>
-            <fieldset>
-              <label>
-                <input type="radio" name="payment-option" value="1" checked/>
-                <span class="content-text">무통장결제</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="2" />
-                <span class="content-text">카드</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="3"  />
-                <span class="content-text">네이버페이</span>
-              </label>
-                </br>
-              <label>
-                <input type="radio" name="payment-option" value="4" />
-                <span class="content-text">카카오페이</span>
-              </label>
-            </fieldset>
             <hr>
             <div class="button-wrapper">
-            <button type="button" value="order" id="bid-button" class="content-text">결제하기</button>
+                <div th:if="${getGoods.immediatePrice} gt ${getPoint.point}">
+                   <button type="button" value="order" id="charge-button" class="content-text">결제하기</button>
+                </div>
+                <div th:if="${getGoods.immediatePrice} le ${getPoint.point}">
+                   <button type="button" value="order" id="bid-button" class="content-text">결제하기</button>
+                </div>
             </div>
-        </div>
-
      <script th:inline="javascript" >
-
-                $("#bid-button").on("click", () =>{
-                var radioVal = $('input[name="payment-option"]:checked').val();
-                var biddingPrice = $("#biddingPrice").val();
-                var auctionId = [[${getGoods.id}]];
-                    var parameter = {
-                        payment: radioVal,
-                        biddingPrice: biddingPrice,
-                        auctionId : auctionId,
-                    };
-
-                    var param = JSON.stringify(parameter);
-                    var url = "/auction/impbiddinginfo/" + auctionId;
-
-                    $.ajax({
-                        url: url,
-                        method: 'POST',
-                        contentType: "application/json",
-                        data: param,
-                        async: false,
-                        success: () => {
-                            Swal.fire({
-                                title: '즉시 구매 완료',
-                                text: '즉시 구매가 완료되었습니다.',
-                                icon: 'success',
-                                showCancelButton: false,
-                                showConfirmButton: false,
-                                allowOutsideClick: false
-                            });
-                        },
-                        error: () => {
-                            alert("fail");
+                $("#charge-button").on("click", () =>{
+                        var cUrl = "/mypage/point";
+                        Swal.fire({
+                        title: '포인트 부족',
+                        text: '포인트가 부족합니다. 충전 페이지로 이동하시겠습니까?',
+                        icon: 'info',
+                        showCancelButton: true,
+                        cancelButtonText: '아니오',
+                        confirmButtonText: '예',
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = cUrl;
                         }
                     });
                 });
 
+            $("#bid-button").on("click", () =>{
+            var biddingPrice = $("#biddingPrice").val();
+            var auctionId = [[${getGoods.id}]];
+            var parameter = {
+                biddingPrice: biddingPrice,
+                auctionId : auctionId,
+            };
+            var param = JSON.stringify(parameter);
+            console.log(param);
+            var url = "/auction/impbiddinginfo/" + auctionId;
+            $.ajax({
+                url: url,
+                method: 'POST',
+                contentType: "application/json",
+                data: param,
+                async: false,
+                success: () => {
+                    Swal.fire({
+                        title: '입찰 완료',
+                        text: '경매 입찰이 완료되었습니다.',
+                        icon: 'success',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false
+                    });
+                        setTimeout(function() {
+                        window.location.href = "/mypage/biddingList";
+                    }, 2500);
+                },
+                error: () => {
+                    alert("fail");
+                }
+            });
+        });
                 var goodsStatus = [[${getGoods.status}]];
-
                 if(goodsStatus === 'C'){
                     Swal.fire({
                         title: '경매 종료 알림',
@@ -209,7 +189,6 @@
                     }, 3000);
                 }
         </script>
-
     </div>
 </div>
 </body>

@@ -13,6 +13,9 @@ public interface BiddingService {
 
     void setbid(BiddingDTO biddingDTO);
     void updateBidStatus();
+
+    void setAuctionStatus(Long id);
+
     BiddingDTO getbid(Long auctionId, String userId);
     List<BiddingDTO> getbidone(String userId);
     Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId);

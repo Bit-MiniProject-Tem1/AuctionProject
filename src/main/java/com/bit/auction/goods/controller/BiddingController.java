@@ -97,6 +97,8 @@ public class BiddingController {
         biddingDTO.setStatus('u');
         biddingDTO.setUserId(customUserDetails.getUsername());
         biddingDTO.setDate(LocalDateTime.now());
+        biddingDTO.setPayment(1);
+        biddingDTO.setAuctionStatus('E');
         biddingService.setbid(biddingDTO);
         pointService.pointWithdraw(biddingDTO.getBiddingPrice() , customUserDetails.getUsername());
         pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
@@ -106,12 +108,13 @@ public class BiddingController {
         auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
     }
 
-    @PostMapping("/bidding/info/{id}?biddingPrice=1234")
+    @PostMapping("/bidding/info/{id}")
     public void bidding2(@RequestBody BiddingDTO biddingDTO,
                                             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         biddingService.updateBidStatus();
         biddingDTO.setStatus('u');
+        biddingDTO.setAuctionStatus('S');
         biddingDTO.setUserId(customUserDetails.getUsername());
         biddingDTO.setDate(LocalDateTime.now());
         biddingService.setbid(biddingDTO);

@@ -30,7 +30,6 @@
     height: 165px;
     object-fit: cover;
     border-radius: 10px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -78,7 +77,7 @@ fieldset {
 }
 
 #bid-button{
-    width: 100px;
+    width: 110px;
     height: 50px;
     border-radius: 10px;
     background-color: white;
@@ -89,21 +88,20 @@ fieldset {
     background-color: rgba(128, 128, 128, 0.15);
 }
 
-#chargePoint{
-    width: 100px;
+#charge-button{
+    width: 110px;
     height: 50px;
     border-radius: 10px;
     background-color: white;
 }
 
-#chargePoint:hover{
+#charge-button:hover{
     transition: 500ms;
     background-color: rgba(128, 128, 128, 0.15);
 }
 
 .content-text{
     font-family: Pretendard;
-    font-weight: bold;
     text-align: center;
 }
 
@@ -120,19 +118,17 @@ fieldset {
 .infoTable {
     margin-top: 30px;
     width: 900px;
-    height: 140px;
+    height: 130px;
     background-color: white;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
-
 }
 
 .userinfoTable {
     margin-top: 30px;
     width: 1100px;
-    height: 210px;
+    height: 200px;
     background-color: white;
     box-shadow: 4px 4px 10px rgba(0,0,0,0.1);
-
 }
 
 thead{
@@ -141,7 +137,7 @@ thead{
 }
 
 td {
-    padding: 8px;
+    padding: 13px;
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
