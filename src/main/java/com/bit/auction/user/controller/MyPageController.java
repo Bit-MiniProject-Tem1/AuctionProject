@@ -192,19 +192,32 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
     }
 
 
-    @GetMapping("/biddingList")
-    public ModelAndView getMyBidding(@PageableDefault(page = 0, size = 10) Pageable pageable,
-                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        ModelAndView mav = new ModelAndView();
+//    @GetMapping("/biddingList")
+//    public ModelAndView getMyBidding(@PageableDefault(page = 1, size = 10) Pageable pageable,
+//                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+//        ModelAndView mav = new ModelAndView();
+//
+//        String userId = customUserDetails.getUsername();
+//        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable , userId));
+//        mav.addObject("biddingInfo", biddingService.getbidone(userId));
+//        mav.addObject("sessionId", userId);
+//        mav.setViewName("user/mypage/getMyBiddingList.html");
+//
+//        return mav;
+//    }
+@GetMapping("/biddingList")
+public ModelAndView getMyBidding(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    ModelAndView mav = new ModelAndView();
 
-        String userId = customUserDetails.getUsername();
-        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable , userId));
-        mav.addObject("biddingInfo", biddingService.getbidone(userId));
-        mav.addObject("sessionId", userId);
-        mav.setViewName("user/mypage/getMyBiddingList.html");
+    String userId = customUserDetails.getUsername();
+    mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
+    mav.addObject("biddingInfo", biddingService.getbid(auctionId, userId));
+    mav.addObject("sessionId", userId);
+    mav.setViewName("user/mypage/getMyBiddingList.html");
 
-        return mav;
-    }
+    return mav;
+}
+
 
     @GetMapping("/chargeForm")
     public ModelAndView chargeFrom(){

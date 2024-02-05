@@ -21,9 +21,22 @@ public interface BiddingRepository extends JpaRepository<Bidding, Long>  {
     @Modifying
     @Query(value = "update Bidding b set b.auctionStatus='C' where b.auctionId = :id")
     void updateStatusByCancel(Long id);
+
+    @Query
     Optional<Bidding> findByAuctionIdAndUserId (Long auctionId , String userId);
     List<Bidding> findByUserId (String userId);
 
-    @Query("SELECT a,b FROM Auction a JOIN Bidding b ON a.id = b.auctionId AND b.userId = :userId")
-    Page<Auction> searchMyBiddingList(Pageable pageable, String userId);
+    @Query("SELECT a, b " +
+            "FROM Auction a " +
+            "JOIN Bidding b ON a.id = b.auctionId " +
+            "WHERE (a.id, b.date) IN (" +
+            "    SELECT a.id, MAX(b.date) " +
+            "    FROM Auction a " +
+            "    JOIN Bidding b ON a.id = b.auctionId " +
+            "    WHERE b.userId = :userId " +
+            "    GROUP BY a.id" +
+            ") " +
+            "ORDER BY b.date DESC")
+    List<Auction> searchMyBiddingList(String userId);
+
 }

@@ -18,6 +18,5 @@ public interface BiddingService {
 
     BiddingDTO getbid(Long auctionId, String userId);
     List<BiddingDTO> getbidone(String userId);
-    Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId);
-
+    List<AuctionDTO> getMyBiddingList(String userId);
 }

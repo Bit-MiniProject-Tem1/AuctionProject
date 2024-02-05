@@ -158,6 +158,7 @@
         var sPrice = [[${getGoods.startingPrice}]];
         var auctionId = [[${getGoods.id}]];
         var rUrl = "/auction/bidding/" + auctionId;
+        var cbPrice = [[${getGoods.currentBiddingPrice}]]
         if(goodsStatus === 'C'){
             Swal.fire({
                 title: '경매 종료 알림',
@@ -210,7 +211,7 @@
         setTimeout(function() {
             window.location.href = rUrl;
         }, 3000);
-    } else if(cPrice <= sPrice){
+    } else if(cPrice <= sPrice && cbPrice == 0){
             Swal.fire({
             title: '입찰가격오류',
             text: '경매 시작가보다 큰 금액을 입력해주세요. 입찰페이지로 돌아갑니다.',
@@ -227,6 +228,23 @@
         setTimeout(function() {
             window.location.href = rUrl;
         }, 3000);
+        }else if(cbPrice != 0 && cPrice<=cbPrice){
+            Swal.fire({
+                title: '입찰가격오류',
+                text: '현재 입찰가보다 큰 금액을 입력해주세요. 입찰페이지로 돌아갑니다.',
+                icon: 'info',
+                showCancelButton: false,
+                confirmButtonText: '예',
+                timer: 4000,
+                allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = rUrl;
+                }
+            });
+            setTimeout(function() {
+                window.location.href = rUrl;
+            }, 3000);
         }
     </script>
     <script>

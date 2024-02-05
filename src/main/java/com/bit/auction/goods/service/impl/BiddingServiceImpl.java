@@ -53,13 +53,13 @@ public class BiddingServiceImpl implements BiddingService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Page<AuctionDTO> getMyBiddingList(Pageable pageable, String userId) {
 
-        Page<Auction> auctionPageList = biddingRepository.searchMyBiddingList(pageable,userId);
-        Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
+    public List<AuctionDTO> getMyBiddingList(String userId) {
+        List<Auction> auctionList = biddingRepository.searchMyBiddingList(userId);
+        List<AuctionDTO> auctionDTOList = auctionList.stream()
+                .map(Auction::toDTO)
+                .collect(Collectors.toList());
 
-        return auctionDTOPageList;
+        return auctionDTOList;
     }
-
 }
