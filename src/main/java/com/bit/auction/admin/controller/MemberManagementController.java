@@ -64,13 +64,13 @@ public class MemberManagementController {
         return mv;
     }
 
-    @GetMapping("/member_info")
+    @GetMapping("/admin/member_info")
     public String member_info_form() {
 
         return "/admin/member_info";
     }
 
-    @GetMapping("/member_info/member-{id}")
+    @GetMapping("/admin/member_info/member-{id}")
     public ModelAndView getMemberInfo(@PathVariable("id") Long id, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         UserDTO member = memberManagementService.findById(id);

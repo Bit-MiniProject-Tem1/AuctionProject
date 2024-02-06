@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>회원 상세정보</title>
     <th:block layout:fragment="css">
@@ -90,7 +90,9 @@
                         </tr>
                             <tr th:each="inquiry : ${inquiryList}">
                                 <td class="cell" style="text-align: center;" th:text="${#strings.substring(inquiry.inquiryRegdate, 0, 10)}"></td>
-                                <td class="cell memberInfo_inquiryTitle" th:text="${inquiry.inquiryTitle}"></td>
+                                <td class="cell memberInfo_inquiryTitle">
+                                    <a th:href="@{/inquiry/inquiry/{inquiryNo} (inquiryNo=${inquiry.inquiryNo})}" th:text="${inquiry.inquiryTitle}"></a>
+                                </td>
                             </tr>
                     </table>
 
@@ -108,19 +110,17 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="colName">입찰아이디</th>
                         <th class="colName">경매아이디</th>
+                        <th class="colName">입찰아이디</th>
                         <th class="colName">입찰가격</th>
-                        <th class="colName">입찰상태</th>
                         <th class="colName">입찰시간</th>
                         <th class="colName">결제방법</th>
                     </tr>
                     <tr th:each="bidding : ${biddingList}" style="text-align: center;">
-                        <td class="cell" th:text="${bidding.biddingId}"></td>
                         <td class="cell" th:text="${bidding.auctionId}"></td>
+                        <td class="cell" th:text="${bidding.biddingId}"></td>
                         <td class="cell" th:text="${bidding.biddingPrice}"></td>
-                        <td class="cell" th:text="${bidding.status}"></td>
-                        <td class="cell" th:text="${bidding.date}"></td>
+                        <td class="cell" th:text="${#strings.substring(bidding.date, 0, 19).replace('T', ' ')}"></td>
                         <th:block th:switch="${bidding.payment}">
                             <td class="cell" th:case="1">무통장결제</td>
                             <td class="cell" th:case="2">카드</td>

@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>자주 묻는 질문 - 수정</title>
     <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
@@ -358,7 +358,7 @@
     </div>
     <div id="faq_add_container">
         <div class="detailView_area">
-            <form id="detailViewForm" th:action="@{/faq_modification/faq-{faqId}(faqId=${faqDTO.faqId})}" th:object="${FaqDTO}" method="post" enctype="multipart/form-data">
+            <form id="detailViewForm" th:action="@{/admin/faq_modification/faq-{faqId}(faqId=${faqDTO.faqId})}" th:object="${FaqDTO}" method="post" enctype="multipart/form-data">
                 <div class="detail_item">
                     <div>
                         <div class="item_label_area">
@@ -438,7 +438,7 @@
                 </div>
                 <div class="button_area" th:with="faqId=${faqDTO.faqId}">
                     <button type="submit" id="saveBtn" class="textTypeBtn">저장</button>
-                    <button th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="submit" id="cancelBtn" class="textTypeBtn">취소</button>
+                    <button th:onclick="'window.location.href = \'/admin/faq_modification/faq-' + ${faqId} + '\''" type="submit" id="cancelBtn" class="textTypeBtn">취소</button>
                 </div>
 <!--
 

@@ -37,6 +37,7 @@ public class Bidding {
 
     public BiddingDTO toDTO(){
         return BiddingDTO.builder()
+                .biddingId(biddingId)
                 .auctionId(auctionId)
                 .userId(userId)
                 .biddingPrice(biddingPrice)

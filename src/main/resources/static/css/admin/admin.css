@@ -140,7 +140,7 @@ input::placeholder {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 300px;
+    max-width: 210px;
 }
 
 /*----------------------------------------------------------*/
@@ -340,13 +340,13 @@ input::placeholder {
 .memberInfo_item > table {
     border-collapse: collapse;
     border: 2px solid #d4d4d4;
-    --leftColWidth: 100px; /* 변수 설정 */
-    --rightColWidth: 350px; /* 변수 설정 */
+    --leftColWidth: 110px; /* 변수 설정 */
+    --rightColWidth: 340px; /* 변수 설정 */
 }
 
 .joinInfo_key {
     /*text-align: center;*/
-    text-indent: 18px;
+    text-indent: 23px;
     background-color: #f4f4f4;
     border: 1px solid #d4d4d4;
     width: var(--leftColWidth);
@@ -415,6 +415,8 @@ input::placeholder {
 
 #toInquiryListBtn {
     margin-bottom: 0;
+    font-size: 20px;
+    border: none;
 }
 
 .pageMoveBtn {

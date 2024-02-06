@@ -2,13 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>자주 묻는 질문 - 상세조회</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-
-
     <th:block layout:fragment="css">
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
@@ -37,45 +33,7 @@
                         $("#" + id).height( viewboxHeight );
                     }
                 }
-
-                //------------------------------------------------------------------------------
-
-                /*let requestUrl = /!*[(${requestUrl})]*!/ {};
-                let status = /!*[(${status})]*!/ {};
-
-                console.log(requestUrl);
-                console.log(status);
-
-                if(requestUrl.contains('/faq_add') && status == true){
-                    alert("저장이 완료되었습니다.");
-                }*/
-
             });
-
-/*
-            $(() => {
-                const button_area = document.querySelector(".button_area");
-                let previousPageURL = document.referrer;
-                const modificationBtn = document.createElement('button');
-                // fileNameParagraph.textContent = file.name;
-                modificationBtn.setAttribute("style", "background-color: rgb(90,98,179); color: white; border: none;");
-                modificationBtn.setAttribute("onclick", "redirectToNextPage()");
-                modificationBtn.setAttribute("type", "submit");
-                modificationBtn.innerText = "수정";
-                modificationBtn.id = "modificationBtn";
-                modificationBtn.className = "textTypeBtn";
-
-                // 요청url에 특정 문자열이 포함되어 있으면 버튼 출력
-                if (previousPageURL.includes('/inquiry-management_')) {
-                    // 버튼을 출력
-                    // document.write('<button onclick="redirectToNextPage()" type="submit" id="modificationBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">수정</button>');
-
-                    button_area.appendChild(modificationBtn);
-                }
-
-            });
-*/
-
 
             function redirectToModificationPage() {
                 window.location.href = '/faq_modification';
@@ -85,33 +43,16 @@
                 window.location.href = '/faq_delete/faq-{faqId}';
             }
 
-
-            function deleteFaq() {
-                fetch('/faq_delete', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    // body: JSON.stringify(data),  // 필요한 경우 body에 데이터 추가
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                        // 성공 시 처리 로직 추가
-                        window.location.href = '/faq_delete';
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                        // 오류 시 처리 로직 추가
-                    });
-            }
-
         </script>
     </th:block>
 </head>
 <body>
 <div class="content_area" layout:fragment="content">
-    <h1 class="page-title light-border-bottom">자주 묻는 질문 - 상세조회</h1>
+    <div class="title_area">
+        <div class="title">
+            <strong>자주 묻는 질문 - 상세조회</strong>
+        </div>
+    </div>
     <div id="faq_detail_container">
         <div class="detailView_area">
             <form id="detailViewForm" action="" method="post">
@@ -170,13 +111,13 @@
                 </div>
 
 <!--                <th:block th:if="${requestUrl.contains('/inquiry-management_')}">-->
-                    <div class="button_area" >
-                        <button th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn" class="btn-black">목록</button>
-                   <!--     <button th:hidden="${!requestUrl.contains('/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn btn-green">수정</button>
-                        <button th:hidden="${!requestUrl.contains('/inquiry-management/')}" th:onclick="'window.location.href = \'/inquiry-management/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn btn-red">삭제</button>
-&lt;!&ndash;                        <button th:hidden="${!requestUrl.contains('/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>&ndash;&gt;
-&lt;!&ndash;                        <button th:hidden="${!requestUrl.contains('/inquiry-management/')}" onclick="deleteFaq()" type="button" id="deleteBtn" class="textTypeBtn btn-red">삭제</button>&ndash;&gt;
-                        <button th:hidden="${!requestUrl.contains('/inquiry-management/')}" th:onclick="'window.location.href = \'/inquiry-management_main\''" type="button" id="toInquiryListBtn" class="btn-black">목록</button>-->
+                    <div class="button_area" th:with="faqId=${faqDTO.faqId}">
+<!--                        <button th:hidden="${requestUrl.contains('/admin/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn" class="textTypeBtn">목록</button>-->
+                        <button th:onclick="'window.location.href = \'/admin/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn">수정</button>
+                        <button th:onclick="'window.location.href = \'/admin/inquiry-management/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>
+<!--                        <button th:hidden="${!requestUrl.contains('/admin/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
+<!--                        <button th:hidden="${!requestUrl.contains('/admin/inquiry-management/')}" onclick="deleteFaq()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
+                        <button th:onclick="'window.location.href = \'/admin/inquiry-management_main\''" type="button" id="toInquiryListBtn" class="textTypeBtn">목록</button>
                     </div>
 <!--                </th:block>-->
             </form>

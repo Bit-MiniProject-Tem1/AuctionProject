@@ -149,32 +149,13 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public void updateFaq(Long faqId, FaqDTO faqDTO) {
-/*
-        Faq originFaq = entityManager.find(Faq.class, faqId);
-
-
-        List<FaqAttachedFile> faqAttachedFileList = faqDTO.getFaqAttachedFileDTOList().stream()
-                .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(faqDTO.toEntity())).toList();
-
-        originFaq.setCategory(faqDTO.getCategory());
-        originFaq.setTitle(faqDTO.getTitle());
-        originFaq.setContent(faqDTO.getContent());
-        originFaq.setRegdate(LocalDateTime.now());
-        originFaq.setViewsCount(faqDTO.getViewsCount());
-        originFaq.setFaqAttachedFileList(faqAttachedFileList);
-*/
-
-/*
-        Optional<Faq> faq = faqRepository.findById(faqId);
-        faq.get().setViewsCount(faq.get().getViewsCount() + 1);
-        return faqRepository.save(faq.get()).toDTO();
-*/
-
-
-
 
         Faq originFaq = faqRepository.findById(faqId)
                 .orElseThrow(() -> new NotFoundException("Faq not found with ID: " + faqId));
+
+        faqAttachedFileRepository.deleteByFaq(originFaq);
+
+        faqAttachedFileRepository.flush();
 
         // 업데이트를 수행할 수 있는 메소드를 호출 (아래에 구현)
         updateFaqDTO(originFaq, faqDTO);
@@ -186,6 +167,8 @@ public class FaqServiceImpl implements FaqService {
         originFaq.setCategory(faqDTO.getCategory());
         originFaq.setTitle(faqDTO.getTitle());
         originFaq.setContent(faqDTO.getContent());
+
+        System.out.println(faqDTO.getFaqAttachedFileDTOList().size());
         // 그 외 필요한 필드 업데이트
 
         // 첨부 파일 업데이트
@@ -199,18 +182,12 @@ public class FaqServiceImpl implements FaqService {
     public void deleteFaq(Long faqId) {
 
         Faq faq = faqRepository.findById(faqId).get();
-        if (faq != null) {
-//            entityManager.remove(faq);
-            faqRepository.delete(faq);
+
+        if(faq != null) {
+            faqRepository.deleteById(faqId);
         }
     }
 
-    @Override
-    public void delete(FaqDTO faqDTO) {
-
-//        Faq faq =  faqRepository.delete(faqDTO);
-
-    }
 
     @Override
     public Page<FaqDTO> getFaqList(Pageable pageable, FaqDTO faqDTO) {

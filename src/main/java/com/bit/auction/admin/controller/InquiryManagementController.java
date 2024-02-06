@@ -52,7 +52,7 @@ public class InquiryManagementController {
         return "/admin/inquiryManagement";
     }*/
 
-    @GetMapping(value = {"/inquiry-management_main", "/inquiry-management_search"})
+    @GetMapping(value = {"/admin/inquiry-management_main", "/admin/inquiry-management_search"})
     public ModelAndView inquiryManagementMain(@PageableDefault(page = 0, size = 20) Pageable pageable, FaqDTO faqDTO, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView();
@@ -76,12 +76,12 @@ public class InquiryManagementController {
     }
 
 
-    @GetMapping("/faq_add")
+    @GetMapping("/admin/faq_add")
     public String faqAddView() {
         return "/admin/faq_add";
     }
 
-    @PostMapping("/faq_add")
+    @PostMapping("/admin/faq_add")
     public String faqSave(FaqDTO faqDTO, RedirectAttributes redirectAttributes, MultipartFile[] uploadFiles, HttpServletRequest request, HttpServletResponse response) {
 
 //        String fileNames = "";
@@ -139,7 +139,7 @@ public class InquiryManagementController {
 
         log.info("############ requestUrl : " + request.getRequestURL().toString());
 
-        return "redirect:/inquiry_management/faq_detail/faq-{faqId}";
+        return "redirect:/admin/inquiry-management/faq_detail/faq-{faqId}";
     }
 
 /*    @GetMapping("/faq_add_result")
@@ -147,134 +147,36 @@ public class InquiryManagementController {
         return "/admin/faq_add_result";
     }*/
 
-    @GetMapping("/faq_delete")
+    @GetMapping("/admin/inquiry-management/faq_delete/faq-{faqId}")
 
-    public String faqDelete(FaqDTO faqDTO) {
-        System.out.println(faqDTO);
-        faqService.deleteFaq(faqDTO.getFaqId());
-        return "redirect:/inquiry_management_main";
+    public String faqDelete(@PathVariable("faqId") Long faqId , RedirectAttributes redirectAttributes) {
+        log.info("########## faqDTO.getFaqId() = {}", faqId);
+
+        redirectAttributes.addFlashAttribute("faqDTO", faqService.getFaq(faqId));
+        faqService.deleteFaq(faqId);
+        return "redirect:/admin/inquiry-management_main";
     }
 
 
-    @GetMapping("/inquiry_management/faq_detail/faq-{faqId}")
+    @GetMapping("/admin/inquiry-management/faq_detail/faq-{faqId}")
     public ModelAndView getBoard(@PathVariable("faqId") Long faqId, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
 
 
         mv.addObject("faqDTO", faqService.updateViewsCount(faqId));
         mv.addObject("requestUrl", request.getRequestURL().toString());
-        mv.setViewName("/user/customer/faq_detail.html");
+        mv.setViewName("/admin/inquiryManagement_faqDetail.html");
 
         return mv;
     }
 
 
     /*=================================== FAQ수정 ===================================*/
-/*
-    @PostMapping("/faq_modification/faq-{faqId}")
-    public ModelAndView faqUpdate(FaqDTO faqDTO, RedirectAttributes redirectAttributes, MultipartFile[] uploadFiles, HttpServletRequest request, HttpServletResponse response) {
-*/
-/*
-        redirectAttributes.addFlashAttribute("faqDTO", faqDTO);
-//        redirectAttributes.addFlashAttribute("fileNames", fileNames);
-        redirectAttributes.addAttribute("itemId", faqDTO.getFaqId());
-        redirectAttributes.addAttribute("status", true);
-        redirectAttributes.addAttribute("requestUrl", request.getRequestURL().toString());
-*//*
 
-
-
-        String fileNames = "";
-
-        try {
-            List<FaqAttachedFileDTO> faqAttachedFileDTOList = new ArrayList<>();
-
-            for (MultipartFile file : uploadFiles) {
-                if (file.getOriginalFilename() != null &&
-                        !file.getOriginalFilename().equals("")) {
-                    FaqAttachedFileDTO faqAttachedFileDTO = fileUtils.parseFaqAttachedFileInfo(file, "faq/");
-
-                    faqAttachedFileDTO.setFaqId(faqDTO.getFaqId());
-
-                    faqAttachedFileDTOList.add(faqAttachedFileDTO);
-
-                    fileNames = fileNames + faqAttachedFileDTO.getFileName() + "  ";
-                }
-            }
-            fileNames.trim();
-            faqDTO.setFaqAttachedFileDTOList(faqAttachedFileDTOList);
-            faqService.insertFaq(faqDTO);
-            Map<String, String> returnMap = new HashMap<>();
-
-            returnMap.put("msg", "정상적으로 저장되었습니다.");
-
-            */
-/*response.setItem(returnMap);
-            response.setStatusCode(HttpStatus.OK.value());*//*
-
-            response.setStatus(HttpStatus.OK.value());
-//            redirectAttributes.addAttribute("StatusCode", HttpStatus.OK.value());
-
-//            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            if (faqDTO.getCategory().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 602);
-                redirectAttributes.addAttribute("ErrorMessage", "카테고리를 입력하세요.");
-            } else if (faqDTO.getTitle().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 603);
-                redirectAttributes.addAttribute("ErrorMessage", "제목을 입력하세요.");
-            } else if (faqDTO.getContent().equals("")) {
-                redirectAttributes.addAttribute("ErrorCode", 604);
-                redirectAttributes.addAttribute("ErrorMessage", "내용을 입력하세요.");
-            } else {
-                redirectAttributes.addAttribute("ErrorCode", 605);
-                redirectAttributes.addAttribute("ErrorMessage", e.getMessage());
-            }
-//            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-//            redirectAttributes.addAttribute("StatusCode", HttpStatus.BAD_REQUEST.value());
-
-            faqService.insertFaq(faqDTO);
-        }
-
-
-        redirectAttributes.addFlashAttribute("faqDTO", faqDTO);
-        redirectAttributes.addFlashAttribute("fileNames", fileNames);
-        redirectAttributes.addAttribute("itemId", faqDTO.getFaqId());
-        redirectAttributes.addAttribute("status", true);
-        redirectAttributes.addAttribute("requestUrl", request.getRequestURL().toString());
-
-        log.info("############ requestUrl : " + request.getRequestURL().toString());
-
-//        return "redirect:/inquiry-management_main";
-
-
-
-
-//        return "redirect:/faq_add";
-        ModelAndView mv = new ModelAndView();
-        */
-/*FaqDTO faqDTO = faqService.findById(faqId);
-        faqService.updateViewsCount(faqId);*//*
-
-
-        log.info("제목 : {}", faqDTO.getTitle());
-        log.info("내용 : {}", faqDTO.getContent());
-
-        mv.addObject("faqDTO", faqDTO);
-        mv.addObject("requestUrl", request.getRequestURL().toString());
-        mv.setViewName("/admin/faq_modification.html");
-
-        return mv;
-    }
-*/
-
-
-    @PostMapping("/faq_modification/faq-{faqId}")
+    @PostMapping("/admin/faq_modification/faq-{faqId}")
     public String faqModification(@PathVariable("faqId") Long faqId, @ModelAttribute FaqDTO faqDTO, RedirectAttributes redirectAttributes, MultipartFile[] uploadFiles, HttpServletRequest request, HttpServletResponse response) {
 
-/*
-        String fileNames = "";
+//        String fileNames = "";
 
         try {
             List<FaqAttachedFileDTO> faqAttachedFileDTOList = new ArrayList<>();
@@ -288,10 +190,10 @@ public class InquiryManagementController {
 
                     faqAttachedFileDTOList.add(faqAttachedFileDTO);
 
-                    fileNames = fileNames + faqAttachedFileDTO.getFileName() + "  ";
+//                    fileNames = fileNames + faqAttachedFileDTO.getFileName() + "  ";
                 }
             }
-            fileNames.trim();
+//            fileNames.trim();
             faqDTO.setFaqAttachedFileDTOList(faqAttachedFileDTOList);
 //            faqService.updateFaq(faqDTO.getFaqId(), faqDTO);
             faqRepository.save(faqDTO.toEntity());
@@ -320,10 +222,10 @@ public class InquiryManagementController {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
 
 //            faqService.updateFaq(faqDTO.getFaqId(), faqDTO);
-            faqRepository.save(faqDTO.toEntity());
+//            faqRepository.save(faqDTO.toEntity());
         }
-*/
 
+//      ===========================================================================
         if (faqDTO.getFaqAttachedFileDTOList() == null) {
             faqDTO.setFaqAttachedFileDTOList(new ArrayList<>());
         }
@@ -340,11 +242,11 @@ public class InquiryManagementController {
 
         log.info("############ requestUrl : " + request.getRequestURL().toString());
 
-        return "redirect:/inquiry_management/faq_detail/faq-{faqId}";
+        return "redirect:/admin/inquiry-management/faq_detail/faq-{faqId}";
     }
 
 
-    @GetMapping("/faq_modification/faq-{faqId}")
+    @GetMapping("/admin/faq_modification/faq-{faqId}")
     public ModelAndView faqModificationView(@PathVariable("faqId") Long faqId, HttpServletRequest request) throws IOException {
         ModelAndView mv = new ModelAndView();
         FaqDTO faqDTO = faqService.findById(faqId);
