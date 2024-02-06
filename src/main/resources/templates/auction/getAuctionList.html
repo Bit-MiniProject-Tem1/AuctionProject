@@ -153,7 +153,7 @@
                 </div>
                 <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span th:text="${auction.title}"></span></a></div>
                 <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
-                <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
+                <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.currentBiddingPrice}"></span></div>
                 <div class="user-name">
                     <i class="bi bi-person"></i><a href="#" th:href="'/auction/goods-list?regUser='+${auction.regUserId}"> <span th:text="${auction.regUserId}"></span></a>
                 </div>

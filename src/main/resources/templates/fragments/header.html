@@ -27,28 +27,12 @@
 <body>
 <header th:fragment="header">
     <div class="header_box">
-    <div class="main_header">
-        <div class="header_top">
-            <ul class="top_list">
-
-                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin/statisticalData}" style="margin-right: 20px;" class="top_link">관리자페이지</a>
-                </li>
-                <li>
-                    <a th:href="@{/faq_main}" class="top_link"> 고객센터 </a>
-                </li>
-                <li sec:authorize="!isAuthenticated()" class="top_link1">
-                    <a th:href="@{/user/login-view}">로그인/회원가입</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="top_link1">
-                    <a th:href="@{/user/logout}">로그아웃</a>
-                </li>
-            </ul>
-        </div>
-        <div th:class="header_main">
-            <a th:href="@{/#}" th:class="logo">
-                <img th:src="@{/img/logoo.png}" th:class="logo_bk">
-            </a>
+        <div class="main_header">
+            <div class="header_top">
+                <ul class="top_list">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/admin/statisticalData}" style="margin-right: 20px;" class="top_link">관리자페이지</a>
+                    </li>
                     <li>
                         <a th:href="@{/faq_main}" class="top_link"> 고객센터 </a>
                     </li>
@@ -60,14 +44,13 @@
                     </li>
                 </ul>
             </div>
-            <div th:class="header_main" class="light-border-bottom">
+            <div th:class="header_main">
                 <a th:href="@{/#}" th:class="logo">
-                    <img th:src="@{/img/main_logoo.png}" th:class="logo_bk">
+                    <img th:src="@{/img/auction_title.png}" th:class="logo_bk">
                 </a>
 
                 <form th:action="@{/auction/search}" method="get" id="searchForm">
-                    <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search"
-                           id="searchInput" name="searchQuery" th:attr="data-show-alert-th=${showAlertValue}">
+                    <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" id="searchInput" name="searchQuery"  th:attr="data-show-alert-th=${showAlertValue}">
                 </form>
                 <div class="category_menu">
                     <div class="category_menu_item">
@@ -79,16 +62,14 @@
                             <span>홈</span>
                         </a>
                         <a th:href="@{/auction/goods-list}" class="category">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-filter-square" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-square" viewBox="0 0 16 16">
                                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                 <path d="M6 11.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                             </svg>
                             <span>카테고리</span>
                         </a>
                         <a th:href="@{/mypage/mypage-view}" class="cart">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-person" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
                             </svg>
                             <span>마이페이지</span>
@@ -98,7 +79,7 @@
 
                 </div>
             </div>
-
+            <hr>
             <div class="recent">
                 <div class="dropdown">
                     <div class="dropdown-title">
@@ -116,8 +97,7 @@
                                 <div class="content_boxes">
                                     <div class="list-img">
                                         <figure class="img_wrapper">
-                                            <img class="d-block w-100" alt=""
-                                                 src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
+                                            <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
                                         </figure>
                                     </div>
                                     <div class="list-title-default">조회 할 상품이 존재하지 않습니다.</div>
@@ -142,9 +122,7 @@
                                     <div class="content_boxes">
                                         <div class="list-img">
                                             <figure class="img_wrapper">
-                                                <img class="d-block w-100" alt=""
-                                                     src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg"
-                                                     th:src="${auction.representativeImgUrl}">
+                                                <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg" th:src="${auction.representativeImgUrl}">
                                             </figure>
                                         </div>
                                         <div class="list-title" th:text="${auction.title}"></div>
@@ -153,17 +131,15 @@
                             </li>
                         </ul>
                         <ul sec:authorize="!isAuthenticated()" class="list_box">
-                            <li style="text-align: left" class="content_box">
+                            <li style="text-align: left" class="content_box" >
                                 <a thref="/user/login-view" class="a_tag">
                                     <div class="content_boxes">
                                         <div class="list-img">
                                             <figure class="img_wrapper">
-                                                <img class="d-block w-100" alt=""
-                                                     src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
+                                                <img class="d-block w-100" alt="" src="https://png.pngtree.com/png-vector/20221125/ourmid/pngtree-no-image-available-icon-flatvector-illustration-picture-coming-creative-vector-png-image_40968940.jpg">
                                             </figure>
                                         </div>
-                                        <div class="list-title-default-1"><a href="/user/login-view">로그인을 해야합니다.</a>
-                                        </div>
+                                        <div class="list-title-default-1"><a href="/user/login-view">로그인을 해야합니다.</a></div>
                                     </div>
                                 </a>
                             </li>
