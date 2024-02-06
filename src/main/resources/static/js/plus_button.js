@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var maxItems = 12; // 최대 보여줄 항목 수
 
     // 각 컨테이너에 대한 현재 수에 따라 항목을 표시하거나 숨기는 함수를 작성합니다.
-    function showHideItems(containerIndex) {
-        for (var i = 0; i < containers.length; i++) {
-            var container = containers[i];
-            var items = container.querySelectorAll('.search-goods');
-            for (var j = 0; j < items.length; j++) {
+    function showHideItems() {
+        for (let i = 0; i < containers.length; i++) {
+            let container = containers[i];
+            let items = container.querySelectorAll('.search-goods');
+            for (let j = 0; j < items.length; j++) {
                 if (j < itemsToShow[i]) {
                     items[j].style.display = 'block';
                 } else {
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 초기에 각 컨테이너에 대한 일부 항목을 표시합니다.
     for (var i = 0; i < containers.length; i++) {
-        showHideItems(i);
+        showHideItems();
     }
 
     // 각 '더 보기' 또는 '접기' 버튼 클릭 시 상태를 변경하고 스크롤합니다.
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // 모든 컨테이너에 대해 항목을 숨기거나 표시합니다.
-                showHideItems(index);
+                showHideItems();
 
                 // '더 보기' 또는 '접기' 버튼을 눌렀을 때만 스크롤합니다.
                 if (loadMoreBtns[index].innerText === '더 보기') {

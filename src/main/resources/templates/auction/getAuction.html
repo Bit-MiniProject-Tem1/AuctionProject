@@ -151,7 +151,7 @@
                 </div>
                 <div>
                     <a th:onclick="|javascript:toggleHeart('${getGoods.id}')|" class="favorite-link">
-                        <i th:id="'likeStatus_' + ${getGoods.id}" class="bi-heart favorite-icon" th:class="${likeChk != null and likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span th:id="'likeSum_' + ${getGoods.id}" th:text="${likeSum}"></span>
+                        <i name="heart" th:data-auction-id="${getGoods.id}" th:id="'likeStatus_' + ${getGoods.id}" class="bi-heart favorite-icon" th:class="${getGoods.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp<span name="likeSum" th:data-count-id="${getGoods.id}" th:id="'likeSum_' + ${getGoods.id}" th:text="${getGoods.likeCnt}"></span>
                     </a>
                 </div>
                 <div class="user-bidding-container light-border-top">

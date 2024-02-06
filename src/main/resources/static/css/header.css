@@ -69,7 +69,7 @@ header {
 
 .main_header .logo > .logo_bk {
     width: 200px;
-    height: 35px;
+    height: 40px;
 }
 
 .main_header .me-2 {
@@ -281,6 +281,19 @@ header {
     max-height: 300px;
 }
 
+.list_box::-webkit-scrollbar {
+    width: 10px;
+}
+.list_box::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.list_box::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
 .main_header .dropdown-content a {
     display: block;
 }
@@ -289,7 +302,7 @@ header {
     width: 314px;
     height: 60px;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
     padding-bottom: 2px;
     background-color: white;
 }
@@ -318,6 +331,8 @@ header {
     font-family: Pretendard;
     padding-top: 15px;
 }
+
+
 
 .main_header .list-title-default {
     font-size: 15px;
