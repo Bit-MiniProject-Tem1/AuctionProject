@@ -11,8 +11,11 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function() {
+                const auctionList = [[${auctionList}]];
+
+                console.log(auctionList);
                 const urlParams = new URL(location.href).searchParams;
                 const name = urlParams.get('regUser');
 

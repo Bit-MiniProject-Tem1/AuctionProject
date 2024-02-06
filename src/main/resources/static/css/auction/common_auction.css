@@ -87,6 +87,9 @@
 .search-goods .title {
     font-weight: 700;
     font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .search-goods .goods-img {

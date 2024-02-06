@@ -47,6 +47,14 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     public Page<Auction> searchAll(Pageable pageable, List<Long> subCategoryIdList, String sortOption, List<String> targetList, List<Character> statusList) {
         List<Auction> auctionList;
 
+        long totalCnt = jpaQueryFactory
+                .selectFrom(auction)
+                .where(eqCategoryId(subCategoryIdList),
+                        eqTarget(targetList),
+                        eqStatus(statusList))
+                .orderBy(auctionSort(sortOption))
+                .fetch().size();
+
         if (sortOption != null && sortOption.equals("byMostFavorite")) {
             auctionList = jpaQueryFactory
                     .selectFrom(auction)
@@ -56,6 +64,8 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
                             eqTarget(targetList),
                             eqStatus(statusList))
                     .orderBy(Expressions.numberTemplate(Double.class, "coalesce({0}, {1})", likeCnt.auction.id.count(), 0).desc())
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
                     .fetch();
         } else {
             auctionList = jpaQueryFactory
@@ -64,26 +74,31 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
                             eqTarget(targetList),
                             eqStatus(statusList))
                     .orderBy(auctionSort(sortOption))
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
                     .fetch();
         }
 
         auctionRepresentative(auctionList);
-
-        long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
 
     @Override
     public Page<Auction> searchMyAuctionList(Pageable pageable, String regUserId, List<Character> statusList) {
+        long totalCnt = jpaQueryFactory
+                .selectFrom(auction)
+                .where(auction.regUser.userId.eq(regUserId).and(eqStatus(statusList)))
+                .fetch().size();
+
         List<Auction> auctionList = jpaQueryFactory
                 .selectFrom(auction)
                 .where(auction.regUser.userId.eq(regUserId).and(eqStatus(statusList)))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         auctionRepresentative(auctionList);
-
-        long totalCnt = auctionList.size();
 
         return new PageImpl<>(auctionList, pageable, totalCnt);
     }
