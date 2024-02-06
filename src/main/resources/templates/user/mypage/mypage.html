@@ -9,113 +9,130 @@
         <link rel="stylesheet" th:href="@{/css/auction/get_auction_list.css}">
         <link rel="stylesheet" th:href="@{/css/auction/common_auction.css}">
     </th:block>
-        <th:block layout:fragment="script">
-            <!--<script th:src="@{/js/to_price_comma.js}"></script>-->
-            <script th:src="@{/js/countdown.js}"></script>
-            <script th:inline="javascript">
-                $(document).ready(function () {
-                    $('.search-goods:lt(4)').show();                });
-            </script>
-        </th:block>
+    <th:block layout:fragment="script">
+        <!--<script th:src="@{/js/to_price_comma.js}"></script>-->
+        <script th:src="@{/js/countdown.js}"></script>
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                $('.search-goods:lt(4)').show();
+            });
+        </script>
+    </th:block>
     <title>마이페이지</title>
 </head>
 <body>
-    <div layout:fragment="content" class="mypage_container">
-        <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
-        <div class="mypage_box1">
-            <img src="https://png.pngtree.com/png-clipart/20191121/original/pngtree-user-vector-icon-png-image_5152508.jpg"
-            class="user_img">
+<div layout:fragment="content">
+    <div class="content">
+        <div class="container">
+            <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
+            <div class="mypage_box1">
+                <img src="https://png.pngtree.com/png-clipart/20191121/original/pngtree-user-vector-icon-png-image_5152508.jpg"
+                     class="user_img">
 
-            <div class="user_info">
-                <strong id="userName" name="userName" class="user_name" th:text="${#authentication.principal.user.userName}"></strong>
-                <p id="userEmail" name="userEmail" class="user_email" th:text="${#authentication.principal.user.userEmail}"></p>
-                <a class="profile_update" type="button" href="/user/modify-view">프로필 수정</a>
-                <a class="user_point" type="button" href="/mypage/point">포인트</a>
-                <a class="user_inquiry" type="button" href="/mypage/inquiry">문 의</a>
+                <div class="user_info">
+                    <strong id="userName" name="userName" class="user_name"
+                            th:text="${#authentication.principal.user.userName}"></strong>
+                    <p id="userEmail" name="userEmail" class="user_email"
+                       th:text="${#authentication.principal.user.userEmail}"></p>
+                    <a class="profile_update" type="button" href="/user/modify-view">프로필 수정</a>
+                    <a class="user_point" type="button" href="/mypage/point">포인트</a>
+                    <a class="user_inquiry" type="button" href="/mypage/inquiry">문 의</a>
+                </div>
             </div>
-        </div>
-        <div class="mypage_box4">
-            <div class="buying_title">
-                <p class="buying_content">입찰 내역</p>
+            <div class="mypage_box4">
+                <div class="buying_title">
+                    <p class="buying_content">입찰 내역</p>
+                </div>
+                <div class="buying_view">
+                    <a class="buying_btn" type="button" href="/mypage/biddingList">더보기&nbsp; &gt;</a>
+                </div>
             </div>
-            <div class="buying_view">
-                <a class="buying_btn" type="button" href="/mypage/biddingList">더보기></a>
-            </div>
-        </div>
 
-        <div class="mypage_box5">
-            <div class="buying_box">
-                <strong>진행 중</strong>
-                <p>0</p>
+            <div class="mypage_box5">
+                <div class="buying_box">
+                    <strong>진행 중</strong>
+                    <p>0</p>
+                </div>
+                <div class="buying_box">
+                    <strong>종료</strong>
+                    <p>0</p>
+                </div>
+                <div class="buying_box">
+                    <strong>취소</strong>
+                    <p>0</p>
+                </div>
             </div>
-            <div class="buying_box">
-                <strong>종료</strong>
-                <p>0</p>
-            </div>
-            <div class="buying_box">
-                <strong>취소</strong>
-                <p>0</p>
-            </div>
-        </div>
 
-        <div class="buying_history">
-            <div class="buying_history_title">
-                <h3 class="buying_history_content">입찰 내역이 없습니다.</h3>
+            <div class="buying_history">
+                <div class="buying_history_title">
+                    <h3 class="buying_history_content">입찰 내역이 없습니다.</h3>
+                </div>
             </div>
-        </div>
 
-        <div class="mypage_box6">
-            <div class="like_title">
-                <p class="like_content">관심 목록</p>
+            <div class="mypage_box6">
+                <div class="like_title">
+                    <p class="like_content">관심 목록</p>
+                </div>
+                <div class="like_view">
+                    <a class="like_btn" type="button" href="/mypage/mylikeproduct">더보기&nbsp; &gt;</a>
+                </div>
             </div>
-            <div class="like_view">
-                <a class="like_btn" type="button" href="/mypage/mylikeproduct">더보기></a>
-            </div>
-        </div>
-        <div class="like_history">
-            <div class="like_history_title">
-                <div class="container search-goods-list">
-                    <ul class="search-goods grid4" th:each="auction : ${likeList}" >
-                        <div class="goods-img">
-                            <figure class="img_wrapper">
-                                <a href="#" th:href="'/auction/goods/'+${auction.id}">
-                                    <img class="d-block w-100"
-                                         src=""
-                                         th:src="@{/img/no-preview.jpeg}"
-                                         th:if="${auction.representativeImgUrl} eq null"
-                                         alt=""/>
-                                    <img class="d-block w-100"
-                                         src=""
-                                         th:src="${auction.representativeImgUrl}"
-                                         th:if="${auction.representativeImgUrl} ne null"
-                                         alt=""/>
-                                </a>
-                            </figure>
-                            <div class="remaining-time">남은시간<br>
-                                <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
-                                <span class="months">0</span>
-                                <span class="days">0</span><br>
-                                <span class="hours">0</span>
-                                <span class="minutes">0</span>
-                                <span class="seconds">0</span>
+            <div class="like_history">
+                <div class="like_history_title">
+                    <div class="container search-goods-list">
+                        <ul class="search-goods grid4" th:each="auction : ${likeList}">
+                            <div class="goods-img">
+                                <figure class="img_wrapper">
+                                    <a href="#" th:href="'/auction/goods/'+${auction.id}">
+                                        <img class="d-block w-100"
+                                             src=""
+                                             th:src="@{/img/no-preview.jpeg}"
+                                             th:if="${auction.representativeImgUrl} eq null"
+                                             alt=""/>
+                                        <img class="d-block w-100"
+                                             src=""
+                                             th:src="${auction.representativeImgUrl}"
+                                             th:if="${auction.representativeImgUrl} ne null"
+                                             alt=""/>
+                                    </a>
+                                </figure>
+                                <div class="remaining-time">남은시간<br>
+                                    <span class="end_date"
+                                          th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                                          style="display: none"></span>
+                                    <span class="months">0</span>
+                                    <span class="days">0</span><br>
+                                    <span class="hours">0</span>
+                                    <span class="minutes">0</span>
+                                    <span class="seconds">0</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span th:text="${auction.title}"></span></a></div>
-                        <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
-                        <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
-                        <div class="user-name">
-                            <i class="bi bi-person"></i><a href="#" th:href="'/auction/goods-list?regUser='+${auction.regUserId}"> <span th:text="${auction.regUserId}"></span></a>
-                        </div>
-                        <div class="favorite-view-group">
-                            <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
-                                <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
-                            </a>
-                            <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
-                        </div>
-                    </ul>
+                            <div class="title"><a href="#" th:href="'/auction/goods/'+${auction.id}"><span
+                                    th:text="${auction.title}"></span></a></div>
+                            <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
+                            <div class="current-bidding_price">현재가&nbsp;<span
+                                    th:text="${auction.immediatePrice}"></span></div>
+                            <div class="user-name">
+                                <i class="bi bi-person"></i><a href="#"
+                                                               th:href="'/auction/goods-list?regUser='+${auction.regUserId}">
+                                <span th:text="${auction.regUserId}"></span></a>
+                            </div>
+                            <div class="favorite-view-group">
+                                <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
+                                    <i name="heart" th:data-auction-id="${auction.id}"
+                                       th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon"
+                                       th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span
+                                        name="likeSum" th:data-count-id="${auction.id}"
+                                        th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                                </a>
+                                <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

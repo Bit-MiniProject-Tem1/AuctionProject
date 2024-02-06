@@ -7,49 +7,53 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/login/find_pw.css}">
     </th:block>
-        <th:block layout:fragment="script">
-            <script>
-                function findPw() {
-                    var userId = document.getElementById('userId').value;
-                    var userName = document.getElementById('userName').value;
-                    var userTel = document.getElementById('userTel').value;
+    <th:block layout:fragment="script">
+        <script>
+            function findPw() {
+                var userId = document.getElementById('userId').value;
+                var userName = document.getElementById('userName').value;
+                var userTel = document.getElementById('userTel').value;
 
-                    $.ajax({
-                       type: 'POST',
-                       url: '/user/find_pw',
-                       data: {
-                           userId: userId,
-                           userName: userName,
-                           userTel: userTel
-                       },
-                        success: function (response) {
-                           if (response === 'success') {
-                               window.location.href = '/user/profile';
-                               alert('비밀번호를 바로 변경하여 주시길 바랍니다.')
-                           } else {
-                               console.log(response);
-                               alert('입력한 정보와 일치하는 사용자를 찾을 수 없습니다.');
-                               window.location.reload();
-                           }
-                        },
-                        error: function (error) {
-                           alert('에러가 발생했습니다. 관리자에게 문의하세요.');
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/find_pw',
+                    data: {
+                        userId: userId,
+                        userName: userName,
+                        userTel: userTel
+                    },
+                    success: function (response) {
+                        if (response === 'success') {
+                            window.location.href = '/user/profile';
+                            alert('비밀번호를 바로 변경하여 주시길 바랍니다.')
+                        } else {
+                            console.log(response);
+                            alert('입력한 정보와 일치하는 사용자를 찾을 수 없습니다.');
+                            window.location.reload();
                         }
-                    });
-                }
-            </script>
-        </th:block>
+                    },
+                    error: function (error) {
+                        alert('에러가 발생했습니다. 관리자에게 문의하세요.');
+                    }
+                });
+            }
+        </script>
+    </th:block>
     <title>비밀번호 찾기</title>
 </head>
 <body>
 <div layout:fragment="content" class="find_pw_container">
     <form th:action="@{/user/find_pw}" name="find_pw" id="find_pw" method="post">
-    <h2 class="find_pw_title">비밀번호 찾기</h2>
-    <div class="find_pw_line"></div>
-
-    <div class="find_pw_textBox">
-        <h3>가입 시 등록한 아이디와 이름, 휴대폰번호를 입력하세요.</h3>
-    </div>
+        <h1 class="page-title">비밀번호 찾기</h1>
+        <!--
+               <div class="find_id_line"></div>
+               -->
+        <div class="find_pw_textBox">
+            <!--
+                <h3>가입 시 등록한 아이디와 이름, 휴대폰번호를 입력하세요.</h3>
+            -->
+            가입 시 등록한 아이디와 이름, 휴대폰번호를 입력하세요.
+        </div>
         <div class="find_pw_phoneNum">
             <h3 for="userId">아이디</h3>
         </div>
@@ -63,14 +67,16 @@
         <div>
             <input type="text" id="userName" name="userName" class="find_pw_input" placeholder="이 름">
         </div>
-    <div class="find_pw_phoneNum">
-        <h3 for="userTel">휴대폰 번호</h3>
-    </div>
-    <div>
-        <input type="text" id="userTel" name="userTel" class="find_pw_input" placeholder="가입하신 휴대폰 번호">
-    </div>
+        <div class="find_pw_phoneNum">
+            <h3 for="userTel">휴대폰 번호</h3>
+        </div>
+        <div>
+            <input type="text" id="userTel" name="userTel" class="find_pw_input" placeholder="가입하신 휴대폰 번호">
+        </div>
 
-    <a><button class="find_pw_btn" onclick="findPw()">비밀번호 찾기</button></a>
+        <a>
+            <button class="find_pw_btn btn-black" onclick="findPw()">비밀번호 찾기</button>
+        </a>
     </form>
 </div>
 </body>

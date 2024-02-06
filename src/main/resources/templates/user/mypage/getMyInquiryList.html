@@ -181,10 +181,7 @@
 </head>
 <body>
 <div layout:fragment="content" class="myinquiry_container">
-
-    <div class="myinquiry_box1">
-        <h2>마이 문의</h2>
-    </div>
+    <h1 class="page-title light-border-bottom">마이 문의</h1>
     <form id="searchForm" action="/inquiry/inquiry-list" method="get">
         <table border="1" style="width: 1020px; border-collapse: collapse;">
             <tr>
@@ -210,7 +207,7 @@
 
     <div class="myinquiry_box2">
         <table id="inquiryTable" class="table">
-            <tr class="table_tr">
+            <tr class="table-secondary">
 <!--                <th scope="col" class="table_th1">체 크</th>-->
                 <th scope="col" class="table_th1">문의번호</th>
                 <th scope="col" class="table_th2">제 목</th>
@@ -271,7 +268,7 @@
             <!--            <button type="button" id="updRowBtn">수정</button>-->
 <!--            <button type="button" id="delRowBtn" class="delRowBtn">삭 제</button>-->
 <!--            <button type="button" id="savRowBtn" class="savRowBtn">저 장</button>-->
-            <a class="insert_btn" href="/inquiry/insert-inquiry-view" >문의 하기</a>
+            <a class="btn-black" href="/inquiry/insert-inquiry-view" >문의하기</a>
         </div>
 
 

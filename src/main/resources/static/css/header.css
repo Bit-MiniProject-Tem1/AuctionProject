@@ -5,10 +5,12 @@ html, body {
 html {
     background-color: #fff;
 }
+
 .bi-heart::before {
     content: "\f417";
     color: red;
 }
+
 .bi-heart-fill::before {
     content: "\f415";
     color: red;
@@ -34,7 +36,7 @@ header {
 
 .header_top .top_link {
     align-items: center;
-    color: rgba(34, 34, 34, .8);
+    color: #222;
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -43,7 +45,7 @@ header {
 
 .header_top .top_link1 {
     align-items: center;
-    color: rgba(34, 34, 34, .8);
+    color: #222;
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -255,7 +257,7 @@ header {
     margin-left: 2px;
     color: black;
     display: flex;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 550;
 }
 
@@ -333,6 +335,7 @@ header {
     padding-top: 15px;
     padding-left: 120px;
 }
+
 .main_header .bi-trash {
     float: right;
     display: flex;

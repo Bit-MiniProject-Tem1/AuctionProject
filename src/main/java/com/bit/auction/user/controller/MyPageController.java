@@ -1,7 +1,7 @@
 package com.bit.auction.user.controller;
 
-import com.bit.auction.goods.dto.*;
-import com.bit.auction.goods.entity.Point;
+import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.PointDTO;
 import com.bit.auction.goods.entity.PointHistory;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
@@ -10,7 +10,6 @@ import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.InquiryDTO;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.CustomUserDetails;
-import com.bit.auction.user.entity.User;
 import com.bit.auction.user.service.InquiryService;
 import com.bit.auction.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +68,7 @@ public class MyPageController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
             mav.setViewName("user/mypage/mypage.html");
         } else {
@@ -84,10 +76,10 @@ public class MyPageController {
             userLikeList = new ArrayList<>();
         }
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             likeList.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });
@@ -116,7 +108,7 @@ public class MyPageController {
 
         List<Map<String, Long>> userLikeList;
 
-        if(customUserDetails != null) {
+        if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
             mav.setViewName("user/mypage/mypage.html");
         } else {
@@ -124,10 +116,10 @@ public class MyPageController {
             userLikeList = new ArrayList<>();
         }
 
-        if(!userLikeList.isEmpty()) {
+        if (!userLikeList.isEmpty()) {
             likeList.stream().map(auctionDTO -> {
                 userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
+                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
                         auctionDTO.setLikeChk(true);
                     }
                 });
@@ -147,8 +139,8 @@ public class MyPageController {
         return mav;
     }
 
-@GetMapping("/point")
-public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    @GetMapping("/point")
+    public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
 
@@ -169,7 +161,7 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
             mav.setViewName("user/mypage/mypoint.html");
         }
         return mav;
-}
+    }
 
     @GetMapping("/inquiry")
     public ModelAndView getMyInquiryList(@PageableDefault(page = 0, size = 10) Pageable pageable,
@@ -198,7 +190,7 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
         ModelAndView mav = new ModelAndView();
 
         String userId = customUserDetails.getUsername();
-        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable , userId));
+        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable, userId));
         mav.addObject("biddingInfo", biddingService.getbidone(userId));
         mav.addObject("sessionId", userId);
         mav.setViewName("user/mypage/getMyBiddingList.html");
@@ -207,7 +199,7 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
     }
 
     @GetMapping("/chargeForm")
-    public ModelAndView chargeFrom(){
+    public ModelAndView chargeFrom() {
         ModelAndView mav = new ModelAndView();
 
         mav.setViewName("user/mypage/chargeForm.html");
@@ -216,14 +208,15 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
 
     @PostMapping("/chargeForm")
     public void chargePoint(@RequestParam int point,
-                            @AuthenticationPrincipal CustomUserDetails customUserDetails){
+                            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         String userId = customUserDetails.getUsername();
         pointService.pointCharge(point, userId);
         char status = 'c';
         pointHistoryService.setPointHistory(point, userId, status);
     }
+
     @GetMapping("/withdrawForm")
-    public ModelAndView withdrawFrom(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public ModelAndView withdrawFrom(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
         PointDTO pointDTO = pointService.getPoint(customUserDetails.getUsername());
         mav.addObject("getPoint", pointDTO);
@@ -233,10 +226,38 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
 
     @PostMapping("/withdrawForm")
     public void withdrawPoint(@RequestParam int point,
-                            @AuthenticationPrincipal CustomUserDetails customUserDetails){
+                              @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         String userId = customUserDetails.getUsername();
         pointService.pointWithdraw(point, userId);
         char status = 'w';
         pointHistoryService.setPointHistory(point, userId, status);
+    }
+
+    @GetMapping("/reg-goods")
+    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        ModelAndView mav = new ModelAndView();
+
+        String regUserId = customUserDetails.getUsername();
+
+        List<Character> statusList = new ArrayList<>();
+
+        if (status == null || status.isEmpty()) {
+            statusList.add('S');
+            statusList.add('C');
+            statusList.add('E');
+        } else if (status.equals("S")) {
+            statusList.add('S');
+        } else if (status.equals("E")) {
+            statusList.add('E');
+        } else if (status.equals("C")) {
+            statusList.add('C');
+        }
+
+        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, statusList));
+        mav.setViewName("user/mypage/getMyAuctionList.html");
+
+        return mav;
     }
 }

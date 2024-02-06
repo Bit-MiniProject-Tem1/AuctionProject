@@ -11,14 +11,14 @@
     </th:block>
     <th:block layout:fragment="script">
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.btn-cancel').click(function () {
                     var auctionId = $(this).data('id');
 
                     $.ajax({
                         method: 'put',
                         url: '/auction/cancel',
-                        data: {id:auctionId},
+                        data: {id: auctionId},
                         success: (obj) => {
                             alert(obj.item.msg);
                             location.href = "/user/reg-goods";
@@ -37,7 +37,7 @@
 <div layout:fragment="content">
     <div class="content">
         <div class="container">
-            <h1 class="page-title">등록 경매 조회</h1>
+            <h1 class="page-title light-border-bottom">등록 경매 조회</h1>
             <div class="goods-filter">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -108,7 +108,8 @@
                             <div class="link-group" th:if="${auction.status} eq 'S'">
                                 <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}"
                                    th:if="${auction.status} eq 'S'">수정</a><br>
-                                <a href="#" class="link btn-red btn-cancel" th:if="${auction.status} eq 'S'" th:data-id="${auction.id}">취소</a>
+                                <a href="#" class="link btn-red btn-cancel" th:if="${auction.status} eq 'S'"
+                                   th:data-id="${auction.id}">취소</a>
                             </div>
                         </td>
                     </tr>
@@ -142,7 +143,7 @@
                     </li>
                 </ul>
             </nav>
-            <a id="register" href="/auction/register">새 경매 등록</a>
+            <a id="register" class="btn-black" href="/auction/register">새 경매 등록</a>
         </div>
     </div>
 </div>

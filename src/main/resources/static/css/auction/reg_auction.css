@@ -39,11 +39,11 @@
 }
 
 .register-auction .form-control, .register-auction .form-select, .register-auction .form-text {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .register-auction .form-label {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
 }
 
@@ -146,7 +146,7 @@
     display: inline-block;
     margin-left: 10px;
     padding: 5px 20px;
-    border-radius: 12px;
+    border-radius: 0.375rem;
     background-color: #6c757d;
     color: white;
     font-size: 14px;

@@ -1,19 +1,33 @@
-.mypage_container {
-
+.content, .container {
+    float: left;
 }
-body{
+
+.content, .container {
+    width: 100%;
+}
+
+.content {
+    float: right;
+    width: 1020px;
+}
+
+.container {
+    margin: 0;
+}
+
+body {
     font-family: Pretendard;
 }
+
 .mypage_box1 {
     height: 120px;
     width: 1020px;
-    margin-left: 180px;
     margin-top: 20px;
     border-radius: 20px;
     display: flex;
     border: 1px solid black;
-
 }
+
 .user_img {
     width: 80px;
     height: 80px;
@@ -21,7 +35,8 @@ body{
     border-radius: 20px;
 }
 
-.user_info{
+.user_info {
+    width: 860px;
     margin-top: 20px;
 }
 
@@ -30,64 +45,75 @@ body{
 }
 
 .profile_update {
+    height: 42px;
+    padding: 0 30px;
     margin-top: 5px;
     margin-right: 10px;
-    width: 100px;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 700;
     background-color: white;
     border-radius: 10px;
-    border: 1px solid lightgrey;
+    border: 1px solid #d3d3d3;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
 }
 
 .user_point {
-    width: 100px;
+    height: 42px;
+    padding: 0 30px;
     margin-right: 10px;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 700;
     background-color: white;
     border-radius: 10px;
-    border: 1px solid lightgrey;
+    border: 1px solid #d3d3d3;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
 }
 
 .user_inquiry {
-    width: 100px;
+    height: 42px;
+    padding: 0 30px;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 700;
     background-color: white;
     border-radius: 10px;
-    border: 1px solid lightgrey;
+    border: 1px solid #d3d3d3;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
 }
+
 .mypage_box2 {
     height: 50px;
     width: 1020px;
-    margin-left: 180px;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
-
 
 .selling_content {
     font-size: 23px;
     font-weight: bold;
 
 }
+
 .selling_view {
     font-size: 15px;
     text-align: right;
-}
-.selling_btn {
-
 }
 
 .mypage_box3 {
     height: 120px;
     width: 1020px;
-    margin-left: 180px;
     display: flex;
     margin-top: 20px;
-    background-color: rgba(46,204,113,0.05);
+    background-color: rgba(46, 204, 113, 0.05);
     border-radius: 20px;
 }
 
@@ -100,7 +126,6 @@ body{
 .selling_history {
     height: 200px;
     width: 1020px;
-    margin-left: 180px;
     margin-top: 20px;
     display: flex;
 }
@@ -108,8 +133,8 @@ body{
 .selling_history_title {
     height: 180px;
     width: 1020px;
-
 }
+
 .selling_history_content {
     margin: 80px;
     text-align: center;
@@ -119,30 +144,27 @@ body{
 .mypage_box4 {
     height: 50px;
     width: 1020px;
-    margin-left: 180px;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-
 .buying_content {
-    font-size: 23px;
-    font-weight: bold;
-
+    font-size: 17px;
+    font-weight: 700;
 }
+
 .buying_view {
-    font-size: 15px;
+    font-size: 13px;
     text-align: right;
 }
 
 .mypage_box5 {
     height: 120px;
     width: 1020px;
-    margin-left: 180px;
     display: flex;
     margin-top: 20px;
-    background-color: rgba(224,224,224,0.38);
+    background-color: rgba(224, 224, 224, 0.38);
     border-radius: 20px;
 }
 
@@ -155,7 +177,6 @@ body{
 .buying_history {
     height: 200px;
     width: 1020px;
-    margin-left: 180px;
     margin-top: 20px;
     display: flex;
 }
@@ -163,8 +184,8 @@ body{
 .buying_history_title {
     height: 180px;
     width: 1020px;
-
 }
+
 .buying_history_content {
     margin: 80px;
     text-align: center;
@@ -174,27 +195,24 @@ body{
 .mypage_box6 {
     height: 50px;
     width: 1020px;
-    margin-left: 180px;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-
 .like_content {
-    font-size: 23px;
-    font-weight: bold;
-
+    font-size: 17px;
+    font-weight: 700;
 }
+
 .like_view {
-    font-size: 15px;
+    font-size: 13px;
     text-align: right;
 }
 
 .like_history {
     height: 440px;
     width: 1020px;
-    margin-left: 180px;
     margin-top: 20px;
     margin-bottom: 30px;
     display: flex;
@@ -205,8 +223,22 @@ body{
     width: 1020px;
 
 }
+
 .like_history_content {
     margin: 80px;
     text-align: center;
     font-size: 17px;
+}
+
+.user_name {
+    font-size: 16px;
+}
+
+.buying_box strong {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.buying_box p {
+    font-size: 14px;
 }

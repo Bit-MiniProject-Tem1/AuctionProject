@@ -2,6 +2,7 @@
     position: relative;
     overflow: hidden;
 }
+
 .home_md .home_card_list {
     margin-left: auto;
     margin-right: auto;
@@ -22,6 +23,7 @@
 .active img {
     height: auto;
 }
+
 .carousel-item img {
     height: auto;
 }
@@ -34,9 +36,11 @@
     width: 1200px;
     margin: 0 auto;
 }
+
 .main_body footer {
     margin: 0 auto;
 }
+
 .main_menu {
     width: 1200px;
     margin: 0 auto;
@@ -49,7 +53,7 @@
     -moz-column-gap: 8px;
     column-gap: 8px;
     display: grid;
-    grid-template-columns: repeat(5,minmax(0,1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
@@ -74,8 +78,9 @@
     object-fit: contain;
     border-radius: 30px;
 }
+
 .shortcut_item_title {
-    color: #333;
+    color: #222;
     font-size: 15px;
     letter-spacing: -.15px;
     margin-top: 8px;
@@ -100,9 +105,10 @@
     max-width: 1200px;
 }
 
-.container_title>.title_item {
+.container_title > .title_item {
     flex: 1;
 }
+
 .title_item_name {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -116,7 +122,7 @@
 }
 
 .title_item_sub {
-    color: rgba(34,34,34,.5);
+    color: rgba(34, 34, 34, .5);
     font-size: 16px;
     margin-top: 2px;
     -webkit-line-clamp: 1;
@@ -128,15 +134,17 @@
 }
 
 .home_product .search-goods-list1 {
-    grid-template-columns: repeat(4,minmax(0,1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     display: grid;
 }
+
 .home_product .search-goods-list2 {
-    grid-template-columns: repeat(4,minmax(0,1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     display: grid;
 }
+
 .home_product .search-goods-list3 {
-    grid-template-columns: repeat(4,minmax(0,1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     display: grid;
 }
 
@@ -149,11 +157,11 @@
     margin-bottom: 25px;
 }
 
-.carousel-caption h5{
+.carousel-caption h5 {
     font-family: GmarketSans;
 }
 
-.carousel-caption p{
+.carousel-caption p {
     font-family: Pretendard;
 }
 
@@ -187,6 +195,7 @@
     display: inline-flex;
     justify-content: center;
     text-align: center;
+    font-weight: 700;
     vertical-align: middle;
 }
 
@@ -194,22 +203,22 @@
     border: 1px solid #d3d3d3;
     color: black;
 }
+
 .btn_product .medium {
-    border-radius: 12px;
+    border-radius: 0.375rem;
     font-size: 14px;
     height: 42px;
     letter-spacing: -.14px;
-    font-family: Pretendard;
 }
+
 .more_product a {
-    color: rgba(34,34,34,.5);
+    color: #222;
     font-size: 13px;
     letter-spacing: -.07px;
-    font-family: Pretendard;
 }
 
 /* 더보기 버튼 hover 추가 */
-.btn_product .medium:hover{
+.btn_product .medium:hover {
     border-color: rgba(110, 110, 110, 0.8);
     border-radius: 12px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);

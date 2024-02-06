@@ -13,7 +13,7 @@
 <div layout:fragment="content">
     <div class="content">
         <div class="container">
-            <h1 class="page-title">입찰 경매 조회</h1>
+            <h1 class="page-title light-border-bottom">입찰 경매 조회</h1>
             <div class="goods-filter">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -87,7 +87,8 @@
                                             <div th:if="${sessionId} eq ${bidding.userId}">
                                                 <div th:if="${bidding.status} eq 'l'">
                                                     <p class="biddingStatus">상회입찰</p>
-                                                 <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}">
+                                                 <a href="#" class="link btn-green"
+                                                    th:href="'/auction/goods-update/'+${auction.id}">
                                                      입찰
                                                  </a>
                                                 </div>

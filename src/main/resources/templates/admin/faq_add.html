@@ -5,12 +5,12 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <title>자주 묻는 질문 - 등록</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
 
 
     <th:block layout:fragment="css">
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script">
@@ -18,11 +18,11 @@
 
             let attachedFileList = [];
 
-            $(document).ready(function() {
+            $(document).ready(function () {
 
-                $('.view_box').on( 'keyup', 'textarea', function (e){
+                $('.view_box').on('keyup', 'textarea', function (e) {
 
-                    for (let i=0; i<$('.view_box').length-1; i++) {
+                    for (let i = 0; i < $('.view_box').length - 1; i++) {
                         let viewboxHeight = 30;
                         let id = $('.view_box')[i].getAttribute('id');
 
@@ -30,17 +30,16 @@
                             viewboxHeight = viewboxHeight * 12;
                         }
 
-                        if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
-                            $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                        if ($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                            $("#" + id).height($("#" + id + " > .text_area")[0].scrollHeight);
                         } else {
-                            $("#" + id).height( viewboxHeight );
+                            $("#" + id).height(viewboxHeight);
                         }
                     }
                 });
 
-                $('.view_box').find( 'textarea' ).keyup();
+                $('.view_box').find('textarea').keyup();
             });
-
 
 
             function updateFiles() {
@@ -54,11 +53,11 @@
 
                 fileInput.files = fileDataTransfer.files;
 
-                for(const file of attachedFileList) {
+                for (const file of attachedFileList) {
                     console.log(file.name);
                 }
 
-                for(const file of fileInput.files) {
+                for (const file of fileInput.files) {
                     console.log(file.name);
                 }
 
@@ -95,8 +94,8 @@
 
                         const deleteFileName = e.target.getAttribute("data-delete-filename");
 
-                        for(let i = 0; i < attachedFileList.length; i++) {
-                            if(deleteFileName === attachedFileList[i].name) {
+                        for (let i = 0; i < attachedFileList.length; i++) {
+                            if (deleteFileName === attachedFileList[i].name) {
                                 attachedFileList.splice(i, 1);
                             }
                         }
@@ -104,7 +103,7 @@
                         // input에 첨부된 파일 삭제
                         let inputDataTransfer = new DataTransfer();
 
-                        for(i in attachedFileList) {
+                        for (i in attachedFileList) {
                             inputDataTransfer.items.add(attachedFileList[i]);
                         }
 
@@ -122,7 +121,7 @@
                     fileNamesContainer.appendChild(fileNameParagraph);
                 }
 
-                $("#file_box").height( $("#fileNames").height());
+                $("#file_box").height($("#fileNames").height());
             }
 
             function focusChild() {
@@ -133,12 +132,8 @@
     </th:block>
 </head>
 <body>
-<div class="content_area" layout:fragment="content" >
-    <div class="title_area">
-        <div class="title">
-            <strong>자주 묻는 질문 - 등록</strong>
-        </div>
-    </div>
+<div class="content_area" layout:fragment="content">
+    <h1 class="page-title light-border-bottom">자주 묻는 질문 - 등록</h1>
     <div id="faq_add_container">
         <div class="detailView_area">
             <form id="detailViewForm" th:action method="post" enctype="multipart/form-data">
@@ -152,18 +147,22 @@
                                 <label class="item_label">카테고리</label>
                             </strong>
                         </div>
-                        <select name="category" id="category" style="width: 180px; height: 42px; font-size: 18px;">
+                        <select name="category" id="category" style="width: 180px; height: 42px; font-size: 16px;">
 
-                                <option value="null" hidden
-                                        th:selected="${category == 'null'}"></option>
-                                <option value="이용정책" style="font-size: 16px;"
-                                        th:selected="${category == '이용정책'}">이용정책</option>
-                                <option value="공통" style="font-size: 16px;"
-                                        th:selected="${category == '공통'}">공통</option>
-                                <option value="구매" style="font-size: 16px;"
-                                        th:selected="${category == '구매'}">구매</option>
-                                <option value="판매" style="font-size: 16px;"
-                                        th:selected="${category == '판매'}">판매</option>
+                            <option value="null" hidden
+                                    th:selected="${category == 'null'}"></option>
+                            <option value="이용정책" style="font-size: 16px;"
+                                    th:selected="${category == '이용정책'}">이용정책
+                            </option>
+                            <option value="공통" style="font-size: 16px;"
+                                    th:selected="${category == '공통'}">공통
+                            </option>
+                            <option value="구매" style="font-size: 16px;"
+                                    th:selected="${category == '구매'}">구매
+                            </option>
+                            <option value="판매" style="font-size: 16px;"
+                                    th:selected="${category == '판매'}">판매
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -207,20 +206,25 @@
                                 <label class="item_label">첨부파일</label>
                             </strong>
                         </div>
-                        <div class="view_box" id="file_box" style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
+                        <div class="view_box" id="file_box"
+                             style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
                             <span>
-                                <label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: #dedede;">파일 선택</label>  <!--background-color: aliceblue;-->
-                                <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
+                                <label for="uploadFiles"
+                                       style="color: white; font-weight: 600; line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border-radius: 0.375rem; background-color: #6c757d;">파일 선택</label>
+                                <!--background-color: aliceblue;-->
+                                <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;"
+                                       aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple
+                                       placeholder="none">
                             </span>
                             <div style="margin: 0 10px 0 10px; padding-left: 15px; border-left: 2px solid #dedede;">
-                                <div id="fileNames" style="font-size: 16px; vertical-align: middle;">
+                                <div id="fileNames" style="font-size: 14px; vertical-align: middle;">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="button_area">
-                    <button type="submit" id="saveBtn" class="textTypeBtn">저장</button>
+                    <button type="submit" id="saveBtn" class="btn-black">저장</button>
                 </div>
             </form>
         </div>

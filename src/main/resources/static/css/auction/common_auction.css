@@ -23,24 +23,6 @@
     color: rgba(34, 34, 34, .5);
 }
 
-.light-border {
-    border-top: 1px solid #ebebeb;
-    border-bottom: 1px solid #ebebeb;
-}
-
-.light-border-top {
-    border-top: 1px solid #ebebeb;
-}
-
-.page-title {
-    font-size: 28px;
-    font-weight: 600;
-    padding-bottom: 16px;
-    padding-top: 16px;
-    text-align: center;
-    font-family: GmarketSans;
-}
-
 .img_wrapper {
     position: relative;
     padding-top: 100%;
@@ -56,28 +38,6 @@
     bottom: 0;
     object-fit: cover;
     border-radius: 10px;
-}
-
-.btn-red {
-    background-color: rgb(239, 98, 83);
-    color: white;
-}
-
-.btn-green {
-    background-color: rgb(65, 185, 121);
-    color: white;
-}
-
-.btn-white {
-    border: 1px solid #ebebeb;
-}
-
-.link {
-    border-radius: 0.375rem;
-}
-
-.link a, .link a:link, .link a:visited, .link a:hover, .link a:active {
-    color: white;
 }
 
 .favorite-link, .favorite-link:link, .favorite-link:visited, .favorite-link:hover, .favorite-link:active {
@@ -156,9 +116,12 @@
     text-decoration-line: line-through;
 }
 
+.search-goods .starting-price, .search-goods .current-bidding_price, .favorite-view-group {
+    font-size: 14px;
+}
+
 .search-goods .current-bidding_price {
     color: rgb(239, 98, 83);
-    font-size: 14px;
 }
 
 .search-goods .favorite-view-group span {

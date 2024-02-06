@@ -16,7 +16,8 @@
             }
 
             function handleMouseout(parentId) {
-                let element = document.getElementById(parentId).getElementsByTagName('i')[0];;
+                let element = document.getElementById(parentId).getElementsByTagName('i')[0];
+                ;
                 element.classList.remove(' fa fa-star fa-bold');
             }
 
@@ -49,12 +50,8 @@
 
 </head>
 <body>
-<div class="content_area" layout:fragment="content" >
-    <div class="title_area">
-        <div class="title">
-            <strong>문의 관리</strong>
-        </div>
-    </div>
+<div class="content_area" layout:fragment="content">
+    <h1 class="page-title light-border-bottom">문의 관리</h1>
     <div id="inquiryManagement_container">
         <div>
             <div style="margin: 40px 0 0; padding: 0 15px; color:rgb(107, 107, 107); display: flex;">
@@ -63,12 +60,19 @@
                         <i class="bi bi-record-fill"></i>
                     </div>
                     <strong>
-                        <label class="item_label" style="font-size: 22px;">자주 묻는 질문</label>
+                        <label class="item_label">자주 묻는 질문</label>
                     </strong>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center;">
-                    <div class="button_area" style="margin-top: 0; width: 90px; display: flex; justify-content: center; align-items: center;">
+                    <div class="button_area"
+                         style="margin-top: 0; width: 90px; display: flex; justify-content: center; align-items: center;">
+                        <!--
                         <button onclick="redirectToFaqAdd()" type="submit" id="registrationBtn" class="textTypeBtn" style="margin-top: 0; background-color: rgb(90,98,179); color: white; border: none; width: 70px; height: 35px;">등록</button>
+                        -->
+                        <button onclick="redirectToFaqAdd()" type="submit" id="registrationBtn" class="textTypeBtn"
+                                style="font-size:16px; font-weight: 700; margin-top: 0; background-color: black; color: white; border: none; width: 70px; height: 35px;">
+                            등록
+                        </button>
                     </div>
                 </div>
             </div>
@@ -77,36 +81,48 @@
         <div class="search">
             <form id="searchForm" action="/inquiry-management_search" method="get">
                 <table id="search_table">
-                    <tr >
+                    <tr>
                         <td id="search_area">
                             <select name="category" id="category" class="search_item">
                                 <option value="전체"
                                         th:selected="${category == '전체' || category == '' ||
-                                                       category == null}">전체</option>
+                                                       category == null}">전체
+                                </option>
                                 <option value="이용정책"
-                                        th:selected="${category == '이용정책'}">이용정책</option>
+                                        th:selected="${category == '이용정책'}">이용정책
+                                </option>
                                 <option value="공통"
-                                        th:selected="${category == '공통'}">공통</option>
+                                        th:selected="${category == '공통'}">공통
+                                </option>
                                 <option value="구매"
-                                        th:selected="${category == '구매'}">구매</option>
+                                        th:selected="${category == '구매'}">구매
+                                </option>
                                 <option value="판매"
-                                        th:selected="${category == '판매'}">판매</option>
+                                        th:selected="${category == '판매'}">판매
+                                </option>
                             </select>
                             <div style="display: flex;">
-                                <select name="searchCondition" class="search_item" style="width: 130px; text-indent: 12px;">
+                                <select name="searchCondition" class="search_item"
+                                        style="width: 130px; text-indent: 12px;">
                                     <option value="전체"
                                             th:selected="${searchCondition == '전체' || searchCondition == '' ||
-                                                       searchCondition == null}">전체</option>
+                                                       searchCondition == null}">전체
+                                    </option>
                                     <option value="제목"
-                                            th:selected="${searchCondition == '제목'}">제목</option>
+                                            th:selected="${searchCondition == '제목'}">제목
+                                    </option>
                                     <option value="내용"
-                                            th:selected="${searchCondition == '내용'}">내용</option>
+                                            th:selected="${searchCondition == '내용'}">내용
+                                    </option>
                                 </select>
                                 <input type="text" name="searchKeyword" class="search_item" autocomplete="off"
-                                       style="width: 620px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
+                                       style="width: 620px; box-sizing: border-box; text-indent: 20px;"
+                                       placeholder="검색어를 입력해주세요."
                                        th:value="${searchKeyword}">
                             </div>
-                            <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                            <button type="submit" id="searchBtn"
+                                    class="search_item d-flex align-items-center justify-content-center"
+                                    style="width: 43px;">
                                 <i class="bi bi-search search_icon font-weight-bold"></i>
                             </button>
                         </td>
@@ -115,9 +131,9 @@
             </form>
         </div>
         <div class="board">
-            <table id="table_form" >
+            <table id="table_form" class="table">
                 <thead>
-                <tr id="table_header">
+                <tr id="table_header" class="table-secondary">
                     <th class="table_colName" style="width: 70px;">번호</th>
                     <th class="table_colName" style="width: 140px;">카테고리</th>
                     <th class="table_colName" style="width: 560px;">제목</th>
@@ -131,7 +147,8 @@
                     <td th:text="${faq.faqId}"></td>
                     <td th:text="${faq.category}"></td>
                     <td class="td_textArea" onclick="navigateToLink(this, this.className)">
-                        <a th:href="@{/inquiry_management/faq_detail/faq-{faqId} (faqId=${faq.faqId})}" th:text="${faq.title}"></a>
+                        <a th:href="@{/inquiry_management/faq_detail/faq-{faqId} (faqId=${faq.faqId})}"
+                           th:text="${faq.title}"></a>
                     </td>
                     <td th:text="${faq.regdate}"></td>
                     <td th:text="${faq.viewsCount}"></td>
@@ -149,7 +166,8 @@
                              tempEndPage = ${startPage + pageSize - 1},
                              endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
                     <li class="pagination-btn" th:if="${pageNumber > 0}">
-                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;"
+                             onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/inquiry-management_main')}"
                                th:href="@{/inquiry-management_main(page=${pageNumber - 1})}">
                                 <i class="bi bi-chevron-double-left"></i> Prev
@@ -171,7 +189,8 @@
                         </div>
                     </li>
                     <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
-                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;"
+                             onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/inquiry-management_main')}"
                                th:href="@{/inquiry-management_main(page=${pageNumber + 1})}">Next
                                 <i class="bi bi-chevron-double-right"></i>

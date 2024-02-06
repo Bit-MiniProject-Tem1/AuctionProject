@@ -21,9 +21,12 @@
             <div class="home_card_list">
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -48,11 +51,13 @@
                             </div>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -91,12 +96,12 @@
                 </div>
                 <div class="more_product">
                     <a href="/auction/recentproducts">
-                        더 보기+
+                        더보기&nbsp;&gt;
                     </a>
                 </div>
             </div>
             <div class="container search-goods-list1">
-                <div class="search-goods" th:each="auction : ${recentAuctions}" >
+                <div class="search-goods" th:each="auction : ${recentAuctions}">
                     <div class="goods-img">
                         <figure class="img_wrapper">
                             <a th:href="@{'/auction/goods/' + ${auction.id}}">
@@ -107,7 +112,9 @@
                             </a>
                         </figure>
                         <div class="remaining-time">남은시간<br>
-                            <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
+                            <span class="end_date"
+                                  th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                                  style="display: none"></span>
                             <span class="months">0</span>
                             <span class="days">0</span><br>
                             <span class="hours">0</span>
@@ -123,7 +130,11 @@
                     </div>
                     <div class="favorite-view-group">
                         <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
-                            <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                            <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}"
+                               class="bi-heart favorite-icon"
+                               th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span
+                                name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}"
+                                th:text="${auction.likeCnt}"></span>
                         </a>
                         <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                     </div>
@@ -131,7 +142,7 @@
             </div>
             <div class="btn_product">
                 <a class="btn outline medium" id="loadMoreBtn1">
-                    더 보기
+                    더보기
                 </a>
             </div>
             <div class="home_product home_product_2">
@@ -142,7 +153,7 @@
                     </div>
                     <div class="more_product">
                         <a href="/auction/finalproducts">
-                            더 보기+
+                            더보기&nbsp; &gt;
                         </a>
                     </div>
                 </div>
@@ -158,7 +169,9 @@
                                 </a>
                             </figure>
                             <div class="remaining-time">남은시간<br>
-                                <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
+                                <span class="end_date"
+                                      th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                                      style="display: none"></span>
                                 <span class="months">0</span>
                                 <span class="days">0</span><br>
                                 <span class="hours">0</span>
@@ -168,13 +181,18 @@
                         </div>
                         <div class="title" th:text="${auction.title}"></div>
                         <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
-                        <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
+                        <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span>
+                        </div>
                         <div class="user-name">
                             <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                         </div>
                         <div class="favorite-view-group">
                             <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
-                                <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                                <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}"
+                                   class="bi-heart favorite-icon"
+                                   th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span
+                                    name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}"
+                                    th:text="${auction.likeCnt}"></span>
                             </a>
                             <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                         </div>
@@ -182,7 +200,7 @@
                 </div>
                 <div class="btn_product">
                     <a class="btn outline medium" id="loadMoreBtn2">
-                        더 보기
+                        더보기
                     </a>
                 </div>
                 <div class="home_product home_product_3">
@@ -193,7 +211,7 @@
                         </div>
                         <div class="more_product">
                             <a href="/auction/popularproducts">
-                                더 보기+
+                                더보기&nbsp; &gt;
                             </a>
                         </div>
                     </div>
@@ -209,7 +227,9 @@
                                     </a>
                                 </figure>
                                 <div class="remaining-time">남은시간<br>
-                                    <span class="end_date" th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}" style="display: none"></span>
+                                    <span class="end_date"
+                                          th:text="${#temporals.format(auction.endDate, 'yyyy-MM-dd''T''HH:mm:ss')}"
+                                          style="display: none"></span>
                                     <span class="months">0</span>
                                     <span class="days">0</span><br>
                                     <span class="hours">0</span>
@@ -219,13 +239,18 @@
                             </div>
                             <div class="title" th:text="${auction.title}"></div>
                             <div class="starting-price">시작가&nbsp;<span th:text="${auction.startingPrice}"></span></div>
-                            <div class="current-bidding_price">현재가&nbsp;<span th:text="${auction.immediatePrice}"></span></div>
+                            <div class="current-bidding_price">현재가&nbsp;<span
+                                    th:text="${auction.immediatePrice}"></span></div>
                             <div class="user-name">
                                 <i class="bi bi-person"></i><span th:text="${auction.regUserId}"></span>
                             </div>
                             <div class="favorite-view-group">
                                 <a th:onclick="|javascript:toggleHeart('${auction.id}')|">
-                                    <i name="heart" th:data-auction-id="${auction.id}" th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon" th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span name="likeSum" th:data-count-id="${auction.id}" th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
+                                    <i name="heart" th:data-auction-id="${auction.id}"
+                                       th:id="'likeStatus_' + ${auction.id}" class="bi-heart favorite-icon"
+                                       th:class="${auction.likeChk ? 'bi-heart-fill' : 'bi-heart'}"></i>관심&nbsp;<span
+                                        name="likeSum" th:data-count-id="${auction.id}"
+                                        th:id="'likeSum_' + ${auction.id}" th:text="${auction.likeCnt}"></span>
                                 </a>
                                 <i class="bi bi-eye"></i>조회수&nbsp;<span th:text="${auction.view}"></span>
                             </div>
@@ -233,7 +258,7 @@
                     </div>
                     <div class="btn_product">
                         <a class="btn outline medium" id="loadMoreBtn3">
-                            더 보기
+                            더보기
                         </a>
                     </div>
                 </div>
