@@ -58,7 +58,7 @@
                 <div class="product-image" th:each="file: ${getGoods.auctionImgDTOList}">
                     <figure class="img_wrapper">
                         <img src=""
-                             th:src="${file.fileUrl}"
+                             th:src="${auction.representativeImgUrl}"
                              alt=""/>
                     </figure>
                 </div>
