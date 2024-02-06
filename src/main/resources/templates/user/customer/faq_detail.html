@@ -5,12 +5,12 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <title>자주 묻는 질문 - 상세조회</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-<!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+    <!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
 
 
     <th:block layout:fragment="css">
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script" th:with="requestUrl = ${requestUrl}, status = ${status}">
@@ -21,7 +21,7 @@
                 console.log($("#title_box").css('height'));
 
 
-                for (let i=0; i<$('.view_box').length; i++) {
+                for (let i = 0; i < $('.view_box').length; i++) {
                     let viewboxHeight = 30;
                     let id = $('.view_box')[i].getAttribute('id');
 
@@ -31,10 +31,10 @@
                         viewboxHeight = viewboxHeight * 12;
                     }
 
-                    if($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
-                        $("#" + id).height( $("#" + id + " > .text_area")[0].scrollHeight );
+                    if ($("#" + id + " > .text_area")[0].scrollHeight > viewboxHeight) {
+                        $("#" + id).height($("#" + id + " > .text_area")[0].scrollHeight);
                     } else {
-                        $("#" + id).height( viewboxHeight );
+                        $("#" + id).height(viewboxHeight);
                     }
                 }
 
@@ -52,29 +52,29 @@
 
             });
 
-/*
-            $(() => {
-                const button_area = document.querySelector(".button_area");
-                let previousPageURL = document.referrer;
-                const modificationBtn = document.createElement('button');
-                // fileNameParagraph.textContent = file.name;
-                modificationBtn.setAttribute("style", "background-color: rgb(90,98,179); color: white; border: none;");
-                modificationBtn.setAttribute("onclick", "redirectToNextPage()");
-                modificationBtn.setAttribute("type", "submit");
-                modificationBtn.innerText = "수정";
-                modificationBtn.id = "modificationBtn";
-                modificationBtn.className = "textTypeBtn";
+            /*
+                        $(() => {
+                            const button_area = document.querySelector(".button_area");
+                            let previousPageURL = document.referrer;
+                            const modificationBtn = document.createElement('button');
+                            // fileNameParagraph.textContent = file.name;
+                            modificationBtn.setAttribute("style", "background-color: rgb(90,98,179); color: white; border: none;");
+                            modificationBtn.setAttribute("onclick", "redirectToNextPage()");
+                            modificationBtn.setAttribute("type", "submit");
+                            modificationBtn.innerText = "수정";
+                            modificationBtn.id = "modificationBtn";
+                            modificationBtn.className = "textTypeBtn";
 
-                // 요청url에 특정 문자열이 포함되어 있으면 버튼 출력
-                if (previousPageURL.includes('/inquiry-management_')) {
-                    // 버튼을 출력
-                    // document.write('<button onclick="redirectToNextPage()" type="submit" id="modificationBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">수정</button>');
+                            // 요청url에 특정 문자열이 포함되어 있으면 버튼 출력
+                            if (previousPageURL.includes('/inquiry-management_')) {
+                                // 버튼을 출력
+                                // document.write('<button onclick="redirectToNextPage()" type="submit" id="modificationBtn" class="textTypeBtn" style="background-color: rgb(90,98,179); color: white; border: none;">수정</button>');
 
-                    button_area.appendChild(modificationBtn);
-                }
+                                button_area.appendChild(modificationBtn);
+                            }
 
-            });
-*/
+                        });
+            */
 
 
             function redirectToModificationPage() {
@@ -111,11 +111,7 @@
 </head>
 <body>
 <div class="content_area" layout:fragment="content">
-    <div class="title_area">
-        <div class="title">
-            <strong>자주 묻는 질문 - 상세조회</strong>
-        </div>
-    </div>
+    <h1 class="page-title light-border-bottom">자주 묻는 질문 - 상세조회</h1>
     <div id="faq_detail_container">
         <div class="detailView_area">
             <form id="detailViewForm" action="" method="post">
@@ -152,7 +148,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="detail_item" th:if="${faqDTO.faqAttachedFileDTOList != null && !faqDTO.faqAttachedFileDTOList.equals('')}">
+                <div class="detail_item"
+                     th:if="${faqDTO.faqAttachedFileDTOList != null && !faqDTO.faqAttachedFileDTOList.equals('')}">
                     <div>
                         <div class="item_label_area">
                             <div class="label_icon d-flex align-items-center justify-content-center">
@@ -163,25 +160,38 @@
                             </strong>
                         </div>
                         <div class="view_box view_color" id="file_box">
-<!--                            <textarea class="text_area" readonly>-->
-                                <p th:each="file : ${faqDTO.faqAttachedFileDTOList}" style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
-                                    <i class="bi bi-file-earmark-arrow-down-fill" style="color: #999999; margin-right: 3px;"></i>
-                                        <a th:text="${file.fileName}"
-                                           th:href="@{/file_download(fileName=${file.fileName}, filePath=${file.filePath})}"></a>
-                                </p>
+                            <!--                            <textarea class="text_area" readonly>-->
+                            <p th:each="file : ${faqDTO.faqAttachedFileDTOList}"
+                               style="font-size: 16px; line-height: 29px; cursor: pointer; display: inline-flex; margin-right: 40px; text-decoration-thick: auto; text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;">
+                                <i class="bi bi-file-earmark-arrow-down-fill"
+                                   style="color: #999999; margin-right: 3px;"></i>
+                                <a th:text="${file.fileName}"
+                                   th:href="@{/file_download(fileName=${file.fileName}, filePath=${file.filePath})}"></a>
+                            </p>
                         </div>
                     </div>
                 </div>
 
-<!--                <th:block th:if="${requestUrl.contains('/inquiry-management_')}">-->
-                    <div class="button_area" th:with="faqId=${faqDTO.faqId}">
-                        <button th:hidden="${requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn" class="textTypeBtn">목록</button>
-                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn">수정</button>
-<!--                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
-                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" onclick="deleteFaq()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>
-                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/inquiry-management_main\''" type="button" id="toInquiryListBtn" class="textTypeBtn">목록</button>
-                    </div>
-<!--                </th:block>-->
+                <!--                <th:block th:if="${requestUrl.contains('/inquiry-management_')}">-->
+                <div class="button_area" th:with="faqId=${faqDTO.faqId}">
+                    <button th:hidden="${requestUrl.contains('/inquiry_management/')}"
+                            th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn"
+                            class="textTypeBtn">목록
+                    </button>
+                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}"
+                            th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''"
+                            type="button" id="modificationBtn" class="textTypeBtn btn-green">수정
+                    </button>
+                    <!--                        <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
+                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" onclick="deleteFaq()"
+                            type="button" id="deleteBtn" class="textTypeBtn btn-red">삭제
+                    </button>
+                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}"
+                            th:onclick="'window.location.href = \'/inquiry-management_main\''" type="button"
+                            id="toInquiryListBtn" class="btn-black">목록
+                    </button>
+                </div>
+                <!--                </th:block>-->
             </form>
         </div>
     </div>

@@ -155,7 +155,7 @@
 <body>
     <div layout:fragment="content" class="join_container">
         <form id="join_Form" action="/user/join" method="post">
-        <h2 class="join_title">회원가입</h2>
+            <h1 class="page-title">회원가입</h1>
 
         <div>
             <label for="userId" class="join_name" >아이디</label>
@@ -172,7 +172,7 @@
         <div>
             <input type="password"  class="input_border" id="userPw" name="userPw" placeholder="영문, 숫자, 특수문자 조합 9자 이상">
         </div>
-            <p class="pwValidation" id="pwValidation" style="color: #bcbcbc; font-size: 0.9rem;">
+            <p class="pwValidation" id="pwValidation">
                 비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
             </p>
             <div>
@@ -217,7 +217,7 @@
         <div>
             <input type="email" class="input_border" name="userEmail" placeholder="예) kream@kream.co.kr">
         </div>
-        <button class="join_success" type="submit">회원가입</button>
+        <button class="join_success btn-black" type="submit">회원가입</button>
         </form>
     </div>
 </body>

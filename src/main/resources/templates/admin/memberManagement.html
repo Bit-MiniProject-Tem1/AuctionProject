@@ -5,14 +5,14 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <title>회원 관리</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
 
-<!--    <th:block layout:fragment="css">-->
-<!--        <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-<!--    </th:block>-->
+    <!--    <th:block layout:fragment="css">-->
+    <!--        <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
+    <!--    </th:block>-->
 
     <th:block layout:fragment="css">
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
@@ -36,37 +36,42 @@
 
 </head>
 <body>
-<div class="content_area" layout:fragment="content" >
-    <div class="title_area">
-        <div class="title">
-                <strong>회원 관리</strong>
-        </div>
-    </div>
+<div class="content_area" layout:fragment="content">
+    <h1 class="page-title light-border-bottom">회원 관리</h1>
     <div>
         <div class="search">
             <form id="searchForm" action="" method="get">
                 <table id="search_table">
-                    <tr >
+                    <tr>
                         <td id="search_area">
                             <div style="display: flex;">
-                                <select name="searchCondition" class="search_item" style="width: 180px; text-indent: 12px;">
+                                <select name="searchCondition" class="search_item"
+                                        style="width: 180px; text-indent: 12px;">
                                     <option value="전체"
                                             th:selected="${searchCondition == '전체' || searchCondition == '' ||
-                                                       searchCondition == null}">전체</option>
+                                                       searchCondition == null}">전체
+                                    </option>
                                     <option value="이름"
-                                            th:selected="${searchCondition == '이름'}">이름</option>
+                                            th:selected="${searchCondition == '이름'}">이름
+                                    </option>
                                     <option value="아이디"
-                                            th:selected="${searchCondition == '아이디'}">아이디</option>
+                                            th:selected="${searchCondition == '아이디'}">아이디
+                                    </option>
                                     <option value="연락처"
-                                            th:selected="${searchCondition == '연락처'}">연락처</option>
+                                            th:selected="${searchCondition == '연락처'}">연락처
+                                    </option>
                                     <option value="이메일"
-                                            th:selected="${searchCondition == '이메일'}">이메일</option>
+                                            th:selected="${searchCondition == '이메일'}">이메일
+                                    </option>
                                 </select>
                                 <input type="text" name="searchKeyword" class="search_item"
-                                       style="width: 750px; box-sizing: border-box; text-indent: 20px;" placeholder="검색어를 입력해주세요."
+                                       style="width: 750px; box-sizing: border-box; text-indent: 20px;"
+                                       placeholder="검색어를 입력해주세요."
                                        th:value="${searchKeyword }">
                             </div>
-                            <button type="submit" id="searchBtn" class="search_item d-flex align-items-center justify-content-center" style="width: 43px;">
+                            <button type="submit" id="searchBtn"
+                                    class="search_item d-flex align-items-center justify-content-center"
+                                    style="width: 43px;">
                                 <i class="bi bi-search search_icon"></i>
                             </button>
                         </td>
@@ -75,32 +80,32 @@
             </form>
         </div>
         <div class="board">
-            <table id="table_form" >
+            <table id="table_form" class="table">
                 <thead>
-                    <tr id="table_header">
-                        <th class="table_colName" style="width: 70px;">번호</th>
-                        <th class="table_colName" style="width: 100px;">이름</th>
-                        <th class="table_colName" style="width: 150px;">아이디</th>
-                        <th class="table_colName" style="width: 150px;">연락처</th>
-                        <th class="table_colName" style="width: 200px;">이메일</th>
-                        <th class="table_colName" style="width: 320px;">주소</th>
-                    </tr>
-                    <tr id="table_header_bottom"></tr>
+                <tr id="table_header" class="table-secondary">
+                    <th class="table_colName" style="width: 70px;">번호</th>
+                    <th class="table_colName" style="width: 100px;">이름</th>
+                    <th class="table_colName" style="width: 150px;">아이디</th>
+                    <th class="table_colName" style="width: 150px;">연락처</th>
+                    <th class="table_colName" style="width: 200px;">이메일</th>
+                    <th class="table_colName" style="width: 320px;">주소</th>
+                </tr>
+                <tr id="table_header_bottom"></tr>
                 </thead>
                 <tbody>
-                    <tr class="table_row" th:each="member : ${memberList}">
-                        <td th:text="${member.id}"></td>
-                        <td onclick="navigateToLink(this, this.className)">
-                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
-                        </td>
-                        <td onclick="navigateToLink(this, this.className)">
-                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
-                        </td>
-                        <td th:text="${member.userTel}"></td>
-                        <td th:text="${member.userEmail}"></td>
-                        <td class="td_textArea" th:text="${member.userAddress}"></td>
-                    </tr>
-                    <tr id="table_body_bottom" style="height:4px; border-top: 3px solid #dedede;"></tr>
+                <tr class="table_row" th:each="member : ${memberList}">
+                    <td th:text="${member.id}"></td>
+                    <td onclick="navigateToLink(this, this.className)">
+                        <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
+                    </td>
+                    <td onclick="navigateToLink(this, this.className)">
+                        <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
+                    </td>
+                    <td th:text="${member.userTel}"></td>
+                    <td th:text="${member.userEmail}"></td>
+                    <td class="td_textArea" th:text="${member.userAddress}"></td>
+                </tr>
+                <tr id="table_body_bottom" style="height:4px; border-top: 3px solid #dedede;"></tr>
                 </tbody>
             </table>
             <br/>
@@ -113,7 +118,8 @@
                              tempEndPage = ${startPage + pageSize - 1},
                              endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
                     <li class="pagination-btn" th:if="${pageNumber > 0}">
-                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                        <div id="prevBtn" class="pageMoveBtn" style="width: 65px;"
+                             onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/memberManagement_search')}"
                                th:href="@{/admin/memberManagement_search(searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
                                 <i class="bi bi-chevron-double-left"></i> Prev
@@ -135,7 +141,8 @@
                         </div>
                     </li>
                     <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
-                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
+                        <div id="nextBtn" class="pageMoveBtn" style="width: 65px;"
+                             onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/memberManagement_search')}"
                                th:href="@{/admin/memberManagement_search(searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
                                 <i class="bi bi-chevron-double-right"></i>

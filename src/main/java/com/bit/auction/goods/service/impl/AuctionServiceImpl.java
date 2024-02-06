@@ -2,6 +2,7 @@ package com.bit.auction.goods.service.impl;
 
 import com.bit.auction.common.FileUtils;
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.AuctionImgDTO;
 import com.bit.auction.goods.entity.Auction;
 import com.bit.auction.goods.entity.AuctionImg;
 import com.bit.auction.goods.entity.Category;
@@ -10,6 +11,7 @@ import com.bit.auction.goods.repository.AuctionRepository;
 import com.bit.auction.goods.repository.CategoryRepository;
 import com.bit.auction.goods.repository.LikeCntRepository;
 import com.bit.auction.goods.service.AuctionService;
+import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +22,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -264,5 +264,76 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public void setCurrentBiddingPrice(Long auctionId, int BiddingPrice) {
         auctionRepository.updateCurrentBiddingPrice(auctionId, BiddingPrice);
+    }
+    @Override
+    public void likeList(CustomUserDetails customUserDetails, List<AuctionDTO> auctionsList) {
+        List<Map<String, Long>> likeSumList = getLikeSumList();
+        List<Map<String, Long>> userLikeList;
+
+        if (customUserDetails != null) {
+            userLikeList = getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+
+        if (!userLikeList.isEmpty()) {
+            auctionsList.forEach(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if (Objects.equals(map.get("AUCTION_ID"), auctionDTO.getId())) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+            });
+        }
+
+        auctionsList.forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream().filter(stringLongMap -> Objects.equals(auctionDTO.getId(), stringLongMap.get("AUCTION_ID")))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+    }
+
+    @Override
+    public void likePage(Page<AuctionDTO> auctionPage, CustomUserDetails customUserDetails) {
+        List<Map<String, Long>> likeSumList = getLikeSumList();
+        List<Map<String, Long>> userLikeList;
+
+        if (customUserDetails != null) {
+            userLikeList = getUserLikeList(customUserDetails.getUser().getId());
+        } else {
+            userLikeList = new ArrayList<>();
+        }
+        if (!userLikeList.isEmpty()) {
+            auctionPage.getContent().forEach(auctionDTO -> {
+                userLikeList.forEach(map -> {
+                    if (Objects.equals(map.get("AUCTION_ID"), auctionDTO.getId())) {
+                        auctionDTO.setLikeChk(true);
+                    }
+                });
+            });
+        }
+        auctionPage.getContent().forEach(auctionDTO -> {
+            auctionDTO.setLikeCnt(
+                    likeSumList.stream()
+                            .filter(stringLongMap -> Objects.equals(auctionDTO.getId(), stringLongMap.get("AUCTION_ID")))
+                            .flatMap(map -> map.entrySet().stream())
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                            .get("LIKE_SUM"));
+        });
+    }
+
+    @Override
+    public List<AuctionImgDTO> processUploadFiles(MultipartFile[] uploadFiles, String representativeImgName) {
+        List<AuctionImgDTO> auctionImgDTOList = new ArrayList<>();
+        for (MultipartFile file : uploadFiles) {
+            if (file.getOriginalFilename() != null &&
+                    !file.getOriginalFilename().isEmpty()) {
+                AuctionImgDTO auctionImgDTO = fileUtils.parseFileInfo(file, "auction/", representativeImgName);
+                auctionImgDTOList.add(auctionImgDTO);
+            }
+        }
+        return auctionImgDTOList;
     }
 }

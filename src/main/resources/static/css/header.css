@@ -5,10 +5,12 @@ html, body {
 html {
     background-color: #fff;
 }
+
 .bi-heart::before {
     content: "\f417";
     color: red;
 }
+
 .bi-heart-fill::before {
     content: "\f415";
     color: red;
@@ -34,7 +36,7 @@ header {
 
 .header_top .top_link {
     align-items: center;
-    color: rgba(34, 34, 34, .8);
+    color: #222;
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -43,7 +45,7 @@ header {
 
 .header_top .top_link1 {
     align-items: center;
-    color: rgba(34, 34, 34, .8);
+    color: #222;
     display: flex;
     font-size: 12px;
     letter-spacing: -.06px;
@@ -69,7 +71,7 @@ header {
 
 .main_header .logo > .logo_bk {
     width: 200px;
-    height: 35px;
+    height: 40px;
 }
 
 .main_header .me-2 {
@@ -255,7 +257,7 @@ header {
     margin-left: 2px;
     color: black;
     display: flex;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 550;
 }
 
@@ -281,6 +283,19 @@ header {
     max-height: 300px;
 }
 
+.list_box::-webkit-scrollbar {
+    width: 10px;
+}
+.list_box::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.list_box::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
 .main_header .dropdown-content a {
     display: block;
 }
@@ -289,7 +304,7 @@ header {
     width: 314px;
     height: 60px;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
     padding-bottom: 2px;
     background-color: white;
 }
@@ -319,6 +334,8 @@ header {
     padding-top: 15px;
 }
 
+
+
 .main_header .list-title-default {
     font-size: 15px;
     color: gray;
@@ -333,6 +350,7 @@ header {
     padding-top: 15px;
     padding-left: 120px;
 }
+
 .main_header .bi-trash {
     float: right;
     display: flex;

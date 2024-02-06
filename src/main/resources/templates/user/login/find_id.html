@@ -8,49 +8,54 @@
         <link rel="stylesheet" th:href="@{/css/user/login/find_id.css}">
     </th:block>
 
-        <th:block layout:fragment="script">
-            <script>
-                function findId() {
-                    var userName = $("#userName").val();
-                    var userTel = $("#userTel").val();
+    <th:block layout:fragment="script">
+        <script>
+            function findId() {
+                var userName = $("#userName").val();
+                var userTel = $("#userTel").val();
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/user/find_id',
-                        data: { userName: userName, userTel:userTel},
-                        success: function (data) {
-                            if (data.includes("find_id2")) {
-                                window.location.href = data;
-                            } else {
-                                alert(data);
-                            }
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            alert("아이디를 찾을 수 없습니다. 사용자의 이름과 전화번호를 정확하게 입력해주세요.")
+                $.ajax({
+                    type: 'POST',
+                    url: '/user/find_id',
+                    data: {userName: userName, userTel: userTel},
+                    success: function (data) {
+                        if (data.includes("find_id2")) {
+                            window.location.href = data;
+                        } else {
+                            alert(data);
                         }
-                    });
-                }
-            </script>
-        </th:block>
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert("아이디를 찾을 수 없습니다. 사용자의 이름과 전화번호를 정확하게 입력해주세요.")
+                    }
+                });
+            }
+        </script>
+    </th:block>
     <title>아이디 찾기</title>
 </head>
 <body>
 
-    <div layout:fragment="content" class="find_id_container" id="result">
-        <form th:action="@{/user/login/find_id}" name="find_id" method="post">
-        <h2 class="find_id_title">아이디 찾기</h2>
+<div layout:fragment="content" class="find_id_container" id="result">
+    <form th:action="@{/user/login/find_id}" name="find_id" method="post">
+        <h1 class="page-title">아이디 찾기</h1>
+        <!--
         <div class="find_id_line"></div>
-
+        -->
         <div class="find_id_textBox">
-            <h3>가입 시 등록한 이름과 휴대폰 번호를 입력하시면</h3>
-            <h3>아이디를 알려드립니다.</h3>
+            <!--
+                <h3>가입 시 등록한 이름과 휴대폰 번호를 입력하시면</h3>
+                <h3>아이디를 알려드립니다.</h3>
+            -->
+            가입 시 등록한 이름과 휴대폰 번호를 입력하시면<br>
+            아이디를 알려드립니다.
         </div>
 
         <div class="find_id_phoneNum">
             <h3 for="userName">이름</h3>
         </div>
         <div>
-            <input type="text" class="find_id_input"  id="userName" name="userName" placeholder="이름을 입력하세요." required>
+            <input type="text" class="find_id_input" id="userName" name="userName" placeholder="이름을 입력하세요." required>
         </div>
 
 
@@ -58,14 +63,15 @@
             <h3 for="userTel">휴대폰 번호</h3>
         </div>
         <div>
-            <input type="text" class="find_id_input"  id="userTel" name="userTel" placeholder="가입하신 휴대폰 번호 '-' 없이 숫자만 입력하세요." required>
+            <input type="text" class="find_id_input" id="userTel" name="userTel"
+                   placeholder="가입하신 휴대폰 번호 '-' 없이 숫자만 입력하세요." required>
         </div>
         <div>
-            <button class="find_id_btn" type="button" onclick="findId()">아이디 찾기</button>
+            <button class="find_id_btn btn-black" type="button" onclick="findId()">아이디 찾기</button>
         </div>
 
 
-        </form>
-    </div>
+    </form>
+</div>
 </body>
 </html>

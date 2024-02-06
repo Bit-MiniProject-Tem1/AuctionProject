@@ -3,7 +3,8 @@
     margin-left: 180px;
     margin-bottom: 100px;
     box-sizing: border-box;
-/*    border: 1px solid black;               !* <--- 영역 구분을 위한 임시 테두리 *!*/
+    font-family: Pretendard;
+    /*    border: 1px solid black;               !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
 .title_area {
@@ -37,13 +38,14 @@
 .search_item {
     height: 40px;
     line-height: 40px;
-    font-size: 17px;
+    font-size: 16px;
     display: inline;
     padding: 0;
     margin: 0;
     /*border: 1px solid #dedede;*/
     /*border: 1px solid rgb(153, 153, 153);*/
     border: 1px solid #bcbcbc;
+    font-family: Pretendard;
 }
 
 #search_area, #inquiry_search_area {
@@ -70,14 +72,24 @@ input::placeholder {
     align-items: center;
 }
 
-#table_header, #inquiry_table_header {
-    /*width: 990px;*/
-    height: 40px;
-    border-collapse: collapse;
-    background-color: #f4f4f4;
-    border-top: 0.5px solid #e2e3e5;
-    font-size: 18px;
+/*#table_header, #inquiry_table_header {*/
+/*    !*width: 990px;*!*/
+/*    height: 40px;*/
+/*    border-collapse: collapse;*/
+/*    background-color: #f4f4f4;*/
+/*    border-top: 0.5px solid #e2e3e5;*/
+/*    font-size: 18px;*/
+/*    text-align: center;*/
+/*}*/
+
+#table_form, #inquiry_table_form {
+    font-size: 14px;
+    font-family: Pretendard;
+}
+
+#table_form th, #inquiry_table_form th {
     text-align: center;
+    vertical-align: middle;
 }
 
 #table_form, #inquiry_table_form {
@@ -86,12 +98,14 @@ input::placeholder {
     /*background-color: skyblue;  !*#f4f4f4;*!*/
     margin: 10px 15px 20px;
 }
+
 .table_colName {
     vertical-align: middle;
-    font-weight: 550;
+    /*font-weight: 550;*/
 }
+
 #table_header_bottom, #inquiry_table_header_bottom {
-    height:4px;
+    height: 4px;
     border-top: 2px solid #999999;
     border-bottom: 2px solid #999999;
 }
@@ -107,16 +121,16 @@ input::placeholder {
 }
 
 #table_body_bottom, #inquiry_table_body_bottom {
-    height:4px;
+    height: 4px;
     border-top: 2px solid #dedede;
 }
 
 .td_textArea {
     text-align: left;
     text-indent: 20px;
-    white-space: nowrap;         /* 텍스트가 줄 바꿈되지 않도록 설정 */
-    overflow: hidden;            /* 넘치는 부분을 감추기 */
-    text-overflow: ellipsis;     /* 생략 기호 (...)로 표시 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+    overflow: hidden; /* 넘치는 부분을 감추기 */
+    text-overflow: ellipsis; /* 생략 기호 (...)로 표시 */
     max-width: 560px;
 }
 
@@ -140,26 +154,27 @@ input::placeholder {
 /*}*/
 
 .detailView_area {
-/*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
+    /*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0;
     padding: 0 15px;
-    color:rgb(107, 107, 107);
+    color: rgb(107, 107, 107);
 }
 
 #search_area #category, #inquiry_search_area #status {
-   /* border: 1.5px solid #dedede;
-    !*border: 1px solid #797979;*!
-    display: inline-block;
-    font-size: 16px;
-    padding: 5px;
-*/
+    /* border: 1.5px solid #dedede;
+     !*border: 1px solid #797979;*!
+     display: inline-block;
+     font-size: 16px;
+     padding: 5px;
+ */
     width: 168px;
     text-indent: 12px;
     border-radius: 10px;
 }
+
 /*.detailView_area*/
 #faq_add_container #category {
-    border: 2px solid #dedede;
+    border: 1px solid #ebebeb;
     border-radius: 10px;
     display: inline-block;
     padding: 3px 8px;
@@ -181,6 +196,7 @@ input::placeholder {
     border-radius: 6px;
     /*background-color: ghostwhite;*/
 }
+
 /*style="padding: 2px; border: 1px solid #dedede; display: inline-block; border-radius: 6px;"*/
 /*
 #faq_detail_container #category-parent {
@@ -196,9 +212,9 @@ input::placeholder {
     width: 990px;
     display: block;
     box-sizing: border-box;
-/*    border: 1px solid mediumpurple;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
+    /*    border: 1px solid mediumpurple;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0 10px;
-    /*--viewbox-hieght: 40;*/          /* <--- 변수 설정*/
+    /*--viewbox-hieght: 40;*/ /* <--- 변수 설정*/
 }
 
 .item_label_area {
@@ -212,7 +228,8 @@ input::placeholder {
 
 .item_label {
     font-size: 20px;
-    color:rgb(107, 107, 107);
+    font-weight: 700;
+    color: rgb(107, 107, 107);
     margin-left: 5px;
 }
 
@@ -220,10 +237,10 @@ input::placeholder {
     box-sizing: border-box;
     border-radius: 10px;
     width: 990px;
-    padding: 7px 20px;
-    border: 2px solid #dedede;
+    padding: 10px;
+    border: 1px solid #ebebeb;
     height: auto;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .view_color {
@@ -235,7 +252,7 @@ input::placeholder {
 }*/
 
 #content_box {
-    padding: 15px 20px;
+    padding: 10px;
 }
 
 .text_area {
@@ -248,7 +265,7 @@ input::placeholder {
     background-color: rgba(255, 255, 255, 0);
     height: 28px;
 
-/*    border: 1px dashed red;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
+    /*    border: 1px dashed red;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
 .text_area:focus, .detailView_area #category, .search_item {
@@ -278,7 +295,7 @@ input::placeholder {
     height: 30px;
     font-size: 1.6em;
     background-color: #dedede;
-    color: white;   /*rgb(107, 107, 107);  #999999;*/
+    color: white; /*rgb(107, 107, 107);  #999999;*/
     border: none;
     border-radius: 4px;
     position: absolute;
@@ -304,7 +321,7 @@ input::placeholder {
     margin-bottom: 10px;
 }
 
-#joinInfo{
+#joinInfo {
     width: 450px;
 }
 
@@ -320,7 +337,7 @@ input::placeholder {
     border-radius: 10px;
 }
 
-.memberInfo_item>table {
+.memberInfo_item > table {
     border-collapse: collapse;
     border: 2px solid #d4d4d4;
     --leftColWidth: 100px; /* 변수 설정 */
@@ -364,7 +381,7 @@ input::placeholder {
     width: 100%;
 }
 
-#purchaseHistory>table, #salesHistory>table {
+#purchaseHistory > table, #salesHistory > table {
     width: 100%;
 }
 
@@ -373,25 +390,31 @@ input::placeholder {
 
 .button_area {
     margin: 60px 0 0;
-    --btn-height: 42px;
+    --btn-height: 45px;
     height: var(--btn-height);
     display: flex;
     justify-content: flex-end; /* 자식 요소를 컨테이너의 끝으로 정렬 */
 }
 
-.button_area button{
+.button_area button {
     margin-left: 15px;
 }
 
 .textTypeBtn {
     width: 80px;
-    height: var(--btn-height);
-    background-color: rgb(90,98,179);
-    color: white;
-    border-radius: 8px;
+    /*height: var(--btn-height);*/
+    /*background-color: rgb(90, 98, 179);*/
+    /*color: white;*/
+    border-radius: 0.375rem;
     /*position: absolute;*/
-    font-size: 20px;
-    border: 1px solid #999999;
+    /*border: 1px solid #999999;*/
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+#toInquiryListBtn {
+    margin-bottom: 0;
 }
 
 .pageMoveBtn {
@@ -412,17 +435,17 @@ input::placeholder {
 /*----------------------------------------------------------*/
 
 .statistical_item_area {
-    border: 1px solid lightblue;      /*<--- 영역 구분을 위한 임시 테두리 */
+    border: 1px solid lightblue; /*<--- 영역 구분을 위한 임시 테두리 */
     margin: 40px 0;
     padding: 0 15px;
-    color:rgb(107, 107, 107);
+    color: rgb(107, 107, 107);
 }
 
 .detailView_area {
     /*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0;
     padding: 0 15px;
-    color:rgb(107, 107, 107);
+    color: rgb(107, 107, 107);
 }
 
 #test_temp {

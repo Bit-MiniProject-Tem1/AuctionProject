@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,74 +32,11 @@ public class HomeController {
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
         List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
         List<AuctionDTO> popularAuctions = auctionService.findByForPopularList();
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+       
+        auctionService.likeList(customUserDetails, recentAuctions);
+        auctionService.likeList(customUserDetails, finalAuctions);
+        auctionService.likeList(customUserDetails, popularAuctions);
 
-        List<Map<String, Long>> userLikeList;
-
-        if(customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-            List<AuctionDTO> likeList = auctionService.findByUserId(customUserDetails.getUser().getId());
-            model.addAttribute("likeList", likeList);
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
-        if(!userLikeList.isEmpty()) {
-            recentAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        recentAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                    .flatMap(map -> map.entrySet().stream())
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                    .get("LIKE_SUM"));
-        });
-
-        if(!userLikeList.isEmpty()) {
-            finalAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        finalAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
-
-        if(!userLikeList.isEmpty()) {
-            popularAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if(map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        popularAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
 
         model.addAttribute("customUserDetails", customUserDetails);
 
@@ -114,5 +48,4 @@ public class HomeController {
 
         return "index";
     }
-
 }

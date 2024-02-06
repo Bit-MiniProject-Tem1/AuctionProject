@@ -28,10 +28,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
-@RestController
+@RestController //@Controller + @ResponseBody
 @RequestMapping("/auction")
 @RequiredArgsConstructor
 public class AuctionController {
@@ -41,7 +40,7 @@ public class AuctionController {
     private final CategoryService categoryService;
     private final FileUtils fileUtils;
     private final LikeCntService likeCntService;
-    private List<String> temporaryImage = new ArrayList<>();
+    private final List<String> temporaryImage = new ArrayList<>();
 
     @GetMapping("/recentproducts")
     public ModelAndView RentAuctionProducts(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -49,34 +48,7 @@ public class AuctionController {
 
         List<AuctionDTO> recentAuctions = auctionService.findByForRecentList();
 
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
-
-        List<Map<String, Long>> userLikeList;
-
-        if (customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
-        if (!userLikeList.isEmpty()) {
-            recentAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        recentAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
+        auctionService.likeList(customUserDetails, recentAuctions);
 
         mav.addObject("auctionList", recentAuctions);
 
@@ -90,38 +62,11 @@ public class AuctionController {
     public ModelAndView FinalAuctionProducts(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         ModelAndView mav = new ModelAndView();
 
-        List<AuctionDTO> fianlAuctions = auctionService.findByForFinalList();
+        List<AuctionDTO> finalAuctions = auctionService.findByForFinalList();
 
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
+        auctionService.likeList(customUserDetails, finalAuctions);
 
-        List<Map<String, Long>> userLikeList;
-
-        if (customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
-        if (!userLikeList.isEmpty()) {
-            fianlAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        fianlAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
-
-        mav.addObject("auctionList", fianlAuctions);
+        mav.addObject("auctionList", finalAuctions);
 
         mav.setViewName("auction/getAuctionforFinal.html");
 
@@ -134,34 +79,7 @@ public class AuctionController {
 
         List<AuctionDTO> popularAuctions = auctionService.findByForPopularList();
 
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
-
-        List<Map<String, Long>> userLikeList;
-
-        if (customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
-        if (!userLikeList.isEmpty()) {
-            popularAuctions.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        popularAuctions.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
+        auctionService.likeList(customUserDetails, popularAuctions);
 
         mav.addObject("auctionList", popularAuctions);
 
@@ -231,14 +149,7 @@ public class AuctionController {
 
         String representativeImgName = auctionDTO.getRepresentativeImgName();
         try {
-            List<AuctionImgDTO> auctionImgDTOList = new ArrayList<>();
-            for (MultipartFile file : uploadFiles) {
-                if (file.getOriginalFilename() != null &&
-                        !file.getOriginalFilename().equals("")) {
-                    AuctionImgDTO auctionImgDTO = fileUtils.parseFileInfo(file, "auction/", representativeImgName);
-                    auctionImgDTOList.add(auctionImgDTO);
-                }
-            }
+            List<AuctionImgDTO> auctionImgDTOList = auctionService.processUploadFiles(uploadFiles, representativeImgName);
 
             Long categoryId = topCategoryId;
             if (subCategoryId != null) {
@@ -328,9 +239,9 @@ public class AuctionController {
 
         List<AuctionDTO> auctionDTOList = new ArrayList<>();
 
-        for (int i = 0; i < itemsIds.length; i++) {
+        for (long itemsId : itemsIds) {
 
-            auctionDTOList.add(auctionService.getAuctionGoods(itemsIds[i]));
+            auctionDTOList.add(auctionService.getAuctionGoods(itemsId));
         }
 
         return auctionDTOList;
@@ -346,14 +257,8 @@ public class AuctionController {
 
         String representativeImgName = auctionDTO.getRepresentativeImgName();
         try {
-            List<AuctionImgDTO> auctionImgDTOList = new ArrayList<>();
-            for (MultipartFile file : uploadFiles) {
-                if (file.getOriginalFilename() != null &&
-                        !file.getOriginalFilename().equals("")) {
-                    AuctionImgDTO auctionImgDTO = fileUtils.parseFileInfo(file, "auction/", representativeImgName);
-                    auctionImgDTOList.add(auctionImgDTO);
-                }
-            }
+            List<AuctionImgDTO> auctionImgDTOList = auctionService.processUploadFiles(uploadFiles, representativeImgName);
+
             Long categoryId = topCategoryId;
             if (auctionDTO.getCategoryId() == null) {
                 if (subCategoryId != null) {
@@ -419,16 +324,6 @@ public class AuctionController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("auction/getAuctionList.html");
 
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
-
-        List<Map<String, Long>> userLikeList;
-
-        if (customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
         mav.addObject("topCategoryList", categoryList);
 
@@ -459,24 +354,7 @@ public class AuctionController {
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, sort, targetList, statusList);
-            if (!userLikeList.isEmpty()) {
-                auctionPage.stream().map(auctionDTO -> {
-                    userLikeList.forEach(map -> {
-                        if (map.get("AUCTION_ID") == auctionDTO.getId()) {
-                            auctionDTO.setLikeChk(true);
-                        }
-                    });
-                    return auctionDTO;
-                }).collect(Collectors.toList());
-            }
-
-            auctionPage.forEach(auctionDTO -> {
-                auctionDTO.setLikeCnt(
-                        likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                                .flatMap(map -> map.entrySet().stream())
-                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                                .get("LIKE_SUM"));
-            });
+            auctionService.likePage(auctionPage ,customUserDetails);
             mav.addObject("auctionList", auctionPage);
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
@@ -509,36 +387,9 @@ public class AuctionController {
 
         List<Character> statusList = new ArrayList<>();
 
-        List<Map<String, Long>> likeSumList = auctionService.getLikeSumList();
-
-        List<Map<String, Long>> userLikeList;
-
-        if (customUserDetails != null) {
-            userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
-        } else {
-            userLikeList = new ArrayList<>();
-        }
-
         Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
 
-        if (!userLikeList.isEmpty()) {
-            auctionDTOList.stream().map(auctionDTO -> {
-                userLikeList.forEach(map -> {
-                    if (map.get("AUCTION_ID") == auctionDTO.getId()) {
-                        auctionDTO.setLikeChk(true);
-                    }
-                });
-                return auctionDTO;
-            }).collect(Collectors.toList());
-        }
-
-        auctionDTOList.forEach(auctionDTO -> {
-            auctionDTO.setLikeCnt(
-                    likeSumList.stream().filter(stringLongMap -> auctionDTO.getId() == stringLongMap.get("AUCTION_ID"))
-                            .flatMap(map -> map.entrySet().stream())
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-                            .get("LIKE_SUM"));
-        });
+        auctionService.likePage(auctionDTOList ,customUserDetails);
 
         if (auctionDTOList.getTotalElements() != 0) {
             // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
@@ -549,6 +400,7 @@ public class AuctionController {
             mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
             mav.addObject("showAlertValue", true);
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, null, null, statusList);
+            auctionService.likePage(auctionPage ,customUserDetails);
             mav.addObject("auctionList", auctionPage);
         }
         System.out.println(mav);

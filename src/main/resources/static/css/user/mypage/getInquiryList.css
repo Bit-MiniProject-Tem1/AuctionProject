@@ -2,11 +2,12 @@
     float: left;
     width: 1020px;
 }
-body{
+
+body {
     font-family: Pretendard;
 }
 
-.myinquiry_box1{
+.myinquiry_box1 {
     width: 1020px;
     height: 40px;
     border-bottom: 1px solid black;
@@ -25,17 +26,20 @@ body{
     border: solid 1px black;
 }
 
-.select_search{
+.select_search {
     border: none;
+    border-radius: 0.375rem;
+    background-color: #6c757d;
+    color: white;
+    font-weight: 400;
     width: 50px;
     height: 30px;
 }
 
-.myinquiry_box2{
+.myinquiry_box2 {
     width: 1020px;
     height: 40px;
     background-color: #cccccc;
-
 }
 
 .table_tr {
@@ -50,36 +54,30 @@ body{
     width: 240px;
 }
 
-.table_th3{
+.table_th3 {
     width: 110px;
 }
 
-.table_th4{
+.table_th4 {
     width: 180px;
 }
 
-.table_th5{
+.table_th5 {
     width: 75px;
 }
 
-.table_th6{
+.table_th6 {
     width: 75px;
 }
 
-.table_th7{
+.table_th7 {
     width: 75px;
-}
-
-
-th {
-    border: solid 1px black;
 }
 
 .inquiryList {
     text-align: center;
     margin-top: 10px;
 }
-
 
 .crudBox {
     width: 1020px;
@@ -121,6 +119,15 @@ th {
     margin-left: 10px;
 }
 
+#inquiryTable {
+    font-size: 14px;
+}
 
+#inquiryTable th {
+    text-align: center;
+    vertical-align: middle;
+}
 
-
+.select_input, .select_search {
+    font-size: 14px;
+}

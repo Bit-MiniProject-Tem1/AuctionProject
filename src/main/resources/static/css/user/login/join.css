@@ -1,9 +1,11 @@
 .join_container {
     width: 1200px;
 }
-body{
+
+body {
     font-family: Pretendard;
 }
+
 .join_title {
     margin-top: 100px;
     margin-bottom: 50px;
@@ -12,27 +14,34 @@ body{
 }
 
 .join_name {
-    font-size: 15px;
+    font-size: 14px;
     color: #bcbcbc;
     margin-left: 25%;
 }
 
 .join_success {
     width: 600px;
+    padding: 10px;
+    text-align: center;
     font-size: 20px;
-    background-color: #e2e3e5;
-    font-weight: bold;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 100px;
     margin-left: 25%;
-    margin-bottom: 50px;
-    border:none;
 }
 
-input {
+.join_container input {
     margin-bottom: 20px;
     padding: 10px;
     width: 600px;
     margin-left: 25%;
     display: flex;
+}
+
+#userId {
+    width: 520px;
 }
 
 .input_border {
@@ -41,40 +50,41 @@ input {
 
 .join_id_check {
     height: 44.8px;
-    font-size: 12px;
-    width: 60px;
-    border-radius: 15px;
-    background-color: white;
-    border-width: 1px 1px 1px 1px;
+    width: 80px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #6C757D;
+    border-radius: 0.375rem;
+    border: none;
 }
 
-.join_name_box{
+.join_name_box {
     margin-left: 100px;
     width: 812px;
     display: flex;
-
 }
 
 .pwValidation {
     margin-left: 25%;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     margin-bottom: 10px;
-    color: #999999;
+    color: #222;
+    font-size: 13px;
 }
 
-.userPwCheck_box{
+.userPwCheck_box {
     width: 600px;
     margin-left: 25%;
     display: flex;
-
 }
 
 .userPwCheck_box input {
     border-width: 0 0 1px;
     height: 40px;
     margin: auto;
-
 }
+
 .pwCheckResult {
     margin-left: 25%;
     margin-top: 10px;

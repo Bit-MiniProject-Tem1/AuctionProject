@@ -11,8 +11,11 @@
     <th:block layout:fragment="script">
         <script th:src="@{/js/auction_filter_tag.js}"></script>
         <script th:src="@{/js/countdown.js}"></script>
-        <script>
+        <script th:inline="javascript">
             $(document).ready(function() {
+                const auctionList = [[${auctionList}]];
+
+                console.log(auctionList);
                 const urlParams = new URL(location.href).searchParams;
                 const name = urlParams.get('regUser');
 
@@ -98,7 +101,7 @@
         </div>
     </div>
     <div class="content">
-        <div class="container">
+        <div class="container goods-container">
             <div class="title">
                 <div class="goods-number">
                     상품 <span th:text="${auctionList.totalElements}"></span>

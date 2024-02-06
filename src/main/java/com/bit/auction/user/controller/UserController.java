@@ -7,7 +7,6 @@ import com.bit.auction.goods.service.PointHistoryService;
 import com.bit.auction.goods.service.PointService;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
-import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.service.UserService;
 import com.bit.auction.user.service.impl.UserDetailsServiceImpl;
@@ -15,13 +14,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +27,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -101,7 +99,7 @@ public class UserController {
 
 
     @PostMapping("/join")
-    public ModelAndView join(UserDTO userDTO, PointDTO pointDTO , PointHistoryDTO pointHistoryDTO) {
+    public ModelAndView join(UserDTO userDTO, PointDTO pointDTO, PointHistoryDTO pointHistoryDTO) {
         userDTO.setUserPw(passwordEncoder.encode(userDTO.getUserPw()));
         userDTO.setRole("ROLE_USER");
         pointDTO.setUserId(userDTO.getUserId());
@@ -116,34 +114,6 @@ public class UserController {
         ModelAndView mav = new ModelAndView();
 
         mav.setViewName("user/login/login.html");
-
-        return mav;
-    }
-
-    @GetMapping("/reg-goods")
-    public ModelAndView getMyAuction(@RequestParam(required = false) String status,
-                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
-                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        ModelAndView mav = new ModelAndView();
-
-        String regUserId = customUserDetails.getUsername();
-
-        List<Character> statusList = new ArrayList<>();
-
-        if (status == null || status.isEmpty()) {
-            statusList.add('S');
-            statusList.add('C');
-            statusList.add('E');
-        } else if (status.equals("S")) {
-            statusList.add('S');
-        } else if (status.equals("E")) {
-            statusList.add('E');
-        } else if (status.equals("C")) {
-            statusList.add('C');
-        }
-
-        mav.addObject("auctionList", auctionService.getMyAuctionList(pageable, regUserId, statusList));
-        mav.setViewName("user/mypage/getMyAuctionList.html");
 
         return mav;
     }

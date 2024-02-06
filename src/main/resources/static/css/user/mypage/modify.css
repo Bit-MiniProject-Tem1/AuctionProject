@@ -2,82 +2,85 @@
     float: left;
     width: 1020px;
 }
-body{
+
+body {
     font-family: Pretendard;
 }
 
-.profile_box1{
+.profile_box1 {
     width: 1020px;
     height: 40px;
     border-bottom: 1px solid black;
 }
 
-.profile_box2{
+.profile_box2 {
     width: 1020px;
     height: 40px;
     margin-top: 20px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
-.profile_box3{
+.profile_box3 {
     width: 510px;
     height: 20px;
     margin-top: 20px;
-    font-size: 15px;
+    font-size: 14px;
     color: lightgrey;
     margin-left: 25%;
 }
+
 .profile_input1 {
     width: 510px;
     height: 40px;
-    font-size: 15px;
+    font-size: 16px;
     border-bottom: 1px solid lightgrey;
     margin-left: 25%;
 
 }
+
 .input_box1 {
     width: 510px;
     height: 39px;
     border: none;
 }
 
-
 .profile_input2 {
     width: 510px;
     height: 40px;
-    font-size: 15px;
+    font-size: 16px;
     border-bottom: 1px solid lightgrey;
     display: flex;
     justify-content: space-between;
     margin-left: 25%;
 }
-.profile_input2 form{
+
+.profile_input2 form {
     width: 100%;
 }
+
 .input_box2 {
     width: 460px;
     height: 39px;
     border: none;
-
 }
 
 .profile_btn {
     width: 510px;
     height: 40px;
-    background-color: #e2e3e5;
-    border: 1px solid;
-    border-radius: 10px;
-    font-size: 18px;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    font-size: 20px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     margin-left: 25%;
 }
 
 .profile_input3 {
     width: 510px;
     height: 40px;
-    font-size: 15px;
+    font-size: 16px;
     border-bottom: 1px solid lightgrey;
     display: flex;
     justify-content: space-between;
@@ -87,6 +90,3 @@ body{
 p {
     margin-left: 25%;
 }
-
-
-
