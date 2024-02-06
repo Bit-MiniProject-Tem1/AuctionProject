@@ -391,10 +391,10 @@ public class AuctionController {
     @PutMapping("/cancel")
     public ResponseEntity<?> updateAuction(@RequestParam("id") Long id) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
-
         try {
             auctionService.cancelAuction(id);
             biddingService.setAuctionStatus(id);
+
             Map<String, String> returnMap = new HashMap<>();
             returnMap.put("msg", "경매가 취소되었습니다.");
 

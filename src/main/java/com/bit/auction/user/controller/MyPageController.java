@@ -3,6 +3,7 @@ package com.bit.auction.user.controller;
 import com.bit.auction.goods.dto.*;
 import com.bit.auction.goods.entity.Point;
 import com.bit.auction.goods.entity.PointHistory;
+import com.bit.auction.goods.repository.BiddingRepository;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.BiddingService;
 import com.bit.auction.goods.service.PointHistoryService;
@@ -51,6 +52,7 @@ public class MyPageController {
     private final PointHistoryService pointHistoryService;
     private final BiddingService biddingService;
     private final AuctionService auctionService;
+    private final BiddingRepository biddingRepository;
 
     private final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
@@ -60,8 +62,14 @@ public class MyPageController {
     public ModelAndView getMyPage(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
-
+        String userId = customUserDetails.getUsername();
+        mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
+        mav.addObject("biddingInfo", biddingService.getbidone(userId));
+        mav.addObject("sessionId", userId);
         UserDTO loginUser = customUserDetails.getUser().toDTO();
+        mav.addObject("AuctionStatuS", biddingRepository.countAuctionStatusS(customUserDetails.getUsername()));
+        mav.addObject("AuctionStatuE", biddingRepository.countAuctionStatusE(customUserDetails.getUsername()));
+        mav.addObject("AuctionStatuC", biddingRepository.countAuctionStatusC(customUserDetails.getUsername()));
 
         if (loginUser == null) {
             mav.setViewName("user/login/login");
@@ -192,32 +200,19 @@ public ModelAndView getPointPage(@AuthenticationPrincipal CustomUserDetails cust
     }
 
 
-//    @GetMapping("/biddingList")
-//    public ModelAndView getMyBidding(@PageableDefault(page = 1, size = 10) Pageable pageable,
-//                                     @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-//        ModelAndView mav = new ModelAndView();
-//
-//        String userId = customUserDetails.getUsername();
-//        mav.addObject("biddingList", biddingService.getMyBiddingList(pageable , userId));
-//        mav.addObject("biddingInfo", biddingService.getbidone(userId));
-//        mav.addObject("sessionId", userId);
-//        mav.setViewName("user/mypage/getMyBiddingList.html");
-//
-//        return mav;
-//    }
 @GetMapping("/biddingList")
 public ModelAndView getMyBidding(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
     ModelAndView mav = new ModelAndView();
 
     String userId = customUserDetails.getUsername();
     mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
-    mav.addObject("biddingInfo", biddingService.getbid(auctionId, userId));
+    mav.addObject("biddingInfo", biddingService.getbidone(userId));
     mav.addObject("sessionId", userId);
+
     mav.setViewName("user/mypage/getMyBiddingList.html");
 
     return mav;
 }
-
 
     @GetMapping("/chargeForm")
     public ModelAndView chargeFrom(){
@@ -252,4 +247,44 @@ public ModelAndView getMyBidding(@AuthenticationPrincipal CustomUserDetails cust
         char status = 'w';
         pointHistoryService.setPointHistory(point, userId, status);
     }
+
+    @GetMapping("/biddingListstatusS")
+    public ModelAndView statusS(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    ModelAndView mav = new ModelAndView();
+
+    String userId = customUserDetails.getUsername();
+    mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
+    mav.addObject("biddingInfo", biddingService.getbidone(userId));
+    mav.addObject("sessionId", userId);
+
+    mav.setViewName("user/mypage/S.html");
+
+    return mav;
+}
+    @GetMapping("/biddingListstatusE")
+    public ModelAndView statusE(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    ModelAndView mav = new ModelAndView();
+
+    String userId = customUserDetails.getUsername();
+    mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
+    mav.addObject("biddingInfo", biddingService.getbidone(userId));
+    mav.addObject("sessionId", userId);
+
+    mav.setViewName("user/mypage/E.html");
+
+    return mav;
+}
+    @GetMapping("/biddingListstatusC")
+    public ModelAndView statusC(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    ModelAndView mav = new ModelAndView();
+
+    String userId = customUserDetails.getUsername();
+    mav.addObject("biddingList", biddingService.getMyBiddingList(userId));
+    mav.addObject("biddingInfo", biddingService.getbidone(userId));
+    mav.addObject("sessionId", userId);
+
+    mav.setViewName("user/mypage/C.html");
+
+    return mav;
+}
 }

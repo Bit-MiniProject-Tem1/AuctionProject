@@ -200,7 +200,6 @@ public class AuctionServiceImpl implements AuctionService {
             response.addCookie(newCookie);
         }
     }
-
     @Override
     public void cancelAuction(Long id) {
         auctionRepository.updateStatusByCancel(id);

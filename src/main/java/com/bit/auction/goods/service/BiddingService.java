@@ -12,7 +12,7 @@ import java.util.List;
 public interface BiddingService {
 
     void setbid(BiddingDTO biddingDTO);
-    void updateBidStatus();
+    void updateBidStatus(Long auctionId);
 
     void setAuctionStatus(Long id);
 

@@ -93,17 +93,17 @@ public class BiddingController {
     @PostMapping("/impbiddinginfo/{id}")
     public void bidding(@RequestBody BiddingDTO biddingDTO,
                         @AuthenticationPrincipal CustomUserDetails customUserDetails){
-        biddingService.updateBidStatus();
         biddingDTO.setStatus('u');
         biddingDTO.setUserId(customUserDetails.getUsername());
         biddingDTO.setDate(LocalDateTime.now());
         biddingDTO.setPayment(1);
         biddingDTO.setAuctionStatus('E');
-        biddingService.setbid(biddingDTO);
         pointService.pointWithdraw(biddingDTO.getBiddingPrice() , customUserDetails.getUsername());
         pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
 
         Long auctionId = biddingDTO.getAuctionId();
+        biddingService.updateBidStatus(auctionId);
+        biddingService.setbid(biddingDTO);
         int BiddingPrice = biddingDTO.getBiddingPrice();
         auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
     }
@@ -112,7 +112,6 @@ public class BiddingController {
     public void bidding2(@RequestBody BiddingDTO biddingDTO,
                                             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        biddingService.updateBidStatus();
         biddingDTO.setStatus('u');
         biddingDTO.setAuctionStatus('S');
         biddingDTO.setUserId(customUserDetails.getUsername());
@@ -122,6 +121,7 @@ public class BiddingController {
         pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
 
         Long auctionId = biddingDTO.getAuctionId();
+        biddingService.updateBidStatus(auctionId);
         int BiddingPrice = biddingDTO.getBiddingPrice();
         auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
     }

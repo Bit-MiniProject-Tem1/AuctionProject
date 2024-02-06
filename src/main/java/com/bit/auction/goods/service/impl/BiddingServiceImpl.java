@@ -32,9 +32,10 @@ public class BiddingServiceImpl implements BiddingService {
 
     @Transactional
     @Override
-    public void updateBidStatus(){
-        biddingRepository.updateBidStatus();
+    public void updateBidStatus(Long auctionId){
+        biddingRepository.updateBidStatus(auctionId);
     }
+    @Transactional
     @Override
     public void setAuctionStatus(Long id) {
         biddingRepository.updateStatusByCancel(id);

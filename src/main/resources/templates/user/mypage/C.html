@@ -46,6 +46,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="auction : ${biddingList}">
+                        <div th:if="${auction.status} eq 'C'">
                         <td class="info">
                             <div class="info-img">
                                 <figure class="img_wrapper">
@@ -112,6 +113,7 @@
                                 </div>
                             </div>
                         </td>
+                        </div>
                     </tr>
                     </tbody>
                 </table>
