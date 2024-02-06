@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class StatisticalDataController {
-    @GetMapping("/statistical_main")
+    @GetMapping("/admin/statisticalData")
     public String statisticalMainView() {
         return "/admin/statisticalData";
     }

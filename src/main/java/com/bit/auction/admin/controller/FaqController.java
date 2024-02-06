@@ -35,7 +35,6 @@ public class FaqController {
     @Value("${ncp.endPoint}")
     private String storageUrl;
 
-
     @GetMapping(value = {"/faq_main", "/faq_search"})
     public ModelAndView faqMain(@PageableDefault(page = 0, size = 20) Pageable pageable, FaqDTO faqDTO, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
@@ -56,42 +55,6 @@ public class FaqController {
         return mv;
     }
 
-
-
-/*
-
-    @GetMapping("/faq_search")
-    public ModelAndView faqSearch(@PageableDefault(page = 0, size = 10) Pageable pageable, FaqDTO faqDTO, Model item) {
-        ModelAndView mv = new ModelAndView();
-*/
-/*        String category = paramMap.get("category");
-        String condition = paramMap.get("condition");
-        String keyword = paramMap.get("keyword");
-
-        FaqDTO faqDTO = new FaqDTO();
-        faqDTO.setCategory(category);
-        faqDTO.setContent(condition);
-        faqDTO.setSearchKeyword(keyword);*//*
-
-
-        String category = faqDTO.getCategory();
-        String condition = faqDTO.getSearchCondition();
-        String keyword = faqDTO.getSearchKeyword();
-
-        mv.addObject("faqList", faqService.getFaqList(pageable, faqDTO));
-        mv.addObject("category", category == null ? "전체" : category);
-        mv.addObject("searchCondition", condition == null ? "전체" : condition);
-        mv.addObject("searchKeyword", keyword == null ? "" : keyword);
-
-//        item.addAttribute()
-
-        log.info("category : {} / searchCondition : {} / searchKeyword : {}", category, condition, keyword);
-        mv.setViewName("/user/customer/faq_main.html");
-
-        return mv;
-    }
-*/
-
     @GetMapping("/faq_detail")
     public String faqDetail() {
         return "/user/customer/faq_detail";
@@ -100,8 +63,6 @@ public class FaqController {
     @GetMapping("/faq_detail/faq-{faqId}")
     public ModelAndView getBoard(@PathVariable("faqId") Long faqId, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
-        /*FaqDTO faqDTO = faqService.findById(faqId);
-        faqService.updateViewsCount(faqId);*/
 
         mv.addObject("faqDTO", faqService.updateViewsCount(faqId));
         mv.addObject("requestUrl", request.getRequestURL().toString());
@@ -109,43 +70,6 @@ public class FaqController {
 
         return mv;
     }
-
-/*
-    @GetMapping("/download")
-    public ResponseEntity<byte[]>fileDownload(FaqAttachedFileDTO faqAttachedFileDTO) throws IOException {
-        FaqAttachedFileDTO downloadFile = faqService.getFaqAttachedFileDTO(faqAttachedFileDTO);
-
-        return fileUtils.getObject(downloadFile.getFilePath());
-    }*/
-
-
-
-/*
-
-    @GetMapping("/file_download/{faqId}-{fileId}")
-    public ResponseEntity<Resource>fileDownload(@PathVariable Long faqId, @PathVariable Long fileId) throws MalformedURLException {
-        FaqAttachedFileDTO faqAttachedFileDTO = faqService.getFaqAttachedFileDTO(faqId, fileId);
-        String replaceText = storageUrl + "/" + bucketName + "/";
-
-        String filePath = UriUtils.encode(faqAttachedFileDTO.getFilePath().replace(replaceText, ""), StandardCharsets.UTF_8);
-
-        String fileName = UriUtils.encode(faqAttachedFileDTO.getFileName(), StandardCharsets.UTF_8);
-
-        UrlResource urlResource = new UrlResource(replaceText + filePath);
-
-        log.info("######### filePath = {}", filePath);
-        log.info("######### fileName = {}", fileName);
-
-        String contentDisposition = "attachment; filename=\"" + fileName + "\"";
-
-        log.info("######### contentDisposition = {}", contentDisposition);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-                .body(urlResource);
-    }
-*/
-
 
     @GetMapping("/file_download")
     public ResponseEntity<Resource>fileDownload(HttpServletRequest request) throws MalformedURLException {
@@ -163,35 +87,6 @@ public class FaqController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(urlResource);
     }
-
-
-
-/*
-
-    @ResponseBody
-    @RequestMapping("request-param-required")
-    // 필수 파라미터 지정 --> required가 true이면 해당 파라미터 정보가 꼭 들어와야 한다.(없으면 오류 발생)
-    //                     required가 false이면 해당 파라미터 정보가 들어오지 않아도 오류가 발생하지 않는다.
-    public String requestParamRequired(@RequestParam(required = true) String username,
-                                       @RequestParam(required = true) Integer age) {
-        // 주의!! --> required를 false로 할 경우 int 타입의 파라미터는 값이 안들어오면 에러가 발생한다.
-        //           int는 기본자료형이라서 null이 될 수 없기 때문..
-        //           그러므로 (required = false) 속성을 사용해야 한다면 int 대신 null 처리가 가능한 객체형인 Integer 타입으로 사용해야 한다.
-        log.info("username:{}, age:{}", username, age);
-
-        return "ok";
-    }
-*/
-
-/*
-    @ResponseBody
-    @RequestMapping("/request-param-map")
-    public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
-        log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
-
-        return "ok";
-    }*/
-
 }
 
 

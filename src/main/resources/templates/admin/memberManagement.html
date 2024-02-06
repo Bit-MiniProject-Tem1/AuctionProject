@@ -2,15 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>회원 관리</title>
-<!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-
-<!--    <th:block layout:fragment="css">-->
-<!--        <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-<!--    </th:block>-->
-
     <th:block layout:fragment="css">
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
@@ -91,10 +85,10 @@
                     <tr class="table_row" th:each="member : ${memberList}">
                         <td th:text="${member.id}"></td>
                         <td onclick="navigateToLink(this, this.className)">
-                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
                         </td>
                         <td onclick="navigateToLink(this, this.className)">
-                            <a th:href="@{/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
                         </td>
                         <td th:text="${member.userTel}"></td>
                         <td th:text="${member.userEmail}"></td>

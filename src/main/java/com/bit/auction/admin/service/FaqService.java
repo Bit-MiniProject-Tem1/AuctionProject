@@ -27,8 +27,6 @@ public interface FaqService {
 
     Page<FaqDTO> findAll(Pageable pageable);
 
-    void delete(FaqDTO faqDTO);
-
     void save(FaqDTO faqDTO);
 
     Faq save(Faq faq);

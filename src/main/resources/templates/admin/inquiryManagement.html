@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>문의 관리</title>
     <th:block layout:fragment="css">
@@ -41,7 +41,7 @@
             }
 
             function redirectToFaqAdd() {
-                window.location.href = '/faq_add';
+                window.location.href = '/admin/faq_add';
             }
 
         </script>
@@ -75,7 +75,7 @@
             <!--                <div style="border-top: 2px solid #dedede; border-bottom: 2px solid #dedede; width: 380px; min-height: 6px; margin-left: 18px;"></div>-->
         </div>
         <div class="search">
-            <form id="searchForm" action="/inquiry-management_search" method="get">
+            <form id="searchForm" action="/admin/inquiry-management_search" method="get">
                 <table id="search_table">
                     <tr >
                         <td id="search_area">
@@ -130,8 +130,8 @@
                 <tr class="table_row" th:each="faq : ${faqList}">
                     <td th:text="${faq.faqId}"></td>
                     <td th:text="${faq.category}"></td>
-                    <td class="td_textArea" onclick="navigateToLink(this, this.className)">
-                        <a th:href="@{/inquiry_management/faq_detail/faq-{faqId} (faqId=${faq.faqId})}" th:text="${faq.title}"></a>
+                    <td class="td_textArea" style="text-align: center;" onclick="navigateToLink(this, this.className)">
+                        <a th:href="@{/admin/inquiry-management/faq_detail/faq-{faqId} (faqId=${faq.faqId})}" th:text="${faq.title}"></a>
                     </td>
                     <td th:text="${faq.regdate}"></td>
                     <td th:text="${faq.viewsCount}"></td>
@@ -151,11 +151,11 @@
                     <li class="pagination-btn" th:if="${pageNumber > 0}">
                         <div id="prevBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_main(page=${pageNumber - 1})}">
+                               th:href="@{/admin/inquiry-management_main(page=${pageNumber - 1})}">
                                 <i class="bi bi-chevron-double-left"></i> Prev
                             </a>
                             <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
+                               th:href="@{/admin/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber - 1})}">
                                 <i class="bi bi-chevron-double-left"></i> Prev
                             </a>
                         </div>
@@ -164,20 +164,20 @@
                         <div class="pageMoveBtn" onclick="navigateToLink(this, this.className)"
                              th:style="${page == pageNumber + 1 ? 'font-weight: 550;' : ''}">
                             <a th:if="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_main(page=${page - 1})}" th:text="${page} "></a>
+                               th:href="@{/admin/inquiry-management_main(page=${page - 1})}" th:text="${page} "></a>
                             <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
+                               th:href="@{/admin/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${page - 1})}"
                                th:text="${page} "></a>
                         </div>
                     </li>
                     <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
                         <div id="nextBtn" class="pageMoveBtn" style="width: 65px;" onclick="navigateToLink(this, this.className)">
                             <a th:if="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_main(page=${pageNumber + 1})}">Next
+                               th:href="@{/admin/inquiry-management_main(page=${pageNumber + 1})}">Next
                                 <i class="bi bi-chevron-double-right"></i>
                             </a>
                             <a th:unless="${requestUrl.contains('/inquiry-management_main')}"
-                               th:href="@{/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
+                               th:href="@{/admin/inquiry-management_search(category=${category}, searchCondition=${searchCondition}, searchKeyword=${searchKeyword}, page=${pageNumber + 1})}">Next
                                 <i class="bi bi-chevron-double-right"></i>
                             </a>
                         </div>
