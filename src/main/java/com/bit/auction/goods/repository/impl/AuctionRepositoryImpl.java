@@ -182,8 +182,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
                     return new OrderSpecifier<>(Order.ASC, auction.currentBiddingPrice);
                 case "byHighPrice":
                     return new OrderSpecifier<>(Order.DESC, auction.currentBiddingPrice);
-                // case "byMostBids":
-                //     return new OrderSpecifier(Order.DESC, auction.bidding 카운트 뽑기);
                 default:
                     break;
             }
