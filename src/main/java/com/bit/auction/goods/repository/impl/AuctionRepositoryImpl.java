@@ -21,7 +21,6 @@ import java.util.List;
 
 import static com.bit.auction.goods.entity.QAuction.auction;
 import static com.bit.auction.goods.entity.QAuctionImg.auctionImg;
-import static com.bit.auction.goods.entity.QBidding.bidding;
 import static com.bit.auction.goods.entity.QLikeCnt.likeCnt;
 
 @Repository
@@ -104,7 +103,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
     }
 
 
-
     private BooleanBuilder eqCategoryId(List<Long> subCategoryIdList) {
         if (subCategoryIdList.get(0) == 0L) {
             return null;
@@ -141,7 +139,6 @@ public class AuctionRepositoryImpl implements AuctionRepositoryCustom {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         for (Character status : statusList) {
-            System.out.println(status);
             if (status.equals('E')) {
                 booleanBuilder.or(
                         auction.status.eq('S').and(auction.endDate.lt(LocalDateTime.now()))
