@@ -20,4 +20,5 @@ public interface UserService {
 
     UserDTO findUser (String userId);
 
+    void saveUser(User user);
 }

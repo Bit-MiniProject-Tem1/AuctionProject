@@ -66,3 +66,15 @@ h2 {
     margin-left: 10px;
     margin-bottom: 100px;
 }
+
+.login_view2 {
+    width: 290px;
+    height: 50px;
+    background-color: black;
+    font-size: 18px;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    margin-left: 25%;
+    margin-bottom: 100px;
+}

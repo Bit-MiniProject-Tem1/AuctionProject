@@ -67,6 +67,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findId(String userName, String userTel) {
+
+
         return userRepository.findByUserNameAndUserTel(userName, userTel);
     }
 
@@ -99,6 +101,11 @@ public class UserServiceImpl implements UserService {
     public UserDTO findUser(String userId) {
         Optional<User> optionalUser = userRepository.findUserByUserId(userId);
         return optionalUser.map(User::toDTO).orElse(null);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
 }

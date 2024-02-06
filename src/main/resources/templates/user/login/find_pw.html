@@ -7,38 +7,39 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/login/find_pw.css}">
     </th:block>
-    <th:block layout:fragment="script">
-        <script>
-            function findPw() {
-                var userId = document.getElementById('userId').value;
-                var userName = document.getElementById('userName').value;
-                var userTel = document.getElementById('userTel').value;
+        <th:block layout:fragment="script">
+            <script>
+                function findPw() {
+                    var userId = document.getElementById('userId').value;
+                    var userName = document.getElementById('userName').value;
+                    var userTel = document.getElementById('userTel').value;
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/user/find_pw',
-                    data: {
-                        userId: userId,
-                        userName: userName,
-                        userTel: userTel
-                    },
-                    success: function (response) {
-                        if (response === 'success') {
-                            window.location.href = '/user/profile';
-                            alert('비밀번호를 바로 변경하여 주시길 바랍니다.')
-                        } else {
+                    $.ajax({
+                       type: 'POST',
+                       url: '/user/find_pw',
+                       data: {
+                           userId: userId,
+                           userName: userName,
+                           userTel: userTel
+                       },
+                        success: function (response) {
                             console.log(response);
-                            alert('입력한 정보와 일치하는 사용자를 찾을 수 없습니다.');
+                           if (response.item && response.item.tempPassword) {
+                               alert(`임시 비밀번호를 발급 드렸습니다. 로그인 하시고 마이페이지 프로필수정에서 비밀번호를 바로 변경하여 주시길 바랍니다.`);
+                               location.href = `/user/find_pw2-view?tempPassword=${response.item.tempPassword}`;
+                           } else {
+                               alert(response.item.msg);
+                               window.location.reload();
+                           }
+                        },
+                        error: function (error) {
+                           alert('에러가 발생했습니다. 관리자에게 문의하세요.');
                             window.location.reload();
                         }
-                    },
-                    error: function (error) {
-                        alert('에러가 발생했습니다. 관리자에게 문의하세요.');
-                    }
-                });
-            }
-        </script>
-    </th:block>
+                    });
+                }
+            </script>
+        </th:block>
     <title>비밀번호 찾기</title>
 </head>
 <body>
@@ -75,7 +76,7 @@
         </div>
 
         <a>
-            <button class="find_pw_btn btn-black" onclick="findPw()">비밀번호 찾기</button>
+            <button type="button" class="find_pw_btn btn-black" onclick="findPw()">비밀번호 찾기</button>
         </a>
     </form>
 </div>
