@@ -1,12 +1,15 @@
 package com.bit.auction.goods.service;
 
 import com.bit.auction.goods.dto.AuctionDTO;
+import com.bit.auction.goods.dto.AuctionImgDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
+import com.bit.auction.user.entity.CustomUserDetails;
 import com.bit.auction.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -46,4 +49,9 @@ public interface AuctionService {
 
     void setCurrentBiddingPrice(Long auctionId, int BiddingPrice);
 
+    void likeList(CustomUserDetails customUserDetails, List<AuctionDTO> recentAuctions);
+
+    void likePage(Page<AuctionDTO> auctionPage, CustomUserDetails customUserDetails);
+
+    List<AuctionImgDTO> processUploadFiles(MultipartFile[] uploadFiles, String representativeImgName);
 }

@@ -67,7 +67,6 @@ public class LikeCntController {
 
         try {
             likeCntService.deleteLike(customUserDetails.getUser(), categoryId);
-
             Map<String, Object> returnMap = new HashMap<>();
 
             long likeCnt = likeCntService.findByUserIdAndAuctionId(customUserDetails.getUser().getId(), categoryId);
