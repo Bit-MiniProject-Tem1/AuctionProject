@@ -10,45 +10,42 @@
     <th:block layout:fragment="script">
         <script>
             $(() => {
-                // 아이디 중복체크 여부
+                //아이디 중복체크 여부
                 let checkId = false;
-                // 비밀번호 유효성 검사 여부
+                //비밀번호 유효성 검사 여부
                 let validationPw = false;
-                // 비밀번호 일치 여부
+                //비밀번호 일치 여부
                 let confirmPw = false;
 
-                // 아이디 중복체크
+                //아이디 중복체크
                 $("#btnIdCheck").on("click", () => {
-                    if ($("#userId").val() === "") {
+                    if($("#userId").val() === "") {
                         alert("아이디를 입력하세요.")
                         $("#userId").focus();
                         return;
                     }
 
-                    // const formData = new FormData($("#join_Form"));
+                    console.log($("#joinForm").serialize());
 
-                    // ajax로 백엔드와 통신
+                    //ajax로 백엔드와 통신
                     $.ajax({
                         url: '/user/id-check',
                         type: 'post',
-                        data: $("#join_Form").serialize(),
-                        // data: formData,
-                        // processData: false,
-                        // contentType: false,
+                        data: $("#joinForm").serialize(),
                         success: (obj) => {
                             console.log(obj);
 
                             console.log(obj.item);
                             console.log(obj.item.idCheckMsg);
 
-                            if (obj.item.idCheckMsg === "idFail") {
+                            if(obj.item.idCheckMsg === "idFail") {
                                 checkId = false;
                                 alert("중복된 아이디 입니다.");
                                 $("#userId").focus();
                                 return;
                             }
 
-                            if (confirm(`사용가능한 아이디입니다. ${$("#userId").val()}를(을) 사용하시겠습니까?`)) {
+                            if(confirm(`사용가능한 아이디입니다. ${$("#userId").val()}를(을) 사용하시겠습니까?`)) {
                                 checkId = true;
                                 $("#btnIdCheck").attr("disabled", true);
                             }
@@ -57,95 +54,83 @@
                             console.log(error);
                         }
                     });
-                    // 중복체크 완료된 상태에서 아이디 값 변경했을 때 중복체크 버튼 다시 활성화
-                    $("#userId").on("change", () => {
-                        checkId = false;
-                        $("#btnIdCheck").attr("disabled", false);
-                    });
 
-                    // 비밀번호 유효성 검사 정규식
-                    const validatePassword = (userPw) => {
-                        return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
+                });
+
+                // 중복체크 완료된 상태에서 아이디 값 변경했을 때 중복체크 버튼 다시 활성화
+                $("#userId").on("change", () => {
+                    checkId = false;
+                    $("#btnIdCheck").attr("disabled", false);
+                });
+
+                // 비밀번호 유효성 검사 정규식
+                const validatePassword = (userPw) => {
+                    return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
+                }
+
+                // 비밀번호 입력 시 비밀번호 유효성 검사
+                $("#userPw").on("change", () => {
+                    if(validatePassword($("#userPw").val())) {
+                        validationPw = true;
+                        $("#pwValidation").hide();
+                    }else {
+                        validationPw = false;
+                        $("#pwValidation").show();
                     }
 
-                    // 비밀번호 입력 시 비밀번호 유효성 검사
-                    $("#userPw").on("change", () => {
-                        if (validatePassword($("#userPw").val())) {
-                            validationPw = true;
-                            $("#pwValidation").hide();
-                        } else {
-                            validationPw = false;
-                            $("#pwValidation").show();
-                        }
+                    if($("#userPw").val() === $("#userPwCheck").val()) {
+                        confirmPw = true;
+                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
+                        $("#pwCheckResult").css("color", "green");
+                    } else {
+                        confirmPw = false;
+                        $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+                        $("#pwCheckResult").css("color", "red");
+                    }
+                });
 
-                        if ($("#userPw").val() === $("#userPwCheck").val()) {
-                            confirmPw = true;
-                            $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                            $("#pwCheckResult").css("color", "green");
-                        } else {
-                            confirmPw = false;
-                            $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-                            $("#pwCheckResult").css("color", "red");
-                        }
-                    });
 
-                    // 비밀번호 확인과 비밀번호가 일치하는 지 검사
-                    $("#userPwCheck").on("change", () => {
-                        $("#pwCheckResult").show();
+                // 비밀번호 확인과 비밀번호가 일치하는 지 검사
+                $("#userPwCheck").on("change", () => {
+                    $("#pwCheckResult").show();
 
-                        if ($("#userPw").val() === $("#userPwCheck").val()) {
-                            confirmPw = true;
-                            $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                            $("#pwCheckResult").css("color", "green");
-                            return;
-                        }
+                    if($("#userPw").val() === $("#userPwCheck").val()) {
+                        confirmPw = true;
+                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
+                        $("#pwCheckResult").css("color", "green");
+                        return;
+                    }
 
                         confirmPw = false;
                         $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
                         $("#pwCheckResult").css("color", "red");
-                    });
+                });
 
-                    const formData = new FormData($("#join_Form").serialize()[0]);
+                // joinForm이 서브밋될 때 유효성 검사가 하나라도 false면 서브밋 막기
+                $("#joinForm").on("submit", (e) => {
+                    // id 중복체크가 되지 않았을 때
+                    if(!checkId) {
+                        e.preventDefault();
+                        alert("아이디 중복체크를 진행하세요.");
+                        $("#userId").focus();
+                        return;
+                    }
 
-                    // joinForm이 서브밋될 때 유효성 검사가 하나라도 false면 서브밋 막기
-                    $("#join_Form").on("submit", (e) => {
-                        // id 중복체크가 되지 않았을 때
-                        if (!checkId) {
-                            e.preventDefault();
-                            alert("아이디 중복체크를 진행하세요.");
-                            $("#userId").focus();
-                            return;
-                        }
+                    // pw 유효성 검사가 틀렸을 때
+                    if(!validationPw) {
+                        e.preventDefault();
+                        alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정하세요.");
+                        $("#userPw").focus();
+                        return;
+                    }
 
-                        // pw 유효성 검사가 틀렸을 때
-                        if (!validationPw) {
-                            e.preventDefault();
-                            alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정하세요.");
-                            $("#userPw").focus();
-                            return;
-                        }
-
-                        // pw가 일치하지 않을 때
-                        if (!confirmPw) {
-                            e.preventDefault();
-                            alert("비밀번호가 일치하지 않습니다.");
-                            $("#userPwCheck").focus();
-                            return;
-                        }
-
-                        $.ajax({
-                            url: '/user/join',
-                            type: 'post',
-                            data: formData,
-                            success: (obj) => {
-                                console.log(obj);
-
-                                console.log(obj.item);
-                                console.log(obj.item.idCheckMsg);
-                            }
-                        });
-
-                    });
+                    // pw가 일치하지 않을 때
+                    if(!confirmPw) {
+                        e.preventDefault();
+                        alert("비밀번호가 일치하지 않습니다.");
+                        $("#userPwCheck").focus();
+                        return;
+                    }
                 });
             });
         </script>
@@ -154,7 +139,7 @@
 </head>
 <body>
     <div layout:fragment="content" class="join_container">
-        <form id="join_Form" action="/user/join" method="post">
+        <form id="joinForm" action="/user/join" method="post">
         <h2 class="join_title">회원가입</h2>
 
         <div>
@@ -162,7 +147,7 @@
         </div>
 
         <div class="join_name_box">
-            <input type="text" class="input_border"  name="userId" id="userId" placeholder="BitCamp">
+            <input type="text" class="input_border"  name="userId" id="userId" placeholder="BitCamp" required>
             <button type="button" class="join_id_check" id="btnIdCheck">중복체크</button>
         </div>
 
@@ -170,7 +155,7 @@
             <label for="userPw" class="join_name">비밀번호</label>
         </div>
         <div>
-            <input type="password"  class="input_border" id="userPw" name="userPw" placeholder="영문, 숫자, 특수문자 조합 9자 이상">
+            <input type="password"  class="input_border" id="userPw" name="userPw" placeholder="영문, 숫자, 특수문자 조합 9자 이상" required>
         </div>
             <p class="pwValidation" id="pwValidation" style="color: #bcbcbc; font-size: 0.9rem;">
                 비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
@@ -179,7 +164,7 @@
                 <label for="userPwCheck" class="join_name">비밀번호 확인</label>
             </div>
             <div class="userPwCheck_box">
-                <input type="password"  id="userPwCheck" name="userPwCheck" class="userPwCheck_input" placeholder="영문, 숫자, 특수문자 조합 9자 이상">
+                <input type="password"  id="userPwCheck" name="userPwCheck" class="userPwCheck_input" placeholder="영문, 숫자, 특수문자 조합 9자 이상" required>
             </div>
 
             <p class="pwCheckResult" id="pwCheckResult" style="font-size: 0.8rem;"></p>
@@ -188,36 +173,36 @@
             <label class="join_name">이름</label>
         </div>
         <div>
-            <input type="text" class="input_border" name="userName" placeholder="홍길동">
+            <input type="text" class="input_border" name="userName" placeholder="홍길동" required>
         </div>
 
         <div>
             <label class="join_name">생년월일</label>
         </div>
         <div>
-            <input type="text" class="input_border" name="userBirth" placeholder="숫자로만 입력해주세요. 예) 940826">
+            <input type="text" class="input_border" name="userBirth" placeholder="숫자로만 입력해주세요. 예) 940826" required>
         </div>
 
         <div>
             <label class="join_name" >핸드폰 번호</label>
         </div>
         <div>
-            <input type="tel" class="input_border" name="userTel" placeholder="01012345678">
+            <input type="tel" class="input_border" name="userTel" placeholder="01012345678" required>
         </div>
 
         <div>
             <label class="join_name" >배송지</label>
         </div>
         <div>
-            <input type="text" class="input_border" name="userAddress" placeholder="서울특별시 강남구 태해란로20길 20">
+            <input type="text" class="input_border" name="userAddress" placeholder="서울특별시 강남구 태해란로20길 20" required>
         </div>
 
         <div class="join_name">이메일 주소</label>
         </div>
         <div>
-            <input type="email" class="input_border" name="userEmail" placeholder="예) kream@kream.co.kr">
+            <input type="email" class="input_border" name="userEmail" placeholder="예) kream@kream.co.kr" required>
         </div>
-        <button class="join_success" type="submit">회원가입</button>
+        <button class="join_success" type="submit" >회원가입</button>
         </form>
     </div>
 </body>

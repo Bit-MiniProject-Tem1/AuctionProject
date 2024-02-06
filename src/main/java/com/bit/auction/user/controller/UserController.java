@@ -5,6 +5,7 @@ import com.bit.auction.goods.dto.PointHistoryDTO;
 import com.bit.auction.goods.service.AuctionService;
 import com.bit.auction.goods.service.PointHistoryService;
 import com.bit.auction.goods.service.PointService;
+import com.bit.auction.user.PasswordGenerator;
 import com.bit.auction.user.dto.ResponseDTO;
 import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.CustomUserDetails;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+
+import static com.bit.auction.user.PasswordGenerator.generateRandomPassword;
 
 @Slf4j
 @RestController
@@ -187,7 +190,7 @@ public class UserController {
 
         if (userOptional.isPresent()) {
             findId = userOptional.get().getUserId();
-            return "/user/find_id2";
+            return "/user/find_id2-view";
         } else {
             return "아이디를 찾을 수 없습니다. 사용자의 이름과 전화번호를 정확하게 입력해주세요.";
         }
@@ -223,9 +226,13 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/find_pw2")
-    public ModelAndView getFindPw2() {
+    @GetMapping("/find_pw2-view")
+    public ModelAndView getFindPw2(Model model) {
         ModelAndView mav = new ModelAndView();
+
+//        String temporaryPassword = generateRandomPassword(6);
+//
+//        model.addAttribute("temporaryPassword", temporaryPassword);
 
         mav.setViewName("user/login/find_pw2.html");
 
@@ -236,16 +243,41 @@ public class UserController {
     public ResponseEntity<?> findPw(@RequestParam String userId,
                                     @RequestParam String userName,
                                     @RequestParam String userTel) {
-        Optional<User> userOptional = userService.findPw(userId, userName, userTel);
+        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
 
-        String response = "";
+        try {
+            Optional<User> userOptional = userService.findPw(userId, userName, userTel);
 
-        if (userOptional.isPresent()) {
-            response = "success";
+            Map<String, String> returnMap = new HashMap<>();
+
+            if (userOptional.isPresent()) {
+
+                String temporaryPassword = generateRandomPassword(6);
+
+                User user = userOptional.get();
+                user.setUserPw(passwordEncoder.encode(temporaryPassword));
+                userService.saveUser(user);
+
+                returnMap.put("tempPassword", temporaryPassword);
+                returnMap.put("msg", "change password success");
+            } else {
+                returnMap.put("msg", "사용자가 존재하지 않습니다.");
+            }
+
+            responseDTO.setItem(returnMap);
+            responseDTO.setStatusCode(HttpStatus.OK.value());
+
+            return ResponseEntity.ok(responseDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setErrorMessage(e.getMessage());
+            responseDTO.setErrorCode(999);
+            return ResponseEntity.badRequest().body(responseDTO);
         }
-
-        return ResponseEntity.ok(response);
     }
+
+
 
     @GetMapping("/modify-view")
     public ModelAndView getModify() {
