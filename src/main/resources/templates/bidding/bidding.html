@@ -29,7 +29,7 @@
     <div class="bidding-container">
         <div class="bidding-area">
             <div class="price-option">
-                <p class="content-text">Pricing Options</p>
+                <p class="content-text">금액 옵션</p>
                 <div class="pricing-options">
                     <div class="bid-button" id="good-bid" th:attr="startingPrice=${#numbers.formatInteger(getGoods.startingPrice,3,'COMMA')}" onclick="javascript:updateRealTimeValue(this.getAttribute('startingPrice'));changeColor(this);">
                         <p class="price-text" th:text="'₩' + ${#numbers.formatInteger(getGoods.startingPrice,3,'COMMA')}"></p>

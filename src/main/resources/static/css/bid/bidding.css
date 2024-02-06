@@ -54,6 +54,7 @@
 }
 
 .pricing-options div:nth-child(n){
+    border-radius: 10px;
     border: solid 1px;
     border-color: #1a2028;
     display: flex;
@@ -105,6 +106,7 @@
      font-size: 22px;
      font-family: Pretendard;
      padding-left: 20px;
+     border-radius: 10px;
  }
 
 #realTimeValue{
@@ -177,5 +179,10 @@
     color: rgba(30, 30, 30, 0.8);
 }
 
+.price-text{
+    font-family: Pretendard;
+}
 
-
+.option-text{
+    font-family: Pretendard;
+}

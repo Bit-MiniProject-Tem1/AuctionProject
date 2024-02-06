@@ -116,12 +116,12 @@ public class BiddingController {
         biddingDTO.setAuctionStatus('S');
         biddingDTO.setUserId(customUserDetails.getUsername());
         biddingDTO.setDate(LocalDateTime.now());
-        biddingService.setbid(biddingDTO);
         pointService.pointWithdraw(biddingDTO.getBiddingPrice() , customUserDetails.getUsername());
         pointHistoryService.setPointHistory(biddingDTO.getBiddingPrice() , customUserDetails.getUsername() , 'b');
 
         Long auctionId = biddingDTO.getAuctionId();
         biddingService.updateBidStatus(auctionId);
+        biddingService.setbid(biddingDTO);
         int BiddingPrice = biddingDTO.getBiddingPrice();
         auctionService.setCurrentBiddingPrice(auctionId, BiddingPrice);
     }
