@@ -58,9 +58,10 @@
 
                     <div class="product-image" th:each="file: ${getGoods.auctionImgDTOList}">
                         <figure class="img_wrapper">
-                            <img src=""
-                                 th:src="${auction.representativeImgUrl}"
-                                 alt=""/>
+                                <img class="d-block w-100"
+                                     src="https://cdn.pixabay.com/photo/2017/07/02/21/34/sport-shoe-2465915_1280.jpg"
+                                     th:src="${getGoods.representativeImgUrl}"
+                                     alt=""/>
                         </figure>
                     </div>
             </div>
