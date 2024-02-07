@@ -46,6 +46,9 @@
     margin: 20px 0;
     --bs-gutter-x: 0rem;
 }
+.container.search-goods-list1 {;
+    margin-left: 180px;
+}
 
 .sub-category-title {
     height: 100px;
