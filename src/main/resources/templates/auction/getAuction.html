@@ -129,6 +129,7 @@
                     </div>
                 </div>
                 <div th:if="${getGoods.regUserId} ne ${uid}">
+                <div th:if="${uid} ne null">
                 <div class="container">
                     <div class="link-group">
                         <a href="#" th:href="'/auction/impbiddinginfo/'+${getGoods.id}" class="link btn-red">
@@ -149,6 +150,30 @@
                         </a>
                         원하는 입찰 금액을 적어주세요.
                     </div>
+                </div>
+                </div>
+                <div th:if="${uid} eq null">
+                <div class="container">
+                    <div class="link-group">
+                        <a href="#" th:href="'/user/login-view'" class="link btn-red">
+                            <div class="link-title immediately">
+                                즉시<br>구매
+                            </div>
+                            <div class="link-description">
+                                즉시 구매가<br>
+                                <span class="price" th:text="${getGoods.immediatePrice}+'원'"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="link-group">
+                        <a href="#" th:href="'/user/login-view'" class="link btn-green">
+                            <div class="link-title voluntary">
+                                자율<br>입찰
+                            </div>
+                        </a>
+                        원하는 입찰 금액을 적어주세요.
+                    </div>
+                </div>
                 </div>
                 </div>
                 <div>
