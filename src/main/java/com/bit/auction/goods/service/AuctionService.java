@@ -48,7 +48,7 @@ public interface AuctionService {
 
     void setCurrentBiddingPrice(Long auctionId, int BiddingPrice);
 
-    void likeList(CustomUserDetails customUserDetails, List<AuctionDTO> recentAuctions);
+    void likeList(CustomUserDetails customUserDetails, List<AuctionDTO> Auctions);
 
     void likePage(Page<AuctionDTO> auctionPage, CustomUserDetails customUserDetails);
 

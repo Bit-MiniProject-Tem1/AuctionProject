@@ -111,6 +111,7 @@ public class AuctionController {
                     .anyMatch(map -> map.get("AUCTION_ID").equals(categoryId));
 
             mav.addObject("likeChk", likeChk);
+
         }
 
         long likeSum = likeCntService.findByAuctionId(categoryId);
