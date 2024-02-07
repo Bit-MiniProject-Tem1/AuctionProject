@@ -101,9 +101,9 @@
                         <td th:text="${auction.immediatePrice}+'원'"></td>
                         <td>
                             <div class="state-title">
-                                <span th:if="${auction.status} eq 'S'">경매중</span>
-                                <span th:if="${auction.status} eq 'E'">경매종료</span>
-                                <span th:if="${auction.status} eq 'C'">경매취소</span>
+                                <span th:if="${auction.status} eq 'S'" style="color: rgb(65, 185, 121);">경매중</span>
+                                <span th:if="${auction.status} eq 'E'" style="color: black">경매종료</span>
+                                <span th:if="${auction.status} eq 'C'" style="color: rgb(239, 98, 83);;">경매취소</span>
                             </div>
                             <div class="link-group" th:if="${auction.status} eq 'S'">
                                 <a href="#" class="link btn-green" th:href="'/auction/goods-update/'+${auction.id}"
