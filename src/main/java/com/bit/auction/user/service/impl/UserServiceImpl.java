@@ -4,6 +4,7 @@ import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.repository.UserRepository;
 import com.bit.auction.user.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,5 +108,12 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         userRepository.save(user);
     }
+
+    @Override
+    public void deleteUser(String userId) {
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        userOptional.ifPresent(user -> userRepository.delete(user));
+    }
+
 
 }

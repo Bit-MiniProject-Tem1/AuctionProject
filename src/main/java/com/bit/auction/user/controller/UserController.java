@@ -11,6 +11,7 @@ import com.bit.auction.user.dto.UserDTO;
 import com.bit.auction.user.entity.User;
 import com.bit.auction.user.service.UserService;
 import com.bit.auction.user.service.impl.UserDetailsServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -300,6 +302,20 @@ public class UserController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+    @PostMapping("/delete")
+    public ResponseEntity<Map<String, String>> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            String username = userDetails.getUsername();
+            userService.deleteUser(username);
+            response.put("redirectUrl", "/"); // 회원 탈퇴 성공 시 리다이렉트할 URL
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("error", "회원 탈퇴에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 }
 
 
