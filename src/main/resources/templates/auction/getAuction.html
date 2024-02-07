@@ -200,7 +200,7 @@
                             <tr th:each="bid: ${getBids}">
                                 <th scope="row" th:text="${bid.userId}"></th>
                                 <td th:text="${bid.biddingPrice}"></td>
-                                <td th:text="${#temporals.format(bid.date, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td th:text="${#temporals.format(bid.date, 'yy-MM-dd HH:mm')}"></td>
                             </tr>
                             </tbody>
                         </table>

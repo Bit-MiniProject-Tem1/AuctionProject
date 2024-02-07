@@ -168,6 +168,21 @@
     width: 60%;
 }
 
+.bidding-info tbody th,td{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bidding-info tbody th{
+    width: 70px;
+    display: block;
+}
+
+.bidding-info tbody td{
+    width: 120px;
+}
+
 .favorite-link .bi-heart {
     cursor: pointer;
 }
