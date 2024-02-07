@@ -56,11 +56,10 @@ public class InquiryManagementController {
     public ModelAndView inquiryManagementMain(@PageableDefault(page = 0, size = 20) Pageable pageable, FaqDTO faqDTO, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView();
+
         String category = faqDTO.getCategory();
         String condition = faqDTO.getSearchCondition();
         String keyword = faqDTO.getSearchKeyword();
-
-        log.info("##### category={}", category);
 
         mv.addObject("faqList", faqService.getFaqList(pageable, faqDTO));
         mv.addObject("category", category == null ? "전체" : category);
@@ -152,7 +151,7 @@ public class InquiryManagementController {
     public String faqDelete(@PathVariable("faqId") Long faqId , RedirectAttributes redirectAttributes) {
         log.info("########## faqDTO.getFaqId() = {}", faqId);
 
-        redirectAttributes.addFlashAttribute("faqDTO", faqService.getFaq(faqId));
+        //redirectAttributes.addFlashAttribute("faqDTO", faqService.getFaq(faqId));
         faqService.deleteFaq(faqId);
         return "redirect:/admin/inquiry-management_main";
     }

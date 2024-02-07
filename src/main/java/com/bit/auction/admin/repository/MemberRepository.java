@@ -1,13 +1,11 @@
 package com.bit.auction.admin.repository;
 
-import com.bit.auction.admin.entity.Faq;
-import com.bit.auction.user.entity.Inquiry;
 import com.bit.auction.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberManagementRepository extends JpaRepository<User, Long> {
+public interface MemberRepository extends JpaRepository<User, Long> {
 
     Page<User> findByUserNameContainingOrUserIdContainingOrUserTelContainingOrUserEmailContaining(Pageable pageable, String userName, String userId, String userTel, String userEmail);
 
