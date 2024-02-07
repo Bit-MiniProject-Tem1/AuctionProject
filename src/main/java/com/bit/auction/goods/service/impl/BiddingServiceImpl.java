@@ -47,6 +47,14 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
+    public List<BiddingDTO> findByAuctionId(Long categoryId) {
+        List<Bidding> List = biddingRepository.findByAuctionId(categoryId);
+        return List.stream()
+                .map(Bidding::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<BiddingDTO> getbidone(String userId){
         List<Bidding> List = biddingRepository.findByUserId(userId);
         return List.stream()

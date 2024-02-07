@@ -60,4 +60,9 @@ public interface BiddingRepository extends JpaRepository<Bidding, Long>  {
   Long countAuctionStatusE(String userId);
   @Query("SELECT COUNT(b) FROM Bidding b WHERE b.auctionStatus = 'C' and b.userId = :userId")
   Long countAuctionStatusC(String userId);
+
+  @Query("SELECT b FROM Bidding b WHERE b.auctionId = :auctionId ORDER BY b.date DESC")
+  List<Bidding> findByAuctionId(Long auctionId);
+
+
 }

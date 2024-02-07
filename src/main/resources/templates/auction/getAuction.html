@@ -164,21 +164,16 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">입찰자</th>
                                 <th scope="col">가격</th>
                                 <th scope="col">입찰일자</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
+                            <tr th:each="bid: ${getBids}">
+                                <th scope="row" th:text="${bid.userId}"></th>
+                                <td th:text="${bid.biddingPrice}"></td>
+                                <td th:text="${#temporals.format(bid.date, 'yyyy-MM-dd HH:mm')}"></td>
                             </tr>
                             </tbody>
                         </table>

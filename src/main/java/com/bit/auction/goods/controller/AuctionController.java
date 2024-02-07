@@ -5,6 +5,7 @@ import com.bit.auction.common.FileUtils;
 import com.bit.auction.common.dto.ResponseDTO;
 import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.AuctionImgDTO;
+import com.bit.auction.goods.dto.BiddingDTO;
 import com.bit.auction.goods.dto.CategoryDTO;
 import com.bit.auction.goods.dto.DescriptionImgDTO;
 import com.bit.auction.goods.service.AuctionService;
@@ -95,6 +96,8 @@ public class AuctionController {
                                  @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         ModelAndView mav = new ModelAndView();
+        List<BiddingDTO> biddingDTO = biddingService.findByAuctionId(categoryId);
+
         List<Map<String, Long>> userLikeList;
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
@@ -120,6 +123,7 @@ public class AuctionController {
         }
         auctionService.updateView(auctionDTO.getId(), request, response);
 
+        mav.addObject("getBids",biddingDTO);
         mav.addObject("getGoods", auctionDTO);
         mav.setViewName("auction/getAuction.html");
 
