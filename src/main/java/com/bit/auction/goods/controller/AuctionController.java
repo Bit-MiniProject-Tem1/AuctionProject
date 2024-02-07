@@ -366,7 +366,7 @@ public class AuctionController {
             } else if (paramMap.get("etc") != null) {
                 mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             } else {
-                //  auctionService.getSubCategoryIdList(categoryId);
+                auctionService.getSubCategoryIdList(categoryId);
                 mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             }
         }

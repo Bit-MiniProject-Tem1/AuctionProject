@@ -47,9 +47,8 @@ public class AuctionServiceImpl implements AuctionService {
         return optionalAuction.map(Auction::toDTO).orElse(null);
     }
 
-    public List<Long> getSubCategoryIdList(Long categoryId) {
+    public void getSubCategoryIdList(Long categoryId) {
         categoryIdList = categoryRepository.findSubCategoryIdList(categoryId);
-        return categoryIdList;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionDTOPageList;
     }
 
-   @Override
+    @Override
     public Page<AuctionDTO> getMyAuctionList(Pageable pageable, String regUserId, List<Character> status) {
         Page<Auction> auctionPageList = auctionRepository.searchMyAuctionList(pageable, regUserId, status);
         Page<AuctionDTO> auctionDTOPageList = auctionPageList.map(auction -> auction.toDTO());
@@ -200,6 +199,7 @@ public class AuctionServiceImpl implements AuctionService {
             response.addCookie(newCookie);
         }
     }
+
     @Override
     public void cancelAuction(Long id) {
         auctionRepository.updateStatusByCancel(id);
@@ -265,6 +265,7 @@ public class AuctionServiceImpl implements AuctionService {
     public void setCurrentBiddingPrice(Long auctionId, int BiddingPrice) {
         auctionRepository.updateCurrentBiddingPrice(auctionId, BiddingPrice);
     }
+
     @Override
     public void likeList(CustomUserDetails customUserDetails, List<AuctionDTO> auctionsList) {
         List<Map<String, Long>> likeSumList = getLikeSumList();
