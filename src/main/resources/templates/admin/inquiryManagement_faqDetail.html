@@ -6,22 +6,14 @@
 <head>
     <title>자주 묻는 질문 - 상세조회</title>
     <th:block layout:fragment="css">
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script" th:with="requestUrl = ${requestUrl}, status = ${status}">
         <script>
-
             $(() => {
-                console.log($(".text_area")[0].scrollHeight);
-                console.log($("#title_box").css('height'));
-
-
                 for (let i = 0; i < $('.view_box').length; i++) {
                     let viewboxHeight = 30;
                     let id = $('.view_box')[i].getAttribute('id');
-
-                    console.log("id = " + id);
 
                     if (id == "content_box") {
                         viewboxHeight = viewboxHeight * 12;
@@ -108,11 +100,8 @@
                     </div>
                 </div>
                     <div class="button_area" th:with="faqId=${faqDTO.faqId}">
-<!--                        <button th:hidden="${requestUrl.contains('/admin/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_main\''" type="button" id="toFaqListBtn" class="textTypeBtn">목록</button>-->
                         <button th:onclick="'window.location.href = \'/admin/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn btn-green">수정</button>
                         <button th:onclick="'window.location.href = \'/admin/inquiry-management/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn btn-red">삭제</button>
-<!--                        <button th:hidden="${!requestUrl.contains('/admin/inquiry-management/')}" th:onclick="'window.location.href = \'/faq_delete/faq-' + ${faqId} + '\''" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
-<!--                        <button th:hidden="${!requestUrl.contains('/admin/inquiry-management/')}" onclick="deleteFaq()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>-->
                         <button th:onclick="'window.location.href = \'/admin/inquiry-management_main\''" type="button" id="toInquiryListBtn" class="textTypeBtn btn-black">목록</button>
                     </div>
             </form>

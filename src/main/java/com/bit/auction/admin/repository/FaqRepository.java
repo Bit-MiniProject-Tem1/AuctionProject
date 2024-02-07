@@ -9,13 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FaqRepository extends JpaRepository<Faq, Long> {
-//
-//    public Page<Faq> test(Pageable pageable, String categoty, String searchKeyword);
-//    @Query(value = "SELECT * FROM your_entity_table WHERE your_condition", nativeQuery = true)
-//    Page<Faq> findAllByCategoryAfterAndTitleContainingOrContentContaining(Pageable pageable);
-//
-
-    // 검색조건 : 카테고리
+   // 검색조건 : 카테고리
     Page<Faq> findByCategory(Pageable pageable, String category);
 
     // 검색조건 : 제목
@@ -39,9 +33,4 @@ public interface FaqRepository extends JpaRepository<Faq, Long> {
     Page<Faq> findByCategoryAndTitleContainingOrCategoryAndContentContaining(Pageable pageable, String category1, String title, String category2, String content);
 
     Faq findTopByOrderByFaqIdDesc();
-
-
-//    void deleteById(Long faqId);
-
-//    Faq save(Faq faq);
 }

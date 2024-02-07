@@ -84,8 +84,4 @@ public class MemberManagementServiceImpl implements MemberManagementService {
         return biddingRepository.findByUserId(userId)
                 .stream().map(bidding -> bidding.toDTO()).toList();
     }
-
-
-
-
 }

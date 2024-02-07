@@ -32,31 +32,6 @@ public class FaqServiceImpl implements FaqService {
     private final FaqRepository faqRepository;
 
     private final FaqAttachedFileRepository faqAttachedFileRepository;
-/*
-    @PersistenceContext
-    public EntityManager entityManager;
-//    private Object ;
-
-    public Page<Faq> test(Pageable pageable, String category, String searchKeyword) {
-        String query = "SELECT * FROM FAQ " +
-                        "WHERE CATEGORY = '" + category + "'" +
-                        "  AND (TITLE LIKE '%" + searchKeyword + "%' OR CONTENT LIKE '%" + searchKeyword + "%')";
-
-        List resultList = entityManager.createNativeQuery(query, Object.class).getResultList();
-        resultList.stream().map(obj -> faqRepository.findById(obj.getField("faqId")));
-
-        return convertListToPage(resultList, pageable);
-    }
-*/
-
-/*
-    public Page<Faq> convertListToPage(List<Faq> list, Pageable pageable) {
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize()) > list.size() ? list.size() : (start + pageable.getPageSize());
-
-        return new PageImpl<>(list.subList(start, end), pageable, list.size());
-    }
-*/
 
     @Override
     public void insertFaq(FaqDTO faqDTO) {
@@ -98,32 +73,16 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public void updateFaq(FaqDTO faqDTO) {
-        log.info("#### faqId = {}", faqDTO.getFaqId());
 
-        // 1. FaqDTO를 이용하여 Faq 엔티티를 가져옴
         Faq newFaq = faqDTO.toEntity();
-        log.info("#### newFaq.getFaqId = {}", newFaq.getFaqId());
 
-        // 2. 데이터베이스에서 해당 faqId에 해당하는 기존 Faq 엔티티를 조회
         Optional<Faq> optionalFaq = faqRepository.findById(faqDTO.getFaqId());
 
         Faq originFaq = optionalFaq.get();
-        log.info("#### originFaq.getFaqId = {}", originFaq.getFaqId());
 
-        // 3.첨부파일을 엔티티로 변환
         List<FaqAttachedFile> faqAttachedFileList = faqDTO.getFaqAttachedFileDTOList().stream()
                 .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(newFaq)).toList();
 
-        log.info("----------------------- File Name -----------------------------");
-        for(int i = 0; i<faqAttachedFileList.size(); i++) {
-
-            log.info("#### originFaq.getFaqId = {}", originFaq.getFaqId());
-        }
-        log.info("---------------------------------------------------------------");
-
-        log.info("##### 변경전 엔티티 - 제목 : {}", originFaq.getTitle());
-
-        // 4. 기존 Faq 엔티티의 필드들을 FaqDTO의 값으로 업데이트
         originFaq.setCategory(faqDTO.getCategory());
         originFaq.setTitle(faqDTO.getTitle());
         originFaq.setContent(faqDTO.getContent());
@@ -131,19 +90,8 @@ public class FaqServiceImpl implements FaqService {
         originFaq.setViewsCount(faqDTO.getViewsCount());
         originFaq.setFaqAttachedFileList(faqAttachedFileList);
 
-        log.info("##### 변경후 엔티티 - 제목 : {}", originFaq.getTitle());
-
-
-        // 5. 기존 FaqAttachedFile 엔티티 삭제
         faqAttachedFileRepository.deleteByFaq(newFaq);
-/*
 
-        // 파일 레포지토리에 파일 추가
-        faqAttachedFileList.stream().forEach(faqAttachedFile -> updateFaq.addFaqAttachedFileList(faqAttachedFile));
-*/
-
-        // 6. 데이터베이스에 업데이트된 Faq 엔티티를 저장
-//        faqRepository.save(originFaq);
         entityManager.persist(originFaq);
     }
 
@@ -157,7 +105,6 @@ public class FaqServiceImpl implements FaqService {
 
         faqAttachedFileRepository.flush();
 
-        // 업데이트를 수행할 수 있는 메소드를 호출 (아래에 구현)
         updateFaqDTO(originFaq, faqDTO);
 
         faqRepository.save(originFaq);
@@ -168,10 +115,6 @@ public class FaqServiceImpl implements FaqService {
         originFaq.setTitle(faqDTO.getTitle());
         originFaq.setContent(faqDTO.getContent());
 
-        System.out.println(faqDTO.getFaqAttachedFileDTOList().size());
-        // 그 외 필요한 필드 업데이트
-
-        // 첨부 파일 업데이트
         List<FaqAttachedFile> attachedFiles = faqDTO.getFaqAttachedFileDTOList().stream()
                 .map(faqAttachedFileDTO -> faqAttachedFileDTO.toEntity(originFaq))
                 .collect(Collectors.toList());
@@ -180,7 +123,6 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public void deleteFaq(Long faqId) {
-
         Faq faq = faqRepository.findById(faqId).get();
 
         if(faq != null) {
@@ -210,8 +152,6 @@ public class FaqServiceImpl implements FaqService {
                 }
             } else {
                 if(condition.equals("전체")) {
-                    /*faqPageList = faqRepository.findByCategoryAndTitleContainingOrContentContaining(
-                            pageable, category, keyword, keyword);*/
                     faqPageList = faqRepository.findByCategoryAndTitleContainingOrCategoryAndContentContaining(pageable, category, keyword, category, keyword);
                 } else if(condition.equals("제목")) {
                     faqPageList = faqRepository.findByCategoryAndTitleContaining(
@@ -231,25 +171,6 @@ public class FaqServiceImpl implements FaqService {
     }
 
 
-/*
-    @Override
-    public List<FaqAttachedFileDTO> getFaqAttachedFileList(Long faqId) {
-
-        return faqAttachedFileRepository.findByFaqId(faqId.toString());
-    }
-*/
-
-
-/*
-    @Override
-    public Page<FaqDTO> findAll(Pageable pageable) {
-        Page<Faq> faqList = faqRepository.findAll(pageable);
-
-        Page<FaqDTO> faqDTOList = faqList.map(faq -> faq.toDTO());
-
-        return faqDTOList;
-    }
-*/
     @Override
     public Page<FaqDTO> findAll(Pageable pageable) {
         return faqRepository.findAll(pageable).map(faq -> faq.toDTO());
@@ -302,8 +223,6 @@ public class FaqServiceImpl implements FaqService {
         Faq faq = faqDTO.toEntity();
         String jpql = "select f from FaqAttachedFile f where faq = :faq";
 
-//        List<Faq> faqAttachedFileList = entityManager.createQuery(jpql, faqDTO.class).getResultList();
-
         return null;
     }
 
@@ -348,8 +267,4 @@ public class FaqServiceImpl implements FaqService {
         return null;
     }
 
-/*    @Override
-    public List<FaqAttachedFileDTO> findByFaqId(Long faqId) {
-        return null;
-    }*/
 }

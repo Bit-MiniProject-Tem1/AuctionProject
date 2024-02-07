@@ -30,7 +30,6 @@ public class Faq {
     @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    //    @CreationTimestamp
     @Column(name = "REGDATE", columnDefinition = "DATETIME", nullable = false)
     private LocalDateTime regdate;
 

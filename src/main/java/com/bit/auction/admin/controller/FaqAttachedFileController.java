@@ -16,24 +16,5 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 public class FaqAttachedFileController {
-/*    @Value("${file.dir}")
-    private String fileDir;
-    @GetMapping("/upload")
-    public String newFile() {
-        return "upload-form";
-    }
-    @PostMapping("/upload")
-    public String saveFile(@RequestParam String itemName,
-                           @RequestParam MultipartFile file, HttpServletRequest
-                                   request) throws IOException {
-        log.info("request={}", request);
-        log.info("itemName={}", itemName);
-        log.info("multipartFile={}", file);
-        if (!file.isEmpty()) {
-            String fullPath = fileDir + file.getOriginalFilename();
-            log.info("파일 저장 fullPath={}", fullPath);
-//            file.transferTo(new File(fullPath));
-        }
-        return "upload-form";
-    }*/
+
 }

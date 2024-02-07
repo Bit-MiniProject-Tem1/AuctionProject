@@ -5,12 +5,7 @@
       layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>자주 묻는 질문 - 등록</title>
-    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-    <!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-
-
     <th:block layout:fragment="css">
-        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script">
@@ -43,7 +38,6 @@
 
 
             function updateFiles() {
-                // 파일 선택 input 요소
                 const fileInput = document.getElementById('uploadFiles');
                 const newFiles = fileInput.files;
                 attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
@@ -61,17 +55,13 @@
                     console.log(file.name);
                 }
 
-                // 파일 이름을 출력할 요소
                 const fileNamesContainer = document.getElementById('fileNames');
 
-                // 기존에 출력된 파일 이름들을 지우기
                 fileNamesContainer.innerHTML = '';
 
-                // for (const file of fileInput.files) {
                 for (let i = 0; i < fileInput.files.length; i++) {
                     const file = fileInput.files[i];
 
-                    //파일 이름이 출력될 p태그 생성
                     const fileNameParagraph = document.createElement('p');
                     fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
                         "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
@@ -100,7 +90,6 @@
                             }
                         }
 
-                        // input에 첨부된 파일 삭제
                         let inputDataTransfer = new DataTransfer();
 
                         for (i in attachedFileList) {
@@ -109,7 +98,6 @@
 
                         fileInput.files = inputDataTransfer.files;
 
-                        // 클릭된 버튼의 파일 삭제
                         const parentTag = e.target.parentNode.parentNode;
                         parentTag.remove();
                     }
@@ -211,7 +199,6 @@
                             <span>
                                 <label for="uploadFiles"
                                        style="color: white; font-weight: 500; line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border-radius: 0.375rem; background-color: #7a7a7a; margin-top: 1px; padding-top: 3px;">파일 선택</label>
-                                <!--background-color: aliceblue;-->
                                 <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;"
                                        aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple
                                        placeholder="none">

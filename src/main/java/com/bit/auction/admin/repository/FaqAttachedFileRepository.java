@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface FaqAttachedFileRepository extends JpaRepository<FaqAttachedFile, Long> {
-//    List<FaqAttachedFileDTO> findByFaqFaqId(String faqId);
-
-
     Optional<FaqAttachedFile> findByFileIdAndFaqFaqId(Long fileId, Long faqId);
 
     FaqAttachedFile findByFaqFaqIdAndFileId(Long faqId, Long fileId);

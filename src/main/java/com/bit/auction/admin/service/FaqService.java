@@ -23,8 +23,6 @@ public interface FaqService {
 
     Page<FaqDTO> getFaqList(Pageable pageable, FaqDTO faqDTO);
 
-//    List<FaqAttachedFileDTO> getFaqAttachedFileList(Long faqId);
-
     Page<FaqDTO> findAll(Pageable pageable);
 
     void save(FaqDTO faqDTO);
@@ -36,13 +34,11 @@ public interface FaqService {
     FaqAttachedFileDTO getFaqAttachedFileDTO(Long faqId, Long fileId);
 
     FaqDTO findById(Long faqId);
-//
+
     FaqDTO findTopByOrderByFaqIdDesc();
 
     List<Faq> findAllByFaqId(FaqDTO faqDTO);
     void deleteById(Long faqId);
-
-    //---------------------------------------------------------------------------
 
     List<FaqDTO> findByCategory(Pageable pageable, String category);
 
@@ -57,6 +53,4 @@ public interface FaqService {
     List<FaqDTO> findByCategoryAndTitleContainingOrContentContaining(String category, String searchKeyword);
 
     List<FaqDTO> search(String category, String searchCondition, String searchKeyword);
-
-//    List<FaqAttachedFileDTO> findByFaqId(Long faqId);
 }
