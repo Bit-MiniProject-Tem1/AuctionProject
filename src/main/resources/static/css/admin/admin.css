@@ -4,7 +4,6 @@
     margin-bottom: 100px;
     box-sizing: border-box;
     font-family: Pretendard;
-    /*    border: 1px solid black;               !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
 .title_area {
@@ -14,7 +13,6 @@
     box-sizing: border-box;
     color: rgb(34, 34, 34);
     height: 48px;
-    /*width: 1020px;*/
     padding-bottom: 7px;
     margin-top: 30px;
     display: flex;
@@ -42,8 +40,6 @@
     display: inline;
     padding: 0;
     margin: 0;
-    /*border: 1px solid #dedede;*/
-    /*border: 1px solid rgb(153, 153, 153);*/
     border: 1px solid #bcbcbc;
     font-family: Pretendard;
 }
@@ -72,16 +68,6 @@ input::placeholder {
     align-items: center;
 }
 
-/*#table_header, #inquiry_table_header {*/
-/*    !*width: 990px;*!*/
-/*    height: 40px;*/
-/*    border-collapse: collapse;*/
-/*    background-color: #f4f4f4;*/
-/*    border-top: 0.5px solid #e2e3e5;*/
-/*    font-size: 18px;*/
-/*    text-align: center;*/
-/*}*/
-
 #table_form, #inquiry_table_form {
     font-size: 14px;
     font-family: Pretendard;
@@ -95,19 +81,16 @@ input::placeholder {
 #table_form, #inquiry_table_form {
     width: 990px;
     border-collapse: collapse;
-    /*background-color: skyblue;  !*#f4f4f4;*!*/
     margin: 10px 15px 20px;
 }
 
 .table_colName {
     vertical-align: middle;
-    /*font-weight: 550;*/
 }
 
 #table_header_bottom, #inquiry_table_header_bottom {
     height: 2px;
     border-top: 1px solid #cccccc;
-    /*border-bottom: 2px solid #999999;*/
 }
 
 .table_row {
@@ -128,9 +111,9 @@ input::placeholder {
 .td_textArea {
     text-align: left;
     text-indent: 20px;
-    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-    overflow: hidden; /* 넘치는 부분을 감추기 */
-    text-overflow: ellipsis; /* 생략 기호 (...)로 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 560px;
 }
 
@@ -143,36 +126,18 @@ input::placeholder {
     max-width: 210px;
 }
 
-/*----------------------------------------------------------*/
-
-/*#detailView_table {*/
-/*    width: 990px;*/
-/*    border-collapse: collapse;*/
-/*    background-color: lightblue;*/
-/*    font-size: 18px;*/
-/*    margin: 20px 15px;*/
-/*}*/
-
 .detailView_area {
-    /*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0;
     padding: 0 15px;
     color: rgb(107, 107, 107);
 }
 
 #search_area #category, #inquiry_search_area #status {
-    /* border: 1.5px solid #dedede;
-     !*border: 1px solid #797979;*!
-     display: inline-block;
-     font-size: 16px;
-     padding: 5px;
- */
     width: 168px;
     text-indent: 12px;
     border-radius: 10px;
 }
 
-/*.detailView_area*/
 #faq_add_container #category {
     border: 1px solid #999999;
     border-radius: 10px;
@@ -196,7 +161,6 @@ input::placeholder {
     border: 1px solid #cccccc;
     display: inline-block;
     border-radius: 6px;
-    /*background-color: ghostwhite;*/
 }
 
 #faq_add_container #content_box {
@@ -204,24 +168,11 @@ input::placeholder {
     padding: 7px 20px;
 }
 
-/*style="padding: 2px; border: 1px solid #dedede; display: inline-block; border-radius: 6px;"*/
-/*
-#faq_detail_container #category-parent {
-    !*width: calc(100% + 4px);*!
-    !*height: calc(100% + 4px);*!
-    border: 2px solid #ccc;
-    box-sizing: border-box;
-}*/
-/*#f4f3f1*/
-/*style="background-color: #f4f3f1; border-radius: 5px; border: 1px solid #dedede; letter-spacing: 1.5px;"*/
-
 .detail_item {
     width: 990px;
     display: block;
     box-sizing: border-box;
-    /*    border: 1px solid mediumpurple;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0 10px;
-    /*--viewbox-hieght: 40;*/ /* <--- 변수 설정*/
 }
 
 .item_label_area {
@@ -250,14 +201,6 @@ input::placeholder {
     font-size: 18px;
 }
 
-.view_color {
-    /*background-color: ghostwhite;*/
-}
-
-/*#title_box, #file_box {
-    height: 48px;
-}*/
-
 #content_box {
     padding: 10px;
 }
@@ -271,15 +214,11 @@ input::placeholder {
     overflow-y: hidden;
     background-color: rgba(255, 255, 255, 0);
     height: 28px;
-
-    /*    border: 1px dashed red;    !* <--- 영역 구분을 위한 임시 테두리 *!*/
 }
 
 .text_area:focus, .detailView_area #category, .search_item {
     outline: none;
 }
-
-/*----------------------------------------------------------*/
 
 #modalPopup {
     display: none;
@@ -302,7 +241,7 @@ input::placeholder {
     height: 30px;
     font-size: 1.6em;
     background-color: #dedede;
-    color: white; /*rgb(107, 107, 107);  #999999;*/
+    color: white;
     border: none;
     border-radius: 4px;
     position: absolute;
@@ -324,6 +263,11 @@ input::placeholder {
 }
 
 .memberInfo_item {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.statistical_item {
     margin-top: 25px;
     margin-bottom: 10px;
 }
@@ -392,15 +336,12 @@ input::placeholder {
     width: 100%;
 }
 
-
-/*----------------------------------------------------------*/
-
 .button_area {
     margin: 60px 0 0;
     --btn-height: 45px;
     height: var(--btn-height);
     display: flex;
-    justify-content: flex-end; /* 자식 요소를 컨테이너의 끝으로 정렬 */
+    justify-content: flex-end;
 }
 
 .button_area button {
@@ -429,7 +370,7 @@ input::placeholder {
     vertical-align: middle;
     text-align: center;
     border-radius: 5px;
-    transition: font-weight, border; /* 트랜지션 효과 추가 (부드러운 변화) */
+    transition: font-weight, border;
 }
 
 .pageMoveBtn:hover, #searchBtn:hover {
@@ -437,17 +378,14 @@ input::placeholder {
     font-weight: 550;
 }
 
-/*----------------------------------------------------------*/
-
 .statistical_item_area {
-    border: 1px solid lightblue; /*<--- 영역 구분을 위한 임시 테두리 */
+    border: 1px solid lightblue;
     margin: 40px 0;
     padding: 0 15px;
     color: rgb(107, 107, 107);
 }
 
 .detailView_area {
-    /*    border: 1px solid lightblue;      !* <--- 영역 구분을 위한 임시 테두리 *!*/
     margin: 40px 0;
     padding: 0 15px;
     color: rgb(107, 107, 107);
@@ -455,8 +393,8 @@ input::placeholder {
 
 #test_temp {
     display: flex;
-    justify-content: center; /* 부모 요소의 가로 중앙 정렬 */
-    align-items: center; /* 부모 요소의 세로 중앙 정렬 */
-    height: 100vh; /* 높이를 화면 전체 높이로 설정 */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 

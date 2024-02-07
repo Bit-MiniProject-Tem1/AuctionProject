@@ -6,7 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface InquiryInfoRepository extends JpaRepository<Inquiry, Long> {
-
     List<Inquiry> findByInquiryWriter(String userId);
-
 }

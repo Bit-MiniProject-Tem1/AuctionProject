@@ -6,13 +6,11 @@
 <head>
     <title>회원 관리</title>
     <th:block layout:fragment="css">
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap">
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script>
-
             function navigateToLink(clickedElement, className) {
                 if (clickedElement.classList.contains(className)) {
                     let elementsWithClass = document.querySelectorAll('.' + className);
@@ -23,11 +21,8 @@
                     window.location.href = href;
                 }
             }
-
-
         </script>
     </th:block>
-
 </head>
 <body>
 <div class="content_area" layout:fragment="content">
@@ -79,16 +74,24 @@
                 </thead>
                 <tbody>
                     <tr class="table_row" th:each="member : ${memberList}">
-                        <td th:text="${member.id}"></td>
+                        <td onclick="navigateToLink(this, this.className)">
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.id}"></a>
+                        </td>
                         <td onclick="navigateToLink(this, this.className)">
                             <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userName}"></a>
                         </td>
                         <td onclick="navigateToLink(this, this.className)">
                             <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userId}"></a>
                         </td>
-                        <td th:text="${member.userTel}"></td>
-                        <td th:text="${member.userEmail}"></td>
-                        <td class="td_textArea" th:text="${member.userAddress}"></td>
+                        <td onclick="navigateToLink(this, this.className)">
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userTel}"></a>
+                        </td>
+                        <td onclick="navigateToLink(this, this.className)">
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userEmail}"></a>
+                        </td>
+                        <td onclick="navigateToLink(this, this.className)" class="td_textArea">
+                            <a th:href="@{/admin/member_info/member-{id} (id=${member.id})}" th:text="${member.userAddress}"></a>
+                        </td>
                     </tr>
                     <tr id="table_body_bottom"></tr>
                 </tbody>
@@ -136,16 +139,11 @@
                             </a>
                         </div>
                     </li>
-
-                    <!----------------------------------------------------------->
-
                 </ul>
             </div>
             <br/>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>

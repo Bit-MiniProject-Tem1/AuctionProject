@@ -5,50 +5,26 @@
       layout:decorate="~{layouts/adminLayout}">
 <head>
     <title>자주 묻는 질문 - 수정</title>
-    <!--    <link rel="stylesheet" type="text/css" href="/css/my/admin.css">-->
-    <!--    <link rel="stylesheet" th:href="@{/css/user/admin.css}">-->
-
-
     <th:block layout:fragment="css">
-        <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
         <link rel="stylesheet" th:href="@{/css/admin/admin.css}">
     </th:block>
     <th:block layout:fragment="script">
 
         <script th:inline="javascript">
-            // 서버에서 받은 faqDTO와 base64DataList 데이터
             /*<![CDATA[*/
             let faqDTO = /*[[${faqDTO}]]*/ null;
             let fileDataList = /*[[${fileDataList}]]*/ null;
             /*]]>*/
-
-/*
-            /!*<![CDATA[*!/
-            let base64DataList = /!*[[${base64DataList}]]*!/ null;
-            /!*]]>*!/
-*/
-
-            console.log('@1');
-            // let fileList = faqDTO.faqAttachedFileDTOList ? JSON.parse(faqDTO.faqAttachedFileDTOList) : [];
-
-            // console.log('#base64DataList is null = ' + (base64DataList == null));
-            console.log('#fileDataList is null = ' + (fileDataList == null));
-            console.log('@2');
         </script>
 
         <script>
             let attachedFileList = [];
 
-
-            console.log('@3');
             if (fileDataList != null) {
-                console.log('@4');
                 document.addEventListener('DOMContentLoaded', function () {
-                    console.log('@5');
                     let dataTransfer = new DataTransfer();
 
                     fileDataList.forEach(function (fileDataMap) {
-                        console.log('@6');
                         let binaryData = fileDataMap.data;
                         let blob = b64toBlob(binaryData, fileDataMap.type);
                         let file = new File([blob], fileDataMap.name, {type: fileDataMap.type});
@@ -58,70 +34,10 @@
                     let fileInput = document.getElementById('uploadFiles');
                     fileInput.files = dataTransfer.files;
 
-                    console.log("########### fileInput.files.length = {}", fileInput.files.length);
-                    for (let i = 0; i < fileInput.files.length; i++) {
-                        console.log(fileInput.files[i].name);
-                    }
-
                     updateFiles();
                 });
             }
 
-
-
-
-
-
-/*
-
-            console.log('@3');
-            if(faqDTO.faqAttachedFileDTOList != null) {
-
-                console.log('@4');
-                document.addEventListener('DOMContentLoaded', function() {
-
-                    console.log('@5');
-                    // faqDTO에서 fileList 데이터를 가져와서 배열에 저장
-                    console.log('@6');
-                    let fileList = JSON.parse(base64DataList);
-
-
-                    console.log('@7');
-                    // DataTransfer 객체 생성
-                    let dataTransfer = new DataTransfer();
-
-                    // fileList 배열에 있는 파일 정보를 DataTransfer 객체에 추가
-                    fileList.forEach(function(fileInfo) {
-                        console.log('@8');
-                        let idx = fileList.indexOf(fileInfo);
-
-                        // index가 -1이 아닌 경우에만 Blob을 생성하도록 처리
-                        if (idx !== -1) {
-                            // fileList[idx]를 이용하여 데이터에 접근
-                            let binaryData =base64DataList[idx];
-
-                            // let blob = new Blob([binaryData], { type: fileInfo.type });
-                            let blob = b64toBlob(binaryData, fileInfo.type);
-                            let file = new File([blob], fileInfo.name, { type: fileInfo.type });
-                            dataTransfer.items.add(file);
-                        }
-
-                    });
-
-                    // input 태그에 DataTransfer 객체를 설정하여 파일 정보를 추가
-                    let fileInput = document.getElementById('uploadFiles');
-                    fileInput.files = dataTransfer.files;
-
-
-                    console.log("########### fileInput.files.length = {}", fileInput.files.length);
-                    for(let i=0; i<fileInput.files.length; i++) {
-                        console.log(fileInput.files[i].name);
-                    }
-                });
-            }
-*/
-
-            // base64를 Blob으로 변환하는 함수
             function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
                 const byteCharacters = atob(b64Data);
                 const byteArrays = [];
@@ -165,11 +81,7 @@
                 $('.view_box').find( 'textarea' ).keyup();
             });
 
-
-
             function updateFiles() {
-                console.log('5');
-                // 파일 선택 input 요소
                 const fileInput = document.getElementById('uploadFiles');
                 const newFiles = fileInput.files;
                 attachedFileList = Array.from(attachedFileList).concat(Array.from(fileInput.files));
@@ -179,25 +91,13 @@
 
                 fileInput.files = fileDataTransfer.files;
 
-                for(const file of attachedFileList) {
-                    console.log(file.name);
-                }
-
-                for(const file of fileInput.files) {
-                    console.log(file.name);
-                }
-
-                // 파일 이름을 출력할 요소
                 const fileNamesContainer = document.getElementById('fileNames');
 
-                // 기존에 출력된 파일 이름들을 지우기
                 fileNamesContainer.innerHTML = '';
 
-                // for (const file of fileInput.files) {
                 for (let i = 0; i < fileInput.files.length; i++) {
                     const file = fileInput.files[i];
 
-                    //파일 이름이 출력될 p태그 생성
                     const fileNameParagraph = document.createElement('p');
                     fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
                         "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
@@ -226,7 +126,6 @@
                             }
                         }
 
-                        // input에 첨부된 파일 삭제
                         let inputDataTransfer = new DataTransfer();
 
                         for(i in attachedFileList) {
@@ -235,11 +134,9 @@
 
                         fileInput.files = inputDataTransfer.files;
 
-                        // 클릭된 버튼의 파일 삭제
                         const parentTag = e.target.parentNode.parentNode;
                         parentTag.remove();
                     }
-
 
                     fileNameParagraph.appendChild(aTag);
                     deleteBtnBox.appendChild(deleteBtn);
@@ -254,98 +151,6 @@
                 document.getElementsByName('content')[0].focus();
             }
 
-        </script>
-
-<!--        <script>
-            // JavaScript 코드에서 fileList를 가져와서 배열에 저장하
-            let fileList = faqDTO.faqAttachedFileDTOList ? JSON.parse(faqDTO.faqAttachedFileDTOList) : [];
-
-            console.log("========== faqAttachedFileDTOList ==========")
-            // fileList 배열 사용 예시
-            for (let i = 0; i < fileList.length; i++) {
-                console.log('File ' + (i + 1) + ':', fileList[i]);
-                // 원하는 로직을 추가할 수 있습니다.
-            }
-
-            $(() => {
-                const fileInput = document.getElementById('uploadFiles');
-                attachedFileList = Array.from(attachedFileList).concat(Array.from(fileList));
-
-                let fileDataTransfer = new DataTransfer();
-                attachedFileList.forEach(file => fileDataTransfer.items.add(file));
-
-                fileInput.files = fileDataTransfer.files;
-
-                for(const file of attachedFileList) {
-                    console.log(file.name);
-                }
-
-                for(const file of fileInput.files) {
-                    console.log(file.name);
-                }
-
-                // 파일 이름을 출력할 요소
-                const fileNamesContainer = document.getElementById('fileNames');
-
-                // 기존에 출력된 파일 이름들을 지우기
-                fileNamesContainer.innerHTML = '';
-
-                // for (const file of fileInput.files) {
-                for (let i = 0; i < fileInput.files.length; i++) {
-                    const file = fileInput.files[i];
-
-                    //파일 이름이 출력될 p태그 생성
-                    const fileNameParagraph = document.createElement('p');
-                    fileNameParagraph.setAttribute("style", "font-size: 16px; line-height: 29px; cursor: pointer; " +
-                        "display: inline-flex; margin-left: 5px; margin-right: 45px; text-decoration-thick: auto; " +
-                        "text-decoration-style: solid; vertical-align: text-top; white-space-collapse: collapse;");
-
-                    let aTag = document.createElement("a");
-                    aTag.textContent = file.name;
-                    aTag.setAttribute("href", "");
-
-                    let deleteBtnBox = document.createElement("span");
-                    deleteBtnBox.setAttribute("style", "color: #bcbcbc; padding-left: 4px;")
-
-                    let deleteBtn = document.createElement("botton");
-                    deleteBtn.setAttribute("data-delete-filename", file.name);
-                    deleteBtn.className = "deleteBtn bi bi-x-square";   //bi bi-x-square  //bi bi-x-square-fill
-                    deleteBtn.setAttribute("style", "style", "width: 16px; height: 16px; position: absolute; right: 0;" +
-                        " bottom: 0; z-index: 999; ");
-
-                    deleteBtn.onclick = (e) => {
-
-                        const deleteFileName = e.target.getAttribute("data-delete-filename");
-
-                        for(let i = 0; i < attachedFileList.length; i++) {
-                            if(deleteFileName === attachedFileList[i].name) {
-                                attachedFileList.splice(i, 1);
-                            }
-                        }
-
-                        // input에 첨부된 파일 삭제
-                        let inputDataTransfer = new DataTransfer();
-
-                        for(i in attachedFileList) {
-                            inputDataTransfer.items.add(attachedFileList[i]);
-                        }
-
-                        fileInput.files = inputDataTransfer.files;
-
-                        // 클릭된 버튼의 파일 삭제
-                        const parentTag = e.target.parentNode.parentNode;
-                        parentTag.remove();
-                    }
-
-
-                    fileNameParagraph.appendChild(aTag);
-                    deleteBtnBox.appendChild(deleteBtn);
-                    fileNameParagraph.appendChild(deleteBtnBox);
-                    fileNamesContainer.appendChild(fileNameParagraph);
-                }
-
-                $("#file_box").height( $("#fileNames").height());
-            });-->
         </script>
     </th:block>
 </head>
@@ -426,7 +231,6 @@
                         </div>
                         <div class="view_box" id="file_box" style="vertical-align: middle; padding: 7px; height: 48px; min-height: 48px; display: flex; box-sizing: border-box;">
                             <span>
-                                <!--<label for="uploadFiles" style="line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border: 2px solid #cbd5e0; border-radius: 5px; background-color: #dedede;">파일 선택</label> -->
                                 <label for="uploadFiles"
                                        style="color: white; font-weight: 500; line-height: 24px; font-size: 16px; width: 80px; height: 29px; text-align: center; vertical-align: middle; border-radius: 0.375rem; background-color: #7a7a7a; margin-top: 1px; padding-top: 3px;">파일 선택</label>
                                 <input onchange="updateFiles()" style="display: none; opacity: 0; cursor: pointer;" aria- autocomplete="off" type="file" name="uploadFiles" id="uploadFiles" multiple placeholder="none">
@@ -442,14 +246,6 @@
                     <button type="submit" id="saveBtn" class="textTypeBtn btn-green">저장</button>
                     <button th:onclick="'window.location.href = \'/admin/faq_modification/faq-' + ${faqId} + '\''" type="submit" id="cancelBtn" class="textTypeBtn btn-black">취소</button>
                 </div>
-<!--
-
-                <div class="button_area" th:with="faqId=${faqDTO.faqId}">
-                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" th:onclick="'window.location.href = \'/faq_modification/faq-' + ${faqId} + '\''" type="button" id="modificationBtn" class="textTypeBtn">수정</button>
-                    <button th:hidden="${!requestUrl.contains('/inquiry_management/')}" onclick="redirectToDeletePage()" type="button" id="deleteBtn" class="textTypeBtn">삭제</button>
-                </div>
--->
-
             </form>
         </div>
     </div>

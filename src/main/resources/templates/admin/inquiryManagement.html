@@ -23,20 +23,13 @@
 
             function navigateToLink(clickedElement, className) {
                 if (clickedElement.classList.contains(className)) {
-                    // 지정한 클래스명을 가지고 있는 요소들을 NodeList로 가져오기
                     let elementsWithClass = document.querySelectorAll('.' + className);
 
-                    // 클릭한 요소의 인덱스 찾기
                     let idx = Array.from(elementsWithClass).indexOf(clickedElement);
 
-                    // 인덱스 출력
-                    console.log("Clicked element index " + className + " : ", idx);
-
-                    // a 태그의 href 속성 값 가져오기
                     let findElement = document.querySelectorAll('.' + className + ' a')[idx];
                     let href = findElement.getAttribute('href');
 
-                    // 해당 링크로 이동
                     window.location.href = href;
                 }
             }
@@ -44,10 +37,8 @@
             function redirectToFaqAdd() {
                 window.location.href = '/admin/faq_add';
             }
-
         </script>
     </th:block>
-
 </head>
 <body>
 <div class="content_area" layout:fragment="content">
@@ -66,9 +57,6 @@
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="button_area"
                          style="margin-top: 0; width: 90px; display: flex; justify-content: center; align-items: center;">
-                        <!--
-                        <button onclick="redirectToFaqAdd()" type="submit" id="registrationBtn" class="textTypeBtn" style="margin-top: 0; background-color: rgb(90,98,179); color: white; border: none; width: 70px; height: 35px;">등록</button>
-                        -->
                         <button onclick="redirectToFaqAdd()" type="submit" id="registrationBtn" class="textTypeBtn"
                                 style="font-size:16px; font-weight: 700; margin-top: 0; background-color: #222222; color: white; border: none; width: 70px; height: 35px;">
                             등록
@@ -76,7 +64,6 @@
                     </div>
                 </div>
             </div>
-            <!--                <div style="border-top: 2px solid #dedede; border-bottom: 2px solid #dedede; width: 380px; min-height: 6px; margin-left: 18px;"></div>-->
         </div>
         <div class="search">
             <form id="searchForm" action="/admin/inquiry-management_search" method="get">

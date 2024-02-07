@@ -10,6 +10,4 @@ public interface BiddingInfoRepository extends JpaRepository<Bidding, Long> {
     List<Bidding> findByUserId(String userId);
 
     List<Bidding> findAll(Specification<Bidding> specification);
-
-    /*List<Bidding> findByDate*/
 }

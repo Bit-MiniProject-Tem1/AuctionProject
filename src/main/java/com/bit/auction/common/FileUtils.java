@@ -170,12 +170,10 @@ public class FileUtils {
 
     public FaqAttachedFileDTO parseFaqAttachedFileInfo(MultipartFile multipartFile, String directory) {
 
-        // 리턴할 DTO 객체 생성
         FaqAttachedFileDTO faqAttachedFileDTO = new FaqAttachedFileDTO();
 
         String fileOrigin = multipartFile.getOriginalFilename();
 
-        // 날짜+랜덤값+파일명으로 파일명 변경 (동일한 파일명 존재할 경우 나중 파일로 덮어쓰기 되기 때문)
         SimpleDateFormat formater = new SimpleDateFormat("yyyyMMddHHmmsss");
         Date nowDate = new Date();
 
@@ -183,13 +181,10 @@ public class FileUtils {
 
         UUID uuid = UUID.randomUUID();
 
-        // 실제로 db와 서버에 저장될 파일명
         String fileName = nowDateStr + "_" + uuid.toString() + "_" + fileOrigin;
 
-        // 업로드 될 파일의 저장경로(파일명 포함)
         String filePath = storageUrl + "/" + bucketName + "/" + directory + fileName;
 
-        // 오브젝트 스토리지에 파일 업로드
         try(InputStream fileInputStream = multipartFile.getInputStream()) {
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(multipartFile.getContentType());
@@ -206,9 +201,7 @@ public class FileUtils {
             System.out.println(e.getMessage());
         }
 
-        // 이미지인지 아닌지 검사
         File checkImage = new File(fileOrigin);
-        // 파일의 형식 가져오기
         String type = "";
 
         try {
@@ -227,7 +220,6 @@ public class FileUtils {
             faqAttachedFileDTO.setFileType("etc");
         }
 
-        // 리턴될 DTO에 값들 세팅 (업로드 전의 파일명, 업로드 후의 파일명이 포함된 풀 저장경로)
         faqAttachedFileDTO.setFileName(fileOrigin);
         faqAttachedFileDTO.setFilePath(filePath);
 
@@ -248,7 +240,6 @@ public class FileUtils {
         httpHeaders.setContentDispositionFormData("attachment", fileName);
 
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
-
     }
 
 

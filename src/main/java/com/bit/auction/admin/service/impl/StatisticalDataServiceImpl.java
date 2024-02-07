@@ -37,11 +37,8 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM");
 
-        log.info("현재월 : {}월", currentDate);
-        log.info("###################");
         for(int i = 0; i < monthsCnt; i++) {
             monthList[i] =  currentDate.minusMonths(i).format(formatter);
-            log.info(monthList[i]);
         }
 
         return monthList;
@@ -58,8 +55,6 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
             biddingCountList[i] = biddingList.size();
         }
 
-        log.info("### biddingCountList = {}", biddingCountList);
-
         return biddingCountList;
     }
 
@@ -74,8 +69,6 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
             auctionCountList[i] = auctionList.size();
         }
 
-        log.info("### auctionCountList = {}", auctionCountList);
-
         return auctionCountList;
     }
 
@@ -88,8 +81,6 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
             totalPriceList[i] = getTotalPrice(Auction.class, i, fieldName);
         }
 
-        log.info("### totalPriceList = {}", totalPriceList);
-
         return totalPriceList;
     }
 
@@ -98,27 +89,16 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
         LocalDate startDate = month.withDayOfMonth(1);
         LocalDate endDate = month.withDayOfMonth(month.lengthOfMonth());
 
-        log.info("1");
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        log.info("2");
         CriteriaQuery<Integer> query = builder.createQuery(Integer.class);
-        log.info("3");
         Root<T> root = query.from(entity);
-        log.info("4");
 
-        // 기간에 해당하는 데이터들의 price 합계를 구하는 표현식 생성
         Expression<Integer> sumExpression = builder.sum(root.get(fieldName));
-        log.info("5");
 
-        // 기간에 해당하는 데이터들을 선택하기 위한 조건 추가
         Predicate betweenPredicate = builder.between(root.get("regDate"), startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
-        log.info("6");
 
-        // 쿼리에 조건 추가
         query.where(betweenPredicate);
-        log.info("7");
         query.select(sumExpression);
-        log.info("8");
 
         return entityManager.createQuery(query).getSingleResult();
     }
@@ -132,7 +112,4 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
             return builder.between(root.get(fieldName), startDate, endDate);
         };
     }
-
-
-
 }

@@ -64,7 +64,6 @@
             });
         </script>
     </th:block>
-
 </head>
 <body>
 <div class="content_area" layout:fragment="content">
@@ -79,36 +78,34 @@
                     <label class="item_label">월별 경매 현황 ([[${monthList[5]}]] ~ [[${monthList[0]}]])</label>
                 </strong>
             </div>
-            <table>
-                <tr>
-                    <th class="colName">기간(월)</th>
-                    <th class="colName">경매 건수</th>
-                    <th class="colName">입찰 건수</th>
-                    <th class="colName">거래 총액</th>
-                </tr>
-                <tr th:each="month, i : ${monthList}">
-                    <td class="cell" th:text="${month}"></td>
-                    <td class="cell" th:text="${auctionCountList[i.index]}"></td>
-                    <td class="cell" th:text="${biddingCountList[i.index]}"></td>
-                    <td class="cell" th:text="${totalPriceList[i.index]}"></td>
-                </tr>
-                <tr style="font-weight: 700;">
-                    <td class="cell">합계</td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                    <td class="cell"></td>
-                </tr>
-            </table>
-
-        </div>
-        <div hidden style="height: 500px;">
-            <canvas id="myChart"></canvas>
+            <div hidden style="height: 500px;">
+                <canvas id="myChart">
+                    <table style="text-align: center;">
+                        <tr>
+                            <th class="colName" style="width: 150px;"></th>
+                            <th class="colName" th:each="month, i : ${monthList}" th:text="${month}" style="width: 140px;"></th>
+                            <th class="colName" style="text-align: center; width: 140px;">합계</th>
+                        </tr>
+                        <tr th:with="sum = 0">
+                            <th class="colName">경매 건수</th>
+                            <td class="cell" th:each="month, i : ${monthList}" th:text="${auctionCountList[i.index]}"></td>
+                            <td class="cell" th:text="${auctionCountSum}"></td>
+                        </tr>
+                        <tr>
+                            <th class="colName">입찰 건수</th>
+                            <td class="cell" th:each="month, i : ${monthList}" th:text="${biddingCountList[i.index]}"></td>
+                            <td class="cell" th:text="${biddingCountSum}"></td>
+                        </tr>
+                        <tr>
+                            <th class="colName">거래 총액</th>
+                            <td class="cell" th:each="month, i : ${monthList}" th:text="${totalPriceList[i.index]}"></td>
+                            <td class="cell" th:text="${totalPriceSum}"></td>
+                        </tr>
+                    </table>
+                </canvas>
+            </div>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>
