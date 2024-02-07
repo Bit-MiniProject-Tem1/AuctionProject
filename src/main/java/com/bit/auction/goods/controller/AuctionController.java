@@ -354,7 +354,7 @@ public class AuctionController {
         if (paramMap.get("category") == null && paramMap.get("subCategory") == null) {
             mav.addObject("topCategoryName", "전체");
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, sort, targetList, statusList);
-            auctionService.likePage(auctionPage ,customUserDetails);
+            auctionService.likePage(auctionPage, customUserDetails);
             mav.addObject("auctionList", auctionPage);
         } else {
             Long categoryId = Long.valueOf(String.valueOf(paramMap.get("category")));
@@ -366,7 +366,7 @@ public class AuctionController {
             } else if (paramMap.get("etc") != null) {
                 mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             } else {
-                auctionService.getSubCategoryIdList(categoryId);
+                //  auctionService.getSubCategoryIdList(categoryId);
                 mav.addObject("auctionList", auctionService.getAuctionList(pageable, categoryId, sort, targetList, statusList));
             }
         }
@@ -389,7 +389,7 @@ public class AuctionController {
 
         Page<AuctionDTO> auctionDTOList = auctionService.searchAuctions(pageable, searchQuery, statusList);
 
-        auctionService.likePage(auctionDTOList ,customUserDetails);
+        auctionService.likePage(auctionDTOList, customUserDetails);
 
         if (auctionDTOList.getTotalElements() != 0) {
             // 검색 결과가 있으면 전체 항목에 포함된 항목이라면 추가
@@ -400,7 +400,7 @@ public class AuctionController {
             mav.addObject("searchMessage", "검색 결과가 없습니다. 전체 항목의 제품을 보여드립니다.");
             mav.addObject("showAlertValue", true);
             Page<AuctionDTO> auctionPage = auctionService.getAuctionList(pageable, 0L, null, null, statusList);
-            auctionService.likePage(auctionPage ,customUserDetails);
+            auctionService.likePage(auctionPage, customUserDetails);
             mav.addObject("auctionList", auctionPage);
         }
         System.out.println(mav);
