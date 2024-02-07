@@ -180,101 +180,102 @@
     <title>문의 내역</title>
 </head>
 <body>
-<div layout:fragment="content" class="myinquiry_container">
-    <h1 class="page-title light-border-bottom">문의 내역</h1>
-    <form id="searchForm" action="/inquiry/inquiry-list" method="get">
-        <table border="1" style="width: 1020px; border-collapse: collapse;">
-            <tr>
-                <td align="right">
-                    <select name="searchCondition" class="select">
-                        <option value="all"
-                                th:selected="${searchCondition == 'all' || searchCondition == '' ||
-                                                       searchCondition == null}">전체</option>
-                        <option value="title"
-                                th:selected="${searchCondition == 'title'}">제목</option>
-                        <option value="writer"
-                                th:selected="${searchCondition == 'writer'}">작성자</option>
-                        <option value="type"
-                                th:selected="${searchCondition == 'type'}">문의유형</option>
-                    </select>
-                    <input type="text" name="searchKeyword" th:value="${searchKeyword }" class="select_input">
-                    <button type="submit" id="btnSearch" class="select_search">검색</button>
-                </td>
-            </tr>
-        </table>
-    </form>
+        <div layout:fragment="content" class="myinquiry_container">
+            <h1 class="page-title light-border-bottom">문의 내역</h1>
+            <form id="searchForm" action="/inquiry/inquiry-list" method="get">
+                <table border="1" style="width: 1020px; border-collapse: collapse;">
+                    <tr>
+                        <td align="right">
+                            <select name="searchCondition" class="select">
+                                <option value="all"
+                                        th:selected="${searchCondition == 'all' || searchCondition == '' ||
+                                                               searchCondition == null}">전체</option>
+                                <option value="title"
+                                        th:selected="${searchCondition == 'title'}">제목</option>
+                                <option value="writer"
+                                        th:selected="${searchCondition == 'writer'}">작성자</option>
+                                <option value="type"
+                                        th:selected="${searchCondition == 'type'}">문의유형</option>
+                                <option value="answer"
+                                        th:selected="${searchCondition == 'answer'}">답변상태</option>
+                            </select>
+                            <input type="text" name="searchKeyword" th:value="${searchKeyword }" class="select_input">
+                            <button type="submit" id="btnSearch" class="select_search">검색</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
 
 
-    <div class="myinquiry_box2">
-        <table id="inquiryTable" class="table">
-            <tr class="table-secondary">
-<!--                <th scope="col" class="table_th1">체 크</th>-->
-                <th scope="col" class="table_th1">문의번호</th>
-                <th scope="col" class="table_th2">제 목</th>
-                <th scope="col" class="table_th3">문의유형</th>
-                <th scope="col" class="table_th4">등록일자</th>
-                <th scope="col" class="table_th5">작성자</th>
-                <th scope="col" class="table_th6">답변상태</th>
-<!--                <th scope="col" class="table_th8">상 태</th>-->
-            </tr>
+            <div class="myinquiry_box2">
+                <table id="inquiryTable" class="table">
+                    <tr class="table-secondary">
+        <!--                <th scope="col" class="table_th1">체 크</th>-->
+                        <th scope="col" class="table_th1">문의번호</th>
+                        <th scope="col" class="table_th2">제 목</th>
+                        <th scope="col" class="table_th3">문의유형</th>
+                        <th scope="col" class="table_th4">등록일자</th>
+                        <th scope="col" class="table_th5">작성자</th>
+                        <th scope="col" class="table_th6">답변상태</th>
+        <!--                <th scope="col" class="table_th8">상 태</th>-->
+                    </tr>
 
-            <tr th:each="inquiry : ${inquiryList.content}" class="inquiryList">
-<!--                <td>-->
-<!--                    <input type="checkbox" name="chk" th:id="'chk' + ${inquiry.inquiryNo}" th:value="${inquiry.inquiryNo}">-->
-<!--                </td>-->
-                <td th:text="${inquiry.inquiryNo}"></td>
-                <td name="inquiryTitleTd" th:data-inquiry-title="${inquiry.inquiryTitle}" th:data-inquiry-no="${inquiry.inquiryNo}"
-                    data-new-title="">
-                    <a th:href="@{/inquiry/inquiry-cnt/{inquiryNo} (inquiryNo=${inquiry.inquiryNo})}"
-                       th:text="${inquiry.inquiryTitle}"></a>
-                </td>
-                <td th:text="${inquiry.inquiryType }"></td>
-                <td th:text="${#temporals.format(inquiry.inquiryRegdate, 'yyyy-MM-dd')}"></td>
-                <td th:text="${inquiry.inquiryWriter }"></td>
-                <td>
-                    <span th:if="${#strings.length(inquiry.inquiryAnswer) > 0}">O</span>
-                    <span th:unless="${#strings.length(inquiry.inquiryAnswer) > 0}">X</span>
-                </td>
-<!--                <td style="text-align: center;" name="statusTd" th:id="'statusTd' + ${inquiry.inquiryNo}"></td>-->
-<!--                <input type="hidden" name="status" th:id="'status' + ${inquiry.inquiryNo}"-->
-<!--                       th:data-inquiry-no="${inquiry.inquiryNo}" th:data-inquiry-title="${inquiry.inquiryTitle}"-->
-<!--                       value="">-->
-            </tr>
-        </table>
-
-
-        <div style="text-align: center; width: 1020px; margin-left: 50%;">
-            <ul class="pagination" th:if="${inquiryList.totalElements > 0}"
-                th:with="pageNumber = ${inquiryList.pageable.pageNumber},
-                             pageSize = ${inquiryList.pageable.pageSize},
-                             totalPages = ${inquiryList.totalPages},
-                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
-                             tempEndPage = ${startPage + pageSize - 1},
-                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
-                <li class="pagination-btn" th:if="${pageNumber > 0}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber - 1})}">이전</a>
-                </li>
-                <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${page - 1})}" th:text="${page}"></a>
-                </li>
-                <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber + 1})}">다음</a>
-                </li>
-            </ul>
-        </div>
-        <br/>
-        <div class="crudBox" th:if="${#authentication.principal.user != null}" style="width: 1020px; text-align: right;">
-            <!--            <button type="button" id="addRowBtn">추가</button>-->
-            <!--            <button type="button" id="updRowBtn">수정</button>-->
-<!--            <button type="button" id="delRowBtn" class="delRowBtn">삭 제</button>-->
-<!--            <button type="button" id="savRowBtn" class="savRowBtn">저 장</button>-->
-            <a class="btn-black" href="/inquiry/insert-inquiry-view" >문의하기</a>
-        </div>
+                    <tr th:each="inquiry : ${inquiryList.content}" class="inquiryList">
+        <!--                <td>-->
+        <!--                    <input type="checkbox" name="chk" th:id="'chk' + ${inquiry.inquiryNo}" th:value="${inquiry.inquiryNo}">-->
+        <!--                </td>-->
+                        <td th:text="${inquiry.inquiryNo}"></td>
+                        <td name="inquiryTitleTd" th:data-inquiry-title="${inquiry.inquiryTitle}" th:data-inquiry-no="${inquiry.inquiryNo}"
+                            data-new-title="">
+                            <a th:href="@{/inquiry/inquiry-cnt/{inquiryNo} (inquiryNo=${inquiry.inquiryNo})}"
+                               th:text="${inquiry.inquiryTitle}"></a>
+                        </td>
+                        <td th:text="${inquiry.inquiryType }"></td>
+                        <td th:text="${#temporals.format(inquiry.inquiryRegdate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${inquiry.inquiryWriter }"></td>
+                        <td>
+                            <span th:if="${#strings.length(inquiry.inquiryAnswer) > 0}">O</span>
+                            <span th:unless="${#strings.length(inquiry.inquiryAnswer) > 0}">X</span>
+                        </td>
+        <!--                <td style="text-align: center;" name="statusTd" th:id="'statusTd' + ${inquiry.inquiryNo}"></td>-->
+        <!--                <input type="hidden" name="status" th:id="'status' + ${inquiry.inquiryNo}"-->
+        <!--                       th:data-inquiry-no="${inquiry.inquiryNo}" th:data-inquiry-title="${inquiry.inquiryTitle}"-->
+        <!--                       value="">-->
+                    </tr>
+                </table>
 
 
+                <div style="display: flex;
+                            align-items: center;
+                            justify-content: center;
+                             width: 1020px;">
+                    <ul class="pagination" th:if="${inquiryList.totalElements > 0}"
+                        th:with="pageNumber = ${inquiryList.pageable.pageNumber},
+                                     pageSize = ${inquiryList.pageable.pageSize},
+                                     totalPages = ${inquiryList.totalPages},
+                                     startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                                     tempEndPage = ${startPage + pageSize - 1},
+                                     endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+                        <li class="pagination-btn" th:if="${pageNumber > 0}">
+                            <a th:href="@{/inquiry/inquiry-list(page=${pageNumber - 1})}">이전</a>
+                        </li>
+                        <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                            <a th:href="@{/inquiry/inquiry-list(page=${page - 1})}" th:text="${page}"></a>
+                        </li>
+                        <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
+                            <a th:href="@{/inquiry/inquiry-list(page=${pageNumber + 1})}">다음</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="crudBox" th:if="${#authentication.principal.user != null}" style="width: 1020px; text-align: right;">
+                    <!--            <button type="button" id="addRowBtn">추가</button>-->
+                    <!--            <button type="button" id="updRowBtn">수정</button>-->
+        <!--            <button type="button" id="delRowBtn" class="delRowBtn">삭 제</button>-->
+        <!--            <button type="button" id="savRowBtn" class="savRowBtn">저 장</button>-->
+                    <a class="btn-black" href="/inquiry/insert-inquiry-view" >문의하기</a>
+                </div>
+            </div>
     </div>
-</div>
-
-
 </body>
 </html>

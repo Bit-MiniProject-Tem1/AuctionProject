@@ -37,9 +37,7 @@ body {
 }
 
 .myinquiry_box2 {
-    width: 1020px;
-    height: 40px;
-    background-color: #cccccc;
+    margin-bottom: 100px;
 }
 
 .table_tr {
@@ -131,3 +129,9 @@ body {
 .select_input, .select_search {
     font-size: 14px;
 }
+
+.pagination-btn {
+    margin-right: 20px;
+    margin-top: 20px;
+}
+

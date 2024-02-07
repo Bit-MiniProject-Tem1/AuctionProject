@@ -243,25 +243,25 @@
         </table>
 
 
-        <div style="text-align: center; width: 1020px; margin-left: 50%;">
-            <ul class="pagination" th:if="${inquiryList.totalElements > 0}"
-                th:with="pageNumber = ${inquiryList.pageable.pageNumber},
-                             pageSize = ${inquiryList.pageable.pageSize},
-                             totalPages = ${inquiryList.totalPages},
-                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
-                             tempEndPage = ${startPage + pageSize - 1},
-                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
-                <li class="pagination-btn" th:if="${pageNumber > 0}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber - 1})}">이전</a>
-                </li>
-                <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${page - 1})}" th:text="${page}"></a>
-                </li>
-                <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
-                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber + 1})}">다음</a>
-                </li>
-            </ul>
-        </div>
+<!--        <div style="text-align: center; width: 1020px; margin-left: 50%;">-->
+<!--            <ul class="pagination" th:if="${inquiryList.totalElements > 0}"-->
+<!--                th:with="pageNumber = ${inquiryList.pageable.pageNumber},-->
+<!--                             pageSize = ${inquiryList.pageable.pageSize},-->
+<!--                             totalPages = ${inquiryList.totalPages},-->
+<!--                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},-->
+<!--                             tempEndPage = ${startPage + pageSize - 1},-->
+<!--                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">-->
+<!--                <li class="pagination-btn" th:if="${pageNumber > 0}">-->
+<!--                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber - 1})}">이전</a>-->
+<!--                </li>-->
+<!--                <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                    <a th:href="@{/inquiry/inquiry-list(page=${page - 1})}" th:text="${page}"></a>-->
+<!--                </li>-->
+<!--                <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">-->
+<!--                    <a th:href="@{/inquiry/inquiry-list(page=${pageNumber + 1})}">다음</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
         <br/>
         <div class="crudBox" th:if="${#authentication.principal.user != null}" style="width: 1020px; text-align: right;">
             <!--            <button type="button" id="addRowBtn">추가</button>-->

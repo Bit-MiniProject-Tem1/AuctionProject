@@ -383,7 +383,7 @@
                        name="inquiryFileCnt" th:value="${fileStat.count}">
                 <img th:if="${file.inquiryFileCate} == 'image'"
                      th:id="'img' + ${file.inquiryFileNo}"
-                     th:src="@{'https://kr.object.ncloudstorage.com/bitcamp-bucket-22/inquiry/' + ${file.inquiryFileName}}"
+                     th:src="@{'https://kr.object.ncloudstorage.com/bitcamp-bucket-36/inquiry/' + ${file.inquiryFileName}}"
                      style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
                      class="fileImg"
                      th:onclick="fnFileChange([[${file.inquiryFileNo}]])">
