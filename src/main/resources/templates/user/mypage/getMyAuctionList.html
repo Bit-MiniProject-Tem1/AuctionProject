@@ -132,7 +132,7 @@
                     </li>
                     <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}"><a class="page-link"
                                                                                                        href="#"
-                                                                                                       th:href="@{/auction/goods-list(page=${page - 1})}"
+                                                                                                       th:href="@{/mypage/reg-goods(page=${page - 1})}"
                                                                                                        th:text="${page}">1</a>
                     </li>
                     <li class="page-item" th:if="${pageNumber < totalPages - 1}">
