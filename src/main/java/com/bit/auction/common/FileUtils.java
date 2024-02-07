@@ -88,7 +88,7 @@ public class FileUtils {
 
 
         auctionImgDTO.setFileName(imgName);
-        auctionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/"+bucketName+"/" + imgPath);
+        auctionImgDTO.setFileUrl("https://kr.object.ncloudstorage.com/" + bucketName + "/" + imgPath);
         if (auctionImgOrigin.equals(representativeImgName)) {
             auctionImgDTO.setRepresentative(true);
         }
@@ -105,7 +105,7 @@ public class FileUtils {
     // 김종범 꺼. (Inquiry File)
 
     public InquiryFileDTO parseFileInfo(MultipartFile multipartFile, String directory) {
-        String bucketName = "bitcamp-bucket-22";
+        String bucketName = "bitcamp-bucket-36";
 
         InquiryFileDTO inquiryFileDTO = new InquiryFileDTO();
 
@@ -190,7 +190,7 @@ public class FileUtils {
         String filePath = storageUrl + "/" + bucketName + "/" + directory + fileName;
 
         // 오브젝트 스토리지에 파일 업로드
-        try(InputStream fileInputStream = multipartFile.getInputStream()) {
+        try (InputStream fileInputStream = multipartFile.getInputStream()) {
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentType(multipartFile.getContentType());
 
@@ -213,12 +213,12 @@ public class FileUtils {
 
         try {
             type = Files.probeContentType(checkImage.toPath());
-        } catch(IOException ie) {
+        } catch (IOException ie) {
             System.out.println(ie.getMessage());
         }
 
-        if(type != "") {
-            if(type.startsWith("image")) {
+        if (type != "") {
+            if (type.startsWith("image")) {
                 faqAttachedFileDTO.setFileType("img");
             } else {
                 faqAttachedFileDTO.setFileType("doc");
@@ -234,7 +234,7 @@ public class FileUtils {
         return faqAttachedFileDTO;
     }
 
-    public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException{
+    public ResponseEntity<byte[]> getObject(String storedFileName) throws IOException {
         byte[] bytes = null;
         storedFileName = storedFileName.replace(storageUrl, "");
         S3Object s3Object = s3.getObject(new GetObjectRequest(bucketName, storedFileName));

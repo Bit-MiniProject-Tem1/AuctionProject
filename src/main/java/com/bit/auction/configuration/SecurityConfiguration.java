@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                     authorizeRequests.requestMatchers("/js/**").permitAll();
                     authorizeRequests.requestMatchers("/img/**").permitAll();
                     // /user/로 시작하는 요청
-                 //   authorizeRequests.requestMatchers("/user/**").permitAll();
+                    //   authorizeRequests.requestMatchers("/user/**").permitAll();
 //                    authorizeRequests.requestMatchers("/user/id-check").permitAll();
 //                    authorizeRequests.requestMatchers("/user/join").permitAll();
 //                    authorizeRequests.requestMatchers("/user/login").permitAll();
@@ -61,9 +61,10 @@ public class SecurityConfiguration {
                     // 위에 설정한 요청외의 모든 요청은 인증된 사용자(로그인한 사용자)만 접근가능하도록 설정
                     authorizeRequests.requestMatchers("/auction/register").hasAnyRole("USER", "ADMIN");
                     authorizeRequests.requestMatchers("/inquiry/**").hasAnyRole("USER", "ADMIN");
+//                    authorizeRequests.requestMatchers("/inquiry/**").permitAll();
                     authorizeRequests.requestMatchers("/mypage/**").hasRole("USER");
                     authorizeRequests.requestMatchers("/admin/**").hasRole("ADMIN");
-                 //   authorizeRequests.anyRequest().authenticated();
+                    //   authorizeRequests.anyRequest().authenticated();
                     authorizeRequests.anyRequest().permitAll();
 
 

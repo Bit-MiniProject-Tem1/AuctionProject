@@ -47,7 +47,6 @@ public class InquiryRepositoryCustomImpl implements InquiryRepositoryCustom {
     }
 
 
-
     @Override
     public Optional<Inquiry> searchOne(Long inquiryNo) {
         Inquiry getInquiry = jpaQueryFactory
@@ -61,11 +60,11 @@ public class InquiryRepositoryCustomImpl implements InquiryRepositoryCustom {
     @Override
     @Transactional
     public void saveOne(Inquiry inquiry) {
-       if (inquiry.getInquiryNo() == 0) {
-           em.persist(inquiry);
-       } else {
-           em.merge(inquiry);
-       }
+        if (inquiry.getInquiryNo() == 0) {
+            em.persist(inquiry);
+        } else {
+            em.merge(inquiry);
+        }
     }
 
     @Override
@@ -79,24 +78,27 @@ public class InquiryRepositoryCustomImpl implements InquiryRepositoryCustom {
         User user = new User();
 
         // 검색어가 전달되지 않았을 때는 null을 리턴해서 where절이 실행되지 않도록
-        if(searchKeyword == null || searchKeyword.isEmpty()) {
+        if (searchKeyword == null || searchKeyword.isEmpty()) {
             return null;
         }
 
 
-        if(searchCondition.equalsIgnoreCase("all")) {
+        if (searchCondition.equalsIgnoreCase("all")) {
             // boardTitle like '%searchKeyword%'
             // or boardContent like '%searchKeyword%'
             // or boardWriter like '%searchKeyword%'
             booleanBuilder.or(inquiry.inquiryTitle.containsIgnoreCase(searchKeyword));
             booleanBuilder.or(inquiry.inquiryWriter.containsIgnoreCase(searchKeyword));
             booleanBuilder.or(inquiry.inquiryType.containsIgnoreCase(searchKeyword));
-        } else if(searchCondition.equalsIgnoreCase("title")) {
+            booleanBuilder.or(inquiry.inquiryAnswer.containsIgnoreCase(searchKeyword));
+        } else if (searchCondition.equalsIgnoreCase("title")) {
             booleanBuilder.or(inquiry.inquiryTitle.containsIgnoreCase(searchKeyword));
-        } else if(searchCondition.equalsIgnoreCase("writer")) {
+        } else if (searchCondition.equalsIgnoreCase("writer")) {
             booleanBuilder.or(inquiry.inquiryWriter.containsIgnoreCase(searchKeyword));
-        } else if(searchCondition.equalsIgnoreCase("type")) {
+        } else if (searchCondition.equalsIgnoreCase("type")) {
             booleanBuilder.or(inquiry.inquiryType.containsIgnoreCase(searchKeyword));
+        } else if (searchCondition.equalsIgnoreCase("answer")) {
+            booleanBuilder.or(inquiry.inquiryAnswer.containsIgnoreCase(searchKeyword));
         }
 
         return booleanBuilder;

@@ -37,19 +37,17 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/inquiry")
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class InquiryController {
-    @Autowired
-    private InquiryService inquiryService;
+    private final InquiryService inquiryService;
 
-    @Autowired
-    private FileUtils fileUtils;
+    private final FileUtils fileUtils;
 
     private final Logger logger = LoggerFactory.getLogger(InquiryController.class);
 
     @GetMapping("/inquiry-list")
     public ModelAndView getInquiryList(@PageableDefault(page = 0, size = 10) Pageable pageable,
-                                     InquiryDTO inquiryDTO) {
+                                       InquiryDTO inquiryDTO) {
         ModelAndView mav = new ModelAndView();
 
         logger.info("searchCondition: {}", inquiryDTO.getSearchCondition());
@@ -102,10 +100,9 @@ public class InquiryController {
     }
 
 
-
     @PostMapping("/inquiry")
     public ResponseEntity<?> insertInquiry(InquiryDTO inquiryDTO,
-                                        @RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
+                                           @RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
         System.out.println("--------------------------------------------------");
         System.out.println(inquiryDTO);
@@ -115,7 +112,7 @@ public class InquiryController {
 
             for (MultipartFile file : uploadFiles) {
                 if (file.getOriginalFilename() != null &&
-                    !file.getOriginalFilename().equals("")) {
+                        !file.getOriginalFilename().equals("")) {
                     InquiryFileDTO inquiryFileDTO = fileUtils.parseFileInfo(file, "inquiry/");
 
                     inquiryFileDTOList.add(inquiryFileDTO);
@@ -153,23 +150,24 @@ public class InquiryController {
 
     @PutMapping("/inquiry")
     public ResponseEntity<?> updateInquiry(InquiryDTO inquiryDTO,
-                                         MultipartFile[] uploadFiles,
-                                         MultipartFile[] changeFiles,
-                                         @RequestParam("originFiles") String originFiles) {
+                                           MultipartFile[] uploadFiles,
+                                           MultipartFile[] changeFiles,
+                                           @RequestParam("originFiles") String originFiles) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         System.out.println(originFiles);
 
         try {
             List<InquiryFileDTO> originFileList = new ObjectMapper().readValue(originFiles,
-                    new TypeReference<List<InquiryFileDTO>>() {});
+                    new TypeReference<List<InquiryFileDTO>>() {
+                    });
 
             List<InquiryFileDTO> uFileList = new ArrayList<>();
             System.out.println(originFileList);
-            for(int i = 0; i < originFileList.size(); i++) {
-                if(originFileList.get(i).getInquiryFileStatus().equals("U")) {
-                    for(int j = 0; j < changeFiles.length; j++) {
-                        if(originFileList.get(i).getNewFileName().equals(
+            for (int i = 0; i < originFileList.size(); i++) {
+                if (originFileList.get(i).getInquiryFileStatus().equals("U")) {
+                    for (int j = 0; j < changeFiles.length; j++) {
+                        if (originFileList.get(i).getNewFileName().equals(
                                 changeFiles[j].getOriginalFilename())) {
                             InquiryFileDTO updateInquiryFile = fileUtils.parseFileInfo(changeFiles[j], "inquiry/");
 
@@ -180,7 +178,7 @@ public class InquiryController {
                             uFileList.add(updateInquiryFile);
                         }
                     }
-                } else if(originFileList.get(i).getInquiryFileStatus().equals("D")) {
+                } else if (originFileList.get(i).getInquiryFileStatus().equals("D")) {
                     InquiryFileDTO deleteInquiryFile = new InquiryFileDTO();
 
                     deleteInquiryFile.setInquiryNo(inquiryDTO.getInquiryNo());
@@ -191,9 +189,9 @@ public class InquiryController {
                 }
             }
 
-            if(uploadFiles.length > 0) {
-                for(int i = 0; i < uploadFiles.length; i++) {
-                    if(!uploadFiles[i].getOriginalFilename().equals("") &&
+            if (uploadFiles.length > 0) {
+                for (int i = 0; i < uploadFiles.length; i++) {
+                    if (!uploadFiles[i].getOriginalFilename().equals("") &&
                             uploadFiles[i].getOriginalFilename() != null) {
                         InquiryFileDTO insertInquiryFile = fileUtils.parseFileInfo(uploadFiles[i], "inquiry/");
 
@@ -253,7 +251,7 @@ public class InquiryController {
 
     @GetMapping("/inquiry-cnt/{inquiryNo}")
     public void updateInquiryCnt(@PathVariable("inquiryNo") Long inquiryNo,
-                               HttpServletResponse response) {
+                                 HttpServletResponse response) {
         try {
             inquiryService.updateInquiryCnt(inquiryNo);
 
@@ -269,7 +267,8 @@ public class InquiryController {
 
         try {
             List<Map<String, String>> changeRowsList = new ObjectMapper().readValue(changeRows,
-                    new TypeReference<List<Map<String, String>>>() {});
+                    new TypeReference<List<Map<String, String>>>() {
+                    });
 
             inquiryService.saveInquiryList(changeRowsList);
 

@@ -27,18 +27,17 @@ public class InquiryDTO {
     private String searchKeyword;
 
 
-
-public Inquiry toEntity() {
-    return Inquiry.builder()
-            .inquiryNo(this.inquiryNo)
-            .inquiryType(this.inquiryType)
-            .inquiryTitle(this.inquiryTitle)
-            .inquiryContent(this.inquiryContent)
-            .inquiryWriter(this.inquiryWriter)
-            .inquiryAnswer(this.inquiryAnswer)
-            .inquiryRegdate(LocalDateTime.now())
-            .inquiryCnt(this.inquiryCnt)
-            .inquiryFileList(new ArrayList<>())
-            .build();
+    public Inquiry toEntity() {
+        return Inquiry.builder()
+                .inquiryNo(this.inquiryNo)
+                .inquiryType(this.inquiryType)
+                .inquiryTitle(this.inquiryTitle)
+                .inquiryContent(this.inquiryContent)
+                .inquiryWriter(this.inquiryWriter)
+                .inquiryAnswer(this.inquiryAnswer == null ? "" : this.inquiryAnswer)
+                .inquiryRegdate(LocalDateTime.now())
+                .inquiryCnt(this.inquiryCnt)
+                .inquiryFileList(new ArrayList<>())
+                .build();
     }
 }
