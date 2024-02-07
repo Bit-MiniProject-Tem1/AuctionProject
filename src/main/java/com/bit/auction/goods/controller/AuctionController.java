@@ -97,7 +97,6 @@ public class AuctionController {
 
         ModelAndView mav = new ModelAndView();
         List<BiddingDTO> biddingDTO = biddingService.findByAuctionId(categoryId);
-
         List<Map<String, Long>> userLikeList;
 
         List<CategoryDTO> categoryList = categoryService.getTopCategoryList();
@@ -105,6 +104,8 @@ public class AuctionController {
 
         if (customUserDetails != null) {
             userLikeList = auctionService.getUserLikeList(customUserDetails.getUser().getId());
+            String userId = customUserDetails.getUsername();
+            mav.addObject("uid",userId);
 
             boolean likeChk = userLikeList.stream()
                     .anyMatch(map -> map.get("AUCTION_ID").equals(categoryId));

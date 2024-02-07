@@ -128,6 +128,7 @@
                         </p>
                     </div>
                 </div>
+                <div th:if="${getGoods.regUserId} ne ${uid}">
                 <div class="container">
                     <div class="link-group">
                         <a href="#" th:href="'/auction/impbiddinginfo/'+${getGoods.id}" class="link btn-red">
@@ -148,6 +149,7 @@
                         </a>
                         원하는 입찰 금액을 적어주세요.
                     </div>
+                </div>
                 </div>
                 <div>
                     <a th:onclick="|javascript:toggleHeart('${getGoods.id}')|" class="favorite-link">
