@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -32,53 +33,63 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
     private final int monthsCnt = 6;
 
     @Override
-    public String[] getStatisticalPeriod() {
-        String[] monthList = new String[monthsCnt];
+    public List<String> getStatisticalPeriod() {
+        List<String> monthList = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM");
 
-        for(int i = 0; i < monthsCnt; i++) {
-            monthList[i] =  currentDate.minusMonths(i).format(formatter);
+        for(int i = monthsCnt - 1; i >= 0; i--) {
+            monthList.add(currentDate.minusMonths(i).format(formatter));
         }
 
         return monthList;
     }
 
     @Override
-    public int[] getBiddingCountList() {
-        int[] biddingCountList = new int[monthsCnt];
+    public List<Integer> getBiddingCountList() {
+        List<Integer> biddingCountList = new ArrayList<>();
         String fieldName = "date";
 
-        for(int i = 0; i < monthsCnt; i++) {
+        for(int i = monthsCnt - 1; i >= 0; i--) {
             Specification<Bidding> spec = getEntityList(Bidding.class, i, fieldName);
             List<Bidding> biddingList = biddingRepository.findAll(spec);
-            biddingCountList[i] = biddingList.size();
+
+            if (biddingList.size() > 0) {
+                biddingCountList.add(biddingList.size());
+            } else {
+                biddingCountList.add(0);
+            }
         }
 
         return biddingCountList;
     }
 
     @Override
-    public int[] getAuctionCountList() {
-        int[] auctionCountList = new int[monthsCnt];
+    public List<Integer> getAuctionCountList() {
+        List<Integer> auctionCountList = new ArrayList<>();
         String fieldName = "regDate";
 
-        for(int i = 0; i < monthsCnt; i++) {
+        for(int i = monthsCnt - 1; i >= 0; i--) {
             Specification<Auction> spec = getEntityList(Auction.class, i, fieldName);
             List<Auction> auctionList = auctionRepository.findAll(spec);
-            auctionCountList[i] = auctionList.size();
+
+            if (auctionList.size() > 0) {
+                auctionCountList.add(auctionList.size());
+            } else {
+                auctionCountList.add(0);
+            }
         }
 
         return auctionCountList;
     }
 
     @Override
-    public int[] getTotalPriceList() {
-        int[] totalPriceList = new int[monthsCnt];
+    public List<Integer> getTotalPriceList() {
+        List<Integer> totalPriceList = new ArrayList<>();
         String fieldName = "currentBiddingPrice";
 
-        for(int i = 0; i < monthsCnt; i++) {
-            totalPriceList[i] = getTotalPrice(Auction.class, i, fieldName);
+        for(int i = monthsCnt - 1; i >= 0; i--) {
+            totalPriceList.add(getTotalPrice(Auction.class, i, fieldName));
         }
 
         return totalPriceList;
@@ -100,7 +111,11 @@ public class StatisticalDataServiceImpl implements StatisticalDataService {
         query.where(betweenPredicate);
         query.select(sumExpression);
 
-        return entityManager.createQuery(query).getSingleResult();
+        if(entityManager.createQuery(query).getSingleResult() == null) {
+            return 0;
+        } else {
+            return entityManager.createQuery(query).getSingleResult();
+        }
     }
 
 

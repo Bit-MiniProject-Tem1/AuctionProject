@@ -30,6 +30,8 @@ public class BiddingDTO {
 
     private String userId;
 
+    private String auctionTitle;
+
 
     public Bidding toEntity() {
         return Bidding.builder()

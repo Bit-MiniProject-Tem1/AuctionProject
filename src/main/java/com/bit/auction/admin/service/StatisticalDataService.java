@@ -1,11 +1,13 @@
 package com.bit.auction.admin.service;
 
+import java.util.List;
+
 public interface StatisticalDataService {
-    String[] getStatisticalPeriod();
+    List<String> getStatisticalPeriod();
 
-    int[] getBiddingCountList();
+    List<Integer> getBiddingCountList();
 
-    int[] getAuctionCountList();
+    List<Integer> getAuctionCountList();
 
-    int[] getTotalPriceList();
+    List<Integer> getTotalPriceList();
 }

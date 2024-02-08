@@ -126,6 +126,13 @@ input::placeholder {
     max-width: 210px;
 }
 
+.memberInfo_auctionTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
 .detailView_area {
     margin: 40px 0;
     padding: 0 15px;
@@ -139,11 +146,11 @@ input::placeholder {
 }
 
 #faq_add_container #category {
-    border: 1px solid #999999;
+    border: 1px solid #d4d4d4;
     border-radius: 10px;
     display: inline-block;
     padding: 0 15px;
-    height: 48px;
+    height: 44px;
     font-size: 18px;
 }
 
@@ -166,6 +173,20 @@ input::placeholder {
 #faq_add_container #content_box {
     font-size: 18px;
     padding: 7px 20px;
+}
+
+#fileSelectBtn {
+    color: white;
+    font-weight: 500;
+    line-height: 24px;
+    font-size: 16px;
+    width: 80px; height: 29px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 0.375rem;
+    background-color: #7a7a7a;
+    margin-top: 1px;
+    padding-top: 3px;
 }
 
 .detail_item {
@@ -196,13 +217,13 @@ input::placeholder {
     border-radius: 10px;
     width: 990px;
     padding: 7px 20px;
-    border: 1px solid #999999;
+    border: 1px solid #d4d4d4;
     height: auto;
     font-size: 18px;
 }
 
 #content_box {
-    padding: 10px;
+    padding: 10px 20px;
 }
 
 .text_area {
@@ -311,6 +332,7 @@ input::placeholder {
 
 .colName {
     text-align: center;
+    vertical-align: middle;
     background-color: #f4f4f4;
     border: 1px solid #d4d4d4;
 }
@@ -378,13 +400,6 @@ input::placeholder {
     font-weight: 550;
 }
 
-.statistical_item_area {
-    border: 1px solid lightblue;
-    margin: 40px 0;
-    padding: 0 15px;
-    color: rgb(107, 107, 107);
-}
-
 .detailView_area {
     margin: 40px 0;
     padding: 0 15px;
@@ -398,3 +413,20 @@ input::placeholder {
     height: 100vh;
 }
 
+.statistical_item_area {
+    margin: 40px 0;
+    padding: 0 15px;
+    color: rgb(107, 107, 107);
+}
+
+.statistical_item_area .chart_box {
+    height: 400px;
+    margin: 20px 270px 70px 0;
+}
+
+.statistical_item .colName, .statistical_item .cell {
+    height: 28px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 16px;
+}

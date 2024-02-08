@@ -101,23 +101,18 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="colName">경매아이디</th>
-                        <th class="colName">입찰아이디</th>
-                        <th class="colName">입찰가격</th>
-                        <th class="colName">입찰시간</th>
-                        <th class="colName">결제방법</th>
+                        <th class="colName">경매 아이디</th>
+                        <th class="colName">입찰 아이디</th>
+                        <th class="colName">입찰 가격</th>
+                        <th class="colName">입찰 시간</th>
+                        <th class="colName">경매 제목</th>
                     </tr>
                     <tr th:each="bidding : ${biddingList}" style="text-align: center;">
                         <td class="cell" th:text="${bidding.auctionId}"></td>
                         <td class="cell" th:text="${bidding.biddingId}"></td>
                         <td class="cell" th:text="${bidding.biddingPrice}"></td>
                         <td class="cell" th:text="${#strings.substring(bidding.date, 0, 19).replace('T', ' ')}"></td>
-                        <th:block th:switch="${bidding.payment}">
-                            <td class="cell" th:case="1">무통장결제</td>
-                            <td class="cell" th:case="2">카드</td>
-                            <td class="cell" th:case="3">네이버페이</td>
-                            <td class="cell" th:case="4">카카오페이</td>
-                        </th:block>
+                        <td class="cell" th:text="${bidding.auctionTitle}"></td>
                     </tr>
                 </table>
             </div>

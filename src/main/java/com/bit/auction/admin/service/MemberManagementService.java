@@ -21,4 +21,6 @@ public interface MemberManagementService {
     List<InquiryDTO> findByInquiryWriter(String userId);
 
     List<BiddingDTO> findByUserId(String userId);
+
+    String getAuctionTitle(Long id);
 }
