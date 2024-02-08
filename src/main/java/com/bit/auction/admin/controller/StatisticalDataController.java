@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -14,23 +16,23 @@ public class StatisticalDataController {
 
     private final StatisticalDataService dataService;
 
-    @GetMapping("/statisticalData")
+    @GetMapping("/admin/statisticalData")
     public ModelAndView statisticalMainView() {
         ModelAndView mv = new ModelAndView();
 
-        String[] monthList = dataService.getStatisticalPeriod();
-        int[] biddingCountList = dataService.getBiddingCountList();
-        int[] auctionCountList = dataService.getAuctionCountList();
-        int[] totalPriceList = dataService.getTotalPriceList();
+        List<String> monthList = dataService.getStatisticalPeriod();
+        List<Integer> biddingCountList = dataService.getBiddingCountList();
+        List<Integer> auctionCountList = dataService.getAuctionCountList();
+        List<Integer> totalPriceList = dataService.getTotalPriceList();
 
         int biddingCountSum = 0;
         int auctionCountSum = 0;
         int totalPriceSum = 0;
 
-        for(int i = 0; i < monthList.length; i++) {
-            biddingCountSum = biddingCountSum + biddingCountList[i];
-            auctionCountSum = auctionCountSum + auctionCountList[i];
-            totalPriceSum = totalPriceSum + totalPriceList[i];
+        for(int i = 0; i < monthList.size(); i++) {
+            biddingCountSum = biddingCountSum + biddingCountList.get(i);
+            auctionCountSum = auctionCountSum + auctionCountList.get(i);
+            totalPriceSum = totalPriceSum + totalPriceList.get(i);
         }
 
         mv.addObject("monthList", monthList);
@@ -41,6 +43,7 @@ public class StatisticalDataController {
         mv.addObject("auctionCountSum", auctionCountSum);
         mv.addObject("totalPriceSum", totalPriceSum);
         mv.setViewName("/admin/statisticalData.html");
+
         return mv;
     }
 

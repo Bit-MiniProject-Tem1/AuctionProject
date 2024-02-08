@@ -1,9 +1,11 @@
 package com.bit.auction.admin.service.impl;
 
+import com.bit.auction.admin.repository.AuctionInfoRepository;
 import com.bit.auction.admin.repository.BiddingInfoRepository;
 import com.bit.auction.admin.repository.InquiryInfoRepository;
-import com.bit.auction.admin.repository.MemberRepository;
+import com.bit.auction.admin.repository.MembersRepository;
 import com.bit.auction.admin.service.MemberManagementService;
+import com.bit.auction.goods.dto.AuctionDTO;
 import com.bit.auction.goods.dto.BiddingDTO;
 import com.bit.auction.user.dto.InquiryDTO;
 import com.bit.auction.user.dto.UserDTO;
@@ -25,9 +27,10 @@ import java.util.List;
 public class MemberManagementServiceImpl implements MemberManagementService {
 
     private final EntityManager entityManager;
-    private final MemberRepository memberRepository;
+    private final MembersRepository membersRepository;
     private final InquiryInfoRepository inquiryRepository;
     private final BiddingInfoRepository biddingRepository;
+    private final AuctionInfoRepository auctionRepository;
 
     @Override
     public UserDTO getMember(Long id) {
@@ -36,25 +39,25 @@ public class MemberManagementServiceImpl implements MemberManagementService {
 
     @Override
     public Page<UserDTO> getMemberList(Pageable pageable, UserDTO userDTO) {
-        Page<User> userPageList = memberRepository.findAll(pageable);
+        Page<User> userPageList = membersRepository.findAll(pageable);
         String condition = userDTO.getSearchCondition();
         String keyword = userDTO.getSearchKeyword();
 
         if(keyword != null && !keyword.equals("")){
             if(condition.equals("전체")) {
-                userPageList = memberRepository
+                userPageList = membersRepository
                         .findByUserNameContainingOrUserIdContainingOrUserTelContainingOrUserEmailContaining(pageable, keyword, keyword, keyword, keyword);
             } else if(condition.equals("이름")) {
-                userPageList = memberRepository.findByUserNameContaining(
+                userPageList = membersRepository.findByUserNameContaining(
                         pageable, keyword);
             } else if(condition.equals("아이디")) {
-                userPageList = memberRepository.findByUserIdContaining(
+                userPageList = membersRepository.findByUserIdContaining(
                         pageable, keyword);
             } else if(condition.equals("연락처")) {
-                userPageList = memberRepository.findByUserTelContaining(
+                userPageList = membersRepository.findByUserTelContaining(
                         pageable, keyword);
             } else if(condition.equals("이메일")) {
-                userPageList = memberRepository.findByUserEmailContaining(
+                userPageList = membersRepository.findByUserEmailContaining(
                         pageable, keyword);
             }
 
@@ -70,7 +73,7 @@ public class MemberManagementServiceImpl implements MemberManagementService {
 
     @Override
     public UserDTO findById(Long id) {
-        return memberRepository.findById(id).get().toDTO();
+        return membersRepository.findById(id).get().toDTO();
     }
 
     @Override
@@ -81,7 +84,19 @@ public class MemberManagementServiceImpl implements MemberManagementService {
 
     @Override
     public List<BiddingDTO> findByUserId(String userId) {
-        return biddingRepository.findByUserId(userId)
+        List<BiddingDTO> biddingDTOList = biddingRepository.findByUserId(userId)
                 .stream().map(bidding -> bidding.toDTO()).toList();
+
+        for(BiddingDTO biddingDTO : biddingDTOList) {
+            biddingDTO.setAuctionTitle(getAuctionTitle(biddingDTO.getAuctionId()));
+        }
+
+        return biddingDTOList;
+    }
+
+    @Override
+    public String getAuctionTitle(Long id) {
+        AuctionDTO auctionDTO = auctionRepository.findById(id).get().toDTO();
+        return auctionDTO.getTitle();
     }
 }

@@ -13,50 +13,58 @@
     <th:block layout:fragment="script">
         <script>
             $(() => {
-                // // Initialize the echarts instance based on the prepared dom
-                // var myChart = echarts.init($("#myChart")[0]);
-                //
-                // // Specify the configuration items and data for the chart
-                // var option = {
-                //     title: {
-                //         text: 'ECharts Getting Started Example'
-                //     },
-                //     tooltip: {},
-                //     legend: {
-                //         data: ['sales']
-                //     },
-                //     xAxis: {
-                //         data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
-                //     },
-                //     yAxis: {},
-                //     series: [
-                //         {
-                //             name: 'sales',
-                //             type: 'bar',
-                //             data: [5, 20, 36, 10, 10, 20]
-                //         }
-                //     ]
-                // };
-                //
-                // // Display the chart using the configuration items and data just specified.
-                // myChart.setOption(option);
+                const monthList = [[${monthList}]];
+                const totalPriceList = [[${totalPriceList}]];
+                const biddingCountList = [[${biddingCountList}]];
+                const auctionCountList = [[${auctionCountList}]];
+                console.log(monthList);
 
-                const ctx = document.getElementById('myChart');
+                const barCtx = document.getElementById('barChart');
+                const lineCtx = document.getElementById('lineChart');
 
-                new Chart(ctx, {
+                new Chart(barCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        labels: monthList,
                         datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
+                            label: monthList,
+                            name: '경매 건수',
+                            data: auctionCountList,
+                            borderWidth: 1
+                        },{
+                            label: monthList,
+                            name: '입찰 건수',
+                            data: biddingCountList,
+                            borderWidth: 1
+                        }]
+
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+
+                new Chart(lineCtx, {
+                    type: 'line',
+                    name: '월별 거래 총액',
+                    data: {
+                        labels: monthList,
+                        datasets: [{
+                            label: monthList,
+                            data: totalPriceList,
                             borderWidth: 1
                         }]
                     },
                     options: {
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                stacked: true
                             }
                         }
                     }
@@ -69,7 +77,7 @@
 <div class="content_area" layout:fragment="content">
     <h1 class="page-title light-border-bottom">통계 데이터</h1>
     <div class="statistical_item_area">
-        <div class="statistical_item" id="statisticalHistory">
+        <div class="statistical_item" id="tableTypeItem">
             <div class="item_label_area">
                 <div class="label_icon d-flex align-items-center justify-content-center">
                     <i class="bi bi-record-fill"></i>
@@ -78,33 +86,64 @@
                     <label class="item_label">월별 경매 현황 ([[${monthList[5]}]] ~ [[${monthList[0]}]])</label>
                 </strong>
             </div>
-            <div hidden style="height: 500px;">
-                <canvas id="myChart">
-                    <table style="text-align: center;">
-                        <tr>
-                            <th class="colName" style="width: 150px;"></th>
-                            <th class="colName" th:each="month, i : ${monthList}" th:text="${month}" style="width: 140px;"></th>
-                            <th class="colName" style="text-align: center; width: 140px;">합계</th>
-                        </tr>
-                        <tr th:with="sum = 0">
-                            <th class="colName">경매 건수</th>
-                            <td class="cell" th:each="month, i : ${monthList}" th:text="${auctionCountList[i.index]}"></td>
-                            <td class="cell" th:text="${auctionCountSum}"></td>
-                        </tr>
-                        <tr>
-                            <th class="colName">입찰 건수</th>
-                            <td class="cell" th:each="month, i : ${monthList}" th:text="${biddingCountList[i.index]}"></td>
-                            <td class="cell" th:text="${biddingCountSum}"></td>
-                        </tr>
-                        <tr>
-                            <th class="colName">거래 총액</th>
-                            <td class="cell" th:each="month, i : ${monthList}" th:text="${totalPriceList[i.index]}"></td>
-                            <td class="cell" th:text="${totalPriceSum}"></td>
-                        </tr>
-                    </table>
+            <div style="margin-bottom: 100px; margin-top: 20px;">
+                <table style="border: 2px solid rgb(212, 212, 212);">
+                    <tr style="border-bottom: 2px solid rgb(212, 212, 212);">
+                        <th class="colName" style="width: 150px;"></th>
+                        <th class="colName" th:each="month, i : ${monthList}" th:text="${month}" style="width: 140px;"></th>
+                        <th class="colName" style="text-align: center; width: 140px;">합계</th>
+                    </tr>
+                    <tr>
+                        <th class="colName">경매 등록</th>
+                        <td class="cell" th:each="month, i : ${monthList}" th:text="${#numbers.formatInteger(auctionCountList[i.index], 1, 'COMMA')}"></td>
+                        <td class="cell" th:text="${#numbers.formatInteger(auctionCountSum, 1, 'COMMA')}"></td>
+                    </tr>
+                    <tr>
+                        <th class="colName">입찰 신청</th>
+                        <td class="cell" th:each="month, i : ${monthList}" th:text="${#numbers.formatInteger(biddingCountList[i.index], 1, 'COMMA')}"></td>
+                        <td class="cell" th:text="${#numbers.formatInteger(biddingCountSum, 1, 'COMMA')}"></td>
+                    </tr>
+                    <tr>
+                        <th class="colName">거래 총액</th>
+                        <td class="cell" th:each="month, i : ${monthList}" th:text="${#numbers.formatInteger(totalPriceList[i.index], 1, 'COMMA')}"></td>
+                        <td class="cell" th:text="${#numbers.formatInteger(totalPriceSum, 1, 'COMMA')}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="statistical_item" id="barChartTypeItem">
+            <div class="item_label_area">
+                <div class="label_icon d-flex align-items-center justify-content-center">
+                    <i class="bi bi-record-fill"></i>
+                </div>
+                <strong>
+                    <label class="item_label">경매등록 VS 입찰신청</label>
+                </strong>
+            </div>
+            <div class="chart_box">
+                <canvas id="barChart">
                 </canvas>
             </div>
         </div>
+
+        <div class="statistical_item" id="lineChartTypeItem">
+            <div class="item_label_area">
+                <div class="label_icon d-flex align-items-center justify-content-center">
+                    <i class="bi bi-record-fill"></i>
+                </div>
+                <strong>
+                    <label class="item_label">월별 거래 총액</label>
+                </strong>
+            </div>
+            <div class="chart_box">
+                <canvas id="lineChart">
+                </canvas>
+            </div>
+        </div>
+
+
     </div>
 </div>
 </body>

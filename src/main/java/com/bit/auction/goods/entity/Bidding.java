@@ -35,6 +35,9 @@ public class Bidding {
 
     private String userId;
 
+    @Transient
+    private String auctionTitle;
+
     public BiddingDTO toDTO(){
         return BiddingDTO.builder()
                 .biddingId(biddingId)
